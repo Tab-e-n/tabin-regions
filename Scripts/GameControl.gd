@@ -75,7 +75,7 @@ func _process(delta):
 		if mouse_position.y < 64:
 			direction.y -= 1
 	
-	game_camera.move_camera(direction, shift, ctrl)
+	game_camera.move_camera(delta, direction, shift, ctrl)
 	
 	if Input.is_action_just_pressed("zoom_out") or mouse_wheel_input < 0:
 		game_camera.zoom_change(-1)
@@ -114,10 +114,11 @@ func _process(delta):
 	if Input.is_action_just_pressed("ai_speedrun"):
 		Options.speedrun_ai = not Options.speedrun_ai
 		ai_control.speedrun_ai_update()
-		if Options.speedrun_ai:
-			command_callout.new_callout("Fast AI")
-		else:
-			command_callout.new_callout("Slow AI")
+		if command_callout:
+			if Options.speedrun_ai:
+				command_callout.new_callout("Fast AI")
+			else:
+				command_callout.new_callout("Slow AI")
 	
 	mouse_wheel_input = 0
 

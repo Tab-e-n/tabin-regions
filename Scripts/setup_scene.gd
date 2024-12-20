@@ -58,7 +58,8 @@ func _ready():
 
 
 func _process(_delta):
-	pass
+	if Input.is_action_just_pressed("escape"):
+		get_tree().change_scene_to_file("res://title.tscn")
 
 
 func _on_leaders_value_changed(value):

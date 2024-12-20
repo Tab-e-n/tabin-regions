@@ -32,6 +32,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var LeaveMessage : Control
 @export var ForfeitMessage : Control
 @export var CommandCallout : CommandCallouts
+@export var MapTintList : Array[NodePath]
 
 @onready var game_control : GameControl = get_parent()
 @onready var region_control : RegionControl
@@ -137,6 +138,9 @@ func _deffered_ready():
 	if LeaveButton:
 		LeaveButton.pressed.connect(_leaving)
 	
+	for path in MapTintList:
+		get_node(path).self_modulate = region_control.color
+	
 	connect_region_control_signals()
 	
 	call_deferred("_ready_turn_order")
@@ -212,6 +216,7 @@ func _process(_delta):
 				var info_leader : Sprite2D = PlayerInfo.get_node("Player") as Sprite2D
 				info_leader.self_modulate = leader.self_modulate
 				info_leader.frame = leader.frame
+				PlayerInfo.self_modulate = leader.self_modulate
 				PlayerInfo.get_node("City").self_modulate = leader.self_modulate
 				PlayerInfo.get_node("Capital").self_modulate = leader.self_modulate
 				if leader.self_modulate.v > region_control.COLOR_TOO_BRIGHT:
@@ -240,7 +245,7 @@ func _turn_ended():
 	update_current_turn()
 
 
-func move_camera(direction : Vector2, shift : bool, ctrl : bool):
+func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
 	var move_speed = BASE_MOVE_SPEED
 	if UI:
 		move_speed *= UI.scale.x
@@ -248,7 +253,7 @@ func move_camera(direction : Vector2, shift : bool, ctrl : bool):
 		move_speed *= 2.0
 	if ctrl:
 		move_speed *= 0.3
-	next_position += direction * Vector2(move_speed, move_speed)
+	next_position += direction * Vector2(move_speed, move_speed) * 60 * delta
 	
 	snapped(next_position, Vector2(1.0, 1.0))
 	if next_position.x > farthest_right:

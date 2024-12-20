@@ -5,18 +5,22 @@ class_name NetworkTrainer
 const NETWORK_SAVE_DIR : String = "user://Networks"
 const NET_NAMES : Array[String] = ["attack", "reinforce", "mobilize"]
 const ALLOWED_MAPS : Dictionary = {
-	"2._Testlandia.tscn" : [5, 20],
-#	"1._Title_Map.tscn" : [2, 15], # Stalematy
-	"1._Odd_&_Even.tscn" : [2, 15],
-	"2._House_Of_90_Degrees.tscn" : [2, 15],
-#	"1._Music_Land.tscn" : [2, 25], # Stalematy
-	"2._Trees_Trees_Trees.tscn" : [3, 25],
-	"2._The_Power_Of_Two.tscn" : [4, 25],
-	"1._Cubical_Warfare.tscn" : [4, 20],
-	"2._We_Didn't_Start_the_Fire.tscn" : [5, 25],
-	"2._Honeycomb_Madness.tscn" : [6, 25],
-	"2._On_The_Slots.tscn" : [7, 30],
-	"2._No_Tickes_Left_To_Ride.tscn" : [8, 30],
+# List of used maps
+	"E5_Testlandia.tscn" : [5, 20],
+	"E3_Trees_Trees_Trees.tscn" : [3, 25],
+	"E4_The_Power_Of_Two.tscn" : [4, 25],
+	"B4_Cubical_Warfare.tscn" : [4, 20],
+	"E5_We_Didn't_Start_the_Fire.tscn" : [5, 25],
+	"E6_Honeycomb_Madness.tscn" : [6, 25],
+	"E6_Azgaar_Map.tscn" : [6, 25],
+	"E7_On_The_Slots.tscn" : [7, 30],
+	"E8_No_Tickes_Left_To_Ride.tscn" : [8, 30],
+# Coinflips
+#	"B2_Odd_&_Even.tscn" : [2, 15], 
+#	"E2_House_Of_90_Degrees.tscn" : [2, 15],
+# Stalematy
+#	"B2_Title_Map.tscn" : [2, 15],
+#	"B2_Music_Land.tscn" : [2, 25], 
 }
 
 enum {MAP_ALIGN_AMOUNT, MAP_TURN_CUTOFF}
@@ -36,6 +40,7 @@ var rankings : Array = []
 var current_rankings : Array = []
 var choosable_networks : Array = []
 var chosen_networks : Array = []
+var order_amount : Array = []
 var chosen_variations : int = 0
 
 var region_control_visible : bool = true
@@ -67,6 +72,8 @@ func _ready():
 	reset_rankings(rankings, 1.0)
 	current_rankings.resize(ALLOWED_MAPS[MapSetup.current_map_name][MAP_ALIGN_AMOUNT])
 	reset_rankings(current_rankings)
+	order_amount.resize(ALLOWED_MAPS[MapSetup.current_map_name][MAP_ALIGN_AMOUNT])
+	reset_rankings(order_amount)
 	
 	choose_networks()
 	
@@ -75,6 +82,11 @@ func _ready():
 	region_control.turn_ended.connect(_turn_ended)
 	
 	turn_cutoff = ALLOWED_MAPS[MapSetup.current_map_name][MAP_TURN_CUTOFF] * turn_cutoff_mult
+
+
+func _physics_process(delta):
+	if Input.is_action_just_pressed("ai_speedrun"):
+		win(0)
 
 
 func make_new_networks(amount : int, net_inputs : int, net_specs : Array):
@@ -114,7 +126,7 @@ func choose_networks() -> bool:
 	for i in range(chosen_networks.size()):
 		chosen_networks[i] = choosable_networks.pop_at(randi_range(0, choosable_networks.size() - 1))
 	
-	print(chosen_networks)
+	print("c: ", chosen_networks)
 	return true
 
 
@@ -209,12 +221,31 @@ func win(_align : int):
 			current_rankings[al] += highest_placement
 		current_rankings[al] -= turn_penalty
 	
+	for i in range(chosen_networks.size()):
+		var turns : int = GameStats.get_stat(i + 1, "turns lasted") as int
+		var al = (i + chosen_variations) % chosen_networks.size()
+		order_amount[al] /= turns
+	var stalling_networks : Array = []
+	var most_orders : float = 0
+	for i in range(chosen_networks.size()):
+		if order_amount[i] > most_orders:
+			stalling_networks = [i]
+			most_orders = order_amount[i]
+		elif order_amount[i] == most_orders:
+			stalling_networks.append(i)
+	if most_orders > chosen_networks.size() + 5:
+		print("stallers: ", stalling_networks)
+		for i in stalling_networks:
+			current_rankings[i] -= 0.05
+#	print("o: ", order_amount)
+	reset_rankings(order_amount, 0)
+	
 	if chosen_variations >= chosen_networks.size() - 1:
 		chosen_variations = 0
 		for i in range(current_rankings.size()):
 			current_rankings[i] /= float(chosen_networks.size())
 			rankings[chosen_networks[i]] = current_rankings[i]
-		print(current_rankings)
+		print("r: ", current_rankings)
 		reset_rankings(current_rankings)
 		
 		print("New set of nets")
@@ -225,13 +256,16 @@ func win(_align : int):
 		print("Next map: ", MapSetup.current_map_name)
 		print("Timeout time: ", turn_cutoff)
 		
-		chosen_networks.resize(ALLOWED_MAPS[MapSetup.current_map_name][MAP_ALIGN_AMOUNT])
-		current_rankings.resize(ALLOWED_MAPS[MapSetup.current_map_name][MAP_ALIGN_AMOUNT])
+		var align_amount : int = ALLOWED_MAPS[MapSetup.current_map_name][MAP_ALIGN_AMOUNT]
+		chosen_networks.resize(align_amount)
+		current_rankings.resize(align_amount)
 		reset_rankings(current_rankings)
+		order_amount.resize(align_amount)
+		reset_rankings(order_amount)
 		
 		if not choose_networks():
 			print(" --- ALL NETS TESTED --- ")
-			print(rankings)
+			print("R: ", rankings)
 			# End of session
 			# Remove poorly performing nets
 			choosable_networks = range(network_amount)
@@ -248,7 +282,7 @@ func win(_align : int):
 			print(" *** Remaining nets: ", choosable_networks.size())
 	else:
 		chosen_variations += 1
-		print(current_rankings)
+		print("r: ", current_rankings)
 		print("New variation, number: ", chosen_variations)
 	
 	change_map(MapSetup.current_map_name)
@@ -266,6 +300,11 @@ func _turn_ended():
 	if region_control.current_turn >= turn_cutoff:
 		print("Timeout")
 		lose(0)
+
+
+func increment_order_amount(alignment : int):
+	var al = (alignment + chosen_variations - 1) % chosen_networks.size()
+	order_amount[al] += 1
 
 
 func save_network(net_set : Node):

@@ -93,12 +93,12 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	$columbs.add_child(columb)
 
 
-func _physics_process(_delta):
+func _physics_process(delta):
 	if Input.is_action_just_pressed(\"escape\"):
 		leave()
 	
 	var mouse_position = get_viewport().get_mouse_position()
-	var move_speed = 8
+	var move_speed = 480 * delta
 	if Input.is_action_pressed(\"shift\"):
 		move_speed *= 2.0
 	

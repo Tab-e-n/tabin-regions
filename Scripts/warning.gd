@@ -10,7 +10,7 @@ class_name RegionWarning
 
 
 func _ready():
-	visual.position.x = 24 * (warning_number + 1)
+	visual.position.x = 20 * (warning_number + 1)
 	hide_self()
 
 

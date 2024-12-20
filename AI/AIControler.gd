@@ -192,7 +192,7 @@ func timer_ended():
 		should_think = true
 	elif CALL_overtake:
 		reset_CALL()
-		region_control.get_node(selected_capital).overtake()
+		region_control.overtake_region(selected_capital)
 		if not ReplayControl.replay_active:
 			if not current_moves.has(current_align()):
 				current_moves[current_align()] = []

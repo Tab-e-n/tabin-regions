@@ -50,6 +50,9 @@ func think_normal():
 		controler.CALL_change_current_action = true
 		return
 	
+	if trainer:
+		trainer.increment_order_amount(current_alignment)
+	
 	var attack_regions : Array = []
 	var reinforce_regions : Array = []
 	var friendly_regions : Array = controler.get_owned_regions()
@@ -90,6 +93,10 @@ func think_mobilize():
 	if not network_mobilize:
 		controler.CALL_nothing = true
 		return
+	
+	if trainer:
+		trainer.increment_order_amount(current_alignment)
+	
 	var mobilize_regions : Array = []
 	var friendly_regions : Array = controler.get_owned_regions()
 	

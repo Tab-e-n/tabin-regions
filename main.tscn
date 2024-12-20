@@ -50,6 +50,7 @@ DefeatMessage = NodePath("UI/lose")
 LeaveMessage = NodePath("UI/leave")
 ForfeitMessage = NodePath("UI/forfeit")
 CommandCallout = NodePath("UI/command_callout")
+MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/Hideable/turn_order")])
 
 [node name="UI" type="Control" parent="GameCamera"]
 layout_mode = 3

@@ -36,11 +36,7 @@ func _ready():
 	region_name.add_theme_font_size_override("font_size", 32)
 	region_name.scale = Vector2(0.5, 0.5)
 	region_name.clip_contents = true
-	region_name.text = region.name + " (" + String.num(region.max_power) + ")"
-	if OS.has_feature("editor"):
-		region_name.text += " (" + String.num(region.distance_from_capital) + ")"
-	region_name.size = region_name.get_theme_font("font").get_string_size(region_name.text, HORIZONTAL_ALIGNMENT_CENTER, -1, 16)
-	region_name.position = Vector2(region_name.size.x * -0.5 + 24, -32)
+	update_region_name()
 	
 	region_name.add_theme_stylebox_override("normal", preload("res://Styles/style_label_city_name.tres"))
 	add_child(region_name)
@@ -63,6 +59,19 @@ func _process(_delta):
 				make_particle(true)
 
 
+func update_region_name():
+	region_name.text = region.name + " (" + String.num(region.max_power) + ")"
+	if OS.has_feature("editor"):
+		region_name.text += " (" + String.num(region.distance_from_capital) + ")"
+	region_name.size = region_name.get_theme_font("font").get_string_size(region_name.text, HORIZONTAL_ALIGNMENT_CENTER, -1, 16)
+	region_name.position = Vector2(region_name.size.x * -0.5 + 24, -32)
+
+
+func color_self(new_color : Color):
+	self_modulate = new_color
+	text.self_modulate = RegionControl.text_color(new_color.v)
+
+
 func make_particle(mobilize : bool):
 	var part : Sprite2D = Sprite2D.new()
 	part.set_script(preload("res://Scripts/CitySelectedParticle.gd"))
@@ -71,11 +80,6 @@ func make_particle(mobilize : bool):
 	part.set_color(self_modulate)
 	part.mobilize = mobilize
 	add_child(part)
-
-
-func color_self(new_color : Color):
-	self_modulate = new_color
-	text.self_modulate = RegionControl.text_color(new_color.v)
 
 
 func show_attacks():

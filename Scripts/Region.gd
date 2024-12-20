@@ -1,5 +1,6 @@
 @tool
 extends Polygon2D
+## Region is a class that represents a single region. Requires being a child node of a RegionControl to function.
 class_name Region
 
 
@@ -17,13 +18,20 @@ signal reinforced(amount : int)
 signal mobilized()
 
 
+## Which alignment owns the region.
 @export var alignment : int = 0
-
+## Current power of the region.
 @export var power : int = 1
+## The maximum power of the region. When reinforcing the region, region will not gain more power than the max power.
 @export var max_power : int = 5
-
+## Whether the region is a capital or not. Capitals give players extra actions.
 @export var is_capital : bool = false
 
+@export_subgroup("Cosmetic")
+## Setting kinetic to true makes region arrows constantly update themselfs.
+@export var kinetic : bool = false
+
+@export_subgroup("Editor")
 @export var connections : Dictionary = {}
 
 
@@ -127,12 +135,49 @@ func _process(delta):
 				material.set_shader_parameter("changing_color", false)
 
 
-func power_color(amount : int, no_zero : bool):
-	if amount == 0 and no_zero:
-		color = Color("703d5d")
-		return
-	var c : float = 1.0 - clampf(amount, 0, region_control.render_range) / region_control.render_range
-	color = Color(c, c, c, 1)
+func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
+	if power >= max_power:
+		return false
+	power += addon_power
+	GameStats.add_to_stat(reinforce_align, "regions reinforced", 1)
+#	GameStats.stats[reinforce_align]["regions reinforced"] += 1
+	reinforced.emit(addon_power)
+	return true
+
+
+func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
+	if power <= 1:
+		return 0
+	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
+#	GameStats.stats[mobilize_align]["units mobilized"] += 1
+	power -= mobilize_amount
+	region_control.bonus_action_amount += mobilize_amount
+	mobilized.emit()
+	return mobilize_amount
+
+
+func incoming_attack(attack_align : int, attack_power : int = 0, test_only : bool = false):
+	for region in connections.keys():
+		if region_control.get_node(region).alignment == attack_align:
+			attack_power += region_attack_power(region)
+	if incoming_attack_captures(attack_power):
+		if test_only:
+			return true
+		GameStats.add_to_stat(attack_align, "enemy units removed", power)
+		GameStats.add_to_stat(alignment, "units lost", power)
+#		GameStats.stats[attack_align]["enemy units removed"] += power
+#		GameStats.stats[alignment]["units lost"] += power
+		power = 1
+		change_alignment(attack_align)
+		GameStats.add_to_stat(attack_align, "regions captured", 1)
+#		GameStats.stats[alignment]["regions captured"] += 1
+		if is_capital:
+			GameStats.add_to_stat(attack_align, "capital regions captured", 1)
+#			GameStats.stats[alignment]["capital regions captured"] += 1
+		captured.emit()
+		return true
+	else:
+		return false
 
 
 func change_alignment(align : int, recolor_self : bool = true):
@@ -144,23 +189,19 @@ func change_alignment(align : int, recolor_self : bool = true):
 	changed_alignment.emit(alignment)
 
 
-func color_self(animate : bool = true):
-	if(animate):
-		material.set_shader_parameter("changing_color", true)
-		material.set_shader_parameter("n", 0)
-		material.set_shader_parameter("previous_color", color)
-		color_change_time = 0.0
-	color = region_control.align_color[alignment]
-	city.color_self(region_control.align_color[alignment])
+func overtake():
+	city_particle(false)
+	if region_control.alignment_friendly(region_control.current_playing_align, alignment):
+		reinforce(region_control.current_playing_align)
+	else:
+		incoming_attack(region_control.current_playing_align, max_power + 1)
 
 
-func city_particle(is_mobilized : bool):
-	city.call_deferred("make_particle", is_mobilized)
-
-
-func _on_capital_pressed():
-	if region_control.is_player_controled and !region_control.dummy:
-		action_decided()
+func set_max_power(new_max : int, reduce_power : bool = true):
+	max_power = new_max
+	if reduce_power and power > max_power:
+		power = max_power
+	city.update_region_name()
 
 
 func action_decided():
@@ -190,65 +231,11 @@ func action_decided():
 		region_control.cross(position)
 
 
-func overtake():
-	city_particle(false)
-	if region_control.alignment_friendly(region_control.current_playing_align, alignment):
-		reinforce(region_control.current_playing_align)
-	else:
-		incoming_attack(region_control.current_playing_align, max_power + 1)
-	region_control.record_overtake(name)
-
-
 func alignment_can_attack(attack_align : int) -> bool:
 	for region in connections.keys():
 		if region_control.get_node(region).alignment == attack_align:
 			return true
 	return false
-
-
-func incoming_attack(attack_align : int, attack_power : int = 0, test_only : bool = false):
-	for region in connections.keys():
-		if region_control.get_node(region).alignment == attack_align:
-			attack_power += region_attack_power(region)
-	if incoming_attack_captures(attack_power):
-		if test_only:
-			return true
-		GameStats.add_to_stat(attack_align, "enemy units removed", power)
-		GameStats.add_to_stat(alignment, "units lost", power)
-#		GameStats.stats[attack_align]["enemy units removed"] += power
-#		GameStats.stats[alignment]["units lost"] += power
-		power = 1
-		change_alignment(attack_align)
-		GameStats.add_to_stat(attack_align, "regions captured", 1)
-#		GameStats.stats[alignment]["regions captured"] += 1
-		if is_capital:
-			GameStats.add_to_stat(attack_align, "capital regions captured", 1)
-#			GameStats.stats[alignment]["capital regions captured"] += 1
-		captured.emit()
-		return true
-	else:
-		return false
-
-
-func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
-	if power == max_power:
-		return false
-	power += addon_power
-	GameStats.add_to_stat(reinforce_align, "regions reinforced", 1)
-#	GameStats.stats[reinforce_align]["regions reinforced"] += 1
-	reinforced.emit(addon_power)
-	return true
-
-
-func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
-	if power <= 1:
-		return 0
-	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
-#	GameStats.stats[mobilize_align]["units mobilized"] += 1
-	power -= mobilize_amount
-	region_control.bonus_action_amount += mobilize_amount
-	mobilized.emit()
-	return mobilize_amount
 
 
 func region_attack_power(region) -> int:
@@ -301,6 +288,20 @@ func attack_power_difference(attack_align : int) -> int:
 	return power - attack_power
 
 
+func color_self(animate : bool = true):
+	if(animate):
+		material.set_shader_parameter("changing_color", true)
+		material.set_shader_parameter("n", 0)
+		material.set_shader_parameter("previous_color", color)
+		color_change_time = 0.0
+	color = region_control.align_color[alignment]
+	city.color_self(region_control.align_color[alignment])
+
+
+func city_particle(is_mobilized : bool):
+	city.call_deferred("make_particle", is_mobilized)
+
+
 func make_region_arrows():
 	var i : int = 0
 	for target in connections.keys():
@@ -309,14 +310,25 @@ func make_region_arrows():
 		var target_node : Node = region_control.get_node(target)
 		if target_node is Region:
 			var arrow : RegionArrow = RegionArrow.new()
-			arrow.from_position = position
-			arrow.to_position = target_node.position
-			arrow.from_color = region_control.align_color[alignment]
-			arrow.to_color = region_control.align_color[target_node.alignment]
-			arrow.to_name = target
+			arrow.kinetic = kinetic
+			arrow.from_region = self
+			arrow.to_region = target_node
 			arrow.num = i
 			arrow.power_reduction = connections[target]
 			arrow.width *= region_control.city_size
 			region_control.add_child(arrow)
 			i += 1
+
+
+func _on_capital_pressed():
+	if region_control.is_player_controled and !region_control.dummy:
+		action_decided()
+
+
+func power_color(amount : int, no_zero : bool):
+	if amount == 0 and no_zero:
+		color = Color("703d5d")
+		return
+	var c : float = 1.0 - clampf(amount, 0, region_control.render_range) / region_control.render_range
+	color = Color(c, c, c, 1)
 

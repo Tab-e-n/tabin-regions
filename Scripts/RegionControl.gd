@@ -14,6 +14,7 @@ const COLOR_TOO_BRIGHT : float = 0.9
 enum APPLY_PENALTIES {OFF, CURRENT_CAPITAL, PREVIOUS_CAPITAL}
 ## Skirmishes are basic maps with not much special. Challenges are curated experiences that are meant to challenge the player in some way. Bot battles are maps with no human players. 
 enum SETUP_TAG {SKIRMISH, CHALLENGE, BOT_BATTLE, GUIDE}
+## B E I N T X Z
 enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DIFFICULT, EXTREME, ROCKET_SCIENCE}
 
 
@@ -370,7 +371,7 @@ func _ready():
 					center_camera = region.position
 					if region.is_capital:
 						break
-		game_camera.center_camera(center_camera)
+		game_camera.call_deferred("center_camera", center_camera)
 		
 	call_deferred("save_replay_data")
 
@@ -528,8 +529,11 @@ func action_done(region_name : String, amount : int = 1):
 			change_current_action()
 
 
-func record_overtake(region_name : String):
-	ReplayControl.record_move(ReplayControl.RECORD_TYPE_OVERTAKE, region_name)
+func overtake_region(region_name : String):
+	var region : Region = get_node(region_name) as Region
+	if region:
+		region.overtake()
+		ReplayControl.record_move(ReplayControl.RECORD_TYPE_OVERTAKE, region_name)
 
 
 func has_enough_actions() -> bool:
@@ -539,7 +543,6 @@ func has_enough_actions() -> bool:
 		return bonus_action_amount > 0
 	else:
 		return true
-	
 
 
 func change_current_action():
