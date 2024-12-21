@@ -66,16 +66,16 @@ func think_normal():
 		if region.alignment != current_alignment:
 #			print("allies region, cannot attack through")
 			continue
-		for connection_name in region.connections.keys():
-			var connection = controler.get_region(connection_name)
-#			print("--> ", connection.name)
-			if controler.alignment_friendly(current_alignment, connection.alignment):
+		for connection in region.connections:
+			var target = connection.get_other_region(region)
+#			print("--> ", target.name)
+			if controler.alignment_friendly(current_alignment, target.alignment):
 #				print("friendly alignment")
 				continue
-			if not connection.incoming_attack(current_alignment, 0, true):
+			if not target.incoming_attack(current_alignment, 0, true):
 #				print("cannot attack")
 				continue
-			attack_regions.append(connection)
+			attack_regions.append(target)
 	
 	var chosen_attack : Array = choose_using_network(network_attack, attack_regions)
 	var chosen_reinforce : Array = choose_using_network(network_reinforce, reinforce_regions)

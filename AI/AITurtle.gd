@@ -34,20 +34,19 @@ func think_normal(is_bonus : bool = false):
 		for region in controler.get_owned_regions():
 #			print("owned: ", region.name)
 			var in_threat : bool = false
-			for connection_name in region.connections.keys():
-#				print("connected_name: ", connection_name)
-				var connection = controler.get_region(connection_name)
-#				print("connected: ", connection.name)
-				if controler.alignment_friendly(current_alignment, connection.alignment):
+			for connection in region.connections:
+				var target : Region = connection.get_other_region(region)
+#				print("connected: ", target.name)
+				if controler.alignment_friendly(current_alignment, target.alignment):
 #					print("friendly alignment")
 					continue
-				if not controler.alignment_neutral(connection.alignment):
+				if not controler.alignment_neutral(target.alignment):
 					in_threat = true
 #					print("not neutral")
-				if not connection.incoming_attack(current_alignment, 0, true):
+				if not target.incoming_attack(current_alignment, 0, true):
 #					print("cannot attack")
 					continue
-				eligable_regions.append(connection)
+				eligable_regions.append(target)
 			if in_threat and region.power != region.max_power:
 				eligable_regions.append(region)
 		

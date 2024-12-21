@@ -32,7 +32,7 @@ signal mobilized()
 @export var kinetic : bool = false
 
 @export_subgroup("Editor")
-@export var connections : Dictionary = {}
+@export var connections : Array[RegionConnection] = []
 
 
 @onready var region_control : RegionControl = get_parent() as RegionControl
@@ -98,7 +98,7 @@ func _ready_deferred():
 	add_child(city)
 	if !region_control.dummy:
 		city.pressed.connect(_on_capital_pressed)
-		city.mouse_entered.connect(make_region_arrows)
+		city.mouse_entered.connect(show_region_connections)
 		
 	color_self(false)
 
@@ -157,9 +157,7 @@ func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
 
 
 func incoming_attack(attack_align : int, attack_power : int = 0, test_only : bool = false):
-	for region in connections.keys():
-		if region_control.get_node(region).alignment == attack_align:
-			attack_power += region_attack_power(region)
+	attack_power += get_alignments_attack_power(attack_align)
 	if incoming_attack_captures(attack_power):
 		if test_only:
 			return true
@@ -232,25 +230,25 @@ func action_decided():
 
 
 func alignment_can_attack(attack_align : int) -> bool:
-	for region in connections.keys():
-		if region_control.get_node(region).alignment == attack_align:
+	for connection in connections:
+		var region : Region = connection.get_other_region(self)
+		if region and region.alignment == attack_align:
 			return true
 	return false
 
 
-func region_attack_power(region) -> int:
-	return max(region_control.get_node(region).power - connections[region], 0)
+func connection_attack_power(connection : RegionConnection) -> int:
+	return max(connection.get_other_region(self).power - connection.power_reduction, 0)
 
 
 func get_adjacent_attack_power() -> Array[int]:
 	var attacks : Array[int] = []
 	attacks.resize(region_control.align_amount)
 	
-	for i in connections.keys():
-		var target : Node = region_control.get_node(i)
-		if target is Region:
-			if target.alignment < region_control.align_amount and target.alignment >= 0:
-				attacks[target.alignment] += region_attack_power(i)
+	for connection in connections:
+		var target : Node = connection.get_other_region(self)
+		if target and region_control.alignment_active(target.alignment):
+			attacks[target.alignment] += connection_attack_power(connection)
 	
 	return attacks
 
@@ -266,26 +264,21 @@ func strongest_enemy_attack(align : int = alignment) -> int:
 	return strongest
 
 
-func self_attack_power(align : int = alignment) -> int:
-	var attack : int = 0
-	for i in connections.keys():
-		var target : Node = region_control.get_node(i)
-		if target is Region:
-			if target.alignment == align:
-				attack += region_attack_power(i)
-	return attack
-
-
 func incoming_attack_captures(attack_power : int) -> bool:
 	return attack_power > power
 
 
+func get_alignments_attack_power(align : int) -> int:
+	var attack_power : int = 0
+	for connection in connections:
+		var region : Region = connection.get_other_region(self)
+		if region and region.alignment == align:
+			attack_power += connection_attack_power(connection)
+	return attack_power
+
+
 func attack_power_difference(attack_align : int) -> int:
-	var attack_power = 0
-	for region in connections.keys():
-		if region_control.get_node(region).alignment == attack_align:
-			attack_power += region_attack_power(region)
-	return power - attack_power
+	return power - get_alignments_attack_power(attack_align)
 
 
 func color_self(animate : bool = true):
@@ -296,28 +289,19 @@ func color_self(animate : bool = true):
 		color_change_time = 0.0
 	color = region_control.align_color[alignment]
 	city.color_self(region_control.align_color[alignment])
+	for connection in connections:
+		connection.update_gradient()
 
 
 func city_particle(is_mobilized : bool):
 	city.call_deferred("make_particle", is_mobilized)
 
 
-func make_region_arrows():
-	var i : int = 0
-	for target in connections.keys():
-		if not region_control.has_node(target):
-			continue
-		var target_node : Node = region_control.get_node(target)
-		if target_node is Region:
-			var arrow : RegionArrow = RegionArrow.new()
-			arrow.kinetic = kinetic
-			arrow.from_region = self
-			arrow.to_region = target_node
-			arrow.num = i
-			arrow.power_reduction = connections[target]
-			arrow.width *= region_control.city_size
-			region_control.add_child(arrow)
-			i += 1
+func show_region_connections():
+	for i in range(connections.size()):
+		var connection : RegionConnection = connections[i]
+		connection.num = i
+		connection.show_self(self)
 
 
 func _on_capital_pressed():

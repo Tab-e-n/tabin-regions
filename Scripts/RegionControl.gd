@@ -146,6 +146,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var render_range : float = 20
 @export var dummy : bool = false
 @export var cities_visible : bool = true
+@export var print_more_info : bool = false
 ## Holds the connections of all regions. When the map is readying, RegionControl will attempt to make every connection in this array. I recommend to not using the inspector to edit this property, use a built-in script like in the template map instead.
 @export var connections : Array = []
 
@@ -177,7 +178,10 @@ var penalty_amount : Array = []
 
 
 func _ready():
-#	MapSetup.print_map_data()
+	if OS.has_feature("editor"):
+		check_duplicate_connetions()
+	if print_more_info:
+		MapSetup.print_map_data()
 	
 	if dummy:
 		return
@@ -206,22 +210,25 @@ func _ready():
 		used_alignments = MapSetup.used_aligments
 	
 	for link in connections:
-		var link_diff = 0
+		var link_power_reduction = 0
 		if link.size() >= 3:
-			link_diff = link[2]
-		var region_0 : Region = get_node(link[0])
-		var region_1 : Region = get_node(link[1])
-		if region_0 == null or region_1 == null:
-			print(link[0], " or ", link[1], " does not exist.")
+			link_power_reduction = link[2]
+		var region_from : Region = get_node(link[0]) as Region
+		var region_to : Region = get_node(link[1]) as Region
+		if region_from == null:
+			push_warning(link[0], " does not exist.")
 			continue
-		if not region_0.connections.has(link[1]):
-			region_0.connections[link[1]] = link_diff
-		else:
-			print("connection ", link[0], " - ", link[1], " already exists.")
-		if not region_1.connections.has(link[0]):
-			region_1.connections[link[0]] = link_diff
-		else:
-			print("connection ", link[1], " - ", link[0], " already exists.")
+		if region_to == null:
+			push_warning(link[1], " does not exist.")
+			continue
+		var connection : RegionConnection = RegionConnection.new()
+		connection.region_from = region_from
+		connection.region_to = region_to
+		connection.power_reduction = link_power_reduction
+		connection.kinetic = region_from.kinetic or region_to.kinetic
+		add_child(connection)
+		region_from.connections.append(connection)
+		region_to.connections.append(connection)
 	
 	region_amount.resize(align_amount - 1)
 	capital_amount.resize(align_amount - 1)
@@ -288,8 +295,6 @@ func _ready():
 #				if align_play_order[i] == 0:
 				align_play_order[i] = MapSetup.preset_alignments[i]
 		
-	#	print(align_play_order)
-		
 		for i in range(align_play_order.size()):
 			if align_play_order[i]:
 				continue
@@ -304,8 +309,8 @@ func _ready():
 		for alignment in removed_alignments:
 			remove_alignment(alignment, remove_capitals_with_alignments)
 	
-#	print(align_play_order)
-#	print(players)
+	if print_more_info:
+		print(align_play_order)
 	
 	current_playing_align = align_play_order[0]
 	
@@ -376,6 +381,32 @@ func _ready():
 	call_deferred("save_replay_data")
 
 
+func check_duplicate_connetions():
+	var regions : Dictionary = {}
+	
+	for link in connections:
+		if link[0] == link[1]:
+			push_warning("Connections cannot be connect to themselfs. [", link[0], "]")
+			continue
+		if regions.has(link[0]):
+			if regions[link[0]].has(link[1]):
+				push_warning("Connection ", link[0], " - ", link[1], " already exists.")
+			else:
+				regions[link[0]].append(link[1])
+		else:
+			regions[link[0]] = [link[1]]
+		if regions.has(link[1]):
+			if regions[link[1]].has(link[0]):
+				push_warning("Connection ", link[1], " - ", link[0], " already exists.")
+			else:
+				regions[link[1]].append(link[0])
+		else:
+			regions[link[1]] = [link[0]]
+	
+	if print_more_info:
+		print(regions)
+
+
 func save_replay_data():
 	if not ReplayControl.replay_active:
 		ReplayControl.clear_replay()
@@ -390,6 +421,9 @@ func save_replay_data():
 
 
 func _process(_delta):
+	if Engine.is_editor_hint():
+		return
+	
 	if dummy:
 		return
 	
@@ -427,44 +461,44 @@ func get_region(reg_name : String) -> Region:
 
 
 func bake_capital_distance():
-	for capital in get_children():
-		if not capital is Region:
+	for node in get_children():
+		var capital : Region = node as Region
+		if not capital:
 			continue
 		if not capital.is_capital:
 			continue
 		capital.distance_from_capital = 0
 		var current_distance : int = 2
-		var regions : Array = capital.connections.keys()
-		while regions.size() > 0:
-			var next_regions : Array = []
-			for reg_name in regions:
-				var region : Region = get_node(reg_name) as Region
+		var links : Array[RegionConnection] = []
+		var regions : Array[Region] = [capital]
+		var i : int = 0
+		while i != regions.size():
+			if not regions[i]:
+				i += 1
+				continue
+			
+			links = regions[i].connections.duplicate()
+			
+			for connection in links:
+				var region : Region = connection.get_other_region(regions[i]) as Region
 				if region.distance_from_capital < current_distance:
 					continue
 				elif region.is_capital:
 					region.distance_from_capital = 0
 				elif region.distance_from_capital > current_distance:
 					region.distance_from_capital = current_distance
-					next_regions.append_array(region.connections.keys())
+					regions.append(region)
 				elif region.distance_from_capital == current_distance:
 					region.distance_from_capital -= 1
 			current_distance += 2
 			
-			regions.clear()
-#			for reg_name in next_regions:
-#				if not regions.has(reg_name):
-#					regions.append(reg_name)
+			links.clear()
 			
-			while next_regions.size() > 0:
-				var reg = next_regions.pop_back()
-				if reg == "":
-					continue
-				regions.append(reg)
-				for i in range(next_regions.size()):
-					if next_regions[i] == reg:
-						next_regions[i] = ""
+			for j in regions.size() - i:
+				if regions[j] == regions[i]:
+					regions[j] = null
 			
-#			print(regions)
+			i += 1
 
 
 func remove_alignment(align : int, remove_capitals : bool):
@@ -694,6 +728,7 @@ func calculate_penalty(alignment : int, end_of_turn : bool = false):
 			break
 		penalty += float(capitals - i) * power_gain_penalties[i]
 	var penalty_total = int(penalty)
+	
 #	print(penalty_total)
 	
 	penalty_amount[alignment - 1] = penalty_total
@@ -721,7 +756,7 @@ func convert_alignment(align_old : int, align_new : int):
 				region.change_alignment(align_new)
 
 
-func alignment_friendly(your_align, opposing_align) -> bool:
+func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 	if your_align < 0 or your_align >= align_amount:
 		return false
 	if opposing_align < 0 or opposing_align >= align_amount:
@@ -732,8 +767,12 @@ func alignment_friendly(your_align, opposing_align) -> bool:
 #	return false
 
 
-func alignment_neutral(align) -> bool:
+func alignment_neutral(align : int) -> bool:
 	return align == 0 or align >= align_amount
+
+
+func alignment_active(align : int) -> bool:
+	return align > 0 and align < align_amount
 
 
 static func flip_color(c : Color) -> Color:

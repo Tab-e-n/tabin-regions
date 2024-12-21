@@ -84,7 +84,7 @@ func _ready():
 	turn_cutoff = ALLOWED_MAPS[MapSetup.current_map_name][MAP_TURN_CUTOFF] * turn_cutoff_mult
 
 
-func _physics_process(delta):
+func _physics_process(_delta):
 	if Input.is_action_just_pressed("ai_speedrun"):
 		win(0)
 
