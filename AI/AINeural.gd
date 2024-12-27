@@ -162,7 +162,7 @@ func calculate_benefit(network : Network, region : Region) -> float:
 	inputs[INPUT_ACTIONS] = controler.get_actions_contextual()
 	
 	inputs[INPUT_ATTACK_POWER] = region.strongest_enemy_attack(current_alignment)
-	inputs[INPUT_OWN_ATTACK_POWER] = region.self_attack_power(current_alignment)
+	inputs[INPUT_OWN_ATTACK_POWER] = region.get_alignments_attack_power(current_alignment)
 	
 	inputs[INPUT_PREVIOUS_MOVE] = controler.used_region_previously(region.name)
 	

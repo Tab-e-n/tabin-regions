@@ -6,21 +6,24 @@ const NETWORK_SAVE_DIR : String = "user://Networks"
 const NET_NAMES : Array[String] = ["attack", "reinforce", "mobilize"]
 const ALLOWED_MAPS : Dictionary = {
 # List of used maps
-	"E5_Testlandia.tscn" : [5, 20],
-	"E3_Trees_Trees_Trees.tscn" : [3, 25],
-	"E4_The_Power_Of_Two.tscn" : [4, 25],
-	"B4_Cubical_Warfare.tscn" : [4, 20],
-	"E5_We_Didn't_Start_the_Fire.tscn" : [5, 25],
-	"E6_Honeycomb_Madness.tscn" : [6, 25],
-	"E6_Azgaar_Map.tscn" : [6, 25],
-	"E7_On_The_Slots.tscn" : [7, 30],
-	"E8_No_Tickes_Left_To_Ride.tscn" : [8, 30],
+	"B.5_Testlandia.tscn" : [5, 20],
+	
+	"A.4_Cubical_Warfare.tscn" : [4, 20],
+	"A.6_Honeycomb_Madness.tscn" : [6, 25],
+	"B.3_Trees_Trees_Trees.tscn" : [3, 25],
+	"B.4_The_Power_Of_Two.tscn" : [4, 25],
+	"B.5_We_Didn't_Start_the_Fire.tscn" : [5, 25],
+	"B.6_Azgaar_Map.tscn" : [6, 25],
+	"B.7_On_The_Slots.tscn" : [7, 30],
+	"B.8_No_Tickes_Left_To_Ride.tscn" : [8, 30],
 # Coinflips
-#	"B2_Odd_&_Even.tscn" : [2, 15], 
-#	"E2_House_Of_90_Degrees.tscn" : [2, 15],
+#	"A.2_Odd_&_Even.tscn" : [2, 15], 
+#	"B.2_House_Of_90_Degrees.tscn" : [2, 15],
 # Stalematy
-#	"B2_Title_Map.tscn" : [2, 15],
-#	"B2_Music_Land.tscn" : [2, 25], 
+#	"A.2_Music_Land.tscn" : [2, 25], 
+#	"A.2_Stretched_Out.tscn" : [2, 25],
+#	"A.2_Title_Map.tscn" : [2, 15],
+#	"A.3_Three_Crabs.tscn" : [2, 25],
 }
 
 enum {MAP_ALIGN_AMOUNT, MAP_TURN_CUTOFF}
@@ -58,7 +61,7 @@ func _ready():
 		load_all_networks(network_amount)
 		print("Loading Networks")
 	
-	MapSetup.current_map_name = "2._Testlandia.tscn"
+	MapSetup.current_map_name = "B.5_Testlandia.tscn"
 	MapSetup.player_amount = 0
 	MapSetup.default_ai_controler = AIControler.CONTROLER_NEURAL
 	MapSetup.aliances_amount = 1
@@ -270,6 +273,7 @@ func win(_align : int):
 			# Remove poorly performing nets
 			choosable_networks = range(network_amount)
 			sort_networks()
+			print("Sorted: ", rankings)
 			remove_last_networks(remove_amount)
 			# Generate new nets
 			fill_missing_networks(network_amount, new_creatures)

@@ -53,8 +53,6 @@ func _ready():
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 		label.size = LABEL_SIZE
 		label.z_index = 11
-		if power_reduction > 0:
-			label.text = "(-" + str(power_reduction) + ")"
 		add_child(label)
 	
 	default_color = Color(0, 0, 0.2)
@@ -78,6 +76,21 @@ func _process(delta):
 				update_gradient()
 	else:
 		hide_self()
+
+
+func get_other_region(region : Region) -> Region:
+	if region == region_from:
+		return region_to
+	else:
+		return region_from
+
+
+func set_power_reduction(amount : int):
+	power_reduction = amount
+	if power_reduction < 0:
+		power_reduction = 0
+	update_gradient()
+	update_label()
 
 
 func update():
@@ -115,6 +128,8 @@ func update_label():
 				label.text += " (-" + str(power_reduction) + ")"
 		else:
 			label.position = (to_position + from_position - LABEL_SIZE) * 0.5
+			if power_reduction > 0:
+				label.text = "(-" + str(power_reduction) + ")"
 
 
 func update_gradient():
@@ -140,10 +155,3 @@ func show_self(region : Region = null):
 	visible = true
 	from_side = (region == region_from)
 	update_label()
-
-
-func get_other_region(region : Region) -> Region:
-	if region == region_from:
-		return region_to
-	else:
-		return region_from

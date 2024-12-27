@@ -14,7 +14,6 @@ const COLOR_TOO_BRIGHT : float = 0.9
 enum APPLY_PENALTIES {OFF, CURRENT_CAPITAL, PREVIOUS_CAPITAL}
 ## Skirmishes are basic maps with not much special. Challenges are curated experiences that are meant to challenge the player in some way. Bot battles are maps with no human players. 
 enum SETUP_TAG {SKIRMISH, CHALLENGE, BOT_BATTLE, GUIDE}
-## B E I N T X Z
 enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DIFFICULT, EXTREME, ROCKET_SCIENCE}
 
 
@@ -487,16 +486,13 @@ func bake_capital_distance():
 					region.distance_from_capital = 0
 				elif region.distance_from_capital > current_distance:
 					region.distance_from_capital = current_distance
-					regions.append(region)
+					if not regions.has(region):
+						regions.append(region)
 				elif region.distance_from_capital == current_distance:
 					region.distance_from_capital -= 1
 			current_distance += 2
 			
 			links.clear()
-			
-			for j in regions.size() - i:
-				if regions[j] == regions[i]:
-					regions[j] = null
 			
 			i += 1
 
