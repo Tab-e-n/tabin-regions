@@ -9,7 +9,7 @@ const TINT : Color = Color(0.6, 0.6, 0.6, 1.0)
 const TINT_REDUCTION : Color = Color(0.25, 0.25, 0.25, 1.0)
 const CUTOFF_APLHA : float = 0.0
 
-const LABEL_SIZE : Vector2 = Vector2(256, 24)
+const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)
 
 
 @export var num : int = 0
@@ -20,7 +20,6 @@ const LABEL_SIZE : Vector2 = Vector2(256, 24)
 @export var power_reduction : int = 0
 @export var kinetic : bool = false
 
-
 @onready var label : Label = null
 
 var is_cutoff : bool = false
@@ -30,29 +29,27 @@ var to_position : Vector2
 
 var from_side : bool = false
 
+var label_size : Vector2 = LABEL_SIZE_BASE
+
 var timer : float = 0.0
 
 
 func _ready():
 	update()
 	
-#	var lbl : Label = Label.new()
-#	lbl.position = from_position
-#	lbl.text = "."
-#	lbl.z_index = 100
-#	add_child(lbl)
-#	lbl = Label.new()
-#	lbl.position = to_position
-#	lbl.text = "."
-#	lbl.z_index = 100
-#	add_child(lbl)
+	var region_control: RegionControl = region_from.get_parent() as RegionControl
+	if region_control:
+		width *= region_control.city_size
 	
 	if is_cutoff or power_reduction > 0:
 		label = Label.new()
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-		label.size = LABEL_SIZE
 		label.z_index = 11
+		label.size = LABEL_SIZE_BASE
+		if region_control:
+			label.scale *= region_control.city_size
+			label_size *= region_control.city_size
 		add_child(label)
 	
 	default_color = Color(0, 0, 0.2)
@@ -119,15 +116,15 @@ func update_label():
 		if is_cutoff:
 			label.text = ""
 			if from_side:
-				label.position = to_position * 0.25 + from_position * 0.75 - LABEL_SIZE * 0.5
+				label.position = to_position * 0.25 + from_position * 0.75 - label_size * 0.5
 				label.text += region_to.name
 			else:
-				label.position = to_position * 0.75 + from_position * 0.25 - LABEL_SIZE * 0.5
+				label.position = to_position * 0.75 + from_position * 0.25 - label_size * 0.5
 				label.text += region_from.name
 			if power_reduction > 0:
 				label.text += " (-" + str(power_reduction) + ")"
 		else:
-			label.position = (to_position + from_position - LABEL_SIZE) * 0.5
+			label.position = (to_position + from_position - label_size) * 0.5
 			if power_reduction > 0:
 				label.text = "(-" + str(power_reduction) + ")"
 

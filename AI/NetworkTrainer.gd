@@ -16,6 +16,7 @@ const ALLOWED_MAPS : Dictionary = {
 	"B.6_Azgaar_Map.tscn" : [6, 25],
 	"B.7_On_The_Slots.tscn" : [7, 30],
 	"B.8_No_Tickes_Left_To_Ride.tscn" : [8, 30],
+	"C.6_Final_Frontiers.tscn" : [6, 30],
 # Coinflips
 #	"A.2_Odd_&_Even.tscn" : [2, 15], 
 #	"B.2_House_Of_90_Degrees.tscn" : [2, 15],
