@@ -36,6 +36,7 @@ enum {MAP_ALIGN_AMOUNT, MAP_TURN_CUTOFF}
 @export var network_inputs : int = 8
 @export var network_specifications : Array = [8, 8, 1]
 @export var turn_cutoff_mult : int = 3
+@export var only_test_no_execute : bool = false
 
 var turn_cutoff : int = 10
 
@@ -248,11 +249,14 @@ func win(_align : int):
 		chosen_variations = 0
 		for i in range(current_rankings.size()):
 			current_rankings[i] /= float(chosen_networks.size())
-			rankings[chosen_networks[i]] = current_rankings[i]
+			if only_test_no_execute:
+				rankings[chosen_networks[i]] += current_rankings[i]
+			else:
+				rankings[chosen_networks[i]] = current_rankings[i]
 		print("r: ", current_rankings)
 		reset_rankings(current_rankings)
 		
-		print("New set of nets")
+		print("NEW SET OF NETS")
 		
 		MapSetup.current_map_name = ALLOWED_MAPS.keys()[randi_range(0, ALLOWED_MAPS.size() - 1)]
 		turn_cutoff = ALLOWED_MAPS[MapSetup.current_map_name][MAP_TURN_CUTOFF] * turn_cutoff_mult
@@ -271,18 +275,19 @@ func win(_align : int):
 			print(" --- ALL NETS TESTED --- ")
 			print("R: ", rankings)
 			# End of session
-			# Remove poorly performing nets
-			choosable_networks = range(network_amount)
-			sort_networks()
-			print("Sorted: ", rankings)
-			remove_last_networks(remove_amount)
-			# Generate new nets
-			fill_missing_networks(network_amount, new_creatures)
+			if not only_test_no_execute:
+				# Remove poorly performing nets
+				choosable_networks = range(network_amount)
+				sort_networks()
+				print("Sorted: ", rankings)
+				remove_last_networks(remove_amount)
+				# Generate new nets
+				fill_missing_networks(network_amount, new_creatures)
+				
+				reset_rankings(rankings, 1.0)
 			
 			choosable_networks = range(network_amount)
 			choose_networks()
-			
-			reset_rankings(rankings, 1.0)
 		else:
 			print(" *** Remaining nets: ", choosable_networks.size())
 	else:
@@ -293,8 +298,6 @@ func win(_align : int):
 	change_map(MapSetup.current_map_name)
 	region_control.turn_ended.connect(_turn_ended)
 	region_control.visible = region_control_visible
-	
-	
 
 
 func lose(align : int):
@@ -366,9 +369,16 @@ func load_network(id : int):
 
 
 func save_all_networks():
-	print("SAVE ALL NETWORKS")
-	for net_set in networks.get_children():
-		save_network(net_set)
+	if only_test_no_execute:
+		
+		choosable_networks = range(network_amount)
+		sort_networks()
+		print("NETS SORTED: ", choosable_networks)
+		get_tree().quit()
+	else:
+		print("SAVE ALL NETWORKS")
+		for net_set in networks.get_children():
+			save_network(net_set)
 
 
 func load_all_networks(amount : int):

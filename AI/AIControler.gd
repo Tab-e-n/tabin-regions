@@ -10,7 +10,7 @@ signal timer_has_ended
 
 const THINKING_TIMER_DEFAULT : float = 0.5
 const THINKING_TIMER_SPEEDRUN : float = 0.05
-const THINKING_TIMER_NETWORK : float = 0.02
+const THINKING_TIMER_NETWORK : float = 0.001
 
 var thinking_timer : float = THINKING_TIMER_DEFAULT
 

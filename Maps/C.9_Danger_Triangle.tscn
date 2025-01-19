@@ -1,0 +1,45 @@
+[gd_scene load_steps=8 format=3 uid="uid://revgynfmcmwb"]
+
+[ext_resource type="Script" path="res://Scripts/RegionControl.gd" id="1_bcjfu"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://Objects/bg.tscn" id="2_1sbqh"]
+[ext_resource type="Shader" path="res://Scripts/region_shader.gdshader" id="3_5gux2"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://Sprites/region.png" id="4_ylwec"]
+[ext_resource type="Script" path="res://Scripts/Region.gd" id="5_idesc"]
+
+[sub_resource type="GDScript" id="GDScript_fsydj"]
+script/source = "extends Node
+
+var connections : Array = [
+#	Basic Connections are defined as such:
+#	[\"Region 1\", \"Region 2\"],
+#	Connections that are harder to traverse are defined as such:
+#	[\"Hilly Region 1\", \"Hilly Region 2\", 1],
+]
+
+
+func _ready():
+	get_parent().connections = connections.duplicate()
+	queue_free()
+
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3jri6"]
+shader = ExtResource("3_5gux2")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[node name="template" type="Polygon2D"]
+script = ExtResource("1_bcjfu")
+
+[node name="connection_setter" type="Node" parent="."]
+script = SubResource("GDScript_fsydj")
+
+[node name="bg" parent="." instance=ExtResource("2_1sbqh")]
+
+[node name="Aggregate" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_3jri6")
+texture = ExtResource("4_ylwec")
+polygon = PackedVector2Array(-40, 12, -36, 24, -20, 36, -4, 40, 12, 36, 24, 32, 40, 20, 40, 0, 36, -20, 16, -32, -4, -32, -16, -28, -32, -12, -40, 4)
+script = ExtResource("5_idesc")
+is_capital = true
