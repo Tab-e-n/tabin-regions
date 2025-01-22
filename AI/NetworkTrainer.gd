@@ -10,6 +10,7 @@ const ALLOWED_MAPS : Dictionary = {
 	
 	"A.4_Cubical_Warfare.tscn" : [4, 20],
 	"A.6_Honeycomb_Madness.tscn" : [6, 25],
+	"A.6_Under_Lock_And_Lock.tscn" : [6, 25],
 	"B.3_Trees_Trees_Trees.tscn" : [3, 25],
 	"B.4_The_Power_Of_Two.tscn" : [4, 25],
 	"B.5_We_Didn't_Start_the_Fire.tscn" : [5, 25],
@@ -17,6 +18,8 @@ const ALLOWED_MAPS : Dictionary = {
 	"B.7_On_The_Slots.tscn" : [7, 30],
 	"B.8_No_Tickes_Left_To_Ride.tscn" : [8, 30],
 	"C.6_Final_Frontiers.tscn" : [6, 30],
+# This one is a mistake, but i'm doing it anyway
+#	"C.30_World_Map.tscn" : [30, 70]
 # Coinflips
 #	"A.2_Odd_&_Even.tscn" : [2, 15], 
 #	"B.2_House_Of_90_Degrees.tscn" : [2, 15],
@@ -330,7 +333,6 @@ func save_network(net_set : Node):
 		file.store_string(JSON.stringify(net.network_to_dict()))
 		
 		file.close()
-	
 
 
 func load_network(id : int):

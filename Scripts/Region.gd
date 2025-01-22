@@ -294,7 +294,8 @@ func color_self(animate : bool = true):
 
 
 func city_particle(is_mobilized : bool):
-	city.call_deferred("make_particle", is_mobilized)
+	if region_control.spawn_particles:
+		city.call_deferred("make_particle", is_mobilized)
 
 
 func show_region_connections():

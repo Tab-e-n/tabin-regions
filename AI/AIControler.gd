@@ -43,7 +43,7 @@ var CALL_nothing : bool = false
 var CALL_cheat : bool = false
 var CALL_overtake : bool = false
 
-var controlers : Array = []
+var controlers : Array[AIBase] = []
 
 var replay_done_action : bool = true
 
@@ -57,7 +57,7 @@ func _ready():
 	
 	for i in range(PACKED_CONTROLERS.size()):
 		if PACKED_CONTROLERS[i]:
-			controlers[i] = Node.new()
+			controlers[i] = AIBase.new()
 			controlers[i].set_script(PACKED_CONTROLERS[i])
 			controlers[i].controler = self
 			add_child(controlers[i])
@@ -118,8 +118,7 @@ func start_turn(alignment : int, control : int):
 			previous_moves = current_moves[current_align()].duplicate()
 		current_moves[current_align()] = []
 		
-		if controlers[current_controler].has_method("start_turn"):
-			controlers[current_controler].call("start_turn", alignment)
+		controlers[current_controler].start_turn(alignment)
 	
 	call_deferred("think")
 

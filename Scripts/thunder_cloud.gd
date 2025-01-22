@@ -38,6 +38,8 @@ func _ready():
 func _process(delta):
 	timer -= delta
 	if timer <= 0:
+		if not cloud:
+			return
 		timer = randf_range(time_range_bottom, time_range_top)
 		var elec_pos : Vector2 = Vector2(0, 0)
 		elec_pos = cloud.position

@@ -33,6 +33,10 @@ window/stretch/mode="canvas_items"
 
 import/blender/enabled=false
 
+[gui]
+
+theme/custom_font="res://Fonts/Fredoka-Medium.ttf"
+
 [input]
 
 plus_turn={

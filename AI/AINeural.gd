@@ -1,8 +1,9 @@
 extends AIBase
 
-const FINAL_NETWORK_ATTACK : Dictionary = {}
-const FINAL_NETWORK_REINFORCE : Dictionary = {}
-const FINAL_NETWORK_MOBILIZE : Dictionary = {}
+
+# REMOVE JSON NEXT TIME
+const NET_NAMES : Array[String] = ["attack.json", "reinforce.json", "mobilize.json"]
+const NET_AMOUNT : int = 7
 
 enum {
 	INPUT_CAPITAL,
@@ -16,6 +17,10 @@ enum {
 }
 
 
+var final_network_attack : Array[Network] = []
+var final_network_reinforce : Array[Network] = []
+var final_network_mobilize : Array[Network] = []
+
 var trainer : NetworkTrainer = null
 
 var network_attack : Network
@@ -23,15 +28,36 @@ var network_reinforce : Network
 var network_mobilize : Network
 
 
+func load_network(id : int, net_type : int) -> Network:
+	var dir : String = "res://AI/NeuralNets/" + str(id) + "/"
+	
+	var save : Dictionary = {}
+	
+	var filename : String = NET_NAMES[net_type]
+	var net : Network = Network.new()
+	
+	# Fuck checking, if the file doesn't exist i'm a dumbass
+	
+	var file = FileAccess.open(dir + filename, FileAccess.READ)
+	
+	save = JSON.parse_string(file.get_as_text())
+	
+	file.close()
+	
+	net.load_network_from_dict(save)
+	
+	add_child(net)
+	
+	return net
+
+
 func _ready():
 	trainer = controler.game_control as NetworkTrainer
 	if not trainer:
-		network_attack = Network.new()
-		network_reinforce = Network.new()
-		network_mobilize = Network.new()
-		network_attack.load_network_from_dict(FINAL_NETWORK_ATTACK)
-		network_reinforce.load_network_from_dict(FINAL_NETWORK_REINFORCE)
-		network_mobilize.load_network_from_dict(FINAL_NETWORK_MOBILIZE)
+		for i in range(NET_AMOUNT):
+			final_network_attack.append(load_network(i, 0))
+			final_network_reinforce.append(load_network(i, 1))
+			final_network_mobilize.append(load_network(i, 2))
 
 
 func start_turn(align : int):
@@ -39,6 +65,15 @@ func start_turn(align : int):
 		network_attack = trainer.get_network_for_align(align, 0)
 		network_reinforce = trainer.get_network_for_align(align, 1)
 		network_mobilize = trainer.get_network_for_align(align, 2)
+	else:
+		if not controler.region_control:
+			# Potential softlock?
+			call_deferred("start_turn", align)
+			return
+		var i : int = controler.region_control.play_order_i % NET_AMOUNT
+		network_attack = final_network_attack[i]
+		network_reinforce = final_network_reinforce[i]
+		network_mobilize = final_network_mobilize[i]
 	super.start_turn(align)
 
 

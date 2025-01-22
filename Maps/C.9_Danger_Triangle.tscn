@@ -380,8 +380,9 @@ use_preset_alignments = true
 preset_alignments = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 10])
 custom_ai_setup = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 5])
 complexity = 3
-lore = "Triple volcano action!"
-align_color = Array[Color]([Color(0.478431, 0.298039, 0.290196, 1), Color(0.815686, 0.513726, 0.129412, 1), Color(0.780392, 0.282353, 0.356863, 1), Color(0.615686, 0.658824, 0.807843, 1), Color(0.54902, 0.423529, 0.470588, 1), Color(0.4, 0.415686, 0.215686, 1), Color(0.54902, 0.345098, 0.611765, 1), Color(0.631373, 0.407843, 0.305882, 1), Color(0.980392, 0.819608, 0.639216, 1), Color(0.776471, 0.352941, 0.176471, 1), Color(0.486275, 0.0745098, 0.0666667, 1)])
+lore = "A dangerous triangle has entered the arena!
+Watch out for it's lava attack!"
+align_color = Array[Color]([Color(0.419608, 0.254902, 0.25098, 1), Color(0.815686, 0.513726, 0.129412, 1), Color(0.780392, 0.282353, 0.356863, 1), Color(0.615686, 0.658824, 0.807843, 1), Color(0.54902, 0.423529, 0.470588, 1), Color(0.4, 0.415686, 0.215686, 1), Color(0.54902, 0.345098, 0.611765, 1), Color(0.631373, 0.407843, 0.305882, 1), Color(0.980392, 0.819608, 0.639216, 1), Color(0.776471, 0.352941, 0.176471, 1), Color(0.486275, 0.0745098, 0.0666667, 1)])
 align_names = Array[String](["Triple Cano", "Spors", "Cupcakes", "Origami", "Boulder", "Money", "Software", "My Leans", "Skeletons", "Chemicals", "Volcanos"])
 city_size = 0.8
 render_mode = 1
@@ -391,7 +392,7 @@ script = SubResource("GDScript_fsydj")
 
 [node name="Volcano" type="Node" parent="." node_paths=PackedStringArray("residing_region")]
 script = ExtResource("2_h406j")
-residing_region = NodePath("../Volcano Timer")
+residing_region = NodePath("../Danger Timer")
 dummy_alignment = 10
 
 [node name="VolcanoPath1_1" type="Node" parent="Volcano"]
@@ -722,7 +723,7 @@ power = 0
 [node name="Booties" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2gfgs")
 position = Vector2(-72, 8)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 offset = Vector2(72, -8)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-72, 80, -64, 72, -64, 40, -48, 24, -48, 8, -40, -8, -64, -16, -72, -48, -96, -40, -104, -8, -88, 16, -96, 48, -88, 72)
@@ -732,7 +733,7 @@ script = ExtResource("5_idesc")
 [node name="Altercation" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mcsw2")
 position = Vector2(-144, 24)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 offset = Vector2(144, -24)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-104, 48, -136, 56, -184, 48, -192, 24, -176, -8, -112, -8, -96, 16)
@@ -742,7 +743,7 @@ script = ExtResource("5_idesc")
 [node name="Peanuts" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_utvrd")
 position = Vector2(-216, -16)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 offset = Vector2(216, 16)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-216, 96, -200, 88, -192, 56, -192, 48, -200, 24, -184, -8, -184, -16, -192, -32, -216, -48, -240, -40, -248, -8, -232, 24, -240, 48, -240, 80, -224, 96)
@@ -752,7 +753,7 @@ script = ExtResource("5_idesc")
 [node name="ICan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_y8doy")
 position = Vector2(48, -48)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 offset = Vector2(-48, 48)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(8, -40, 16, -40, 32, -32, 48, -8, 88, -24, 80, -48, 56, -72, 32, -80, 16, -48, 8, -48, 8, -64, -8, -88, -8, -64)
@@ -762,7 +763,7 @@ script = ExtResource("5_idesc")
 [node name="Block" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mmlig")
 position = Vector2(72, -96)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-40, 8, -16, 16, 0, 32, 40, -8, -8, -40)
 uv = PackedVector2Array(0, 85.3333, 38.4, 99.5556, 64, 128, 128, 56.8889, 51.2, 0)
@@ -771,7 +772,7 @@ script = ExtResource("5_idesc")
 [node name="GUN" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2lx2u")
 position = Vector2(112, -144)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-80, 0, -48, -8, -40, 0, -40, 8, 0, 32, 8, 32, 40, 56, 56, 40, 16, 8, 0, -16, -16, -24, -8, -40, -32, -48, -40, -32, -88, -16)
 uv = PackedVector2Array(7.11111, 59.0769, 35.5556, 49.2308, 42.6667, 59.0769, 42.6667, 68.9231, 78.2222, 98.4615, 85.3333, 98.4615, 113.778, 128, 128, 108.308, 92.4444, 68.9231, 78.2222, 39.3846, 64, 29.5385, 71.1111, 9.84615, 49.7778, 0, 42.6667, 19.6923, 0, 39.3846)
@@ -780,7 +781,7 @@ script = ExtResource("5_idesc")
 [node name="Audit" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_imwet")
 position = Vector2(24, 64)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-40, 40, -40, 32, -48, 8, -24, -16, -16, -16, 0, -24, 8, -24, 32, -16, 72, -16, 72, 0, 16, 8, -16, 8, 0, 32, -16, 48)
 uv = PackedVector2Array(8.53333, 113.778, 8.53333, 99.5556, 0, 56.8889, 25.6, 14.2222, 34.1333, 14.2222, 51.2, 0, 59.7333, 0, 85.3333, 14.2222, 128, 14.2222, 128, 42.6667, 68.2667, 56.8889, 34.1333, 56.8889, 51.2, 99.5556, 34.1333, 128)
@@ -789,7 +790,7 @@ script = ExtResource("5_idesc")
 [node name="Actual" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_siy1q")
 position = Vector2(48, 112)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-24, -32, 16, -32, 24, 8, 56, 32, 56, 48, 24, 48, -24, 8, -32, 8, -32, 0, -16, -16)
 uv = PackedVector2Array(11.6364, 0, 69.8182, 0, 81.4545, 64, 128, 102.4, 128, 128, 81.4545, 128, 11.6364, 64, 0, 64, 0, 51.2, 23.2727, 25.6)
@@ -798,7 +799,7 @@ script = ExtResource("5_idesc")
 [node name="Sacrebleu" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_i5g3g")
 position = Vector2(104, 176)
-color = Color(0.478431, 0.298039, 0.290196, 1)
+color = Color(0.419608, 0.254902, 0.25098, 1)
 texture = ExtResource("4_ylwec")
 polygon = PackedVector2Array(-40, -16, -48, -16, -64, 8, -40, 24, -8, 32, 32, 24, 64, 40, 96, 16, 96, -16, 72, -32, 56, -56, 48, -48, 56, -24, 16, -16, 8, -24, 8, -8, -32, -8)
 uv = PackedVector2Array(19.2, 53.3333, 12.8, 53.3333, 0, 85.3333, 19.2, 106.667, 44.8, 117.333, 76.8, 106.667, 102.4, 128, 128, 96, 128, 53.3333, 108.8, 32, 96, 0, 89.6, 10.6667, 96, 42.6667, 64, 53.3333, 57.6, 42.6667, 57.6, 64, 25.6, 64)
@@ -815,12 +816,12 @@ script = ExtResource("5_idesc")
 alignment = 10
 power = 0
 
-[node name="Volcano Timer" type="Polygon2D" parent="."]
+[node name="Danger Timer" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5vbc3")
 position = Vector2(352, -224)
 color = Color(0.486275, 0.0745098, 0.0666667, 1)
 texture = ExtResource("4_ylwec")
-polygon = PackedVector2Array(-48, -24, -48, 24, -24, 48, 24, 48, 48, 24, 48, -24, 24, -48, -24, -48)
+polygon = PackedVector2Array(-80, 8, 56, 72, 32, -80)
 script = ExtResource("5_idesc")
 alignment = 10
 power = 0

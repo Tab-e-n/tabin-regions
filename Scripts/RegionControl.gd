@@ -65,6 +65,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 ## The default AI that computer players will use. Uses the 'CONTROLER_' enums from 'AIControler'. Default, Turtle, Neural and Cheater are all accessible in the setup scene. The Dummy AI does nothing, expecting to be controled by the map.
 @export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_ai_controler : int = AIControler.CONTROLER_DEFAULT
 @export var custom_ai_setup : Array[int] = []
+@export var shuffle_ai : bool = false
 
 @export_subgroup("Aliances")
 @export var use_aliances : bool = false
@@ -134,6 +135,8 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var snap_camera_to_first_align_capital : bool = true
 ## When set to true, the turn order will start invisible.
 @export var hide_turn_order : bool = false
+
+@export var spawn_particles : bool = true
 
 @export_subgroup("Editor")
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
@@ -314,6 +317,9 @@ func _ready():
 	current_playing_align = align_play_order[0]
 	
 	if not ReplayControl.replay_active:
+		if shuffle_ai:
+			randomize()
+			custom_ai_setup.shuffle()
 		align_controlers.resize(align_amount - 1)
 		for i in range(align_amount - 1):
 			align_controlers[i] = default_ai_controler
