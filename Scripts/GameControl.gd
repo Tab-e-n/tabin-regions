@@ -83,15 +83,15 @@ func _process(delta):
 		game_camera.zoom_change(1)
 	if Input.is_action_just_pressed("zoom_reset"):
 		game_camera.reset_zoom()
-		command_callout.new_callout("Reset zoom")
+		new_callout("Reset zoom")
 	
 	if Input.is_action_just_pressed("hide_ui"):
 		game_camera.toggle_ui_visibility()
-		command_callout.new_callout("Toggle hide UI")
+		new_callout("Toggle hide UI")
 	
 	if Input.is_action_just_pressed("hide_turn_order"):
 		game_camera.toggle_turn_order_visibility()
-		command_callout.new_callout("Toggle turn order")
+		new_callout("Toggle turn order")
 	
 	if Input.is_action_just_pressed("hide_capitals"):
 		region_control.hide_capitals()
@@ -100,27 +100,31 @@ func _process(delta):
 	if Input.is_action_just_pressed("disable_mouse_scroll"):
 		Options.mouse_scroll_active = not Options.mouse_scroll_active
 		if Options.mouse_scroll_active:
-			command_callout.new_callout("Mouse scrolling active")
+			new_callout("Mouse scrolling active")
 		else:
-			command_callout.new_callout("Mouse scrolling disabled")
+			new_callout("Mouse scrolling disabled")
 	
 	if Input.is_action_just_pressed("auto_phase"):
 		Options.auto_end_turn_phases = not Options.auto_end_turn_phases
 		if Options.auto_end_turn_phases:
-			command_callout.new_callout("Phases end when no actions are left")
+			new_callout("Phases end when no actions are left")
 		else:
-			command_callout.new_callout("Phases end only after user input")
+			new_callout("Phases end only after user input")
 	
 	if Input.is_action_just_pressed("ai_speedrun"):
 		Options.speedrun_ai = not Options.speedrun_ai
 		ai_control.speedrun_ai_update()
-		if command_callout:
-			if Options.speedrun_ai:
-				command_callout.new_callout("Fast AI")
-			else:
-				command_callout.new_callout("Slow AI")
+		if Options.speedrun_ai:
+			new_callout("Fast AI")
+		else:
+			new_callout("Slow AI")
 	
 	mouse_wheel_input = 0
+
+
+func new_callout(text: String):
+	if command_callout:
+		command_callout.new_callout(text)
 
 
 func load_map(map_name : String):

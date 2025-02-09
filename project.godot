@@ -10,10 +10,14 @@ config_version=5
 
 [application]
 
-config/name="Regions"
+config/name="Tabin's Regions"
+config/description="A simple game about capturing regions."
 run/main_scene="res://title.tscn"
-config/custom_user_dir_name="TRegions"
+config/use_custom_user_dir=true
+config/custom_user_dir_name="TRegs"
 config/features=PackedStringArray("4.0", "GL Compatibility")
+boot_splash/bg_color=Color(0.0745098, 0.054902, 0.0666667, 1)
+boot_splash/show_image=false
 config/icon="res://icon.png"
 config/windows_native_icon="res://icon.ico"
 
@@ -27,6 +31,7 @@ Options="*res://Scripts/Options.gd"
 [display]
 
 window/size/viewport_height=640
+window/size/mode=2
 window/stretch/mode="canvas_items"
 
 [filesystem]

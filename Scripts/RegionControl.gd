@@ -115,7 +115,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 		Color("828387"), # gray
 		
 		Color("673a2b"), # brown
-		Color("4e4c32"), # tank
+		Color("4f4b3b"), # tank
 		Color("b6b7eb"), # silver
 		Color("eda75b"), # sandstorm
 		Color("2e5949"), # dark green

@@ -41,7 +41,7 @@ func _ready():
 	if region_control:
 		width *= region_control.city_size
 	
-	if is_cutoff or power_reduction > 0:
+	if kinetic or is_cutoff or power_reduction > 0:
 		label = Label.new()
 		label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 		label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
@@ -114,6 +114,7 @@ func update():
 func update_label():
 	if label:
 		if is_cutoff:
+			label.visible = true
 			label.text = ""
 			if from_side:
 				label.position = to_position * 0.25 + from_position * 0.75 - label_size * 0.5
@@ -123,10 +124,13 @@ func update_label():
 				label.text += region_from.name
 			if power_reduction > 0:
 				label.text += " (-" + str(power_reduction) + ")"
-		else:
+		elif power_reduction > 0:
+			label.visible = true
 			label.position = (to_position + from_position - label_size) * 0.5
 			if power_reduction > 0:
 				label.text = "(-" + str(power_reduction) + ")"
+		else:
+			label.visible = false
 
 
 func update_gradient():

@@ -305,6 +305,13 @@ func show_region_connections():
 		connection.show_self(self)
 
 
+func hide_region_connections():
+	for i in range(connections.size()):
+		var connection : RegionConnection = connections[i]
+		connection.num = i
+		connection.hide_self()
+
+
 func _on_capital_pressed():
 	if region_control.is_player_controled and !region_control.dummy:
 		action_decided()

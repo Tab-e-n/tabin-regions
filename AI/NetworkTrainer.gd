@@ -18,16 +18,16 @@ const ALLOWED_MAPS : Dictionary = {
 	"B.7_On_The_Slots.tscn" : [7, 30],
 	"B.8_No_Tickes_Left_To_Ride.tscn" : [8, 30],
 	"C.6_Final_Frontiers.tscn" : [6, 30],
-# This one is a mistake, but i'm doing it anyway
+	"C.10_Flip_Dungeon.tscn" : [10, 30],
+# Takes too long
 #	"C.30_World_Map.tscn" : [30, 70]
 # Coinflips
 #	"A.2_Odd_&_Even.tscn" : [2, 15], 
-#	"B.2_House_Of_90_Degrees.tscn" : [2, 15],
-# Stalematy
 #	"A.2_Music_Land.tscn" : [2, 25], 
 #	"A.2_Stretched_Out.tscn" : [2, 25],
 #	"A.2_Title_Map.tscn" : [2, 15],
 #	"A.3_Three_Crabs.tscn" : [2, 25],
+#	"B.2_House_Of_90_Degrees.tscn" : [2, 15],
 }
 
 enum {MAP_ALIGN_AMOUNT, MAP_TURN_CUTOFF}

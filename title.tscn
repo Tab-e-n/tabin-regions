@@ -1,14 +1,16 @@
-[gd_scene load_steps=4 format=3 uid="uid://t2528ie7ag6n"]
+[gd_scene load_steps=5 format=3 uid="uid://t2528ie7ag6n"]
 
 [ext_resource type="PackedScene" uid="uid://cnxb64453xeqg" path="res://Maps/A.2_Title_Map.tscn" id="1_dr8vy"]
 [ext_resource type="Script" path="res://Scripts/title.gd" id="1_wam5a"]
 [ext_resource type="Texture2D" uid="uid://tmryy03p6doc" path="res://Sprites/ai_neuron.png" id="3_ofd00"]
+[ext_resource type="PackedScene" uid="uid://ib7qg43imr83" path="res://Objects/background_polygon.tscn" id="4_xrc6d"]
 
 [node name="title" type="Node2D"]
 script = ExtResource("1_wam5a")
 
 [node name="title" parent="." instance=ExtResource("1_dr8vy")]
 position = Vector2(528, 312)
+color = Color(0.87451, 0.87451, 0.905882, 1)
 dummy = true
 cities_visible = false
 
@@ -30,6 +32,441 @@ offset_top = 528.0
 offset_right = 112.0
 offset_bottom = 624.0
 texture_normal = ExtResource("3_ofd00")
+
+[node name="bg" type="Node2D" parent="."]
+
+[node name="back" type="Polygon2D" parent="bg"]
+z_index = -8
+color = Color(0.223529, 0.223529, 0.278431, 1)
+polygon = PackedVector2Array(-128, -128, 1280, -128, 1280, 768, -128, 768)
+
+[node name="BGPoly" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(240, 464)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-32, -72, -24, -72, 104, -8, 96, 16, 56, 24, 24, 64, 0, 88, -8, 88, -40, 64, -40, -64)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly52" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(312, 552)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-80, 56, -72, 8, -40, -16, -8, -56, 32, -64, 40, -88, 48, -56, 72, -24, 56, -8, 56, 16, 72, 32, 24, 40, -24, 64)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly51" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(312, 384)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-64, -64, -32, -40, 8, -48, 32, -48, 40, -8, 80, 0, 104, 16, 104, 24, 80, 40, 64, 48, 48, 72, 16, 56, 8, 32, -32, 32, -40, 8, -64, 16, -64, -8, -80, 8, -96, 0, -80, -24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly50" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(392, 416)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(72, 16, 48, 24, 16, 32, 8, 64, 24, 96, 24, 128, -8, 104, -24, 80, -32, 48, -16, 24, 8, 8, 32, 0, 32, -16, 8, -40, -32, -48, -40, -80, -24, -56, 48, -40, 48, -24, 56, 0)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly49" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(808, 168)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-88, 24, -56, 56, -48, 72, -24, 80, -16, 80, -16, 96, 0, 96, 24, 80, 40, 88, 64, 64, 64, 24, 88, 0, 88, -16, 64, -48, 40, -40, 16, -72, 0, -112, -32, -88, -32, -48, -72, -32)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly48" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(936, 232)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-32, 88, -56, 64, -56, 40, -80, 24, -56, 0, -56, -40, -40, -56, -8, -40, 64, -32, 72, -8, 96, 0, 112, 24, 96, 32, 88, 32, 16, 24, 16, 48, -16, 56)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly47" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(832, 336)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-40, 8, 0, 32, 32, 40, 48, 16, 56, -16, 40, -40, 40, -64, 0, -80, -24, -64, -40, -64, -32, -24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly46" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1008, 336)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-96, -8, -80, -40, -48, -48, -48, -72, 16, -64, 16, -40, 48, -16, 88, -8, 88, 48, 40, 48, 0, 56, 0, 64, -16, 64, -40, 40, -56, 32, -72, 8)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly45" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1056, 464)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(8, 120, -32, 64, -40, 56, -24, 16, -24, -24, -40, -64, -8, -72, 0, -24, 0, 16, 24, -16, 24, -72, 48, -72, 48, 0, 24, 16, 8, 56, 24, 96)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly44" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(944, 80)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-56, -64, -56, -40, 0, -24, 32, -16, 40, 8, 48, 56, 88, 80, 80, 96, 56, 112, -8, 104, -40, 88, -40, 72, -56, 48, -72, 32, -96, 40, -112, 16, -128, -24, -112, -32, -88, -64)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly43" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(928, 432)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(16, 72, 16, 24, -32, -8, -56, -56, -40, -80, -32, -104, 0, -88, 16, -64, 40, -48, 64, -24, 88, -24, 96, 8, 96, 48, 80, 88, 56, 72)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly42" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(672, 272)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-112, -8, -72, 16, -16, 16, 16, 48, 48, 64, 80, 48, 112, 72, 120, 40, 112, -16, 88, -24, 72, -48, 48, -72, 40, -40, -72, -40, -104, -24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly41" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(176, 368)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-64, 72, -88, -24, -64, -48, -64, -56, -32, -56, -16, -88, -8, -96, 16, -80, 48, -88, 64, -56, 48, -8, 16, 32, 16, 80, -8, 72)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly40" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(352, 288)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-88, -40, -48, -8, -24, -8, 16, -24, 48, -24, 64, -40, 80, -8, 104, -8, 112, 16, 88, 80, 24, 72, 0, 40, -32, 40, -72, 48, -104, 24, -120, -8, -104, -8)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly39" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(160, 192)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-32, -48, 32, -40, 72, -16, 72, 16, 96, 48, 80, 80, 32, 88, 8, 72, -8, 88, -16, 112, -48, 112, -40, 88, -56, 16, -56, -24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly38" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(832, 560)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-80, 88, -24, 88, 0, 48, 16, 40, 48, 40, 72, 56, 72, -32, 16, -32, -40, -56, -48, -72, -48, -24, -64, 0, -64, 48)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly37" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(672, 128)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-112, 0, -96, -32, -96, -40, 32, -40, 96, -48, 96, -16, 56, 0, 32, 96, -64, 96, -56, 64, 8, 64, 8, 40, -8, 40, -24, 16, -24, 0)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly36" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(488, 96)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-88, -88, -48, -80, -32, -48, 24, -48, 40, -80, 80, -88, 96, -64, 80, -32, 80, 0, 64, 32, 32, 32, 32, 64, 24, 72, 8, 80, -24, 72, -40, 56, -40, 32, -80, 32, -96, 8, -96, -32, -112, -64)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly35" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(544, 256)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-88, 88, 0, 112, 0, 72, -8, 32, -8, 24, 24, -16, 56, -32, 64, -56, 80, -120, -16, -120, -16, -96, -24, -80, -48, -72, -80, -80, -112, -56, -120, -16, -104, 16, -80, 16, -72, 48)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly34" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(568, 416)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-112, 0, -56, 24, -32, 48, 8, 56, 56, 72, 80, 64, 88, 32, 80, 0, 48, -8, 16, -8, -24, -40, -64, -48, -112, -64, -120, -48, -120, -24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly33" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(416, 480)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(48, 104, 56, 104, 80, 72, 104, 64, 88, 48, 96, 32, 128, 32, 112, 8, 72, 0, 80, -16, 112, -16, 96, -32, 56, -48, 32, -32, 0, -24, -8, 0, 8, 32, 8, 72, -24, 56, -40, 64, -40, 88, -24, 104, -8, 96, 0, 96)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly32" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(672, 576)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(0, 72, 72, 72, 88, 32, 88, -16, 104, -40, 104, -96, 64, -112, -8, -120, -16, -88, -48, -80, -88, -96, -80, -56, -48, -48, -32, -32, -40, -8, -64, -8, -64, 0, -24, 24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly31" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(960, 608)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-48, 96, -16, 88, 40, 32, 80, 0, 56, -32, 80, -48, 56, -80, 24, -96, -16, -96, -16, -72, -48, -80, -48, 56, -56, 88)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly30" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(56, 96)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-88, -8, -88, 24, -56, 72, -24, 80, 16, 80, 40, 72, 64, 40, 56, -16, 40, -40, 72, -80, 0, -80, -8, -64, -56, -56, -64, -32)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly29" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(64, 256)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-56, 72, -48, 16, -96, 16, -64, -16, -56, -80, -32, -72, 8, -72, 32, -80, 32, -48, 40, -8, 48, 24, 40, 64, 16, 88, 24, 120, -16, 88)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly28" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(24, 408)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-80, 32, -96, 8, -64, -72, -24, -72, 0, -40, 24, -56, 64, -24, 80, 32, 72, 64, 64, 80, 56, 80, 16, 56, -32, 40)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly27" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(112, 544)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-96, 32, -80, 56, -48, 64, -24, 56, 32, 32, 64, 8, 80, -16, 80, -88, 56, -96, 0, -96, -8, -64, -24, -48, -24, 0, -80, 16)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly26" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1096, 224)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+offset = Vector2(0, 16)
+polygon = PackedVector2Array(40, 88, 72, 32, 64, -8, 24, -32, 48, -72, 24, -96, 8, -136, -16, -120, -56, -112, -96, -104, -48, -80, -64, -56, -88, -48, -80, -24, -56, -16, -32, 16, -64, 32, -64, 56, -40, 72)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly25" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1184, 360)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-8, 112, -16, 104, -56, 96, -72, 104, -80, -32, -40, -24, -8, -88, 80, -64, 56, 0, 88, 8)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly24" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(760, -8)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-104, 88, -88, 72, -48, 56, 0, 48, 32, 24, -8, 40, -40, 40, -40, 16, -64, 8, -48, -24, -56, -88, 32, -56, 40, 8, 72, 8, 88, 24, 64, 48, 8, 80, -56, 88)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly23" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(664, -40)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-56, -32, -56, 16, -88, 48, -72, 72, -88, 104, -88, 120, -16, 120, 0, 96, 40, 80, 48, 56, 24, 48, 40, 8, 32, -56, 8, -32)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly22" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(344, 664)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+offset = Vector2(-16, 0)
+polygon = PackedVector2Array(-32, 88, -40, 32, -96, 16, -96, -48, -40, -40, 8, -64, 80, -80, 80, -8, 128, 24, 128, 72, 96, 72, 48, 80, 72, 40, 56, -8, 8, -16, -8, 0, 0, 24, 16, 0, 48, 16, 48, 40, 32, 80)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly21" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(184, 632)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-88, -24, -96, 0, -88, 16, -48, 16, -56, 72, -40, 104, 16, 88, 32, 48, 40, 48, 40, -16, 48, -72, 8, -96, -8, -72, -40, -48, -80, -32)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly20" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(536, 664)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(128, -8, 128, 16, 56, 48, 48, 88, 16, 104, -8, 72, -72, 72, -72, 16, -120, -16, -120, -80, -64, -72, -40, -104, 0, -120, 56, -120, 64, -80, 104, -56)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly18" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(864, 728)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-64, -72, -96, -24, -96, 8, -80, 24, -64, 24, -32, 48, 8, 56, 48, 48, 72, 56, 64, 40, 104, 24, 104, 8, 80, -24, 40, -16, 32, -32, 40, -64, 40, -104, 16, -120, -16, -120, -32, -112, -56, -72)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly17" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1024, 696)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-48, 80, -24, 80, 24, 112, 48, 80, 96, 56, 72, -48, 24, -80, -16, -56, -72, 8, -48, 40)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly16" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(-64, 24)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-120, -56, -104, -48, -56, 32, -56, 72, 24, 88, 24, 64, 48, 32, 56, 8, 112, 0, 120, -32, 88, -48, 48, -48, -64, -64)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly15" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1184, 56)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-32, 112, 24, 48, 96, 32, 96, 0, 56, -72, 32, -88, -24, -40, -96, -40, -96, 0, -56, 88)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly13" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(928, -72)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+offset = Vector2(-32, 0)
+polygon = PackedVector2Array(-96, -64, -96, 8, -88, 64, -64, 64, -40, 80, -8, 80, 32, 40, 80, 56, 144, 32, 136, 16, 152, -8, 104, -40, 72, -40, 72, -64, 40, -56, 48, -32, 16, -40, -24, -32, -64, -40)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly14" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(-120, 208)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-16, 80, -8, 64, 80, 64, 112, 32, 120, -32, 80, -88, -16, -112, -80, -96, -112, -56, -96, -16, -64, -48, -56, -16, -16, -48, -8, -16, 48, -32, 72, 16, 16, 32, -8, 8, -32, 32, -56, 8, -72, 32, -104, 0, -120, 24, -112, 56)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly12" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(672, 760)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-112, 16, -80, 0, -72, -40, 0, -80, 0, -104, 120, -104, 88, -56, 88, -24, 104, 0, 120, 0, 120, 64, 80, 48, 24, 32, 0, 56, -64, 56, -64, 32)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly11" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(480, -72)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-120, 8, -80, 72, -32, 80, -16, 112, 24, 112, 40, 80, 96, 72, 120, 40, 120, -24, 72, -40, 48, -80, -48, -80, -72, -32, -72, -16)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly10" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(352, -104)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-120, 64, -96, 40, -96, 24, -56, -8, -56, -32, 72, -48, 48, 0, 48, 16, -16, 48, -16, 56)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly9" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(160, -72)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-96, 0, -96, 80, -24, 80, -8, 56, 40, 56, 88, 8, 88, 0, 48, -24, -8, -24, -24, 0)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly8" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(176, 760)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-112, 56, -40, 56, -24, 32, 32, 32, 72, 56, 112, 24, 104, -56, 48, -72, 32, -32, -32, -16, -56, -56, -112, -64, -120, -8, -112, 24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly7" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(-64, -72)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-120, 32, -120, -32, -88, -40, -32, -80, 32, -80, 32, -40, 88, -32, 120, -40, 120, 56, 88, 40, 48, 40, -64, 24)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly6" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1184, 664)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-56, 88, -80, -16, -56, -64, 80, -64, 72, -16, 80, -8, 120, 0, 112, 40, 72, 32, 120, 72, 80, 104, 40, 56, 56, 112, 32, 120, -8, 88)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly5" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1120, -72)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-80, 16, -64, 56, -16, 80, 40, 80, 96, 32, 96, -24, 56, -64, 0, -64, -40, -40)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly4" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(1120, 504)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-16, 136, -72, 104, -96, 72, -80, 64, -56, 88, -32, 56, -48, 16, -32, -24, 8, -40, 48, -32, 56, -24, 72, 16, 40, 64, 8, 80)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly3" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(-104, 376)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(112, -96, -24, -96, -56, -24, -16, -16, -72, 56, -32, 64, 8, 80, 56, -48, 104, -48)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly2" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(-160, 472)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-120, 120, 16, 120, 16, 104, 72, 64, 96, 40, 88, 8, 104, -24, 64, -8, 24, -24, -24, -32, -64, 8, -48, 48, -80, 96)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BGPoly19" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(0, 696)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+offset = Vector2(-16, 0)
+polygon = PackedVector2Array(-80, 40, -80, 8, -88, 8, -80, -32, -56, -24, 8, -80, 32, -112, 48, -88, 80, -80, 104, -88, 96, -64, 112, -40, 144, -40, 136, 0, 72, -8, 64, 56, 72, 80, 40, 88, -8, 80, -8, 40)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
+
+[node name="BackgroundPolygon" parent="bg" instance=ExtResource("4_xrc6d")]
+position = Vector2(-32, 568)
+color = Color(0.352941, 0.352941, 0.431373, 1)
+polygon = PackedVector2Array(-48, -24, -104, 16, -112, 80, -40, 96, 24, 40, 56, -16, 112, -32, 112, -72, 72, -96, 48, -72, 24, -112, -16, -120, -32, -88, -24, -56)
+speed = Vector2(-20, 10)
+edges_x = Vector2(-128, 1280)
+edges_y = Vector2(-128, 768)
 
 [connection signal="mouse_entered" from="network" to="." method="_on_network_mouse_entered"]
 [connection signal="mouse_exited" from="network" to="." method="_on_network_mouse_exited"]
