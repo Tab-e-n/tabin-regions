@@ -27,7 +27,7 @@ func _ready():
 			i.change_alignment(0, false)
 			regions.append(i)
 	
-	alignments = range(1, 30)
+	alignments = range(1, 31)
 	alignments.shuffle()
 	
 	if OS.has_feature("editor"):
