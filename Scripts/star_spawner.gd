@@ -1,6 +1,7 @@
 extends Node2D
 
 
+@export var enabled : bool = true
 @export var time_range_bottom : float = 2
 @export var time_range_top : float = 4
 @export var star_scale_bottom : float = 0.5
@@ -34,7 +35,8 @@ func _ready():
 
 
 func _process(delta):
-	timer -= delta
+	if enabled:
+		timer -= delta
 	if timer <= 0:
 		timer = randf_range(time_range_bottom, time_range_top)
 		var star_amount : int = randi_range(star_count_bottom, star_count_top)

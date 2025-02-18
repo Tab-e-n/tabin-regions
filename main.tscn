@@ -255,6 +255,7 @@ offset_bottom = 312.0
 text = "
 
 
+
 Esc  -  Exit
 \",\"  -  Zoom out
 \".\"  -  Zoom in
@@ -273,7 +274,8 @@ offset_left = 472.0
 offset_top = 24.0
 offset_right = 872.0
 offset_bottom = 312.0
-text = "Ctrl + Space  -  Advance turn
+text = "
+Ctrl + Space  -  Advance turn
 Ctrl + Alt + Space  -  End turn
 Ctrl + Alt + \"-\"  -  Forfeit
 Ctrl + Alt + Enter  -  Toggle fast AI

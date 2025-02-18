@@ -3,6 +3,7 @@ extends Node2D
 
 const CLOUD_DISTANCE_COVERED : float = 1024
 
+@export var enabled : bool = true
 @export var time_range_bottom : float = 8
 @export var time_range_top : float = 24
 
@@ -46,7 +47,8 @@ func _ready():
 
 
 func _process(delta):
-	timer -= delta
+	if enabled:
+		timer -= delta
 	if timer <= 0:
 		timer = randf_range(time_range_bottom, time_range_top)
 		var thunder : DecorThunderCloud = packed_cloud.instantiate() as DecorThunderCloud

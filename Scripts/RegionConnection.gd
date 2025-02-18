@@ -140,10 +140,15 @@ func update_gradient():
 	var middle : Color = edge
 	if is_cutoff:
 		middle.a = CUTOFF_APLHA
-	gradient.set_color(0, region_from.color * edge)
-	gradient.set_color(1, region_from.color * middle)
-	gradient.set_color(2, region_to.color * middle)
-	gradient.set_color(3, region_to.color * edge)
+		gradient.set_color(3, region_from.color * edge)
+		gradient.set_color(2, region_from.color * middle)
+		gradient.set_color(1, region_to.color * middle)
+		gradient.set_color(0, region_to.color * edge)
+	else:
+		gradient.set_color(0, region_from.color * edge)
+		gradient.set_color(1, region_from.color * middle)
+		gradient.set_color(2, region_to.color * middle)
+		gradient.set_color(3, region_to.color * edge)
 
 
 func hide_self():

@@ -4,6 +4,7 @@ extends Node2D
 const SPIRAL_DISTANCE_COVERED : float = 320
 
 
+@export var enabled : bool = true
 @export var time_range_bottom : float = 1
 @export var time_range_top : float = 4
 @export var color : Color = Color(1, 1, 1, 1)
@@ -32,7 +33,8 @@ func _ready():
 
 
 func _process(delta):
-	timer -= delta
+	if enabled:
+		timer -= delta
 	if timer <= 0:
 		timer = randf_range(time_range_bottom, time_range_top)
 		var spiral : DecorSpiral = packed_spiral.instantiate() as DecorSpiral

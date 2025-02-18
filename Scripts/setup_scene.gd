@@ -103,15 +103,18 @@ func _on_map_list_item_selected(index):
 	
 	slider_leader.visible = not current_map.lock_align_amount
 	slider_leader.max_value = current_map.align_amount - 1
+	slider_leader.tick_count = slider_leader.max_value - 1
 	
 	slider_player.visible = not current_map.lock_player_amount
 	if current_map.max_player_amount >= 0:
 		slider_player.max_value = current_map.max_player_amount
 	else:
 		slider_player.max_value = current_map.align_amount - 1
+	slider_player.tick_count = slider_player.max_value + 1
 	
 	slider_aliances.visible = not current_map.lock_aliances
 	slider_aliances.max_value = current_map.align_amount - 1
+	slider_aliances.tick_count = slider_aliances.max_value
 	
 	ai_preset.visible = current_map.lock_ai_setup
 	ai_cursor.visible = !current_map.lock_ai_setup

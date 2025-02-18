@@ -1,0 +1,88 @@
+[gd_resource type="Theme" load_steps=15 format=3 uid="uid://b6vimx6otsqe8"]
+
+[ext_resource type="Texture2D" uid="uid://dhfr2qyl07v6l" path="res://Sprites/menu_circle_disabled.png" id="2_a1gsd"]
+[ext_resource type="StyleBox" uid="uid://m2cc5cpx0qxw" path="res://Styles/style_hslider_grabber_high.tres" id="2_cxi87"]
+[ext_resource type="StyleBox" uid="uid://dnpk6ufkxy45q" path="res://Styles/style_hseperator.tres" id="2_geuq5"]
+[ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://Styles/style_panel_map_list.tres" id="2_wc57s"]
+[ext_resource type="StyleBox" uid="uid://bv2ajk7xi2c7x" path="res://Styles/style_hslider_slider.tres" id="3_kuauy"]
+[ext_resource type="Texture2D" uid="uid://n52bj3guhwpr" path="res://Sprites/menu_circle.png" id="3_u1wal"]
+[ext_resource type="Texture2D" uid="uid://bftdyw7twodc7" path="res://Sprites/menu_tick.png" id="4_3bfo4"]
+[ext_resource type="StyleBox" uid="uid://s8pger68b5dx" path="res://Styles/style_vscrollbar_grabber_high.tres" id="4_qm4kn"]
+[ext_resource type="StyleBox" uid="uid://b68q8mpohg2xa" path="res://Styles/style_vscrollbar_grabber_pressed.tres" id="5_ulc73"]
+[ext_resource type="StyleBox" uid="uid://blb1sd30050aw" path="res://Styles/style_vscrollbar_scroll.tres" id="6_cvdkg"]
+[ext_resource type="StyleBox" uid="uid://crwlkegnfaves" path="res://Styles/style_label_align_picker.tres" id="9_06fqa"]
+[ext_resource type="StyleBox" uid="uid://cfywtanitvfwf" path="res://Styles/style_itemlist_selected.tres" id="10_fp7nr"]
+[ext_resource type="FontFile" uid="uid://doby6lr01xt8m" path="res://Fonts/Fredoka-Medium.ttf" id="10_vqddw"]
+
+[sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0u2yk"]
+
+[resource]
+HScrollBar/icons/decrement = null
+HScrollBar/icons/decrement_highlight = null
+HScrollBar/icons/decrement_pressed = null
+HScrollBar/icons/increment = null
+HScrollBar/icons/increment_highlight = null
+HScrollBar/icons/increment_pressed = null
+HScrollBar/styles/grabber = null
+HScrollBar/styles/grabber_highlight = null
+HScrollBar/styles/grabber_pressed = null
+HScrollBar/styles/scroll = null
+HScrollBar/styles/scroll_focus = null
+HSeparator/constants/separation = 0
+HSeparator/styles/separator = ExtResource("2_geuq5")
+HSlider/constants/grabber_offset = 0
+HSlider/icons/grabber = ExtResource("3_u1wal")
+HSlider/icons/grabber_disabled = ExtResource("2_a1gsd")
+HSlider/icons/grabber_highlight = ExtResource("3_u1wal")
+HSlider/icons/tick = ExtResource("4_3bfo4")
+HSlider/styles/grabber_area = ExtResource("2_cxi87")
+HSlider/styles/grabber_area_highlight = ExtResource("2_cxi87")
+HSlider/styles/slider = ExtResource("3_kuauy")
+ItemList/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
+ItemList/colors/font_selected_color = Color(0, 0, 0, 1)
+ItemList/colors/guide_color = Color(0.6, 0.6, 0.6, 0)
+ItemList/constants/h_separation = 0
+ItemList/constants/icon_margin = 0
+ItemList/constants/line_separation = 0
+ItemList/constants/outline_size = 0
+ItemList/constants/v_separation = 0
+ItemList/font_sizes/font_size = 16
+ItemList/fonts/font = null
+ItemList/styles/cursor = null
+ItemList/styles/cursor_unfocused = null
+ItemList/styles/focus = null
+ItemList/styles/panel = ExtResource("9_06fqa")
+ItemList/styles/selected = ExtResource("10_fp7nr")
+ItemList/styles/selected_focus = ExtResource("10_fp7nr")
+Label/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+Label/colors/font_outline_color = Color(0, 0, 0, 1)
+Label/colors/font_shadow_color = Color(0, 0, 0, 1)
+Label/constants/line_spacing = 0
+Label/constants/outline_size = 0
+Label/constants/shadow_offset_x = 0
+Label/constants/shadow_offset_y = 0
+Label/constants/shadow_outline_size = 0
+Label/font_sizes/font_size = 16
+Label/fonts/font = ExtResource("10_vqddw")
+Label/styles/normal = SubResource("StyleBoxEmpty_0u2yk")
+Panel/styles/panel = ExtResource("2_wc57s")
+VScrollBar/icons/decrement = null
+VScrollBar/icons/decrement_highlight = null
+VScrollBar/icons/decrement_pressed = null
+VScrollBar/icons/increment = null
+VScrollBar/icons/increment_highlight = null
+VScrollBar/icons/increment_pressed = null
+VScrollBar/styles/grabber = ExtResource("5_ulc73")
+VScrollBar/styles/grabber_highlight = ExtResource("4_qm4kn")
+VScrollBar/styles/grabber_pressed = ExtResource("5_ulc73")
+VScrollBar/styles/scroll = ExtResource("6_cvdkg")
+VScrollBar/styles/scroll_focus = null
+VSlider/constants/grabber_offset = 0
+VSlider/icons/grabber = null
+VSlider/icons/grabber_disabled = null
+VSlider/icons/grabber_highlight = null
+VSlider/icons/tick = null
+VSlider/styles/grabber_area = null
+VSlider/styles/grabber_area_highlight = null
+VSlider/styles/slider = null

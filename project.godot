@@ -40,7 +40,10 @@ import/blender/enabled=false
 
 [gui]
 
+theme/custom="res://Styles/default_theme.tres"
 theme/custom_font="res://Fonts/Fredoka-Medium.ttf"
+theme/default_font_antialiasing=0
+theme/lcd_subpixel_layout=0
 
 [input]
 
