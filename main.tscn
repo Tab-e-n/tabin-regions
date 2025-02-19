@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=33 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://Scripts/GameControl.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://Scripts/GameCamera.gd" id="1_we6ai"]
@@ -6,19 +6,60 @@
 [ext_resource type="Texture2D" uid="uid://deqhvnfw114vp" path="res://Sprites/advance.png" id="5_1p0vp"]
 [ext_resource type="StyleBox" uid="uid://crwlkegnfaves" path="res://Styles/style_label_align_picker.tres" id="5_mbtgw"]
 [ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://Sprites/current_power.png" id="6_duti3"]
+[ext_resource type="Shader" path="res://Scripts/ui_button.gdshader" id="6_hw6d1"]
 [ext_resource type="Texture2D" uid="uid://b5wmm400auwgm" path="res://Sprites/pause_button.png" id="7_6wsra"]
 [ext_resource type="Texture2D" uid="uid://cate3b6eswfv2" path="res://Sprites/end_turn.png" id="7_7ft3b"]
+[ext_resource type="Texture2D" uid="uid://lqgtg3b5d7e6" path="res://Sprites/mask_advance.png" id="7_410mq"]
 [ext_resource type="StyleBox" uid="uid://l8vkqqi4prkx" path="res://Styles/style_label_normal_box.tres" id="7_r48wm"]
 [ext_resource type="Texture2D" uid="uid://3uf3acu0wy42" path="res://Sprites/forfeit.png" id="8_chkrk"]
 [ext_resource type="PackedScene" uid="uid://dt0hijbeupo" path="res://Objects/command_callout.tscn" id="8_gv3dv"]
 [ext_resource type="Script" path="res://Scripts/alignment_list.gd" id="8_y476x"]
+[ext_resource type="Texture2D" uid="uid://iax63f215c2f" path="res://Sprites/mask_end_turn.png" id="9_63gm5"]
 [ext_resource type="Texture2D" uid="uid://b83fxlgeqmrwf" path="res://Sprites/turn_order_players.png" id="9_gke1b"]
 [ext_resource type="Texture2D" uid="uid://c2duva1ycjs8u" path="res://Sprites/city.png" id="10_5d75i"]
+[ext_resource type="Texture2D" uid="uid://bh0sjq1vbftjk" path="res://Sprites/mask_forfeit.png" id="11_1122e"]
 [ext_resource type="Texture2D" uid="uid://66jp7txq175w" path="res://Sprites/capital.png" id="11_i48c4"]
 [ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://Sprites/exit.png" id="12_st2cf"]
 [ext_resource type="StyleBox" uid="uid://ciikkahxcqynr" path="res://Styles/style_label_pause.tres" id="16_ixm5t"]
 [ext_resource type="Texture2D" uid="uid://dm2nl24gy8gxh" path="res://Sprites/accept.png" id="17_0hp27"]
 [ext_resource type="Texture2D" uid="uid://ex66wqntm5fi" path="res://Sprites/deny.png" id="18_mtr1x"]
+[ext_resource type="Texture2D" uid="uid://d2ixgtwhalidj" path="res://Sprites/mask_accept.png" id="22_f36kt"]
+[ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://Sprites/mask_deny.png" id="24_46d4l"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_www5i"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("7_410mq")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_731gk"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("9_63gm5")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8i6ds"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("11_1122e")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l4hw3"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("22_f36kt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fbdoa"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("24_46d4l")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rh36y"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("22_f36kt")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lcdv6"]
+shader = ExtResource("6_hw6d1")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("24_46d4l")
 
 [node name="GameControler" type="Node2D"]
 script = ExtResource("1_2axsc")
@@ -113,6 +154,7 @@ offset_right = 40.0
 offset_bottom = 544.0
 
 [node name="AdvanceTurn" type="TextureButton" parent="GameCamera/UI/Hideable/PlayerActions"]
+material = SubResource("ShaderMaterial_www5i")
 layout_mode = 0
 offset_left = 992.0
 offset_right = 1120.0
@@ -120,6 +162,7 @@ offset_bottom = 128.0
 texture_normal = ExtResource("5_1p0vp")
 
 [node name="EndTurn" type="TextureButton" parent="GameCamera/UI/Hideable/PlayerActions"]
+material = SubResource("ShaderMaterial_731gk")
 layout_mode = 0
 offset_left = 912.0
 offset_top = 56.0
@@ -128,6 +171,7 @@ offset_bottom = 120.0
 texture_normal = ExtResource("7_7ft3b")
 
 [node name="Forfeit" type="TextureButton" parent="GameCamera/UI/Hideable/PlayerActions"]
+material = SubResource("ShaderMaterial_8i6ds")
 layout_mode = 0
 offset_left = 176.0
 offset_top = 56.0
@@ -337,6 +381,7 @@ horizontal_alignment = 1
 
 [node name="yes" type="TextureButton" parent="GameCamera/UI/leave"]
 modulate = Color(0.713726, 0.890196, 0.65098, 1)
+material = SubResource("ShaderMaterial_l4hw3")
 layout_mode = 0
 offset_left = 48.0
 offset_top = 96.0
@@ -346,6 +391,7 @@ texture_normal = ExtResource("17_0hp27")
 
 [node name="no" type="TextureButton" parent="GameCamera/UI/leave"]
 modulate = Color(1, 0.717647, 0.698039, 1)
+material = SubResource("ShaderMaterial_fbdoa")
 layout_mode = 0
 offset_left = 128.0
 offset_top = 96.0
@@ -369,6 +415,7 @@ horizontal_alignment = 1
 
 [node name="yes" type="TextureButton" parent="GameCamera/UI/forfeit"]
 modulate = Color(0.713726, 0.890196, 0.65098, 1)
+material = SubResource("ShaderMaterial_rh36y")
 layout_mode = 0
 offset_left = 48.0
 offset_top = 96.0
@@ -378,6 +425,7 @@ texture_normal = ExtResource("17_0hp27")
 
 [node name="no" type="TextureButton" parent="GameCamera/UI/forfeit"]
 modulate = Color(1, 0.717647, 0.698039, 1)
+material = SubResource("ShaderMaterial_lcdv6")
 layout_mode = 0
 offset_left = 128.0
 offset_top = 96.0

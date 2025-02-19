@@ -9,7 +9,7 @@ signal game_ended(winner)
 
 
 ## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
-const COLOR_TOO_BRIGHT : float = 0.9
+const COLOR_TOO_BRIGHT : float = 0.85
 
 enum APPLY_PENALTIES {OFF, CURRENT_CAPITAL, PREVIOUS_CAPITAL}
 ## Skirmishes are basic maps with not much special. Challenges are curated experiences that are meant to challenge the player in some way. Bot battles are maps with no human players. 
@@ -586,10 +586,15 @@ func change_current_action():
 		bonus_action_amount = action_amount
 	current_action += 1
 	
-	turn_phase_changed.emit(current_action)
+	var call_end_turn : bool = false
 	
 	if current_action == ACTION_MODES_AMOUNT:
 		current_action = ACTION_NORMAL
+		call_end_turn = true
+	
+	turn_phase_changed.emit(current_action)
+	
+	if call_end_turn:
 		turn_end(false)
 	
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "change_current_action")

@@ -138,6 +138,9 @@ func _deffered_ready():
 	if LeaveButton:
 		LeaveButton.pressed.connect(_leaving)
 	
+	update_ui_color()
+	update_current_action(region_control.current_action)
+	
 	for path in MapTintList:
 		get_node(path).self_modulate = region_control.color
 	
@@ -149,7 +152,9 @@ func _deffered_ready():
 
 
 func connect_region_control_signals():
-	region_control.turn_ended.connect(_turn_ended)
+	if region_control:
+		region_control.turn_ended.connect(_turn_ended)
+		region_control.turn_phase_changed.connect(_turn_phase_changed)
 
 
 func _ready_turn_order():
@@ -173,19 +178,6 @@ func _process(_delta):
 	if hovering_advance_turn or hovering_turn_order:
 		cam_movement_stop = 1
 	
-	if PlayerActions:
-		PlayerActions.modulate = region_control.align_color[region_control.current_playing_align]
-		PlayerActions.modulate.a = 1
-		PlayerActions.visible = region_control.is_player_controled and not ReplayControl.replay_active
-	if PowerSprite:
-		PowerSprite.self_modulate = region_control.align_color[region_control.current_playing_align]
-		PowerSprite.self_modulate.a = 1
-		if PowerAmount:
-			PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
-	
-	if CurrentAction:
-		const ACTIONS : Array[String] = ["FIRST ACTION", "MOBILIZE", "BONUS ACTION"]
-		CurrentAction.text = ACTIONS[region_control.current_action]
 	if PowerAmount:
 		if region_control.current_action == RegionControl.ACTION_NORMAL:
 			PowerAmount.text = String.num(region_control.action_amount)
@@ -235,7 +227,33 @@ func _process(_delta):
 			PlayerInfo.visible = false
 
 
+func update_ui_color():
+	if PlayerActions:
+		PlayerActions.modulate = region_control.align_color[region_control.current_playing_align]
+		PlayerActions.modulate.a = 1
+		PlayerActions.visible = region_control.is_player_controled and not ReplayControl.replay_active
+		if AdvanceTurnButton:
+			AdvanceTurnButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if EndTurnButton:
+			EndTurnButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if ForfeitButton:
+			ForfeitButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
+	if PowerSprite:
+		PowerSprite.self_modulate = region_control.align_color[region_control.current_playing_align]
+		PowerSprite.self_modulate.a = 1
+		if PowerAmount:
+			PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
+
+
+func update_current_action(current_action : int):
+	if CurrentAction:
+		const ACTIONS : Array[String] = ["FIRST ACTION", "MOBILIZE", "BONUS ACTION"]
+		CurrentAction.text = ACTIONS[current_action]
+
+
 func _turn_ended():
+	update_ui_color()
+	
 	if TurnOrder:
 		TurnOrder.update_list(region_control)
 	
@@ -243,6 +261,10 @@ func _turn_ended():
 		hovering_advance_turn = false
 	
 	update_current_turn()
+
+
+func _turn_phase_changed(current_action : int):
+	update_current_action(current_action)
 
 
 func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
