@@ -14,7 +14,7 @@ extends Node2D
 @export var color : Color = Color(1, 1, 1, 1)
 
 
-var packed_elec : PackedScene = preload("res://Objects/elec_decor.tscn")
+var packed_elec : PackedScene = preload("res://objects/particle_elec.tscn")
 var timer : float = 0
 
 @onready var elec_offset : Vector4

@@ -2,7 +2,7 @@ extends Node
 
 var current_map_name : String = ""
 var player_amount : int = 1
-var default_ai_controler : int = AIControler.CONTROLER_DEFAULT
+var default_ai_controler : int = AIControl.CONTROLER_DEFAULT
 
 var aliances_amount : int = 0
 

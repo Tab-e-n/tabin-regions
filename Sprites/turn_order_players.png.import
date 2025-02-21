@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b83fxlgeqmrwf"
-path="res://.godot/imported/turn_order_players.png-8ed0eb57d698835213fa22b01b5e5eee.ctex"
+path="res://.godot/imported/turn_order_players.png-748b78e3f65bd58a87d9404bbe0951db.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/turn_order_players.png"
-dest_files=["res://.godot/imported/turn_order_players.png-8ed0eb57d698835213fa22b01b5e5eee.ctex"]
+source_file="res://sprites/turn_order_players.png"
+dest_files=["res://.godot/imported/turn_order_players.png-748b78e3f65bd58a87d9404bbe0951db.ctex"]
 
 [params]
 

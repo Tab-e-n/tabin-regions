@@ -3,12 +3,12 @@
 importer="font_data_dynamic"
 type="FontFile"
 uid="uid://h0mvcaimndp7"
-path="res://.godot/imported/Fredoka-Light.ttf-75a72677b81dd54184d542db1789ccd2.fontdata"
+path="res://.godot/imported/Fredoka-Light.ttf-dd28e01ba3377cf5149d0d0ee1b2a444.fontdata"
 
 [deps]
 
-source_file="res://Fonts/Fredoka-Light.ttf"
-dest_files=["res://.godot/imported/Fredoka-Light.ttf-75a72677b81dd54184d542db1789ccd2.fontdata"]
+source_file="res://fonts/Fredoka-Light.ttf"
+dest_files=["res://.godot/imported/Fredoka-Light.ttf-dd28e01ba3377cf5149d0d0ee1b2a444.fontdata"]
 
 [params]
 

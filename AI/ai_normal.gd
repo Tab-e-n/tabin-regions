@@ -39,6 +39,8 @@ func think_normal(is_bonus : bool = false):
 		var in_threat : bool = false
 		for connection in region.connections:
 			var target : Region = connection.get_other_region(region)
+			if not target:
+				continue
 #			print("--> ", target.name)
 			if controler.alignment_friendly(current_alignment, target.alignment):
 #				print("friendly alignment")

@@ -11,7 +11,7 @@ const SPIRAL_DISTANCE_COVERED : float = 320
 @export var direction : float = 0.0
 
 
-var packed_spiral : PackedScene = preload("res://Objects/spiral.tscn")
+var packed_spiral : PackedScene = preload("res://objects/particle_spiral.tscn")
 var timer : float = 0
 
 @onready var spiral_offset : Vector4

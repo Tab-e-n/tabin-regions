@@ -15,12 +15,6 @@ var callout_timestamp : Array[float] = []
 var timer : float = 0.0
 
 
-#func _ready():
-#	new_callout("a")
-#	new_callout("b")
-#	new_callout("c")
-
-
 func _physics_process(delta):
 	if callout_timestamp.size() > 0:
 		timer += delta

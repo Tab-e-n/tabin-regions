@@ -20,7 +20,7 @@ class_name DecorThunderCloud
 
 @onready var cloud : DecorCloud = $Cloud as DecorCloud
 
-var packed_elec : PackedScene = preload("res://Objects/elec_decor.tscn")
+var packed_elec : PackedScene = preload("res://objects/particle_elec.tscn")
 
 
 var timer : float = 0.0

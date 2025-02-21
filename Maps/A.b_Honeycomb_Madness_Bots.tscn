@@ -1,7 +1,7 @@
 [gd_scene load_steps=43 format=3 uid="uid://c4hvxw7fybpir"]
 
-[ext_resource type="PackedScene" uid="uid://03dtr6sjdp7c" path="res://Maps/A.6_Honeycomb_Madness.tscn" id="1_yquc5"]
-[ext_resource type="Shader" path="res://Scripts/region_shader.gdshader" id="2_vsv3m"]
+[ext_resource type="PackedScene" uid="uid://03dtr6sjdp7c" path="res://maps/A.6_Honeycomb_Madness.tscn" id="1_yquc5"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_vsv3m"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3q04i"]
 shader = ExtResource("2_vsv3m")

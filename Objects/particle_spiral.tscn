@@ -1,6 +1,6 @@
 [gd_scene load_steps=5 format=3 uid="uid://pbdy3hkeih8e"]
 
-[ext_resource type="Script" path="res://Scripts/spiral.gd" id="1_15htg"]
+[ext_resource type="Script" path="res://scripts/particle_spiral.gd" id="1_15htg"]
 
 [sub_resource type="Animation" id="Animation_fmahm"]
 resource_name = "spin_clockwise"

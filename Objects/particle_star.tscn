@@ -1,8 +1,8 @@
 [gd_scene load_steps=6 format=3 uid="uid://denljvpjosqn8"]
 
-[ext_resource type="Texture2D" uid="uid://dsqlv4386lu5p" path="res://Sprites/star.png" id="1_81l4w"]
-[ext_resource type="Texture2D" uid="uid://b5541shsh3gjx" path="res://Sprites/light.png" id="2_0igae"]
-[ext_resource type="Script" path="res://Scripts/star.gd" id="2_8n0tb"]
+[ext_resource type="Texture2D" uid="uid://dsqlv4386lu5p" path="res://sprites/star.png" id="1_81l4w"]
+[ext_resource type="Texture2D" uid="uid://b5541shsh3gjx" path="res://sprites/light.png" id="2_0igae"]
+[ext_resource type="Script" path="res://scripts/particle_star.gd" id="2_8n0tb"]
 
 [sub_resource type="Animation" id="Animation_jvehk"]
 resource_name = "star"

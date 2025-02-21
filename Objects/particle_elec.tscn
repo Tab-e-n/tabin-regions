@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://cd4trbis6awh6"]
 
-[ext_resource type="Script" path="res://Scripts/elec_decor.gd" id="1_mukh7"]
-[ext_resource type="Texture2D" uid="uid://d1cnwfpjs4eq2" path="res://Sprites/circle.png" id="2_x2ymp"]
+[ext_resource type="Script" path="res://scripts/particle_elec.gd" id="1_mukh7"]
+[ext_resource type="Texture2D" uid="uid://d1cnwfpjs4eq2" path="res://sprites/circle.png" id="2_x2ymp"]
 
 [sub_resource type="Animation" id="Animation_6kek7"]
 resource_name = "disappear"

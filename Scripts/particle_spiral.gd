@@ -4,9 +4,9 @@ class_name DecorSpiral
 
 const SPIRAL_DURATION : float = 9.0
 const SPIRALS : Array[Texture2D] = [
-	preload("res://Sprites/spiral_0.png"),
-	preload("res://Sprites/spiral_1.png"),
-	preload("res://Sprites/spiral_2.png"),
+	preload("res://sprites/spiral_0.png"),
+	preload("res://sprites/spiral_1.png"),
+	preload("res://sprites/spiral_2.png"),
 ]
 
 

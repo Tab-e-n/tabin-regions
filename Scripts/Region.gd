@@ -47,9 +47,9 @@ var color_change_time : float = 1.0
 
 
 func _ready():
-	texture = preload("res://Sprites/region.png")
+	texture = preload("res://sprites/region.png")
 	material = ShaderMaterial.new()
-	material.shader = preload("res://Scripts/region_shader.gdshader")
+	material.shader = preload("res://scripts/shader_region.gdshader")
 	
 	if polygon.size() > 0:
 		var far_left : float = polygon[0].x
@@ -238,7 +238,11 @@ func alignment_can_attack(attack_align : int) -> bool:
 
 
 func connection_attack_power(connection : RegionConnection) -> int:
-	return max(connection.get_other_region(self).power - connection.power_reduction, 0)
+	var region : Region = connection.get_other_region(self)
+	if region:
+		return max(region.power - connection.power_reduction, 0)
+	else:
+		return 0
 
 
 func get_adjacent_attack_power() -> Array[int]:

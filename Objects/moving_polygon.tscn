@@ -1,6 +1,6 @@
 [gd_scene load_steps=2 format=3 uid="uid://ib7qg43imr83"]
 
-[ext_resource type="Script" path="res://Scripts/background_polygon.gd" id="1_ulfwn"]
+[ext_resource type="Script" path="res://scripts/moving_polygon.gd" id="1_ulfwn"]
 
 [node name="BackgroundPolygon" type="Polygon2D"]
 z_index = -5

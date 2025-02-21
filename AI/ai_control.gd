@@ -1,5 +1,5 @@
 extends Node
-class_name AIControler
+class_name AIControl
 
 
 signal timer_has_ended
@@ -18,11 +18,11 @@ enum {CONTROLER_USER, CONTROLER_DEFAULT, CONTROLER_TURTLE, CONTROLER_NEURAL, CON
 const CONTROLER_NAMES : Array = ["User Controled", "Simple", "Turtle", "Neural", "Cheater", "Environment"]
 const PACKED_CONTROLERS : Array = [
 	null, # CONTROLER_USER (can be just null)
-	preload("res://AI/AINormal.gd"), # CONTROLER_DEFAULT
-	preload("res://AI/AITurtle.gd"), # CONTROLER_TURTLE
-	preload("res://AI/AINeural.gd"), # CONTROLER_NEURAL
-	preload("res://AI/AINormal.gd"), # CONTROLER_CHEATER
-	preload("res://AI/AIDummy.gd") # CONTROLER_DUMMY
+	preload("res://ai/ai_normal.gd"), # CONTROLER_DEFAULT
+	preload("res://ai/ai_turtle.gd"), # CONTROLER_TURTLE
+	preload("res://ai/ai_neural.gd"), # CONTROLER_NEURAL
+	preload("res://ai/ai_normal.gd"), # CONTROLER_CHEATER
+	preload("res://ai/ai_dummy.gd") # CONTROLER_DUMMY
 ]
 
 

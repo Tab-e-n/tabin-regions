@@ -1,11 +1,11 @@
 [gd_scene load_steps=81 format=3 uid="uid://0g4urrneakd7"]
 
-[ext_resource type="Script" path="res://Scripts/RegionControl.gd" id="1_dvj8c"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://Objects/bg.tscn" id="2_nxpt1"]
-[ext_resource type="Shader" path="res://Scripts/region_shader.gdshader" id="3_28xrj"]
-[ext_resource type="Script" path="res://Scripts/Region.gd" id="3_d0fh2"]
-[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://Sprites/region.png" id="4_5vtou"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://Objects/cloud_spawner.tscn" id="4_5y4qr"]
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_dvj8c"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_nxpt1"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_28xrj"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="3_d0fh2"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_5vtou"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_5y4qr"]
 
 [sub_resource type="GDScript" id="GDScript_ykiaq"]
 script/source = "extends Node

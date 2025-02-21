@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1y4eufy1vp18"
-path="res://.godot/imported/spiral_2.png-1fbfe883b0207200ea5b3e069c8a9258.ctex"
+path="res://.godot/imported/spiral_2.png-e8f08cf9a8f95e1030d3bd1b59dc6567.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/spiral_2.png"
-dest_files=["res://.godot/imported/spiral_2.png-1fbfe883b0207200ea5b3e069c8a9258.ctex"]
+source_file="res://sprites/spiral_2.png"
+dest_files=["res://.godot/imported/spiral_2.png-e8f08cf9a8f95e1030d3bd1b59dc6567.ctex"]
 
 [params]
 

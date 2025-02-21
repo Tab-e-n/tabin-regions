@@ -12,9 +12,9 @@ var was_hovered : bool = false
 
 func _ready():
 	if is_capital:
-		texture_normal = preload("res://Sprites/capital.png")
+		texture_normal = preload("res://sprites/capital.png")
 	else:
-		texture_normal = preload("res://Sprites/city.png")
+		texture_normal = preload("res://sprites/city.png")
 	z_index = 20
 	var city_size : float = region.region_control.city_size
 	position = Vector2(-32 * city_size, -32 * city_size)
@@ -38,7 +38,7 @@ func _ready():
 	region_name.clip_contents = true
 	update_region_name()
 	
-	region_name.add_theme_stylebox_override("normal", preload("res://Styles/style_label_city_name.tres"))
+	region_name.add_theme_stylebox_override("normal", preload("res://styles/style_label_city_name.tres"))
 	add_child(region_name)
 
 
@@ -74,8 +74,8 @@ func color_self(new_color : Color):
 
 func make_particle(mobilize : bool):
 	var part : Sprite2D = Sprite2D.new()
-	part.set_script(preload("res://Scripts/CitySelectedParticle.gd"))
-	part.texture = preload("res://Sprites/circle.png")
+	part.set_script(preload("res://scripts/particle_city_selected.gd"))
+	part.texture = preload("res://sprites/circle.png")
 	part.position = Vector2(32, 32)
 	part.set_color(self_modulate)
 	part.mobilize = mobilize

@@ -29,7 +29,7 @@ var network_mobilize : Network
 
 
 func load_network(id : int, net_type : int) -> Network:
-	var dir : String = "res://AI/NeuralNets/" + str(id) + "/"
+	var dir : String = "res://ai/networks/" + str(id) + "/"
 	
 	var save : Dictionary = {}
 	
@@ -103,6 +103,8 @@ func think_normal():
 			continue
 		for connection in region.connections:
 			var target = connection.get_other_region(region)
+			if not target:
+				continue
 #			print("--> ", target.name)
 			if controler.alignment_friendly(current_alignment, target.alignment):
 #				print("friendly alignment")

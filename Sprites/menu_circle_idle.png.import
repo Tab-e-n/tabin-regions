@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bordftudguy00"
-path="res://.godot/imported/menu_circle_idle.png-bc9283bc2aad4e636f223eb6320b7fe3.ctex"
+path="res://.godot/imported/menu_circle_idle.png-5f422361c616f3cd8fd2f96a8c155c3e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/menu_circle_idle.png"
-dest_files=["res://.godot/imported/menu_circle_idle.png-bc9283bc2aad4e636f223eb6320b7fe3.ctex"]
+source_file="res://sprites/menu_circle_idle.png"
+dest_files=["res://.godot/imported/menu_circle_idle.png-5f422361c616f3cd8fd2f96a8c155c3e.ctex"]
 
 [params]
 

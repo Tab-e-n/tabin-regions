@@ -15,7 +15,7 @@ var wait : bool = true
 
 
 func _ready():
-	var packed_map : PackedScene = load("res://Maps/" + MapSetup.current_map_name)
+	var packed_map : PackedScene = load("res://maps/" + MapSetup.current_map_name)
 	if packed_map:
 		current_map = packed_map.instantiate()
 		current_map.dummy = true

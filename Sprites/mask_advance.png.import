@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://lqgtg3b5d7e6"
-path.s3tc="res://.godot/imported/mask_advance.png-3ebdef973315a76ea5d90f331ee60918.s3tc.ctex"
+path.s3tc="res://.godot/imported/mask_advance.png-f6e694c7992c0a44dd23db9d90a37be7.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Sprites/mask_advance.png"
-dest_files=["res://.godot/imported/mask_advance.png-3ebdef973315a76ea5d90f331ee60918.s3tc.ctex"]
+source_file="res://sprites/mask_advance.png"
+dest_files=["res://.godot/imported/mask_advance.png-f6e694c7992c0a44dd23db9d90a37be7.s3tc.ctex"]
 
 [params]
 

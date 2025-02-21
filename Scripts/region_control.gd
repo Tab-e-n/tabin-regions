@@ -19,7 +19,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 
 @onready var bg_color : Color = color
 @onready var game_control : GameControl
-@onready var ai_control : AIControler
+@onready var ai_control : AIControl
 @onready var game_camera : GameCamera
 
 
@@ -62,8 +62,8 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var preset_alignments : Array[int] = []
 
 @export_subgroup("AI")
-## The default AI that computer players will use. Uses the 'CONTROLER_' enums from 'AIControler'. Default, Turtle, Neural and Cheater are all accessible in the setup scene. The Dummy AI does nothing, expecting to be controled by the map.
-@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_ai_controler : int = AIControler.CONTROLER_DEFAULT
+## The default AI that computer players will use. Uses the 'CONTROLER_' enums from 'AIControl'. Default, Turtle, Neural and Cheater are all accessible in the setup scene. The Dummy AI does nothing, expecting to be controled by the map.
+@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_ai_controler : int = AIControl.CONTROLER_DEFAULT
 @export var custom_ai_setup : Array[int] = []
 @export var shuffle_ai : bool = false
 
@@ -327,7 +327,7 @@ func _ready():
 				if custom_ai_setup[i] != 0:
 					align_controlers[i] = custom_ai_setup[i]
 		for i in range(player_amount):
-			align_controlers[align_play_order[i] - 1] = AIControler.CONTROLER_USER
+			align_controlers[align_play_order[i] - 1] = AIControl.CONTROLER_USER
 	
 	last_turn_region_amount = region_amount.duplicate()
 	
@@ -340,8 +340,8 @@ func _ready():
 			GameStats.set_stat(align, "controler", align_controlers[align - 1])
 #			GameStats.stats[align]["controler"] = align_controlers[align - 1]
 		else:
-			GameStats.set_stat(align, "controler", AIControler.CONTROLER_DUMMY)
-#			GameStats.stats[align]["controler"] = AIControler.CONTROLER_DUMMY
+			GameStats.set_stat(align, "controler", AIControl.CONTROLER_DUMMY)
+#			GameStats.stats[align]["controler"] = AIControl.CONTROLER_DUMMY
 	
 	current_placement = align_play_order.size()
 	
@@ -486,6 +486,8 @@ func bake_capital_distance():
 			
 			for connection in links:
 				var region : Region = connection.get_other_region(regions[i]) as Region
+				if not region:
+					continue
 				if region.distance_from_capital < current_distance:
 					continue
 				elif region.is_capital:
@@ -515,8 +517,8 @@ func remove_alignment(align : int, remove_capitals : bool):
 
 func cross(capital_position : Vector2):
 	var part : Sprite2D = Sprite2D.new()
-	part.set_script(preload("res://Scripts/CrossParticle.gd"))
-	part.texture = preload("res://Sprites/cross.png")
+	part.set_script(preload("res://scripts/particle_cross.gd"))
+	part.texture = preload("res://sprites/cross.png")
 	part.position = capital_position
 	part.set_color(color)
 	part.z_index = 25
@@ -703,7 +705,7 @@ func reset():
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
 		if Options.speedrun_ai:
-			if align_controlers[current_playing_align - 1] == AIControler.CONTROLER_USER:
+			if align_controlers[current_playing_align - 1] == AIControl.CONTROLER_USER:
 				color = bg_color_tinted
 			else:
 				color = bg_color
@@ -713,7 +715,7 @@ func reset():
 	if ReplayControl.replay_active:
 		is_player_controled = false
 	else:
-		is_player_controled = align_controlers[current_playing_align - 1] == AIControler.CONTROLER_USER
+		is_player_controled = align_controlers[current_playing_align - 1] == AIControl.CONTROLER_USER
 	
 	if !is_player_controled:
 		ai_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])

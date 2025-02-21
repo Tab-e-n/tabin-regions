@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://d2ixgtwhalidj"
-path.s3tc="res://.godot/imported/mask_accept.png-06342298eb0204f99b123271143c7fa1.s3tc.ctex"
+path.s3tc="res://.godot/imported/mask_accept.png-2da06a7b7d2790973d3d6f31be128619.s3tc.ctex"
 metadata={
 "imported_formats": ["s3tc_bptc"],
 "vram_texture": true
@@ -11,8 +11,8 @@ metadata={
 
 [deps]
 
-source_file="res://Sprites/mask_accept.png"
-dest_files=["res://.godot/imported/mask_accept.png-06342298eb0204f99b123271143c7fa1.s3tc.ctex"]
+source_file="res://sprites/mask_accept.png"
+dest_files=["res://.godot/imported/mask_accept.png-2da06a7b7d2790973d3d6f31be128619.s3tc.ctex"]
 
 [params]
 

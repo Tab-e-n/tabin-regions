@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bftdyw7twodc7"
-path="res://.godot/imported/menu_tick.png-23b1ffcc72e497381d2f0b23a65ff453.ctex"
+path="res://.godot/imported/menu_tick.png-f9eeeac6368fa59cdc2d5ddccf4ac89b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/menu_tick.png"
-dest_files=["res://.godot/imported/menu_tick.png-23b1ffcc72e497381d2f0b23a65ff453.ctex"]
+source_file="res://sprites/menu_tick.png"
+dest_files=["res://.godot/imported/menu_tick.png-f9eeeac6368fa59cdc2d5ddccf4ac89b.ctex"]
 
 [params]
 

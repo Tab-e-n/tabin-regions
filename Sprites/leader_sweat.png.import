@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://6spaie0247oo"
-path="res://.godot/imported/leader_sweat.png-497804967ee12f73c6a38be81c4f32df.ctex"
+path="res://.godot/imported/leader_sweat.png-c3999dda00141d62d0eae49368fa1c06.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/leader_sweat.png"
-dest_files=["res://.godot/imported/leader_sweat.png-497804967ee12f73c6a38be81c4f32df.ctex"]
+source_file="res://sprites/leader_sweat.png"
+dest_files=["res://.godot/imported/leader_sweat.png-c3999dda00141d62d0eae49368fa1c06.ctex"]
 
 [params]
 

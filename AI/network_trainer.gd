@@ -68,7 +68,7 @@ func _ready():
 	
 	MapSetup.current_map_name = "B.5_Testlandia.tscn"
 	MapSetup.player_amount = 0
-	MapSetup.default_ai_controler = AIControler.CONTROLER_NEURAL
+	MapSetup.default_ai_controler = AIControl.CONTROLER_NEURAL
 	MapSetup.aliances_amount = 1
 	MapSetup.used_aligments = 65532
 	MapSetup.preset_alignments = []

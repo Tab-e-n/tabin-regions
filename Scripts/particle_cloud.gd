@@ -4,21 +4,21 @@ class_name DecorCloud
 
 const CLOUD_DURATION : float = 64
 const CLOUDS : Array[Texture2D] = [
-	preload("res://Sprites/cloud_0.png"),
-	preload("res://Sprites/cloud_1.png"),
-	preload("res://Sprites/cloud_2.png"),
-	preload("res://Sprites/cloud_3.png"),
-	preload("res://Sprites/cloud_4.png"),
-	preload("res://Sprites/cloud_5.png"),
-	preload("res://Sprites/cloud_6.png"),
-	preload("res://Sprites/cloud_7.png"),
+	preload("res://sprites/cloud_0.png"),
+	preload("res://sprites/cloud_1.png"),
+	preload("res://sprites/cloud_2.png"),
+	preload("res://sprites/cloud_3.png"),
+	preload("res://sprites/cloud_4.png"),
+	preload("res://sprites/cloud_5.png"),
+	preload("res://sprites/cloud_6.png"),
+	preload("res://sprites/cloud_7.png"),
 ]
 const SECRET_CLOUDS : Array[Texture2D] = [
-	preload("res://Sprites/cloud_secret_0.png"),
-	preload("res://Sprites/cloud_secret_1.png"),
-	preload("res://Sprites/cloud_secret_2.png"),
-	preload("res://Sprites/cloud_secret_3.png"),
-	preload("res://Sprites/cloud_secret_4.png"),
+	preload("res://sprites/cloud_secret_0.png"),
+	preload("res://sprites/cloud_secret_1.png"),
+	preload("res://sprites/cloud_secret_2.png"),
+	preload("res://sprites/cloud_secret_3.png"),
+	preload("res://sprites/cloud_secret_4.png"),
 ]
 
 @export var speed : float = 16

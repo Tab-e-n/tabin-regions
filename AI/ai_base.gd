@@ -2,7 +2,7 @@ extends Node
 class_name AIBase
 
 
-var controler : AIControler
+var controler : AIControl
 var current_alignment : int
 
 

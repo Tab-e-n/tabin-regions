@@ -1,10 +1,10 @@
 [gd_scene load_steps=15 format=3 uid="uid://p6e2ena75y30"]
 
-[ext_resource type="Script" path="res://Scripts/RegionControl.gd" id="1_o5nxe"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://Objects/bg.tscn" id="2_hx3e2"]
-[ext_resource type="Shader" path="res://Scripts/region_shader.gdshader" id="3_fkek4"]
-[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://Sprites/region.png" id="4_fo4k4"]
-[ext_resource type="Script" path="res://Scripts/Region.gd" id="5_6l5qv"]
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_o5nxe"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_hx3e2"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_fkek4"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_fo4k4"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="5_6l5qv"]
 
 [sub_resource type="GDScript" id="GDScript_fsydj"]
 script/source = "extends Node

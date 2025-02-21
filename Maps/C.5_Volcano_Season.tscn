@@ -1,13 +1,13 @@
 [gd_scene load_steps=56 format=3 uid="uid://bumpmtnuqgdio"]
 
-[ext_resource type="Script" path="res://Scripts/RegionControl.gd" id="1_bj04g"]
-[ext_resource type="Script" path="res://Scripts/volcano.gd" id="2_6dpgy"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://Objects/bg.tscn" id="2_v7h8x"]
-[ext_resource type="Shader" path="res://Scripts/region_shader.gdshader" id="3_42p2u"]
-[ext_resource type="Script" path="res://Scripts/VolcanoPath.gd" id="3_xo7gg"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://Objects/cloud_spawner.tscn" id="4_lxeuq"]
-[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://Sprites/region.png" id="4_oj0wk"]
-[ext_resource type="Script" path="res://Scripts/Region.gd" id="5_ib1ao"]
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_bj04g"]
+[ext_resource type="Script" path="res://scripts/volcano.gd" id="2_6dpgy"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_v7h8x"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_42p2u"]
+[ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_xo7gg"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_lxeuq"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_oj0wk"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="5_ib1ao"]
 
 [sub_resource type="GDScript" id="GDScript_fsydj"]
 script/source = "extends Node

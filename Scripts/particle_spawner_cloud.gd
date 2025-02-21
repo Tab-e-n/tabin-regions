@@ -12,7 +12,7 @@ const CLOUD_DISTANCE_COVERED : float = 1024
 @export var rare_cloud : int = -1
 
 
-var packed_cloud : PackedScene = preload("res://Objects/cloud.tscn")
+var packed_cloud : PackedScene = preload("res://objects/particle_cloud.tscn")
 var timer : float = 0
 
 @onready var cloud_offset : Vector4

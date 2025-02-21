@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://ctbrxkbv3kxgh"]
 
-[ext_resource type="Script" path="res://Scripts/cloud.gd" id="2_6ixo7"]
+[ext_resource type="Script" path="res://scripts/particle_cloud.gd" id="2_6ixo7"]
 
 [sub_resource type="Animation" id="Animation_tohj0"]
 resource_name = "Cloud"

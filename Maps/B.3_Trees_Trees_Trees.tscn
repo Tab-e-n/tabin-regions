@@ -1,13 +1,13 @@
 [gd_scene load_steps=60 format=3 uid="uid://cl2h1tyr16xgh"]
 
-[ext_resource type="Script" path="res://Scripts/RegionControl.gd" id="1_2f2jj"]
-[ext_resource type="Shader" path="res://Scripts/bg_coloring.gdshader" id="1_uete3"]
-[ext_resource type="Texture2D" uid="uid://dle6ea0julea4" path="res://Sprites/bg.tres" id="2_h7c3j"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://Objects/bg.tscn" id="2_he663"]
-[ext_resource type="Shader" path="res://Scripts/region_shader.gdshader" id="4_v2svr"]
-[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://Sprites/region.png" id="5_iknln"]
-[ext_resource type="Script" path="res://Scripts/Region.gd" id="6_yqfju"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://Objects/cloud_spawner.tscn" id="8_03thk"]
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_2f2jj"]
+[ext_resource type="Shader" path="res://scripts/shader_bg_coloring.gdshader" id="1_uete3"]
+[ext_resource type="Texture2D" uid="uid://dle6ea0julea4" path="res://sprites/bg.tres" id="2_h7c3j"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_he663"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="4_v2svr"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="5_iknln"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="6_yqfju"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="8_03thk"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u2424"]
 shader = ExtResource("1_uete3")

@@ -6,7 +6,7 @@ class_name GameControl
 
 @onready var game_camera : GameCamera
 @onready var region_control : RegionControl
-@onready var ai_control : AIControler
+@onready var ai_control : AIControl
 @onready var command_callout : CommandCallouts
 
 var mouse_wheel_input : int = 0
@@ -128,7 +128,7 @@ func new_callout(text: String):
 
 
 func load_map(map_name : String):
-	var packed_map : PackedScene = load("res://Maps/" + map_name)
+	var packed_map : PackedScene = load("res://maps/" + map_name)
 	region_control = packed_map.instantiate()
 	add_child(region_control)
 	move_child(region_control, 1)

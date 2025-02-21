@@ -1,8 +1,8 @@
 [gd_scene load_steps=7 format=3 uid="uid://dikxdeaxwl51g"]
 
-[ext_resource type="Script" path="res://Scripts/text_box.gd" id="1_3ya5g"]
-[ext_resource type="Texture2D" uid="uid://cro4rr8vwvrhs" path="res://Sprites/info.png" id="1_c57oj"]
-[ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://Styles/style_panel_map_list.tres" id="3_p5vnh"]
+[ext_resource type="Script" path="res://scripts/text_box.gd" id="1_3ya5g"]
+[ext_resource type="Texture2D" uid="uid://cro4rr8vwvrhs" path="res://sprites/info.png" id="1_c57oj"]
+[ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://styles/style_panel_map_list.tres" id="3_p5vnh"]
 
 [sub_resource type="Animation" id="Animation_1dbpo"]
 resource_name = "appear"

@@ -30,7 +30,7 @@ var current_menu : int = 0
 func _ready():
 	Options.save_options()
 	
-	maps = DirAccess.get_files_at("res://Maps")
+	maps = DirAccess.get_files_at("res://maps")
 	
 #	maps.sort()
 #	print(maps)
@@ -85,8 +85,11 @@ func _on_map_list_item_activated(index):
 func _on_map_list_item_selected(index):
 	if current_map != null:
 		current_map.queue_free()
-	var packed_map : PackedScene = load("res://Maps/" + maps[index])
+	var packed_map : PackedScene = load("res://maps/" + maps[index])
 	current_map = packed_map.instantiate() as RegionControl
+	
+	if not current_map:
+		return
 	
 	current_map.dummy = true
 	
@@ -103,18 +106,18 @@ func _on_map_list_item_selected(index):
 	
 	slider_leader.visible = not current_map.lock_align_amount
 	slider_leader.max_value = current_map.align_amount - 1
-	slider_leader.tick_count = slider_leader.max_value - 1
+	slider_leader.tick_count = int(slider_leader.max_value) - 1
 	
 	slider_player.visible = not current_map.lock_player_amount
 	if current_map.max_player_amount >= 0:
 		slider_player.max_value = current_map.max_player_amount
 	else:
 		slider_player.max_value = current_map.align_amount - 1
-	slider_player.tick_count = slider_player.max_value + 1
+	slider_player.tick_count = int(slider_player.max_value) + 1
 	
 	slider_aliances.visible = not current_map.lock_aliances
 	slider_aliances.max_value = current_map.align_amount - 1
-	slider_aliances.tick_count = slider_aliances.max_value
+	slider_aliances.tick_count = int(slider_aliances.max_value)
 	
 	ai_preset.visible = current_map.lock_ai_setup
 	ai_cursor.visible = !current_map.lock_ai_setup
@@ -171,33 +174,33 @@ func _on_next_menu_pressed():
 
 func ai_selected_pos():
 	match(MapSetup.default_ai_controler):
-		AIControler.CONTROLER_TURTLE:
+		AIControl.CONTROLER_TURTLE:
 			ai_cursor.position.x = 624
-		AIControler.CONTROLER_DEFAULT:
+		AIControl.CONTROLER_DEFAULT:
 			ai_cursor.position.x = 752
-		AIControler.CONTROLER_NEURAL:
+		AIControl.CONTROLER_NEURAL:
 			ai_cursor.position.x = 880
-		AIControler.CONTROLER_CHEATER:
+		AIControl.CONTROLER_CHEATER:
 			ai_cursor.position.x = 1008
 
 
 func _on_ai_turtle_pressed():
-	MapSetup.default_ai_controler = AIControler.CONTROLER_TURTLE
+	MapSetup.default_ai_controler = AIControl.CONTROLER_TURTLE
 	ai_selected_pos()
 
 
 func _on_ai_default_pressed():
-	MapSetup.default_ai_controler = AIControler.CONTROLER_DEFAULT
+	MapSetup.default_ai_controler = AIControl.CONTROLER_DEFAULT
 	ai_selected_pos()
 
 
 func _on_ai_neural_pressed():
-	MapSetup.default_ai_controler = AIControler.CONTROLER_NEURAL
+	MapSetup.default_ai_controler = AIControl.CONTROLER_NEURAL
 	ai_selected_pos()
 
 
 func _on_ai_cheater_pressed():
-	MapSetup.default_ai_controler = AIControler.CONTROLER_CHEATER
+	MapSetup.default_ai_controler = AIControl.CONTROLER_CHEATER
 	ai_selected_pos()
 
 

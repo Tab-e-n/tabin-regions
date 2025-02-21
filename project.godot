@@ -23,10 +23,10 @@ config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
-MapSetup="*res://Scripts/MapSetupData.gd"
-GameStats="*res://Scripts/GameStats.gd"
-ReplayControl="*res://Scripts/ReplayControler.gd"
-Options="*res://Scripts/Options.gd"
+MapSetup="*res://scripts/map_setup_data.gd"
+GameStats="*res://scripts/game_stats.gd"
+ReplayControl="*res://scripts/replay_control.gd"
+Options="*res://scripts/options.gd"
 
 [display]
 
@@ -40,8 +40,8 @@ import/blender/enabled=false
 
 [gui]
 
-theme/custom="res://Styles/default_theme.tres"
-theme/custom_font="res://Fonts/Fredoka-Medium.ttf"
+theme/custom="res://styles/default_theme.tres"
+theme/custom_font="res://fonts/Fredoka-Medium.ttf"
 theme/default_font_antialiasing=0
 theme/lcd_subpixel_layout=0
 
@@ -168,4 +168,5 @@ locale/translation_remaps={}
 textures/canvas_textures/default_texture_filter=0
 renderer/rendering_method="gl_compatibility"
 renderer/rendering_method.mobile="gl_compatibility"
+anti_aliasing/screen_space_roughness_limiter/enabled=false
 environment/defaults/default_clear_color=Color(0.364706, 0.364706, 0.439216, 1)

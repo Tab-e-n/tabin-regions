@@ -73,7 +73,7 @@ func stats_as_strings(align : int) -> PackedStringArray:
 		elif i == "align color":
 			str_stats.append("#" + stats[align][i].to_html(false))
 		elif i == "controler":
-			str_stats.append(AIControler.CONTROLER_NAMES[stats[align][i]])
+			str_stats.append(AIControl.CONTROLER_NAMES[stats[align][i]])
 		else:
 			str_stats.append(String.num(stats[align][i]))
 	

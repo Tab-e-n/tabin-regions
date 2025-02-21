@@ -11,7 +11,7 @@ extends Node2D
 @export var color : Color = Color(1, 1, 1, 1)
 
 
-var packed_star : PackedScene = preload("res://Objects/star.tscn")
+var packed_star : PackedScene = preload("res://objects/particle_star.tscn")
 var timer : float = 0
 
 @onready var star_offset : Vector4

@@ -7,12 +7,14 @@ const SHOW_TIMER_BASE : float = 3.0
 
 const TINT : Color = Color(0.6, 0.6, 0.6, 1.0)
 const TINT_REDUCTION : Color = Color(0.25, 0.25, 0.25, 1.0)
+const TINT_DISABLED : Color = Color(0.15, 0.15, 0.15, 0.75)
 const CUTOFF_APLHA : float = 0.0
 
 const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)
 
 
 @export var num : int = 0
+@export var disabled : bool = false
 
 @export var region_from : Region
 @export var region_to : Region
@@ -76,10 +78,19 @@ func _process(delta):
 
 
 func get_other_region(region : Region) -> Region:
+	if disabled:
+		return null
 	if region == region_from:
 		return region_to
 	else:
 		return region_from
+
+
+func set_disabled(value : bool):
+	if disabled != value:
+		disabled = value
+		update_gradient()
+		update_label()
 
 
 func set_power_reduction(amount : int):
@@ -122,8 +133,14 @@ func update_label():
 			else:
 				label.position = to_position * 0.75 + from_position * 0.25 - label_size * 0.5
 				label.text += region_from.name
-			if power_reduction > 0:
+			if disabled:
+				label.text += " [X]"
+			elif power_reduction > 0:
 				label.text += " (-" + str(power_reduction) + ")"
+		elif disabled:
+			label.visible = true
+			label.position = (to_position + from_position - label_size) * 0.5
+			label.text = "[X]"
 		elif power_reduction > 0:
 			label.visible = true
 			label.position = (to_position + from_position - label_size) * 0.5
@@ -135,7 +152,9 @@ func update_label():
 
 func update_gradient():
 	var edge : Color = TINT
-	if power_reduction > 0:
+	if disabled:
+		edge = TINT_DISABLED
+	elif power_reduction > 0:
 		edge = TINT_REDUCTION
 	var middle : Color = edge
 	if is_cutoff:

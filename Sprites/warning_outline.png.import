@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dnxl8mo0vyte8"
-path="res://.godot/imported/warning_outline.png-e135c0be696d0323cbdfd904e47c532a.ctex"
+path="res://.godot/imported/warning_outline.png-133b5bc757b7c18596adf77c3ca8ed29.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Sprites/warning_outline.png"
-dest_files=["res://.godot/imported/warning_outline.png-e135c0be696d0323cbdfd904e47c532a.ctex"]
+source_file="res://sprites/warning_outline.png"
+dest_files=["res://.godot/imported/warning_outline.png-133b5bc757b7c18596adf77c3ca8ed29.ctex"]
 
 [params]
 

@@ -6,7 +6,7 @@ class_name Volcano
 @export var dummy_alignment : int
 
 @onready var controler : AIDummy
-@onready var ai_control : AIControler
+@onready var ai_control : AIControl
 @onready var region_control : RegionControl
 
 var pathways : Array[VolcanoPath] = []
@@ -43,7 +43,7 @@ func _ready():
 			path.pathway.append(region)
 			
 			if not region.has_node("VolcanoWarning"):
-				var warning : RegionWarning = preload("res://Objects/warning.tscn").instantiate() as RegionWarning
+				var warning : RegionWarning = preload("res://objects/warning.tscn").instantiate() as RegionWarning
 				warning.warning_number = 1
 				warning.name = "VolcanoWarning"
 				warning.color = region_control.align_color[dummy_alignment]
