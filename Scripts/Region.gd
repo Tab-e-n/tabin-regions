@@ -32,6 +32,8 @@ signal mobilized()
 @export var kinetic : bool = false
 
 @export_subgroup("Editor")
+## Hides the capital if set to true.
+@export var hide_capital : bool = false
 @export var connections : Array[RegionConnection] = []
 
 
@@ -96,7 +98,7 @@ func _ready_deferred():
 	city = City.new()
 	city.is_capital = is_capital
 	add_child(city)
-	if !region_control.dummy:
+	if region_control and not region_control.dummy:
 		city.pressed.connect(_on_capital_pressed)
 		city.mouse_entered.connect(show_region_connections)
 		
@@ -285,21 +287,25 @@ func attack_power_difference(attack_align : int) -> int:
 	return power - get_alignments_attack_power(attack_align)
 
 
-func color_self(animate : bool = true):
+func color_self(animate : bool = true, backup_color : Color = color):
 	if(animate):
 		material.set_shader_parameter("changing_color", true)
 		material.set_shader_parameter("n", 0)
 		material.set_shader_parameter("previous_color", color)
 		color_change_time = 0.0
-	color = region_control.align_color[alignment]
-	city.color_self(region_control.align_color[alignment])
+	if region_control:
+		color = region_control.align_color[alignment]
+	else:
+		color = backup_color
+	city.color_self(color)
 	for connection in connections:
 		connection.update_gradient()
 
 
 func city_particle(is_mobilized : bool):
-	if region_control.spawn_particles:
-		city.call_deferred("make_particle", is_mobilized)
+	if region_control and not region_control.spawn_particles:
+		return
+	city.call_deferred("make_particle", is_mobilized)
 
 
 func show_region_connections():
@@ -317,7 +323,7 @@ func hide_region_connections():
 
 
 func _on_capital_pressed():
-	if region_control.is_player_controled and !region_control.dummy:
+	if region_control.is_player_controled and not region_control.dummy:
 		action_decided()
 
 

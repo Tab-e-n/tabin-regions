@@ -11,12 +11,17 @@ var region_name : Label = Label.new()
 var was_hovered : bool = false
 
 func _ready():
+	if region.hide_capital:
+		visible = false
+	
 	if is_capital:
 		texture_normal = preload("res://sprites/capital.png")
 	else:
 		texture_normal = preload("res://sprites/city.png")
 	z_index = 20
-	var city_size : float = region.region_control.city_size
+	var city_size : float = 1.0
+	if region.region_control:
+		city_size = region.region_control.city_size
 	position = Vector2(-32 * city_size, -32 * city_size)
 	scale = Vector2(city_size, city_size)
 	
@@ -44,8 +49,9 @@ func _ready():
 
 func _process(_delta):
 	text.text = String.num(region.power)
-	visible = region.region_control.cities_visible
-	if !region.region_control.dummy:
+	if not region.hide_capital and region.region_control:
+		visible = region.region_control.cities_visible
+	if region.region_control and not region.region_control.dummy:
 		if was_hovered != is_hovered():
 			was_hovered = is_hovered()
 			if was_hovered:
@@ -83,10 +89,10 @@ func make_particle(mobilize : bool):
 
 
 func show_attacks():
-	if !region.region_control.dummy:
+	if region.region_control and not region.region_control.dummy:
 		region.region_control.game_camera.call_deferred("show_attacks", region)
 
 
 func hide_attacks():
-	if !region.region_control.dummy:
+	if region.region_control and not region.region_control.dummy:
 		region.region_control.game_camera.hide_attacks()

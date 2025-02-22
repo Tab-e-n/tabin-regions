@@ -1,4 +1,4 @@
-[gd_resource type="Theme" load_steps=15 format=3 uid="uid://b6vimx6otsqe8"]
+[gd_resource type="Theme" load_steps=16 format=3 uid="uid://b6vimx6otsqe8"]
 
 [ext_resource type="Texture2D" uid="uid://dhfr2qyl07v6l" path="res://sprites/menu_circle_disabled.png" id="2_a1gsd"]
 [ext_resource type="StyleBox" uid="uid://m2cc5cpx0qxw" path="res://styles/style_hslider_grabber_high.tres" id="2_cxi87"]
@@ -13,6 +13,7 @@
 [ext_resource type="StyleBox" uid="uid://crwlkegnfaves" path="res://styles/style_label_align_picker.tres" id="9_06fqa"]
 [ext_resource type="StyleBox" uid="uid://cfywtanitvfwf" path="res://styles/style_itemlist_selected.tres" id="10_fp7nr"]
 [ext_resource type="FontFile" uid="uid://doby6lr01xt8m" path="res://fonts/Fredoka-Medium.ttf" id="10_vqddw"]
+[ext_resource type="StyleBox" uid="uid://clkv4kfblv13o" path="res://styles/style_tooltip.tres" id="11_xgoml"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0u2yk"]
 
@@ -67,6 +68,15 @@ Label/font_sizes/font_size = 16
 Label/fonts/font = ExtResource("10_vqddw")
 Label/styles/normal = SubResource("StyleBoxEmpty_0u2yk")
 Panel/styles/panel = ExtResource("2_wc57s")
+TooltipLabel/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+TooltipLabel/colors/font_outline_color = Color(0, 0, 0, 1)
+TooltipLabel/colors/font_shadow_color = Color(0, 0, 0, 1)
+TooltipLabel/constants/outline_size = 0
+TooltipLabel/constants/shadow_offset_x = 0
+TooltipLabel/constants/shadow_offset_y = 0
+TooltipLabel/font_sizes/font_size = 16
+TooltipLabel/fonts/font = ExtResource("10_vqddw")
+TooltipPanel/styles/panel = ExtResource("11_xgoml")
 VScrollBar/icons/decrement = null
 VScrollBar/icons/decrement_highlight = null
 VScrollBar/icons/decrement_pressed = null

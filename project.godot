@@ -12,7 +12,7 @@ config_version=5
 
 config/name="Tabin's Regions"
 config/description="A simple game about capturing regions."
-run/main_scene="res://title.tscn"
+run/main_scene="res://logo.tscn"
 config/use_custom_user_dir=true
 config/custom_user_dir_name="TRegs"
 config/features=PackedStringArray("4.0", "GL Compatibility")

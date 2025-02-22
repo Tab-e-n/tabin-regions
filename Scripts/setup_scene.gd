@@ -40,6 +40,7 @@ func _ready():
 		var new_name : String = maps[i].trim_suffix(".tscn")
 		new_name = new_name.replace("_", " ")
 		map_list.add_item(new_name)
+		map_list.set_item_tooltip_enabled(i, false)
 	
 	var map = maps.find(MapSetup.current_map_name)
 	
