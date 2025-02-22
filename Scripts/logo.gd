@@ -19,14 +19,19 @@ func _ready():
 
 
 func _input(event):
-	if event is InputEventKey or event is InputEventMouseButton:
-		phase = PHASE_HOLD
-		timer = 0.0
-		current_region = 0
-		for i in range(14):
-			var region : Region = get_node(str(i)) as Region
-			if region:
-				region.color_self(true, Color("eeeeee"))
+	if event is InputEventKey or event is InputEventMouseButton and event.is_pressed():
+		if phase == PHASE_START:
+			phase = PHASE_HOLD
+			timer = 0.0
+			current_region = 0
+			for i in range(14):
+				var region : Region = get_node(str(i)) as Region
+				if region:
+					region.color_self(true, Color("eeeeee"))
+		elif phase == PHASE_HOLD:
+			phase = PHASE_END
+			timer = 0.0
+			current_region = 0
 
 
 func _process(delta):

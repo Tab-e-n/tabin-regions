@@ -5,6 +5,7 @@ class_name RegionControl
 
 signal turn_ended
 signal turn_phase_changed(phase)
+signal round_ended
 signal game_ended(winner)
 
 
@@ -529,6 +530,10 @@ func hide_capitals():
 	cities_visible = not cities_visible
 
 
+func set_capital_visibility(visibility : bool):
+	cities_visible = visibility
+
+
 func change_region_amount(amount : int, alignment : int, is_capital : bool):
 	if alignment > 0 and alignment < align_amount and region_amount.size() > 0:
 		region_amount[alignment - 1] += amount
@@ -610,11 +615,13 @@ func turn_end(record : bool):
 #		GameStats.stats[current_playing_align]["turns lasted"] = current_turn
 	var first_loop = true
 	var starting_player = play_order_i
+	var round_end : bool = false
 	while region_amount[current_playing_align - 1] == 0 or first_loop:
 		play_order_i += 1
 		if play_order_i == align_play_order.size():
 			play_order_i = 0
 			current_turn += 1
+			round_end = true
 		current_playing_align = align_play_order[play_order_i]
 		first_loop = false
 		if play_order_i == starting_player:
@@ -635,6 +642,8 @@ func turn_end(record : bool):
 	reset()
 	
 	turn_ended.emit()
+	if round_end:
+		round_ended.emit()
 	
 	if record:
 		ReplayControl.call_deferred("record_move", ReplayControl.RECORD_TYPE_FUNCTION, "turn_end")

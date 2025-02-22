@@ -16,23 +16,37 @@ const BASE_MOVE_SPEED : float = 8
 @export var PauseMenu : Control
 @export var PlayerInfo : Control
 @export var PlayerActions : Control
+@export var MapTintList : Array[NodePath]
+
+@export_subgroup("Buttons")
 @export var AdvanceTurnButton : BaseButton
 @export var EndTurnButton : BaseButton
 @export var ForfeitButton : BaseButton
 @export var PauseButton : BaseButton
 @export var LeaveButton : BaseButton
+
+@export_subgroup("Info")
 @export var TurnOrder : AlignmentList
 @export var Attacks : RichTextLabel
 @export var PowerSprite : TextureRect
 @export var PowerAmount : Label
 @export var CurrentTurn : Label
 @export var CurrentAction : Label
+
+@export_subgroup("Messages")
 @export var VictoryMessage : Control
 @export var DefeatMessage : Control
 @export var LeaveMessage : Control
 @export var ForfeitMessage : Control
 @export var CommandCallout : CommandCallouts
-@export var MapTintList : Array[NodePath]
+
+@export_subgroup("Pause Options")
+@export var MouseScroll : BaseButton
+@export var AutoPhase : BaseButton
+@export var FastAI : BaseButton
+@export var VisCapitals : BaseButton
+@export var VisUI : BaseButton
+@export var VisTurnOrder : BaseButton
 
 @onready var game_control : GameControl = get_parent()
 @onready var region_control : RegionControl
@@ -137,6 +151,19 @@ func _deffered_ready():
 		PauseButton.pressed.connect(toggle_pause_menu)
 	if LeaveButton:
 		LeaveButton.pressed.connect(_leaving)
+	
+	if MouseScroll:
+		MouseScroll.button_pressed = Options.mouse_scroll_active
+	if AutoPhase:
+		AutoPhase.button_pressed = Options.auto_end_turn_phases
+	if FastAI:
+		FastAI.button_pressed = Options.speedrun_ai
+	if VisCapitals and region_control:
+		VisCapitals.button_pressed = region_control.cities_visible
+	if VisUI and UIHideable:
+		VisUI.button_pressed = UIHideable.visible
+	if VisTurnOrder and TurnOrder:
+		VisTurnOrder.button_pressed = TurnOrder.visible
 	
 	update_ui_color()
 	update_current_action(region_control.current_action)
@@ -365,22 +392,40 @@ func update_current_turn():
 func toggle_pause_menu():
 	if PauseMenu:
 		PauseMenu.visible = not PauseMenu.visible
+		if game_control:
+			game_control.inputs_active = not PauseMenu.visible
 	_not_leaving()
 
 
 func hide_pause_menu():
 	if PauseMenu:
 		PauseMenu.visible = false
+		if game_control:
+			game_control.inputs_active = true
 
 
 func toggle_ui_visibility():
 	if UIHideable:
 		UIHideable.visible = not UIHideable.visible
+		if VisUI:
+			VisUI.button_pressed = UIHideable.visible
+
+
+func set_ui_visibility(visibility : bool):
+	if UIHideable:
+		UIHideable.visible = visibility
 
 
 func toggle_turn_order_visibility():
 	if TurnOrder:
 		TurnOrder.visible = not TurnOrder.visible
+		if VisTurnOrder:
+			VisTurnOrder.button_pressed = TurnOrder.visible
+
+
+func set_turn_order_visibility(visibility : bool):
+	if TurnOrder:
+		TurnOrder.visible = visibility
 
 
 func show_attacks(region : Region):

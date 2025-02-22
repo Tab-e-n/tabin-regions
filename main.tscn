@@ -67,7 +67,7 @@ script = ExtResource("1_2axsc")
 [node name="AIControler" type="Node" parent="."]
 script = ExtResource("2_w08l3")
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "CommandCallout")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "VisCapitals", "VisUI", "VisTurnOrder")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -75,6 +75,7 @@ UIHideable = NodePath("UI/Hideable")
 PauseMenu = NodePath("UI/pause")
 PlayerInfo = NodePath("UI/player_info")
 PlayerActions = NodePath("UI/Hideable/PlayerActions")
+MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/Hideable/turn_order")])
 AdvanceTurnButton = NodePath("UI/Hideable/PlayerActions/AdvanceTurn")
 EndTurnButton = NodePath("UI/Hideable/PlayerActions/EndTurn")
 ForfeitButton = NodePath("UI/Hideable/PlayerActions/Forfeit")
@@ -91,7 +92,12 @@ DefeatMessage = NodePath("UI/lose")
 LeaveMessage = NodePath("UI/leave")
 ForfeitMessage = NodePath("UI/forfeit")
 CommandCallout = NodePath("UI/command_callout")
-MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/Hideable/turn_order")])
+MouseScroll = NodePath("UI/pause/mouse_scroll")
+AutoPhase = NodePath("UI/pause/auto_phase")
+FastAI = NodePath("UI/pause/fast_ai")
+VisCapitals = NodePath("UI/pause/vis_capitals")
+VisUI = NodePath("UI/pause/vis_ui")
+VisTurnOrder = NodePath("UI/pause/vis_turn_order")
 
 [node name="UI" type="Control" parent="GameCamera"]
 layout_mode = 3
@@ -290,48 +296,6 @@ offset_right = 1024.0
 offset_bottom = 472.0
 theme_override_styles/panel = ExtResource("16_ixm5t")
 
-[node name="keys1" type="Label" parent="GameCamera/UI/pause"]
-layout_mode = 0
-offset_left = 24.0
-offset_top = 24.0
-offset_right = 424.0
-offset_bottom = 312.0
-text = "
-
-
-
-Esc  -  Exit
-\",\"  -  Zoom out
-\".\"  -  Zoom in
-\"/\"  -  Reset zoom
-Arrow Keys  -  Secondary way to move camera
-WASD  -  Tertiary way to move camera
-Hold shift to move the camera faster
-Hold ctrl to move the camera slower
-
-"
-clip_text = true
-
-[node name="keys2" type="Label" parent="GameCamera/UI/pause"]
-layout_mode = 0
-offset_left = 472.0
-offset_top = 24.0
-offset_right = 872.0
-offset_bottom = 312.0
-text = "
-Ctrl + Space  -  Advance turn
-Ctrl + Alt + Space  -  End turn
-Ctrl + Alt + \"-\"  -  Forfeit
-Ctrl + Alt + Enter  -  Toggle fast AI
-Ctrl + E  -  Highlight mobilizable cities
-Ctrl + H  -  Toggle capitals
-Ctrl + U  -  Toggle UI
-Ctrl + T  -  Toggle turn order
-Ctrl + Alt + M  -  Toggle mouse scroll
-Ctrl + Alt + P  -  Toggle auto phase advancing.
-Hold Shift when mobilizing to grab all extra units"
-clip_text = true
-
 [node name="leave" type="TextureButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 24.0
@@ -339,6 +303,135 @@ offset_top = 24.0
 offset_right = 88.0
 offset_bottom = 88.0
 texture_normal = ExtResource("12_st2cf")
+
+[node name="mouse_scroll" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 56.0
+offset_right = 432.0
+offset_bottom = 84.0
+focus_mode = 0
+text = "Scrolling camera with mouse"
+
+[node name="auto_phase" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 88.0
+offset_right = 432.0
+offset_bottom = 116.0
+focus_mode = 0
+text = "Automatic Phases"
+
+[node name="fast_ai" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 120.0
+offset_right = 432.0
+offset_bottom = 148.0
+focus_mode = 0
+text = "Fast AI"
+
+[node name="vis_capitals" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 184.0
+offset_right = 432.0
+offset_bottom = 212.0
+focus_mode = 0
+text = "Capitals Visible"
+
+[node name="vis_ui" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 216.0
+offset_right = 432.0
+offset_bottom = 244.0
+focus_mode = 0
+text = "UI Visible"
+
+[node name="vis_turn_order" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 248.0
+offset_right = 432.0
+offset_bottom = 276.0
+focus_mode = 0
+text = "Turn Order Visible"
+
+[node name="keys_title" type="Label" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 24.0
+offset_right = 872.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+text = "CONTROLS & SHORTCUTS"
+clip_text = true
+
+[node name="keys_title2" type="Label" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 24.0
+offset_right = 432.0
+offset_bottom = 56.0
+theme_override_font_sizes/font_size = 24
+text = "OPTIONS"
+clip_text = true
+
+[node name="keys_title3" type="Label" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 152.0
+offset_right = 432.0
+offset_bottom = 184.0
+theme_override_font_sizes/font_size = 24
+text = "TEMPORARY OPTIONS"
+clip_text = true
+
+[node name="keys" type="ScrollContainer" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 464.0
+offset_top = 56.0
+offset_right = 872.0
+offset_bottom = 312.0
+
+[node name="text" type="Label" parent="GameCamera/UI/pause/keys"]
+layout_mode = 2
+text = "Left Click - Interact
+Esc  -  Exit
+
+
+CAMERA
+\",\"  -  Zoom out
+\".\"  -  Zoom in
+\"/\"  -  Reset zoom
+
+Hovering your mouse on the edges
+of the window moves the camera.
+Arrow Keys  -  Move camera
+WASD  -  Move camera
+Ctrl + Alt + M  -  Toggle camera scrolling using mouse
+
+Hold shift to move the camera faster.
+Hold ctrl to move the camera slower.
+
+
+GAMEPLAY
+Ctrl + Space  -  Advance turn phase
+Ctrl + Alt + Space  -  End turn
+Ctrl + Alt + \"-\"  -  Forfeit
+Ctrl + E  -  Highlight your mobilizable cities
+Ctrl + Alt + P  -  Toggle automatic phase advancing
+Ctrl + Alt + Enter  -  Toggle fast AI
+
+Hold Shift when clicking a city while
+mobilizing to grab all extra units.
+
+
+VISUAL
+Ctrl + H  -  Toggle capitals
+Ctrl + U  -  Toggle UI
+Ctrl + T  -  Toggle turn order"
 
 [node name="win" type="Label" parent="GameCamera/UI"]
 visible = false
@@ -433,6 +526,12 @@ offset_right = 176.0
 offset_bottom = 144.0
 texture_normal = ExtResource("18_mtr1x")
 
+[connection signal="toggled" from="GameCamera/UI/pause/mouse_scroll" to="." method="set_mouse_scroll"]
+[connection signal="toggled" from="GameCamera/UI/pause/auto_phase" to="." method="set_auto_phases"]
+[connection signal="toggled" from="GameCamera/UI/pause/fast_ai" to="." method="set_speedrun_ai"]
+[connection signal="toggled" from="GameCamera/UI/pause/vis_capitals" to="." method="set_capital_visibility"]
+[connection signal="toggled" from="GameCamera/UI/pause/vis_ui" to="GameCamera" method="set_ui_visibility"]
+[connection signal="toggled" from="GameCamera/UI/pause/vis_turn_order" to="GameCamera" method="set_turn_order_visibility"]
 [connection signal="pressed" from="GameCamera/UI/leave/yes" to="GameCamera" method="_confirmed_leave"]
 [connection signal="pressed" from="GameCamera/UI/leave/no" to="GameCamera" method="_not_leaving"]
 [connection signal="pressed" from="GameCamera/UI/forfeit/yes" to="GameCamera" method="_forfeit"]

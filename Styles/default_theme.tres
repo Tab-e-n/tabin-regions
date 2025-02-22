@@ -1,9 +1,12 @@
-[gd_resource type="Theme" load_steps=16 format=3 uid="uid://b6vimx6otsqe8"]
+[gd_resource type="Theme" load_steps=19 format=3 uid="uid://b6vimx6otsqe8"]
 
+[ext_resource type="Texture2D" uid="uid://nhqtqn2rp0d8" path="res://sprites/menu_check_pressed.png" id="1_c8xom"]
 [ext_resource type="Texture2D" uid="uid://dhfr2qyl07v6l" path="res://sprites/menu_circle_disabled.png" id="2_a1gsd"]
 [ext_resource type="StyleBox" uid="uid://m2cc5cpx0qxw" path="res://styles/style_hslider_grabber_high.tres" id="2_cxi87"]
 [ext_resource type="StyleBox" uid="uid://dnpk6ufkxy45q" path="res://styles/style_hseperator.tres" id="2_geuq5"]
+[ext_resource type="Texture2D" uid="uid://dc5lw5twijlci" path="res://sprites/menu_check.png" id="2_mc6wh"]
 [ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://styles/style_panel_map_list.tres" id="2_wc57s"]
+[ext_resource type="StyleBox" uid="uid://cjaabqpgsx47h" path="res://styles/style_label_city_name.tres" id="3_iq2qs"]
 [ext_resource type="StyleBox" uid="uid://bv2ajk7xi2c7x" path="res://styles/style_hslider_slider.tres" id="3_kuauy"]
 [ext_resource type="Texture2D" uid="uid://n52bj3guhwpr" path="res://sprites/menu_circle.png" id="3_u1wal"]
 [ext_resource type="Texture2D" uid="uid://bftdyw7twodc7" path="res://sprites/menu_tick.png" id="4_3bfo4"]
@@ -18,6 +21,32 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0u2yk"]
 
 [resource]
+CheckButton/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/colors/font_disabled_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/colors/font_focus_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/colors/font_hover_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/colors/font_hover_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/colors/font_outline_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/colors/font_pressed_color = Color(0.933333, 0.933333, 0.933333, 1)
+CheckButton/constants/check_v_offset = 0
+CheckButton/constants/h_separation = 0
+CheckButton/constants/outline_size = 0
+CheckButton/font_sizes/font_size = 16
+CheckButton/fonts/font = null
+CheckButton/icons/checked = ExtResource("1_c8xom")
+CheckButton/icons/checked_disabled = null
+CheckButton/icons/checked_disabled_mirrored = null
+CheckButton/icons/checked_mirrored = null
+CheckButton/icons/unchecked = ExtResource("2_mc6wh")
+CheckButton/icons/unchecked_disabled = null
+CheckButton/icons/unchecked_disabled_mirrored = null
+CheckButton/icons/unchecked_mirrored = null
+CheckButton/styles/disabled = null
+CheckButton/styles/focus = null
+CheckButton/styles/hover = ExtResource("3_iq2qs")
+CheckButton/styles/hover_pressed = ExtResource("3_iq2qs")
+CheckButton/styles/normal = ExtResource("3_iq2qs")
+CheckButton/styles/pressed = ExtResource("3_iq2qs")
 HScrollBar/icons/decrement = null
 HScrollBar/icons/decrement_highlight = null
 HScrollBar/icons/decrement_pressed = null

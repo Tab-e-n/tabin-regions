@@ -15,7 +15,7 @@ var mouse_position : Vector2
 var win_timer : float = -1
 
 var hide_cross : float = 0
-
+var inputs_active : bool = true
 
 func _ready():
 	if not MapSetup.current_map_name.is_empty():
@@ -44,82 +44,113 @@ func _process(delta):
 			leave()
 			return
 	
-	if Input.is_action_just_pressed("escape"):
-		if game_camera.LeaveMessage.visible:
-			leave()
-		game_camera.LeaveMessage.visible = true
-	
-	mouse_position = get_viewport().get_mouse_position()
-	var shift = Input.is_action_pressed("shift")
-	var ctrl = Input.is_action_pressed("ctrl")
-	
-	var direction : Vector2 = Vector2(0, 0)
-	if Input.is_action_pressed("right"):
-		direction.x += 1
-	if Input.is_action_pressed("left"):
-		direction.x -= 1
-	if Input.is_action_pressed("down"):
-		direction.y += 1
-	if Input.is_action_pressed("up"):
-		direction.y -= 1
-	
-	if game_camera.cam_movement_stop > 0:
-		game_camera.cam_movement_stop -= 1
-	elif Options.mouse_scroll_active:
-		if mouse_position.x > game_camera.window_size.x - 64:
+	if inputs_active:
+		if Input.is_action_just_pressed("escape"):
+			if game_camera.LeaveMessage.visible:
+				leave()
+			game_camera.LeaveMessage.visible = true
+		
+		mouse_position = get_viewport().get_mouse_position()
+		var shift = Input.is_action_pressed("shift")
+		var ctrl = Input.is_action_pressed("ctrl")
+		
+		var direction : Vector2 = Vector2(0, 0)
+		if Input.is_action_pressed("right"):
 			direction.x += 1
-		if mouse_position.x < 64:
+		if Input.is_action_pressed("left"):
 			direction.x -= 1
-		if mouse_position.y > game_camera.window_size.y - 64:
+		if Input.is_action_pressed("down"):
 			direction.y += 1
-		if mouse_position.y < 64:
+		if Input.is_action_pressed("up"):
 			direction.y -= 1
-	
-	game_camera.move_camera(delta, direction, shift, ctrl)
-	
-	if Input.is_action_just_pressed("zoom_out") or mouse_wheel_input < 0:
-		game_camera.zoom_change(-1)
-	if Input.is_action_just_pressed("zoom_in") or mouse_wheel_input > 0:
-		game_camera.zoom_change(1)
-	if Input.is_action_just_pressed("zoom_reset"):
-		game_camera.reset_zoom()
-		new_callout("Reset zoom")
-	
-	if Input.is_action_just_pressed("hide_ui"):
-		game_camera.toggle_ui_visibility()
-		new_callout("Toggle hide UI")
-	
-	if Input.is_action_just_pressed("hide_turn_order"):
-		game_camera.toggle_turn_order_visibility()
-		new_callout("Toggle turn order")
-	
-	if Input.is_action_just_pressed("hide_capitals"):
-		region_control.hide_capitals()
-		game_camera.CommandCallout.new_callout("Toggle hide capitols")
-	
-	if Input.is_action_just_pressed("disable_mouse_scroll"):
-		Options.mouse_scroll_active = not Options.mouse_scroll_active
-		if Options.mouse_scroll_active:
-			new_callout("Mouse scrolling active")
-		else:
-			new_callout("Mouse scrolling disabled")
-	
-	if Input.is_action_just_pressed("auto_phase"):
-		Options.auto_end_turn_phases = not Options.auto_end_turn_phases
-		if Options.auto_end_turn_phases:
-			new_callout("Phases end when no actions are left")
-		else:
-			new_callout("Phases end only after user input")
-	
-	if Input.is_action_just_pressed("ai_speedrun"):
-		Options.speedrun_ai = not Options.speedrun_ai
-		ai_control.speedrun_ai_update()
-		if Options.speedrun_ai:
-			new_callout("Fast AI")
-		else:
-			new_callout("Slow AI")
+		
+		if game_camera.cam_movement_stop > 0:
+			game_camera.cam_movement_stop -= 1
+		elif Options.mouse_scroll_active:
+			if mouse_position.x > game_camera.window_size.x - 64:
+				direction.x += 1
+			if mouse_position.x < 64:
+				direction.x -= 1
+			if mouse_position.y > game_camera.window_size.y - 64:
+				direction.y += 1
+			if mouse_position.y < 64:
+				direction.y -= 1
+		
+		game_camera.move_camera(delta, direction, shift, ctrl)
+		
+		if Input.is_action_just_pressed("zoom_out") or mouse_wheel_input < 0:
+			game_camera.zoom_change(-1)
+		if Input.is_action_just_pressed("zoom_in") or mouse_wheel_input > 0:
+			game_camera.zoom_change(1)
+		if Input.is_action_just_pressed("zoom_reset"):
+			game_camera.reset_zoom()
+			new_callout("Reset zoom")
+		
+		if Input.is_action_just_pressed("hide_ui"):
+			game_camera.toggle_ui_visibility()
+			new_callout("Toggle hide UI")
+		
+		if Input.is_action_just_pressed("hide_turn_order"):
+			game_camera.toggle_turn_order_visibility()
+			new_callout("Toggle turn order")
+		
+		if Input.is_action_just_pressed("hide_capitals"):
+			hide_capitals()
+			game_camera.CommandCallout.new_callout("Toggle hide capitols")
+		
+		if Input.is_action_just_pressed("disable_mouse_scroll"):
+			set_mouse_scroll(not Options.mouse_scroll_active)
+			if Options.mouse_scroll_active:
+				new_callout("Mouse scrolling active")
+			else:
+				new_callout("Mouse scrolling disabled")
+			if game_camera.MouseScroll:
+				game_camera.MouseScroll.button_pressed = Options.mouse_scroll_active
+		
+		if Input.is_action_just_pressed("auto_phase"):
+			set_auto_phases(not Options.auto_end_turn_phases)
+			if Options.auto_end_turn_phases:
+				new_callout("Phases end when no actions are left")
+			else:
+				new_callout("Phases end only after user input")
+			if game_camera.AutoPhase:
+				game_camera.AutoPhase.button_pressed = Options.auto_end_turn_phases
+		
+		if Input.is_action_just_pressed("ai_speedrun"):
+			set_speedrun_ai(not Options.speedrun_ai)
+			ai_control.speedrun_ai_update()
+			if Options.speedrun_ai:
+				new_callout("Fast AI")
+			else:
+				new_callout("Slow AI")
+			if game_camera.FastAI:
+				game_camera.FastAI.button_pressed = Options.speedrun_ai
 	
 	mouse_wheel_input = 0
+
+
+func hide_capitals():
+	if region_control:
+		region_control.hide_capitals()
+		if game_camera.VisCapitals:
+			game_camera.VisCapitals.button_pressed = region_control.cities_visible
+
+
+func set_capital_visibility(visibility : bool):
+	if region_control:
+		region_control.set_capital_visibility(visibility)
+
+
+func set_mouse_scroll(scrolling : bool):
+	Options.mouse_scroll_active = scrolling
+
+
+func set_auto_phases(auto : bool):
+	Options.auto_end_turn_phases = auto
+
+
+func set_speedrun_ai(speedy : bool):
+	Options.speedrun_ai = speedy
 
 
 func new_callout(text: String):
