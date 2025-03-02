@@ -485,21 +485,23 @@ func bake_capital_distance():
 			
 			links = regions[i].connections.duplicate()
 			
+			current_distance = snapped(regions[i].distance_from_capital + 0.1, 2) + 2
+			
 			for connection in links:
 				var region : Region = connection.get_other_region(regions[i]) as Region
 				if not region:
 					continue
 				if region.distance_from_capital < current_distance:
 					continue
-				elif region.is_capital:
+				var has_visited : bool = regions.has(region)
+				if region.is_capital:
 					region.distance_from_capital = 0
 				elif region.distance_from_capital > current_distance:
 					region.distance_from_capital = current_distance
-					if not regions.has(region):
+					if not has_visited:
 						regions.append(region)
-				elif region.distance_from_capital == current_distance:
+				elif not has_visited and region.distance_from_capital == current_distance:
 					region.distance_from_capital -= 1
-			current_distance += 2
 			
 			links.clear()
 			
@@ -634,6 +636,8 @@ func turn_end(record : bool):
 	for i in range(region_amount.size()):
 		if region_amount[i] != last_turn_region_amount[i] and region_amount[i] == 0: 
 			GameStats.set_stat(i + 1, "placement", placement)
+			if game_control:
+				game_control.new_callout(align_names[i + 1] + " got eliminated!")
 #			GameStats.stats[i + 1]["placement"] = placement
 			current_placement -= 1
 	

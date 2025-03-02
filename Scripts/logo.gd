@@ -58,7 +58,7 @@ func _process(delta):
 		if current_region != 14:
 			if timer >= 0.05:
 				timer = 0.0
-				region_velocities[current_region] = Vector2((float(current_region) - 6.5) * 3, -32)
+				region_velocities[current_region] = Vector2((float(current_region) - 6.5) * 6, -32)
 				current_region += 1
 		elif timer >= 1.5:
 				get_tree().change_scene_to_file("res://title.tscn")

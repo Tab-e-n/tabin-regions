@@ -33,7 +33,6 @@ func reset_statistics(align_amount):
 
 func stat_exists(align : int, key : String) -> bool:
 	if align < 0 or align >= stats.size():
-		push_warning("Alignment ", align, " isn't in the statistics table.")
 		return false
 	if not stats[align].has(key):
 		push_warning("Statistic ", key, " doesn't exist.")
