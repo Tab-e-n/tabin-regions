@@ -1,9 +1,9 @@
 extends AIBase
 
 
-# REMOVE JSON NEXT TIME
-const NET_NAMES : Array[String] = ["attack.json", "reinforce.json", "mobilize.json"]
-const NET_AMOUNT : int = 7
+const NET_NAMES : Array[String] = ["attack", "reinforce", "mobilize"]
+const NET_AMOUNT : int = 10
+#const CHECK : int = 0
 
 enum {
 	INPUT_CAPITAL,
@@ -36,7 +36,7 @@ func load_network(id : int, net_type : int) -> Network:
 	var filename : String = NET_NAMES[net_type]
 	var net : Network = Network.new()
 	
-	# Fuck checking, if the file doesn't exist i'm a dumbass
+	# Fuck checking, if the file doesn't exist i'm just an idiot
 	
 	var file = FileAccess.open(dir + filename, FileAccess.READ)
 	
@@ -54,10 +54,11 @@ func load_network(id : int, net_type : int) -> Network:
 func _ready():
 	trainer = controler.game_control as NetworkTrainer
 	if not trainer:
+#		print(CHECK)
 		for i in range(NET_AMOUNT):
-			final_network_attack.append(load_network(i, 0))
-			final_network_reinforce.append(load_network(i, 1))
-			final_network_mobilize.append(load_network(i, 2))
+			final_network_attack.append(load_network(i, 0))#CHECK, 0))
+			final_network_reinforce.append(load_network(i, 1))#CHECK, 0))
+			final_network_mobilize.append(load_network(i, 2))#CHECK, 0))
 
 
 func start_turn(align : int):
