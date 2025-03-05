@@ -102,24 +102,25 @@ VisTurnOrder = NodePath("UI/pause/vis_turn_order")
 [node name="UI" type="Control" parent="GameCamera"]
 layout_mode = 3
 anchors_preset = 0
-offset_left = -576.0
-offset_top = -320.0
-offset_right = 576.0
-offset_bottom = 320.0
-pivot_offset = Vector2(576, 320)
+offset_right = 1152.0
+offset_bottom = 640.0
 mouse_filter = 2
 
 [node name="command_callout" parent="GameCamera/UI" instance=ExtResource("8_gv3dv")]
 layout_mode = 1
-offset_left = 800.0
-offset_top = 136.0
-offset_right = -32.0
+offset_left = 224.0
+offset_top = -184.0
+offset_right = -608.0
+offset_bottom = -320.0
 right = true
 
 [node name="Hideable" type="Control" parent="GameCamera/UI"]
+layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 640.0
+offset_left = -576.0
+offset_top = -320.0
+offset_right = 576.0
+offset_bottom = 320.0
 mouse_filter = 2
 
 [node name="Panel" type="Panel" parent="GameCamera/UI/Hideable"]
@@ -226,21 +227,19 @@ bbcode_enabled = true
 scroll_active = false
 
 [node name="gearbox" type="TextureButton" parent="GameCamera/UI"]
-layout_mode = 0
-offset_left = 64.0
-offset_top = 136.0
-offset_right = 128.0
-offset_bottom = 200.0
+offset_left = -512.0
+offset_top = -184.0
+offset_right = -448.0
+offset_bottom = -120.0
 scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("7_6wsra")
 
 [node name="player_info" type="Panel" parent="GameCamera/UI"]
 visible = false
-layout_mode = 0
-offset_left = 472.0
-offset_top = 112.0
-offset_right = 680.0
-offset_bottom = 232.0
+offset_left = -104.0
+offset_top = -208.0
+offset_right = 104.0
+offset_bottom = -88.0
 theme_override_styles/panel = ExtResource("7_r48wm")
 
 [node name="Player" type="Sprite2D" parent="GameCamera/UI/player_info"]
@@ -289,11 +288,10 @@ clip_text = true
 
 [node name="pause" type="Panel" parent="GameCamera/UI"]
 visible = false
-layout_mode = 0
-offset_left = 128.0
-offset_top = 136.0
-offset_right = 1024.0
-offset_bottom = 472.0
+offset_left = -448.0
+offset_top = -184.0
+offset_right = 448.0
+offset_bottom = 152.0
 theme_override_styles/panel = ExtResource("16_ixm5t")
 
 [node name="leave" type="TextureButton" parent="GameCamera/UI/pause"]
@@ -435,11 +433,10 @@ Ctrl + T  -  Toggle turn order"
 
 [node name="win" type="Label" parent="GameCamera/UI"]
 visible = false
-layout_mode = 0
-offset_left = 384.0
-offset_top = 256.0
-offset_right = 768.0
-offset_bottom = 384.0
+offset_left = -192.0
+offset_top = -64.0
+offset_right = 192.0
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 64
 theme_override_styles/normal = ExtResource("7_r48wm")
 text = "VICTORY!"
@@ -448,11 +445,10 @@ vertical_alignment = 1
 
 [node name="lose" type="Label" parent="GameCamera/UI"]
 visible = false
-layout_mode = 0
-offset_left = 384.0
-offset_top = 256.0
-offset_right = 768.0
-offset_bottom = 384.0
+offset_left = -192.0
+offset_top = -64.0
+offset_right = 192.0
+offset_bottom = 64.0
 theme_override_font_sizes/font_size = 64
 theme_override_styles/normal = ExtResource("7_r48wm")
 text = "DEFEAT..."
@@ -461,11 +457,10 @@ vertical_alignment = 1
 
 [node name="leave" type="Label" parent="GameCamera/UI"]
 visible = false
-layout_mode = 0
-offset_left = 464.0
-offset_top = 240.0
-offset_right = 688.0
-offset_bottom = 400.0
+offset_left = -112.0
+offset_top = -80.0
+offset_right = 112.0
+offset_bottom = 80.0
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("16_ixm5t")
 text = "Do you want
@@ -494,11 +489,10 @@ texture_normal = ExtResource("18_mtr1x")
 
 [node name="forfeit" type="Label" parent="GameCamera/UI"]
 visible = false
-layout_mode = 0
-offset_left = 464.0
-offset_top = 240.0
-offset_right = 688.0
-offset_bottom = 400.0
+offset_left = -112.0
+offset_top = -80.0
+offset_right = 112.0
+offset_bottom = 80.0
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("16_ixm5t")
 text = "Do you want
