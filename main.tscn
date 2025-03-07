@@ -102,8 +102,8 @@ VisTurnOrder = NodePath("UI/pause/vis_turn_order")
 [node name="UI" type="Control" parent="GameCamera"]
 layout_mode = 3
 anchors_preset = 0
-offset_right = 1152.0
-offset_bottom = 640.0
+offset_right = 64.0
+offset_bottom = 64.0
 mouse_filter = 2
 
 [node name="command_callout" parent="GameCamera/UI" instance=ExtResource("8_gv3dv")]
