@@ -1,6 +1,6 @@
 [gd_scene load_steps=4 format=3 uid="uid://dktvwaulmmgha"]
 
-[ext_resource type="Script" path="res://Scripts/RegionControl.gd" id="1_vjgqo"]
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_w30nm"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_b7xpv"]
 
 [sub_resource type="GDScript" id="GDScript_fsydj"]
@@ -21,7 +21,7 @@ func _ready():
 "
 
 [node name="template" type="Polygon2D"]
-script = ExtResource("1_vjgqo")
+script = ExtResource("1_w30nm")
 
 [node name="connection_setter" type="Node" parent="."]
 script = SubResource("GDScript_fsydj")

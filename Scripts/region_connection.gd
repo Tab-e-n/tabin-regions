@@ -7,7 +7,7 @@ const SHOW_TIMER_BASE : float = 3.0
 
 const TINT : Color = Color(0.6, 0.6, 0.6, 1.0)
 const TINT_REDUCTION : Color = Color(0.25, 0.25, 0.25, 1.0)
-const TINT_DISABLED : Color = Color(0.15, 0.15, 0.15, 0.75)
+const TINT_DISABLED : Color = Color(0.15, 0.15, 0.15, 0.65)
 const CUTOFF_APLHA : float = 0.0
 
 const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)

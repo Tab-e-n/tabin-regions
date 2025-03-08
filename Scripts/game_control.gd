@@ -25,11 +25,7 @@ func _ready():
 
 
 func _input(event):
-#	if event is InputEventKey:
-#		if event.key_label != KEY_ESCAPE:
-#			LeaveMessage.visible = false
 	if event is InputEventMouseButton:
-#		LeaveMessage.visible = false
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
 				mouse_wheel_input = 1

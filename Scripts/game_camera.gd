@@ -79,6 +79,19 @@ func _ready():
 	
 	zoom_level = ZOOM_START
 	zoom_change(0)
+	
+	if PlayerInfo:
+		PlayerInfo.visible = false
+	if PauseMenu:
+		PauseMenu.visible = false
+	if VictoryMessage:
+		VictoryMessage.visible = false
+	if DefeatMessage:
+		DefeatMessage.visible = false
+	if LeaveMessage:
+		LeaveMessage.visible = false
+	if ForfeitMessage:
+		ForfeitMessage.visible = false
 
 
 func _deffered_ready():
@@ -288,6 +301,7 @@ func _turn_ended():
 		hovering_advance_turn = false
 	
 	update_current_turn()
+	update_current_action(region_control.current_action)
 
 
 func _turn_phase_changed(current_action : int):

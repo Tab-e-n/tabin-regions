@@ -3,18 +3,37 @@ extends Polygon2D
 class_name RegionControl
 
 
+## Emitted once after RegionControl makes all region connections, so the mapmaker can edit them before the capital distance is calculated.
+## Intended for maps that want to have different region structure every time players play them.
+signal region_connections_ready
+
+signal capital_distance_ready
+## Emitted when a players turn ends.
 signal turn_ended
-signal turn_phase_changed(phase)
+## Emitted when a player changes the turns phase. First argument will is the turn phase which just started.
+signal turn_phase_changed(phase : int)
+## Emitted when all alignments played their turn.
 signal round_ended
-signal game_ended(winner)
+## Emitted after the an alignment ends their turn and no unfriendly alignments towards them are left.
+signal game_ended(winner : int)
 
 
 ## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
 const COLOR_TOO_BRIGHT : float = 0.85
 
 enum APPLY_PENALTIES {OFF, CURRENT_CAPITAL, PREVIOUS_CAPITAL}
-## Skirmishes are basic maps with not much special. Challenges are curated experiences that are meant to challenge the player in some way. Bot battles are maps with no human players. 
+## Skirmishes are free-for-all maps, this is the default tag.
+## Challenges are curated experiences that are meant to challenge the player in some way.
+## Bot battles are maps with no human players.
 enum SETUP_TAG {SKIRMISH, CHALLENGE, BOT_BATTLE, GUIDE}
+## Labels that tell the player how experienced with the game they have to be to play this map.
+## There are some guidelines you can follow when choosing a maps complexity.
+## BEGINNER maps are intended to be played by players who just started the game and should
+## only use normal connections between regions,
+## have the turn order hidden by default
+## and should not have aliances.
+## SIMPLE maps can use all default map features.
+## INTERMEDIATE and onwards can use custom gimmicks, only differing in how hard the map is to understand.
 enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DIFFICULT, EXTREME, ROCKET_SCIENCE}
 
 
@@ -27,17 +46,25 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export_subgroup("Setup Scene")
 ## When set to true, before starting the map players will be able to pick which alignment they want to play as.
 @export var use_alignment_picker : bool = true
+## Prevents the player from changing the number of alignments on the map.
+## Set to true by default, because changing the align amount could break some maps by removing important alignments.
+## If you think your map is not be affected by this, set this to false.
 @export var lock_align_amount : bool = true
+## Prevents users changing the amount of players that can be played on the map.
 @export var lock_player_amount : bool = false
+## Prevents users from changing the number of aliances.
 @export var lock_aliances : bool = false
+## Prevents users from changing the computer players. Set this to true if you need a specific AI active.
 @export var lock_ai_setup : bool = false
 
 
 @export_subgroup("Gameplay")
+
 @export_enum ("Off", "Current Capital Amount", "Previous Capital Amount") var apply_penalties : int = APPLY_PENALTIES.OFF
 ## Sets penalties to slow down players who get ahead, so they don't snowball too hard.
-## After a player reaches a certain capital amount, specified by the dictionary's keys, every subsequent capital the player gains will give them less power, specified by the dictionary's value.
 ## The keys should be intigers, values should be floats representing percentages.
+## After a player reaches a certain capital amount, specified by the dictionary's keys,
+## every subsequent capital the player gains will give them less power, specified by the dictionary's value.
 @export var power_gain_penalties : Dictionary = {
 	3 : .325,
 	13 : .25,
@@ -47,15 +74,18 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export_subgroup("Alignments & Players")
 ## The number of alignments the map uses. It equals the number of all active alignments + the neutral alignment.
 @export var align_amount : int = 3
-## Will specify the amount of alignments that are used. When the map has more alignments than the amount specified with this property, random alignments not picked by players will have their regions converted to neutral.
+## Will specify the amount of alignments that are used. When the map has more alignments than the amount specified with this property,
+## random alignments not picked by players will have their regions converted to neutral.
 @export var used_alignments : int = 0
 ## Determines if the capitals of alignments that were removed by 'used_alignments' should be removed as well.
 ## When set to true, all the alignments capitals will be converted to basic cities.
 @export var remove_capitals_with_alignments : bool = true
 ## The intended amount of players the map should have. Can be overwritten in the setup scene unless allow_map_spec_change is set to false.
 @export var player_amount : int = 1
+
 @export var random_player_align_range : int = 0
-## The maximum amount of players the map allows to be played. There can be more alignments than players. When set to -1, the max amount of players is equal to the number of active alignments.
+## The maximum amount of players the map allows to be played. There can be more alignments than players.
+## When set to -1, the max amount of players is equal to the number of active alignments.
 @export var max_player_amount : int = -1
 ## Toggles the use of preset_alignments.
 @export var use_preset_alignments : bool = false
@@ -63,15 +93,23 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var preset_alignments : Array[int] = []
 
 @export_subgroup("AI")
-## The default AI that computer players will use. Uses the 'CONTROLER_' enums from 'AIControl'. Default, Turtle, Neural and Cheater are all accessible in the setup scene. The Dummy AI does nothing, expecting to be controled by the map.
+## The default AI that computer players will use. Uses the 'CONTROLER_' enums from 'AIControl'.
+## Default, Turtle, Neural and Cheater are all accessible in the setup scene.
+## The Dummy AI does nothing, expecting to be controled by the map.
 @export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_ai_controler : int = AIControl.CONTROLER_DEFAULT
+
 @export var custom_ai_setup : Array[int] = []
+## If set to true, when starting the map custom_ai_setup will be shuffled so it is not the same every time.
 @export var shuffle_ai : bool = false
 
 @export_subgroup("Aliances")
+
 @export var use_aliances : bool = false
+
 @export var alignment_aliances : Array[int] = []
+
 @export var use_autoaliances : bool = false
+
 @export var autoaliances_divisions_amount : int = 2
 
 @export_subgroup("Cosmetics")
@@ -136,7 +174,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var snap_camera_to_first_align_capital : bool = true
 ## When set to true, the turn order will start invisible.
 @export var hide_turn_order : bool = false
-
+## When false, regions will not spawn particles.
 @export var spawn_particles : bool = true
 
 @export_subgroup("Editor")
@@ -147,10 +185,12 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 ## Position colors the regions based on their position.
 @export_enum("Disabled", "Alignment", "Power", "Max Power", "Capital", "Position") var render_mode : int = 0
 @export var render_range : float = 20
+## When set to true, RegionControl wil not do anything on its own. This is intended to be used by other scenes, not RegionControl itself.
 @export var dummy : bool = false
 @export var cities_visible : bool = true
 @export var print_more_info : bool = false
-## Holds the connections of all regions. When the map is readying, RegionControl will attempt to make every connection in this array. I recommend to not using the inspector to edit this property, use a built-in script like in the template map instead.
+## Holds the connections of all regions. When the map is readying, RegionControl will attempt to make every connection in this array.
+## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
 @export var connections : Array = []
 
 var current_playing_align : int = 1
@@ -233,6 +273,8 @@ func _ready():
 		region_from.connections.append(connection)
 		region_to.connections.append(connection)
 	
+	region_connections_ready.emit()
+	
 	region_amount.resize(align_amount - 1)
 	capital_amount.resize(align_amount - 1)
 	penalty_amount.resize(align_amount - 1)
@@ -244,6 +286,8 @@ func _ready():
 	count_up_regions()
 	
 	bake_capital_distance()
+	
+	capital_distance_ready.emit()
 	
 	if not ReplayControl.replay_active:
 		var rng : RandomNumberGenerator = RandomNumberGenerator.new()

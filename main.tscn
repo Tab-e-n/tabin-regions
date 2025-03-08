@@ -227,6 +227,7 @@ bbcode_enabled = true
 scroll_active = false
 
 [node name="gearbox" type="TextureButton" parent="GameCamera/UI"]
+layout_mode = 0
 offset_left = -512.0
 offset_top = -184.0
 offset_right = -448.0
@@ -236,6 +237,7 @@ texture_normal = ExtResource("7_6wsra")
 
 [node name="player_info" type="Panel" parent="GameCamera/UI"]
 visible = false
+layout_mode = 0
 offset_left = -104.0
 offset_top = -208.0
 offset_right = 104.0
@@ -288,6 +290,7 @@ clip_text = true
 
 [node name="pause" type="Panel" parent="GameCamera/UI"]
 visible = false
+layout_mode = 0
 offset_left = -448.0
 offset_top = -184.0
 offset_right = 448.0
@@ -433,6 +436,7 @@ Ctrl + T  -  Toggle turn order"
 
 [node name="win" type="Label" parent="GameCamera/UI"]
 visible = false
+layout_mode = 0
 offset_left = -192.0
 offset_top = -64.0
 offset_right = 192.0
@@ -445,6 +449,7 @@ vertical_alignment = 1
 
 [node name="lose" type="Label" parent="GameCamera/UI"]
 visible = false
+layout_mode = 0
 offset_left = -192.0
 offset_top = -64.0
 offset_right = 192.0
@@ -457,6 +462,7 @@ vertical_alignment = 1
 
 [node name="leave" type="Label" parent="GameCamera/UI"]
 visible = false
+layout_mode = 0
 offset_left = -112.0
 offset_top = -80.0
 offset_right = 112.0
@@ -489,6 +495,7 @@ texture_normal = ExtResource("18_mtr1x")
 
 [node name="forfeit" type="Label" parent="GameCamera/UI"]
 visible = false
+layout_mode = 0
 offset_left = -112.0
 offset_top = -80.0
 offset_right = 112.0
