@@ -53,8 +53,6 @@ func _ready():
 	
 	MapSetup.preset_alignments.clear()
 	
-	ai_selected_pos()
-	
 	ReplayControl.clear_replay()
 
 
@@ -121,7 +119,11 @@ func _on_map_list_item_selected(index):
 	slider_aliances.tick_count = int(slider_aliances.max_value)
 	
 	ai_preset.visible = current_map.lock_ai_setup
-	ai_cursor.visible = !current_map.lock_ai_setup
+	ai_cursor.visible = not current_map.lock_ai_setup
+	if current_map.lock_ai_setup:
+		$tintable_ui/diff/opponent.text = ""
+	else:
+		ai_selected_pos()
 	
 	map_lore.text = RegionControl.setup_tag_name(current_map.tag) + ", " + RegionControl.setup_complexity_name(current_map.complexity) + "\n" + current_map.lore
 	
@@ -176,13 +178,17 @@ func _on_next_menu_pressed():
 func ai_selected_pos():
 	match(MapSetup.default_ai_controler):
 		AIControl.CONTROLER_TURTLE:
-			ai_cursor.position.x = 624
+			ai_cursor.position.x = $tintable_ui/diff/ai_turtle.position.x
+			$tintable_ui/diff/opponent.text = "OPPONENT:\nTURTLE"
 		AIControl.CONTROLER_DEFAULT:
-			ai_cursor.position.x = 752
+			ai_cursor.position.x = $tintable_ui/diff/ai_default.position.x
+			$tintable_ui/diff/opponent.text = "OPPONENT:\nSIMPLETON"
 		AIControl.CONTROLER_NEURAL:
-			ai_cursor.position.x = 880
+			ai_cursor.position.x = $tintable_ui/diff/ai_neural.position.x
+			$tintable_ui/diff/opponent.text = "OPPONENT:\nTHINKER"
 		AIControl.CONTROLER_CHEATER:
-			ai_cursor.position.x = 1008
+			ai_cursor.position.x = $tintable_ui/diff/ai_cheater.position.x
+			$tintable_ui/diff/opponent.text = "OPPONENT:\nCHEATER"
 
 
 func _on_ai_turtle_pressed():

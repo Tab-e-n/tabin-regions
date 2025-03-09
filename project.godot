@@ -32,6 +32,7 @@ Options="*res://scripts/options.gd"
 
 window/size/viewport_height=640
 window/size/mode=2
+window/subwindows/embed_subwindows=false
 window/stretch/mode="canvas_items"
 
 [filesystem]

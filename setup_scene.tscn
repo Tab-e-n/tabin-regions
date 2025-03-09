@@ -117,49 +117,62 @@ anchors_preset = 0
 offset_right = 40.0
 offset_bottom = 40.0
 
+[node name="opponent" type="Label" parent="tintable_ui/diff"]
+layout_mode = 0
+offset_left = 536.0
+offset_top = 112.0
+offset_right = 656.0
+offset_bottom = 176.0
+theme_override_constants/line_spacing = 0
+theme_override_font_sizes/font_size = 20
+text = "OPPONENT:"
+horizontal_alignment = 1
+
 [node name="AiSelected" type="Sprite2D" parent="tintable_ui/diff"]
-position = Vector2(624, 144)
+position = Vector2(664, 96)
 texture = ExtResource("2_1q3y1")
+centered = false
+offset = Vector2(-4, -4)
 
 [node name="ai_turtle" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 576.0
+offset_left = 664.0
 offset_top = 96.0
-offset_right = 672.0
+offset_right = 760.0
 offset_bottom = 192.0
 texture_normal = ExtResource("2_wi0e8")
 
 [node name="ai_default" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 704.0
+offset_left = 776.0
 offset_top = 96.0
-offset_right = 800.0
+offset_right = 872.0
 offset_bottom = 192.0
 texture_normal = ExtResource("2_qggyn")
 
 [node name="ai_neural" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 832.0
+offset_left = 888.0
 offset_top = 96.0
-offset_right = 928.0
+offset_right = 984.0
 offset_bottom = 192.0
 texture_normal = ExtResource("3_g3ljl")
 
 [node name="ai_cheater" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 960.0
+offset_left = 1000.0
 offset_top = 96.0
-offset_right = 1056.0
+offset_right = 1096.0
 offset_bottom = 192.0
 texture_normal = ExtResource("5_qe1ei")
 
 [node name="preset" type="Label" parent="tintable_ui/diff"]
 visible = false
 layout_mode = 0
-offset_left = 560.0
-offset_top = 80.0
-offset_right = 1072.0
-offset_bottom = 208.0
+offset_left = 528.0
+offset_top = 88.0
+offset_right = 1104.0
+offset_bottom = 200.0
 theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = SubResource("StyleBoxFlat_kl6wx")
 text = "LOCKED BY MAP MAKER"
@@ -194,6 +207,8 @@ texture_normal = ExtResource("5_x6iy8")
 initial_position = 1
 title = "Open a File"
 size = Vector2i(480, 480)
+borderless = true
+transparent = true
 popup_window = true
 ok_button_text = "Open"
 file_mode = 0

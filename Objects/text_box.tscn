@@ -4,7 +4,7 @@
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="1_11prg"]
 [ext_resource type="Texture2D" uid="uid://cro4rr8vwvrhs" path="res://sprites/info.png" id="1_c57oj"]
 [ext_resource type="Texture2D" uid="uid://cbl5kq46ifv0m" path="res://sprites/mask_info.png" id="2_xpei1"]
-[ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://styles/style_panel_map_list.tres" id="3_p5vnh"]
+[ext_resource type="StyleBox" uid="uid://dc1w42tfx0dul" path="res://styles/style_label_tutorial.tres" id="5_krdjd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5rpnn"]
 shader = ExtResource("1_11prg")
@@ -101,7 +101,7 @@ offset_top = 24.0
 offset_right = 41.0
 offset_bottom = 63.0
 scale = Vector2(1e-05, 1e-05)
-theme_override_styles/normal = ExtResource("3_p5vnh")
+theme_override_styles/normal = ExtResource("5_krdjd")
 horizontal_alignment = 1
 vertical_alignment = 1
 
