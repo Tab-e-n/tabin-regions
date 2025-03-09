@@ -756,7 +756,7 @@ func reset():
 #		GameStats.stats[current_playing_align]["most capitals owned"] = capital_amount[current_playing_align - 1]
 	calculate_penalty(current_playing_align)
 	action_amount = capital_amount[current_playing_align - 1] - penalty_amount[current_playing_align - 1]
-	bonus_action_amount = 1 if action_amount == 0 else 0
+	bonus_action_amount = 1 if action_amount == 0 and not use_aliances else 0
 	current_action = ACTION_MOBILIZE if action_amount == 0 else ACTION_NORMAL
 	
 	if color_bg_according_to_alignment:

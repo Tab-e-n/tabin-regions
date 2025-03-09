@@ -5,6 +5,11 @@ class_name Volcano
 @export var residing_region : Region
 @export var dummy_alignment : int
 
+@export_subgroup("Screen Shake")
+@export var duration : float = 1.2
+@export var amplitude : float = 32
+@export var period : float = 0.8
+
 @onready var controler : AIDummy
 @onready var ai_control : AIControl
 @onready var region_control : RegionControl
@@ -91,6 +96,8 @@ func _think_mobilize():
 	
 	if residing_region.power == 1:
 		ai_control.CALL_change_current_action = true
+		if region_control.game_camera:
+			region_control.game_camera.shake_camera(duration, amplitude, period)
 	else:
 		ai_control.selected_capital = residing_region.name
 

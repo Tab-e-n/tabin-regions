@@ -14,7 +14,6 @@ var mouse_position : Vector2
 
 var win_timer : float = -1
 
-var hide_cross : float = 0
 var inputs_active : bool = true
 
 func _ready():

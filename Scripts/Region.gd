@@ -297,7 +297,8 @@ func color_self(animate : bool = true, backup_color : Color = color):
 		color = region_control.align_color[alignment]
 	else:
 		color = backup_color
-	city.color_self(color)
+	if city:
+		city.color_self(color)
 	for connection in connections:
 		connection.update_gradient()
 

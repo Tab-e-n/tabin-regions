@@ -67,6 +67,11 @@ var hovering_turn_order : bool = false
 
 var hovered_player : int = -1
 
+var shake_duration : float
+var shake_time : float
+var shake_amplitude : float
+var shake_period : float
+
 
 func _ready():
 	z_index = 100
@@ -210,11 +215,7 @@ func _ready_turn_order():
 			Attacks.size.x = TurnOrder.size.x
 
 
-func _physics_process(_delta):
-	position = next_position
-
-
-func _process(_delta):
+func _process(delta):
 	if hovering_advance_turn or hovering_turn_order:
 		cam_movement_stop = 1
 	
@@ -265,6 +266,24 @@ func _process(_delta):
 				capital_amount.text += "\n-" + String.num(region_control.penalty_amount[player_alignment - 1])
 		else:
 			PlayerInfo.visible = false
+	
+	var shake_offset : Vector2 = Vector2(0.0, 0.0)
+	
+	if shake_time > 0.0:
+		shake_time -= delta
+		var damp : float = shake_time / shake_duration
+		shake_offset.x = shake_amplitude * (abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.15) * 13.3) - 0.5) * damp
+		shake_offset.y = shake_amplitude * abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.4) * 5.0) * damp
+#		print(shake_offset)
+		if shake_time <= 0.0:
+			shake_time = 0.0
+			shake_duration = 0.0
+			shake_amplitude = 0.0
+			shake_period = 0.0
+	
+	position = next_position + shake_offset
+	force_update_scroll()
+#	call_deferred("set", "position", next_position)
 
 
 func update_ui_color():
@@ -494,3 +513,10 @@ func _confirmed_leave():
 
 func center_camera(pos : Vector2):
 	next_position = pos
+
+
+func shake_camera(duration : float, amplitude : float, period : float) -> void:
+	shake_duration += duration
+	shake_time += duration
+	shake_amplitude += amplitude
+	shake_period = max(period, shake_period)
