@@ -153,7 +153,6 @@ func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
 	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
 #	GameStats.stats[mobilize_align]["units mobilized"] += 1
 	power -= mobilize_amount
-	region_control.bonus_action_amount += mobilize_amount
 	mobilized.emit()
 	return mobilize_amount
 

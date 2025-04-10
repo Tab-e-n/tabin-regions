@@ -1,8 +1,9 @@
-[gd_scene load_steps=33 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=34 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://scripts/game_control.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
 [ext_resource type="Script" path="res://ai/ai_control.gd" id="2_w08l3"]
+[ext_resource type="PackedScene" uid="uid://cpgxwqs1hap0p" path="res://objects/particle_number.tscn" id="4_s5wqb"]
 [ext_resource type="Texture2D" uid="uid://deqhvnfw114vp" path="res://sprites/advance.png" id="5_1p0vp"]
 [ext_resource type="StyleBox" uid="uid://crwlkegnfaves" path="res://styles/style_label_align_picker.tres" id="5_mbtgw"]
 [ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://sprites/current_power.png" id="6_duti3"]
@@ -67,7 +68,7 @@ script = ExtResource("1_2axsc")
 [node name="AIControler" type="Node" parent="."]
 script = ExtResource("2_w08l3")
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "VisCapitals", "VisUI", "VisTurnOrder")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -76,6 +77,7 @@ PauseMenu = NodePath("UI/pause")
 PlayerInfo = NodePath("UI/player_info")
 PlayerActions = NodePath("UI/Hideable/PlayerActions")
 MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/Hideable/turn_order")])
+ActionChangeParticle = ExtResource("4_s5wqb")
 AdvanceTurnButton = NodePath("UI/Hideable/PlayerActions/AdvanceTurn")
 EndTurnButton = NodePath("UI/Hideable/PlayerActions/EndTurn")
 ForfeitButton = NodePath("UI/Hideable/PlayerActions/Forfeit")
@@ -95,6 +97,7 @@ CommandCallout = NodePath("UI/command_callout")
 MouseScroll = NodePath("UI/pause/mouse_scroll")
 AutoPhase = NodePath("UI/pause/auto_phase")
 FastAI = NodePath("UI/pause/fast_ai")
+ActionChangePart = NodePath("UI/pause/particles")
 VisCapitals = NodePath("UI/pause/vis_capitals")
 VisUI = NodePath("UI/pause/vis_ui")
 VisTurnOrder = NodePath("UI/pause/vis_turn_order")
@@ -108,10 +111,10 @@ mouse_filter = 2
 
 [node name="command_callout" parent="GameCamera/UI" instance=ExtResource("8_gv3dv")]
 layout_mode = 1
-offset_left = 224.0
-offset_top = -184.0
-offset_right = -608.0
-offset_bottom = -320.0
+offset_left = 288.0
+offset_top = -208.0
+offset_right = 480.0
+offset_bottom = 256.0
 right = true
 
 [node name="Hideable" type="Control" parent="GameCamera/UI"]
@@ -321,7 +324,7 @@ offset_top = 88.0
 offset_right = 432.0
 offset_bottom = 116.0
 focus_mode = 0
-text = "Automatic Phases"
+text = "Automatic phases"
 
 [node name="fast_ai" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
@@ -332,32 +335,41 @@ offset_bottom = 148.0
 focus_mode = 0
 text = "Fast AI"
 
-[node name="vis_capitals" type="CheckButton" parent="GameCamera/UI/pause"]
+[node name="particles" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 104.0
-offset_top = 184.0
+offset_top = 152.0
 offset_right = 432.0
-offset_bottom = 212.0
+offset_bottom = 180.0
 focus_mode = 0
-text = "Capitals Visible"
+text = "Action change particles"
 
-[node name="vis_ui" type="CheckButton" parent="GameCamera/UI/pause"]
+[node name="vis_capitals" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 104.0
 offset_top = 216.0
 offset_right = 432.0
 offset_bottom = 244.0
 focus_mode = 0
-text = "UI Visible"
+text = "Capitals visible"
 
-[node name="vis_turn_order" type="CheckButton" parent="GameCamera/UI/pause"]
+[node name="vis_ui" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 104.0
 offset_top = 248.0
 offset_right = 432.0
 offset_bottom = 276.0
 focus_mode = 0
-text = "Turn Order Visible"
+text = "UI visible"
+
+[node name="vis_turn_order" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 104.0
+offset_top = 280.0
+offset_right = 432.0
+offset_bottom = 308.0
+focus_mode = 0
+text = "Turn order visible"
 
 [node name="keys_title" type="Label" parent="GameCamera/UI/pause"]
 layout_mode = 0
@@ -382,9 +394,9 @@ clip_text = true
 [node name="keys_title3" type="Label" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 112.0
-offset_top = 152.0
+offset_top = 184.0
 offset_right = 432.0
-offset_bottom = 184.0
+offset_bottom = 216.0
 theme_override_font_sizes/font_size = 24
 text = "TEMPORARY OPTIONS"
 clip_text = true
@@ -432,7 +444,8 @@ mobilizing to grab all extra units.
 VISUAL
 Ctrl + H  -  Toggle capitals
 Ctrl + U  -  Toggle UI
-Ctrl + T  -  Toggle turn order"
+Ctrl + T  -  Toggle turn order
+Ctrl + A  -  Toggle action change particles"
 
 [node name="win" type="Label" parent="GameCamera/UI"]
 visible = false
@@ -530,6 +543,7 @@ texture_normal = ExtResource("18_mtr1x")
 [connection signal="toggled" from="GameCamera/UI/pause/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="GameCamera/UI/pause/auto_phase" to="." method="set_auto_phases"]
 [connection signal="toggled" from="GameCamera/UI/pause/fast_ai" to="." method="set_speedrun_ai"]
+[connection signal="toggled" from="GameCamera/UI/pause/particles" to="." method="set_action_change_particles"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_capitals" to="." method="set_capital_visibility"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_ui" to="GameCamera" method="set_ui_visibility"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_turn_order" to="GameCamera" method="set_turn_order_visibility"]

@@ -592,8 +592,10 @@ func add_action():
 	match(current_action):
 		ACTION_NORMAL:
 			action_amount += 1
+			game_camera.changed_action_amount(1, align_color[current_playing_align])
 		ACTION_MOBILIZE, ACTION_BONUS:
 			bonus_action_amount += 1
+			game_camera.changed_action_amount(1, align_color[current_playing_align])
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "add_action")
 
 
@@ -603,16 +605,20 @@ func action_done(region_name : String, amount : int = 1):
 		if action_amount > 0:
 			GameStats.add_to_stat(current_playing_align, "first actions done", 1)
 			action_amount -= 1
+			game_camera.changed_action_amount(-1, align_color[current_playing_align])
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 		if action_amount <= 0 and auto_end_phase:
 			change_current_action()
 	elif current_action == ACTION_MOBILIZE:
+		bonus_action_amount += amount
+		game_camera.changed_action_amount(amount, align_color[current_playing_align])
 		for i in range(amount):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 	elif current_action == ACTION_BONUS:
 		if bonus_action_amount > 0:
 			GameStats.add_to_stat(current_playing_align, "bonus actions done", 1)
 			bonus_action_amount -= 1
+			game_camera.changed_action_amount(-1, align_color[current_playing_align])
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 		if bonus_action_amount <= 0 and auto_end_phase:
 			change_current_action()

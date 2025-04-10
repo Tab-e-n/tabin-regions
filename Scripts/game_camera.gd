@@ -17,6 +17,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var PlayerInfo : Control
 @export var PlayerActions : Control
 @export var MapTintList : Array[NodePath]
+@export var ActionChangeParticle : PackedScene
 
 @export_subgroup("Buttons")
 @export var AdvanceTurnButton : BaseButton
@@ -44,6 +45,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var MouseScroll : BaseButton
 @export var AutoPhase : BaseButton
 @export var FastAI : BaseButton
+@export var ActionChangePart : BaseButton
 @export var VisCapitals : BaseButton
 @export var VisUI : BaseButton
 @export var VisTurnOrder : BaseButton
@@ -176,6 +178,8 @@ func _deffered_ready():
 		AutoPhase.button_pressed = Options.auto_end_turn_phases
 	if FastAI:
 		FastAI.button_pressed = Options.speedrun_ai
+	if ActionChangePart:
+		ActionChangePart.button_pressed = Options.action_change_particles
 	if VisCapitals and region_control:
 		VisCapitals.button_pressed = region_control.cities_visible
 	if VisUI and UIHideable:
@@ -520,3 +524,21 @@ func shake_camera(duration : float, amplitude : float, period : float) -> void:
 	shake_time += duration
 	shake_amplitude += amplitude
 	shake_period = max(period, shake_period)
+
+
+func changed_action_amount(amount : int, color : Color) -> void:
+	if not Options.action_change_particles:
+		return
+	if UIHideable:
+		if not UIHideable.visible:
+			return
+	if amount == 0:
+		return
+	var part = ActionChangeParticle.instantiate()
+	if amount > 0:
+		part.text = "+" + str(amount)
+	else:
+		part.text = str(amount)
+	part.position = Vector2(-448, 208)
+	part.color = color
+	UI.add_child(part)

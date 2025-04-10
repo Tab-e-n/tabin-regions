@@ -113,13 +113,21 @@ func _process(delta):
 		
 		if Input.is_action_just_pressed("ai_speedrun"):
 			set_speedrun_ai(not Options.speedrun_ai)
-			ai_control.speedrun_ai_update()
 			if Options.speedrun_ai:
 				new_callout("Fast AI")
 			else:
 				new_callout("Slow AI")
 			if game_camera.FastAI:
 				game_camera.FastAI.button_pressed = Options.speedrun_ai
+		
+		if Input.is_action_just_pressed("action_change_particles"):
+			set_action_change_particles(not Options.action_change_particles)
+			if Options.action_change_particles:
+				new_callout("Action change particles on")
+			else:
+				new_callout("Action change particles off")
+			if game_camera.ActionChangePart:
+				game_camera.ActionChangePart.button_pressed = Options.action_change_particles
 	
 	mouse_wheel_input = 0
 
@@ -146,6 +154,11 @@ func set_auto_phases(auto : bool):
 
 func set_speedrun_ai(speedy : bool):
 	Options.speedrun_ai = speedy
+	ai_control.speedrun_ai_update()
+
+
+func set_action_change_particles(active : bool):
+	Options.action_change_particles = active
 
 
 func new_callout(text: String):
@@ -187,5 +200,3 @@ func lose(align : int):
 
 func leave():
 	get_tree().change_scene_to_file("res://stats.tscn")
-
-
