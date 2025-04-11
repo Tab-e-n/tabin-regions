@@ -310,7 +310,7 @@ func update_ui_color():
 
 func update_current_action(current_action : int):
 	if CurrentAction:
-		const ACTIONS : Array[String] = ["FIRST ACTION", "MOBILIZE", "BONUS ACTION"]
+		const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
 		CurrentAction.text = ACTIONS[current_action]
 
 

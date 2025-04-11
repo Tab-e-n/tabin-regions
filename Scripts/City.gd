@@ -60,9 +60,13 @@ func _process(_delta):
 				hide_attacks()
 			region_name.visible = is_hovered()
 		
-		if Input.is_action_just_pressed("show_extra"):
-			if region.power > 1 and region.region_control.current_playing_align == region.alignment:
-				make_particle(true)
+		if Input.is_action_just_pressed("show_extra") and region.power > 1:
+			if Input.is_action_pressed("shift"):
+				if region.region_control.current_playing_align != region.alignment and not region.region_control.alignment_neutral(region.alignment):
+					make_particle(true)
+			else:
+				if region.region_control.current_playing_align == region.alignment:
+					make_particle(true)
 
 
 func update_region_name():

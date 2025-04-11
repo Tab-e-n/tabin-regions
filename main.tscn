@@ -434,6 +434,7 @@ Ctrl + Space  -  Advance turn phase
 Ctrl + Alt + Space  -  End turn
 Ctrl + Alt + \"-\"  -  Forfeit
 Ctrl + E  -  Highlight your mobilizable cities
+Ctrl + Shift + E  -  Highlight enemy mobilizable cities
 Ctrl + Alt + P  -  Toggle automatic phase advancing
 Ctrl + Alt + Enter  -  Toggle fast AI
 
