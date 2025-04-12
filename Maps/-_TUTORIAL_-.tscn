@@ -60,7 +60,7 @@ func _ready():
 		queue_free()
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_layio"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnc3d"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
@@ -118,103 +118,103 @@ func _on__tutorial__turn_phase_changed(phase):
 		visible = true
 "
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_jc46t"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ks1fk"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_un0de"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mni55"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dbcsx"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0kepp"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_evoyv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_knstt"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p1ao4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_45n6k"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_leshg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qgmx7"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_d2xo4"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cex0g"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_vi3o5"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p7car"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_1d7c2"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3uy0n"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gsxgq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_isyxy"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_7qmbc"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4mgnb"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tyusg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3g0wo"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5nv8u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_qsjw6"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_fs5mv"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8wt7c"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_dny0r"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5edyy"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qajcb"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_b7dw8"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_p618k"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_d0jee"]
 shader = ExtResource("2_ewhbl")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
@@ -260,10 +260,12 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="intro" type="Label" parent="."]
-offset_left = -200.0
-offset_top = -231.0
-offset_right = 200.0
-offset_bottom = 85.0
+offset_left = -184.0
+offset_top = -232.0
+offset_right = 553.0
+offset_bottom = 392.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "Welcome to Regions!
 
@@ -283,10 +285,12 @@ alternatively use the arrow keys.
 horizontal_alignment = 1
 
 [node name="region" type="Label" parent="."]
-offset_left = -256.0
+offset_left = -240.0
 offset_top = 384.0
-offset_right = 256.0
-offset_bottom = 488.0
+offset_right = 720.0
+offset_bottom = 560.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "Here we can see a basic region.
 
@@ -296,10 +300,12 @@ They always contain a city (the circle) somewhere in their bounds.
 horizontal_alignment = 1
 
 [node name="region2" type="Label" parent="."]
-offset_left = -176.0
+offset_left = -152.0
 offset_top = 688.0
-offset_right = 176.0
-offset_bottom = 832.0
+offset_right = 456.0
+offset_bottom = 944.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "The number in the city tells you
 the region's current power.
@@ -311,7 +317,7 @@ the region's maximum power in brackets.
 horizontal_alignment = 1
 
 [node name="Examplia" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_layio")
+material = SubResource("ShaderMaterial_rnc3d")
 position = Vector2(0, 592)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-136, -16, -72, -80, 48, -88, 120, -40, 128, 32, 56, 72, -40, 72, -112, 48)
@@ -319,10 +325,12 @@ uv = PackedVector2Array(0, 57.6, 31.0303, 6.4, 89.2121, 0, 124.121, 38.4, 128, 9
 script = ExtResource("2_bnykq")
 
 [node name="actions_bar" type="Label" parent="."]
-offset_left = -264.0
+offset_left = -248.0
 offset_top = 1064.0
-offset_right = 280.0
-offset_bottom = 1240.0
+offset_right = 744.0
+offset_bottom = 1400.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "By now you probably noticed the panel on the bottom of the screen.
 This panel shows you information about your current turn.
@@ -337,8 +345,10 @@ horizontal_alignment = 1
 [node name="actions_first" type="Label" parent="."]
 offset_left = -728.0
 offset_top = 1336.0
-offset_right = -216.0
-offset_bottom = 1616.0
+offset_right = 264.0
+offset_bottom = 1880.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "Turns start with the phase \"first actions\".
 In this phase, you can click on enemy cities to attempt to
@@ -358,8 +368,10 @@ horizontal_alignment = 1
 [node name="actions_end_phase" type="Label" parent="."]
 offset_left = -168.0
 offset_top = 1536.0
-offset_right = 184.0
-offset_bottom = 1616.0
+offset_right = 504.0
+offset_bottom = 1680.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "To end any phase, press the big button on
 the right side of the bottom panel. This is the
@@ -370,8 +382,10 @@ script = SubResource("GDScript_xj31w")
 [node name="actions_mobilize" type="Label" parent="."]
 offset_left = -192.0
 offset_top = 1336.0
-offset_right = 208.0
-offset_bottom = 1496.0
+offset_right = 576.0
+offset_bottom = 1640.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "The second phase is \"mobilization\"
 
@@ -386,8 +400,10 @@ script = SubResource("GDScript_4l5p2")
 [node name="actions_bonus" type="Label" parent="."]
 offset_left = 232.0
 offset_top = 1336.0
-offset_right = 618.0
-offset_bottom = 1543.0
+offset_right = 936.0
+offset_bottom = 1720.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "The \"bonus actions\" phase acts the same
 as the \"first actions\" phase.
@@ -402,10 +418,12 @@ horizontal_alignment = 1
 script = SubResource("GDScript_378v5")
 
 [node name="buttons" type="Label" parent="."]
-offset_left = -232.0
+offset_left = -224.0
 offset_top = 1912.0
-offset_right = 232.0
-offset_bottom = 2032.0
+offset_right = 672.0
+offset_bottom = 2136.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "The bottom screen panel has two smaller buttons that can be
 used aswell. The button with the two opposed arrows will end
@@ -416,7 +434,7 @@ horizontal_alignment = 1
 script = SubResource("GDScript_fugbh")
 
 [node name="Mobi" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_jc46t")
+material = SubResource("ShaderMaterial_ks1fk")
 position = Vector2(-312, 1712)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(48, -24, -16, -32, -72, -24, -112, 0, -112, 64, -80, 104, -16, 128, 40, 104, 96, 104, 120, 64, 128, 24, 104, 8)
@@ -428,7 +446,7 @@ max_power = 3
 is_capital = true
 
 [node name="Cobi" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_un0de")
+material = SubResource("ShaderMaterial_mni55")
 position = Vector2(-72, 1792)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-127.49, 23.2991, -103.49, -8.70093, -95.4902, -48.7009, -39.4902, -48.7009, -7.49023, -64.7009, 40.5098, -32.7009, 80.5098, -32.7009, 96.5098, 15.2991, 72.5098, 47.2991, 80.5098, 71.2991, 40.5098, 79.2991, 8.50977, 55.2991, -39.4902, 71.2991, -71.4902, 31.2991)
@@ -438,7 +456,7 @@ alignment = 1
 max_power = 3
 
 [node name="Tobi" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_dbcsx")
+material = SubResource("ShaderMaterial_0kepp")
 position = Vector2(112, 1800)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-95.9182, 37.5596, -87.9182, 61.5596, -7.91821, 29.5596, 48.0818, 45.5596, 120.082, 29.5596, 128.082, -18.4404, 96.0818, -66.4404, 40.0818, -42.4404, -23.9182, -66.4404, -87.9182, -42.4404, -71.9182, 5.55957)
@@ -448,7 +466,7 @@ power = 0
 max_power = 2
 
 [node name="Gobi" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_evoyv")
+material = SubResource("ShaderMaterial_knstt")
 position = Vector2(346, 1786)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-129.742, -57.9722, -89.7419, -9.97217, -97.7419, 46.0278, -41.7419, 38.0278, 6.25806, 62.0278, 46.2581, 62.0278, 78.2581, 30.0278, 78.2581, -17.9722, 38.2581, -41.9722, -1.74194, -49.9722, -49.7419, -73.9722, -97.7419, -65.9722)
@@ -457,10 +475,12 @@ script = ExtResource("2_bnykq")
 max_power = 2
 
 [node name="last" type="Label" parent="."]
-offset_left = -280.0
+offset_left = -224.0
 offset_top = 2208.0
-offset_right = 280.0
-offset_bottom = 2424.0
+offset_right = 672.0
+offset_bottom = 2624.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "Now you know how to play!
 Again, you win by capturing all enemy regions. This doesn't
@@ -478,8 +498,10 @@ horizontal_alignment = 1
 [node name="last2" type="Label" parent="."]
 offset_left = -784.0
 offset_top = 2496.0
-offset_right = -384.0
-offset_bottom = 2616.0
+offset_right = -32.0
+offset_bottom = 2720.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
 theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "Last thing! This is your capital region. ---> 
 You can tell it is a capital because the city isn't a
@@ -489,7 +511,7 @@ and defending capitals is important!"
 horizontal_alignment = 1
 
 [node name="Greenland" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_p1ao4")
+material = SubResource("ShaderMaterial_45n6k")
 position = Vector2(-256, 2544)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-88, 128, -64, 64, -80, 40, -112, 8, -104, -40, -88, -80, -32, -80, 40, -96, 104, -88, 120, -56, 80, -24, 40, 24, 16, 72, -8, 112, -56, 120)
@@ -499,7 +521,7 @@ alignment = 1
 is_capital = true
 
 [node name="Green Acres" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_leshg")
+material = SubResource("ShaderMaterial_qgmx7")
 position = Vector2(-328, 2728)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-16, -40, 24, -48, 64, -56, 128, 8, 112, 112, 56, 112, -40, 128, -96, 104, -56, 16)
@@ -508,7 +530,7 @@ script = ExtResource("2_bnykq")
 power = 0
 
 [node name="Green Hill" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_d2xo4")
+material = SubResource("ShaderMaterial_cex0g")
 position = Vector2(-152, 2688)
 offset = Vector2(-8, -72)
 texture = ExtResource("3_5siwf")
@@ -518,7 +540,7 @@ script = ExtResource("2_bnykq")
 power = 0
 
 [node name="Greg" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_vi3o5")
+material = SubResource("ShaderMaterial_p7car")
 position = Vector2(-328, 2912)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(8, -48, -32, -40, -120, -64, -192, 48, -192, 88, -152, 24, -112, -24, -48, 0, -120, 32, -144, 104, -136, 136, -104, 56, -32, 24, 8, 40, 56, 24, 88, 64, 72, 144, 112, 72, 88, 16, 128, 16, 184, 112, 184, 48, 136, -16, 88, -40, 56, -32)
@@ -526,7 +548,7 @@ uv = PackedVector2Array(68.0851, 9.84615, 54.4681, 14.7692, 24.5106, 0, 0, 68.92
 script = ExtResource("2_bnykq")
 
 [node name="Tshenkovitse" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_1d7c2")
+material = SubResource("ShaderMaterial_3uy0n")
 position = Vector2(-224, 3160)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-208, -112, -104, -128, -24, -72, 96, -104, 152, -128, 232, -120, 240, -56, 192, -32, 112, -8, 64, 16, -24, 40, -88, 32, -160, -24, -208, -48, -272, -56, -320, -88, -344, -136, -328, -160, -296, -120, -240, -96)
@@ -535,7 +557,7 @@ script = ExtResource("2_bnykq")
 max_power = 7
 
 [node name="Red Water" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_gsxgq")
+material = SubResource("ShaderMaterial_isyxy")
 position = Vector2(64, 3168)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-272, 48, -280, 88, -256, 128, -264, 176, -216, 208, -160, 200, -168, 168, -176, 120, -120, 88, -72, 48, 0, 32, 80, 32, 160, 32, 224, 8, 240, -16, 224, -64, 200, -72, 112, -48, 40, -48, -16, -48, -64, -32, -112, -16, -160, 8, -208, 32)
@@ -544,7 +566,7 @@ script = ExtResource("2_bnykq")
 max_power = 7
 
 [node name="Forgotten Capital" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_7qmbc")
+material = SubResource("ShaderMaterial_4mgnb")
 position = Vector2(-336, 3296)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-40, -48, -72, 0, -56, 56, 24, 96, 104, 80, 120, -8, 80, -72, 8, -80)
@@ -554,7 +576,7 @@ power = 2
 is_capital = true
 
 [node name="Central Lake" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_tyusg")
+material = SubResource("ShaderMaterial_3g0wo")
 position = Vector2(-8, 2880)
 offset = Vector2(0, 440)
 texture = ExtResource("3_5siwf")
@@ -564,7 +586,7 @@ script = ExtResource("2_bnykq")
 max_power = 6
 
 [node name="Lunar Bay" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_5nv8u")
+material = SubResource("ShaderMaterial_qsjw6")
 position = Vector2(128, 2704)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-104, 48, -40, 48, 8, 72, 48, 128, 64, 176, 104, 88, 80, 8, 24, -16, -32, -16, -72, 8)
@@ -572,7 +594,7 @@ uv = PackedVector2Array(0, 42.6667, 39.3846, 42.6667, 68.9231, 58.6667, 93.5385,
 script = ExtResource("2_bnykq")
 
 [node name="Turtle Road" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_fs5mv")
+material = SubResource("ShaderMaterial_8wt7c")
 position = Vector2(272, 2872)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(-96, 88, -64, 16, -24, -64, 16, -80, 72, -88, 152, -88, 192, -56, 248, -32, 288, -24, 304, -8, 280, 8, 208, 0, 160, -32, 112, -48, 72, -24, 40, 24, 8, 72, -24, 96, -64, 112)
@@ -581,7 +603,7 @@ script = ExtResource("2_bnykq")
 alignment = 2
 
 [node name="Red Plains" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_dny0r")
+material = SubResource("ShaderMaterial_5edyy")
 position = Vector2(376, 2928)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(8, -88, -24, -64, -88, 32, 0, 64, 80, 88, 136, 72, 176, 48, 192, 0, 184, -32, 96, -40, 48, -72)
@@ -590,7 +612,7 @@ script = ExtResource("2_bnykq")
 power = 0
 
 [node name="Red Mountains" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_qajcb")
+material = SubResource("ShaderMaterial_b7dw8")
 position = Vector2(552, 3064)
 texture = ExtResource("3_5siwf")
 polygon = PackedVector2Array(16, -80, 56, 0, 136, 64, 104, 136, 80, 184, 8, 192, -40, 168, -32, 136, -24, 96, -40, 72, -88, 48, -128, 72, -136, 40, -128, -8, -144, -48, -96, -32, -40, -48)
@@ -598,7 +620,7 @@ uv = PackedVector2Array(73.1429, 0, 91.4286, 37.6471, 128, 67.7647, 113.371, 101
 script = ExtResource("2_bnykq")
 
 [node name="Redland" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_p618k")
+material = SubResource("ShaderMaterial_d0jee")
 position = Vector2(376, 3072)
 offset = Vector2(40, -24)
 texture = ExtResource("3_5siwf")

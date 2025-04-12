@@ -11,10 +11,10 @@ func think_bonus():
 
 func think_normal(is_bonus : bool = false):
 	if is_bonus and controler.region_control.bonus_action_amount == 0:
-		controler.CALL_change_current_action = true
+		controler.CALL_turn_end = true
 		return
 	if not is_bonus and controler.region_control.action_amount == 0:
-		controler.CALL_change_current_action = true
+		controler.CALL_turn_end = true
 		return
 	
 #	print("think default first")
@@ -70,7 +70,7 @@ func think_normal(is_bonus : bool = false):
 			if results:
 				controler.selected_capital = results[rng.randi_range(0, results.size() - 1)]
 		else:
-			controler.CALL_change_current_action = true
+			controler.CALL_turn_end = true
 
 
 func think_mobilize():
