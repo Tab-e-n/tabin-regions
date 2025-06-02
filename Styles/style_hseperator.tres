@@ -1,7 +1,0 @@
-[gd_resource type="StyleBoxFlat" format=3 uid="uid://dnpk6ufkxy45q"]
-
-[resource]
-border_width_top = 2
-border_width_bottom = 2
-border_color = Color(0.6, 0.6, 0.6, 1)
-corner_detail = 2
