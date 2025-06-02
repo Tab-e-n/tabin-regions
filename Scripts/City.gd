@@ -9,6 +9,7 @@ var text : Label = Label.new()
 var region_name : Label = Label.new()
 
 var was_hovered : bool = false
+var offset : Vector2
 
 func _ready():
 	if region.hide_capital:
@@ -16,20 +17,22 @@ func _ready():
 	
 	if is_capital:
 		texture_normal = preload("res://sprites/capital.png")
+		offset = Vector2(40, 40)
 	else:
 		texture_normal = preload("res://sprites/city.png")
+		offset = Vector2(32, 32)
 	z_index = 20
-	var city_size : float = 1.0
+	var city_size : float = 0.8
 	if region.region_control:
-		city_size = region.region_control.city_size
-	position = Vector2(-32 * city_size, -32 * city_size)
+		city_size = region.region_control.city_size * 0.8
+	position = offset * -city_size
 	scale = Vector2(city_size, city_size)
 	
 	text.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	text.size = Vector2(128, 128)
+	text.size = offset * 4
 	text.z_index = 1
-	text.add_theme_font_size_override("font_size", 36)
+	text.add_theme_font_size_override("font_size", offset.x * 1.2)
 	text.scale = Vector2(0.5, 0.5)
 	add_child(text)
 	
@@ -74,7 +77,7 @@ func update_region_name():
 	if OS.has_feature("editor"):
 		region_name.text += " (" + String.num(region.distance_from_capital) + ")"
 	region_name.size = region_name.get_theme_font("font").get_string_size(region_name.text, HORIZONTAL_ALIGNMENT_CENTER, -1, 16)
-	region_name.position = Vector2(region_name.size.x * -0.5 + 24, -32)
+	region_name.position = Vector2((offset.x - region_name.size.x * 0.5 - 4), -offset.y)
 
 
 func color_self(new_color : Color):
@@ -86,7 +89,7 @@ func make_particle(mobilize : bool):
 	var part : Sprite2D = Sprite2D.new()
 	part.set_script(preload("res://scripts/particle_city_selected.gd"))
 	part.texture = preload("res://sprites/circle.png")
-	part.position = Vector2(32, 32)
+	part.position = offset
 	part.set_color(self_modulate)
 	part.mobilize = mobilize
 	add_child(part)

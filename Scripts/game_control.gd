@@ -2,6 +2,8 @@ extends Node2D
 class_name GameControl
 
 
+enum CURSOR {NORMAL, BLOCKED, PLUS, SHIELD, SWORD, FULL_PLUS, FULL_SHIELD, FULL_SWORD}
+
 @export var map : String = "2._Testlandia.tscn"
 
 @onready var game_camera : GameCamera
@@ -62,13 +64,13 @@ func _process(delta):
 		if game_camera.cam_movement_stop > 0:
 			game_camera.cam_movement_stop -= 1
 		elif Options.mouse_scroll_active:
-			if mouse_position.x > game_camera.window_size.x - 64:
+			if mouse_position.x > game_camera.window_size.x - 16:
 				direction.x += 1
-			if mouse_position.x < 64:
+			if mouse_position.x < 16:
 				direction.x -= 1
-			if mouse_position.y > game_camera.window_size.y - 64:
+			if mouse_position.y > game_camera.window_size.y - 16:
 				direction.y += 1
-			if mouse_position.y < 64:
+			if mouse_position.y < 16:
 				direction.y -= 1
 		
 		game_camera.move_camera(delta, direction, shift, ctrl)
@@ -200,3 +202,25 @@ func lose(align : int):
 
 func leave():
 	get_tree().change_scene_to_file("res://stats.tscn")
+
+
+static func set_cursor(cursor : CURSOR):
+	match cursor:
+		CURSOR.NORMAL:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))
+		CURSOR.BLOCKED:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_block.png"))
+		CURSOR.PLUS:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_plus.png"))
+		CURSOR.SHIELD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_shield.png"))
+		CURSOR.SWORD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_sword.png"))
+		CURSOR.FULL_PLUS:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_plus.png"))
+		CURSOR.FULL_SHIELD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_shield.png"))
+		CURSOR.FULL_SWORD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_sword.png"))
+		_:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))

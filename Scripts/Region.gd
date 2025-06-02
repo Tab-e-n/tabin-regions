@@ -100,7 +100,8 @@ func _ready_deferred():
 	add_child(city)
 	if region_control and not region_control.dummy:
 		city.pressed.connect(_on_capital_pressed)
-		city.mouse_entered.connect(show_region_connections)
+		city.mouse_entered.connect(_on_mouse_entered)
+		city.mouse_exited.connect(_on_mouse_exited)
 		
 	color_self(false)
 
@@ -322,9 +323,43 @@ func hide_region_connections():
 		connection.hide_self()
 
 
+func update_cursor():
+	if region_control.dummy:
+		pass
+	elif not region_control.is_player_controled:
+		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+		
+	elif region_control.current_playing_align == alignment:
+		if region_control.current_action == RegionControl.ACTION_MOBILIZE:
+			if power > 1:
+				GameControl.set_cursor(GameControl.CURSOR.PLUS)
+				
+			else:
+				GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+			
+		else:
+			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
+			
+	elif region_control.current_action != RegionControl.ACTION_MOBILIZE:
+		GameControl.set_cursor(GameControl.CURSOR.SWORD)
+		
+	else:
+		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+
+
 func _on_capital_pressed():
 	if region_control.is_player_controled and not region_control.dummy:
 		action_decided()
+	update_cursor()
+
+
+func _on_mouse_entered():
+	show_region_connections()
+	update_cursor()
+
+
+func _on_mouse_exited():
+	GameControl.set_cursor(GameControl.CURSOR.NORMAL)
 
 
 func power_color(amount : int, no_zero : bool):
