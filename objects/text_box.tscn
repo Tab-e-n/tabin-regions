@@ -1,0 +1,110 @@
+[gd_scene load_steps=11 format=3 uid="uid://dikxdeaxwl51g"]
+
+[ext_resource type="Script" path="res://scripts/text_box.gd" id="1_3ya5g"]
+[ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="1_11prg"]
+[ext_resource type="Texture2D" uid="uid://cro4rr8vwvrhs" path="res://sprites/info.png" id="1_c57oj"]
+[ext_resource type="Texture2D" uid="uid://cbl5kq46ifv0m" path="res://sprites/mask_info.png" id="2_xpei1"]
+[ext_resource type="StyleBox" uid="uid://dc1w42tfx0dul" path="res://styles/style_label_tutorial.tres" id="5_krdjd"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5rpnn"]
+shader = ExtResource("1_11prg")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("2_xpei1")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v10uf"]
+shader = ExtResource("1_11prg")
+shader_parameter/value = 1.0
+shader_parameter/mask = ExtResource("2_xpei1")
+
+[sub_resource type="Animation" id="Animation_1dbpo"]
+resource_name = "appear"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("text:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0, 0), Vector2(0.6, 0.6), Vector2(0.5, 0.5)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("text:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, true]
+}
+
+[sub_resource type="Animation" id="Animation_r50ng"]
+resource_name = "disappear"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("text:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.1, 0.4),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector2(0.5, 0.5), Vector2(0.6, 0.6), Vector2(0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("text:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_1xusi"]
+_data = {
+"appear": SubResource("Animation_1dbpo"),
+"disappear": SubResource("Animation_r50ng")
+}
+
+[node name="TextBox" type="TextureButton"]
+offset_left = -16.0
+offset_top = -16.0
+offset_right = 16.0
+offset_bottom = 16.0
+toggle_mode = true
+texture_normal = ExtResource("1_c57oj")
+script = ExtResource("1_3ya5g")
+shader_light = SubResource("ShaderMaterial_5rpnn")
+shader_dark = SubResource("ShaderMaterial_v10uf")
+
+[node name="anim" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_1xusi")
+}
+
+[node name="text" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 24.0
+offset_top = 24.0
+offset_right = 41.0
+offset_bottom = 63.0
+scale = Vector2(1e-05, 1e-05)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("5_krdjd")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[connection signal="toggled" from="." to="." method="_on_toggled"]

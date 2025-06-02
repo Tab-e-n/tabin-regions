@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://btcck3xcj2vbf"]
+
+[ext_resource type="Script" path="res://scripts/particle_thunder_cloud.gd" id="1_1kjlj"]
+[ext_resource type="PackedScene" uid="uid://ctbrxkbv3kxgh" path="res://objects/particle_cloud.tscn" id="2_801gu"]
+
+[node name="ThunderCloud" type="Node2D"]
+script = ExtResource("1_1kjlj")
+
+[node name="Cloud" parent="." instance=ExtResource("2_801gu")]

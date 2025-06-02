@@ -1,0 +1,608 @@
+[gd_scene load_steps=33 format=3 uid="uid://02bnffpw4xmq"]
+
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_hywy4"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="2_lql3s"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_tlyqu"]
+[ext_resource type="StyleBox" uid="uid://dc1w42tfx0dul" path="res://styles/style_label_tutorial.tres" id="2_w6fy5"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_ek2to"]
+[ext_resource type="PackedScene" uid="uid://dikxdeaxwl51g" path="res://objects/text_box.tscn" id="3_thjdb"]
+
+[sub_resource type="GDScript" id="GDScript_ojoeb"]
+script/source = "extends Node
+
+var connections : Array = [
+	[\"Blupital\", \"Blue Beach\"],
+	[\"Blupital\", \"Bluh Bluh\"],
+	[\"Bluh Bluh\", \"Blue Beach\"],
+	[\"Bluh Bluh\", \"Midland\"],
+	[\"Midland\", \"Blue Beach\"],
+	[\"Bluh Bluh\", \"Mushroom Meadow\"],
+	[\"Greenopolis\", \"Green Grass\"],
+	[\"Greenopolis\", \"Frederic's Land\"],
+	[\"Frederic's Land\", \"Green Grass\"],
+	[\"Frederic's Land\", \"Baffin Coast\"],
+	[\"Lake of Dess\", \"Green Grass\"],
+	[\"Lake of Dess\", \"Mushroom Meadow\"],
+	[\"Mushroom Meadow\", \"Green Grass\"],
+	[\"Lake of Dess\", \"Baffin Coast\"],
+	[\"Lake of Dess\", \"Lamanch Lowlands\"],
+	[\"Lake of Dess\", \"Lahama\"],
+	[\"Lake of Dess\", \"Crampus Country\"],
+	[\"Mushroom Meadow\", \"Crampus Country\"],
+	[\"Mushroom Meadow\", \"Midland\"],
+	[\"Midland\", \"Crampus Country\"],
+	[\"Midland\", \"Last Coast\"],
+	[\"Last Coast\", \"Crampus Country\"],
+	[\"Lahama\", \"Lamanch Lowlands\"],
+	[\"Lamanch Grove\", \"Lamanch Lowlands\"],
+	[\"Lahama\", \"Red Camping\"],
+	[\"Lamanch Grove\", \"Red Camping\"],
+	[\"Lamanch Grove\", \"Last Coast\"],
+	[\"Last Coast\", \"Red Camping\"],
+	[\"Crampus Country\", \"Red Camping\"],
+	[\"Lamanch Lowlands\", \"Baffin Coast\"],
+	[\"Frederic's Land\", \"Lake of Dess\"],
+	[\"Grunchy Grunch\", \"Green Grass\"],
+	[\"Grunchy Grunch\", \"Bluh Bluh\"],
+	[\"Grunchy Grunch\", \"Mushroom Meadow\"],
+	[\"Southern Lamanch\", \"Northern Lamanch\", 1],
+	[\"Lamanch Lowlands\", \"Northern Lamanch\"],
+	[\"Lamanch Grove\", \"Northern Lamanch\"],
+	[\"Lamanch Grove\", \"Red Bay\"],
+	[\"Red Bay\", \"Northern Lamanch\"],
+	[\"Southern Lamanch\", \"Red Bay\"],
+	[\"Southern Lamanch\", \"Redville\"],
+	[\"Red Downtown\", \"Red Bay\"],
+	[\"Red Downtown\", \"Redville\"],
+	[\"Southern Lamanch\", \"Red Downtown\"],
+]
+
+func _ready():
+	get_parent().connections = connections.duplicate()
+	queue_free()
+"
+
+[sub_resource type="GDScript" id="GDScript_sn1dp"]
+script/source = "extends Polygon2D
+
+
+func _ready():
+	if get_parent().dummy:
+		visible = true
+	else:
+		queue_free()
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nf1yi"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vx243"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_57ymq"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yyudc"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o0ynp"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4mb2k"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_q133q"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8p6l3"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2vjv7"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_jc8nk"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o754a"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m8k0k"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1yaky"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_r5odx"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rnx2k"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ghnu5"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8pqck"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_c1jpu"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ckd4f"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u21jv"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j5jdh"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_f7wla"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_oqtg0"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7x2w6"]
+shader = ExtResource("2_tlyqu")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[node name="- TUTORIAL -" type="Polygon2D"]
+position = Vector2(0, -1)
+color = Color(0.521569, 0.521569, 0.603922, 1)
+polygon = PackedVector2Array(-1024, -448, 1024, -448, 1024, 2368, -1024, 2368)
+script = ExtResource("1_hywy4")
+use_alignment_picker = false
+lock_player_amount = true
+lock_aliances = true
+lock_ai_setup = true
+align_amount = 4
+use_preset_alignments = true
+preset_alignments = Array[int]([1, 2, 3])
+use_aliances = true
+alignment_aliances = Array[int]([0, 1, 1, 2])
+tag = 3
+complexity = 2
+lore = "A follow-up on the previous tutorial, explains to you the remaining gameplay mechanics. CAN BE SKIPPED, BUT I RECOMMEND YOU PLAY ONLY BEGINNER MAPS UNTIL YOU COMPLETE THIS."
+align_color = Array[Color]([Color(0.431373, 0.341176, 0.411765, 1), Color(0.101961, 0.564706, 0.368627, 1), Color(0.14902, 0.490196, 0.741176, 1), Color(0.670588, 0.141176, 0.2, 1)])
+align_names = Array[String](["Neutral", "You", "Friend", "Enemy"])
+main_character = 1
+snap_camera_to_first_align_capital = false
+
+[node name="Node" type="Node" parent="."]
+script = SubResource("GDScript_ojoeb")
+
+[node name="spoilerwall" type="Polygon2D" parent="."]
+visible = false
+z_index = 21
+color = Color(0.192157, 0.192157, 0.266667, 1)
+polygon = PackedVector2Array(2048, -1536, 2048, 1536, -2048, 1536, -2048, -1536)
+script = SubResource("GDScript_sn1dp")
+
+[node name="tut" type="Label" parent="spoilerwall"]
+offset_left = -512.0
+offset_top = -40.0
+offset_right = 709.0
+offset_bottom = 51.0
+theme_override_font_sizes/font_size = 64
+text = "TUTORIAL FOR THE VIDEO GAME, WOW!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="intro" type="Label" parent="."]
+offset_left = -224.0
+offset_top = -231.0
+offset_right = 672.0
+offset_bottom = -7.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_w6fy5")
+text = "Welcome to the Advanced Tutorial!
+
+If you haven't played the previous tutorial, exit out through
+the pause menu and go play it. You will not know how to
+play the game without playing that one first."
+horizontal_alignment = 1
+
+[node name="turn_order" type="Label" parent="."]
+offset_left = -304.0
+offset_top = -47.0
+offset_right = 912.0
+offset_bottom = 257.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_w6fy5")
+text = "Let's start with the new UI element that was added, the rectangle with
+colorful figures in the top left corner. This shows you the player turn order.
+Right now, green starts, then blue has their turn, and red is last.
+Human players always start before computer players on standard maps.
+
+Hovering over any of the figures will show you the player's captured capitals and
+captured regions, along with the a name for who they are playing as."
+horizontal_alignment = 1
+
+[node name="aliances" type="Label" parent="."]
+offset_left = -280.0
+offset_top = 177.0
+offset_right = 840.0
+offset_bottom = 561.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_w6fy5")
+text = "You may also notice that there are numbers on the figures. This is because
+of an optional feature you may enable while playing, called \"aliances\".
+Players with the same number are on a team and play together. This means
+that you have a friend in this tutorial! :D
+
+Allied players win together if they are the last ones left. Clicking on regions
+owned by allied players during the \"first actions\" and \"bonus actions\"
+phases will reinforce them, as if they were your regions.
+Here is a blue region where you can try it out (You play as green):"
+horizontal_alignment = 1
+
+[node name="Examplia" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_nf1yi")
+position = Vector2(0, 520)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-136, -16, -72, -80, 48, -88, 120, -40, 128, 32, 56, 72, -40, 72, -112, 48)
+uv = PackedVector2Array(0, 57.6, 31.0303, 6.4, 89.2121, 0, 124.121, 38.4, 128, 96, 93.0909, 128, 46.5455, 128, 11.6364, 108.8)
+script = ExtResource("2_lql3s")
+alignment = 2
+
+[node name="intro2" type="Label" parent="."]
+offset_left = -256.0
+offset_top = 641.0
+offset_right = 768.0
+offset_bottom = 977.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_w6fy5")
+text = "And that is it! You now know all major aspects of the game!
+There are still a few other things that are covered in this tutorial,
+you can find out more about them by clicking the rounded icons
+with an \"i\" that are spread around the outskirts of the map below.
+
+Cooperate with your blue ally and beat red to complete this tutorial!
+
+V V V"
+horizontal_alignment = 1
+
+[node name="speedrun" parent="." instance=ExtResource("3_thjdb")]
+self_modulate = Color(0.729412, 0.737255, 0.803922, 1)
+offset_left = -912.0
+offset_top = 1289.0
+offset_right = -880.0
+offset_bottom = 1321.0
+text = "You can use the mouse wheel to
+zoom in or zoom out the camera."
+
+[node name="hills" parent="." instance=ExtResource("3_thjdb")]
+self_modulate = Color(0.729412, 0.737255, 0.803922, 1)
+offset_left = -816.0
+offset_top = 1704.0
+offset_right = -784.0
+offset_bottom = 1736.0
+text = "Hover over a city from one of the two regions neighboring there -->
+You see how the connection between them is darker than other
+connections? That is because that connection reduces the power
+of an attack by the number in the brackets. This means that a
+city needs 1 more power than usual to be captured.
+"
+
+[node name="skip_turn" parent="." instance=ExtResource("3_thjdb")]
+self_modulate = Color(0.729412, 0.737255, 0.803922, 1)
+offset_left = 432.0
+offset_top = 1248.0
+offset_right = 464.0
+offset_bottom = 1280.0
+text = "If you still have some first actions left,
+and you advance the turn phase, the
+remaining first actions you have will
+be converted into bonus actions."
+
+[node name="hide" parent="." instance=ExtResource("3_thjdb")]
+self_modulate = Color(0.729412, 0.737255, 0.803922, 1)
+offset_left = 352.0
+offset_top = 1720.0
+offset_right = 384.0
+offset_bottom = 1752.0
+text = "Even though this game is primarily mouse controled,
+it contains a few usefull keybinds that can speed up play,
+or provide some QoL. You can check these keybinds by
+clicking the gearbox icon under the play order.
+
+For example: If you want to look at just the regions
+on their own with no cities, press ctrl + H.
+
+There is something behind this city,
+try hiding cities so you can see it!"
+
+[node name="Blupital" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_vx243")
+position = Vector2(224, 1032)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-104, 96, -72, 56, -88, -16, -56, -64, 0, -88, 64, -64, 104, -8, 72, 48, -8, 80, -48, 136)
+uv = PackedVector2Array(0, 105.143, 19.6923, 82.2857, 9.84615, 41.1429, 29.5385, 13.7143, 64, 0, 103.385, 13.7143, 128, 45.7143, 108.308, 77.7143, 59.0769, 96, 34.4615, 128)
+script = ExtResource("2_lql3s")
+alignment = 2
+is_capital = true
+
+[node name="Greenopolis" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_57ymq")
+position = Vector2(-416, 1352)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-104, -16, -152, -32, -136, -72, -112, -104, -72, -96, -64, -144, 8, -128, 16, -64, 80, -56, 80, 40, 8, 40, 8, 96, -72, 96, -72, 48, -112, 40)
+uv = PackedVector2Array(26.4828, 68.2667, 0, 59.7333, 8.82759, 38.4, 22.069, 21.3333, 44.1379, 25.6, 48.5517, 0, 88.2759, 8.53333, 92.6897, 42.6667, 128, 46.9333, 128, 98.1333, 88.2759, 98.1333, 88.2759, 128, 44.1379, 128, 44.1379, 102.4, 22.069, 98.1333)
+script = ExtResource("2_lql3s")
+alignment = 1
+is_capital = true
+
+[node name="Redville" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_yyudc")
+position = Vector2(-176, 1888)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-32, -72, -56, 16, -104, 72, -128, 112, -96, 128, -64, 112, -16, 128, 0, 96, 24, 88, 40, 48, 56, 24, 72, 8, 32, -16, 16, -56, -16, -72)
+uv = PackedVector2Array(61.44, 0, 46.08, 56.32, 15.36, 92.16, 0, 117.76, 20.48, 128, 40.96, 117.76, 71.68, 128, 81.92, 107.52, 97.28, 102.4, 107.52, 76.8, 117.76, 61.44, 128, 51.2, 102.4, 35.84, 92.16, 10.24, 71.68, 0)
+script = ExtResource("2_lql3s")
+alignment = 3
+is_capital = true
+
+[node name="Red Downtown" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_o0ynp")
+position = Vector2(-24, 1936)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-112, 16, -104, 0, -88, -24, -72, -40, -32, -32, 40, -32, 96, -40, 96, 0, 120, 16, 72, 32, 48, 48, 24, 48, -8, 40, -32, 32, -64, 48, -80, 64, -120, 80, -160, 80, -144, 56, -120, 40)
+uv = PackedVector2Array(21.9429, 59.7333, 25.6, 42.6667, 32.9143, 17.0667, 40.2286, 0, 58.5143, 8.53333, 91.4286, 8.53333, 117.029, 0, 117.029, 42.6667, 128, 59.7333, 106.057, 76.8, 95.0857, 93.8667, 84.1143, 93.8667, 69.4857, 85.3333, 58.5143, 76.8, 43.8857, 93.8667, 36.5714, 110.933, 18.2857, 128, 0, 128, 7.31429, 102.4, 18.2857, 85.3333)
+script = ExtResource("2_lql3s")
+
+[node name="Green Grass" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_4mb2k")
+position = Vector2(-280, 1328)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-112, -48, -112, -80, -32, -80, 16, -48, 64, -32, 104, -40, 152, -24, 208, 0, 208, 32, 184, 48, 160, 40, 120, 48, 88, 32, 56, 32, 24, 48, -8, 40, -48, 40, -48, -40)
+uv = PackedVector2Array(0, 32, 0, 0, 32, 0, 51.2, 32, 70.4, 48, 86.4, 40, 105.6, 56, 128, 80, 128, 112, 118.4, 128, 108.8, 120, 92.8, 128, 80, 112, 67.2, 112, 54.4, 128, 41.6, 120, 25.6, 120, 25.6, 40)
+script = ExtResource("2_lql3s")
+power = 0
+
+[node name="Frederic\'s Land" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_q133q")
+position = Vector2(-312, 1432)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-88, -32, -88, 24, -128, 24, -112, 72, -104, 96, -80, 112, -64, 112, -48, 88, -32, 72, -24, 80, -16, 72, -24, 64, 16, 56, 24, 40, 24, 16, 32, -8, 48, -16, 72, -32, 80, -64, 56, -48, 24, -56, -16, -56, -16, -32)
+uv = PackedVector2Array(24.6154, 23.2727, 24.6154, 64, 0, 64, 9.84615, 98.9091, 14.7692, 116.364, 29.5385, 128, 39.3846, 128, 49.2308, 110.545, 59.0769, 98.9091, 64, 104.727, 68.9231, 98.9091, 64, 93.0909, 88.6154, 87.2727, 93.5385, 75.6364, 93.5385, 58.1818, 98.4615, 40.7273, 108.308, 34.9091, 123.077, 23.2727, 128, 0, 113.231, 11.6364, 93.5385, 5.81818, 68.9231, 5.81818, 68.9231, 23.2727)
+script = ExtResource("2_lql3s")
+
+[node name="Baffin Coast" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_8p6l3")
+position = Vector2(-304, 1536)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-32, 8, -16, 16, 24, 48, 40, 80, 72, 104, 72, 72, 80, 40, 88, 16, 64, -8, 48, -24, 32, -32, -8, -16, -16, -24, -24, -16, -16, -8)
+uv = PackedVector2Array(0, 37.6471, 17.0667, 45.1765, 59.7333, 75.2941, 76.8, 105.412, 110.933, 128, 110.933, 97.8824, 119.467, 67.7647, 128, 45.1765, 102.4, 22.5882, 85.3333, 7.52941, 68.2667, 0, 25.6, 15.0588, 17.0667, 7.52941, 8.53333, 15.0588, 17.0667, 22.5882)
+script = ExtResource("2_lql3s")
+max_power = 4
+
+[node name="Grunchy Grunch" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_2vjv7")
+position = Vector2(-96, 1248)
+offset = Vector2(32, 16)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-104, 16, -8, 56, -8, 24, 24, 8, 56, 16, 72, -8, 72, -104, 48, -112, 24, -88, 8, -72, -8, -80, -24, -104, -64, -112, -72, -96, -64, -64, -144, -48, -128, -32, -104, -32, -88, -24, -88, -8)
+uv = PackedVector2Array(23.7037, 97.5238, 80.5926, 128, 80.5926, 103.619, 99.5556, 91.4286, 118.519, 97.5238, 128, 79.2381, 128, 6.09524, 113.778, 0, 99.5556, 18.2857, 90.0741, 30.4762, 80.5926, 24.381, 71.1111, 6.09524, 47.4074, 0, 42.6667, 12.1905, 47.4074, 36.5714, 0, 48.7619, 9.48148, 60.9524, 23.7037, 60.9524, 33.1852, 67.0476, 33.1852, 79.2381)
+script = ExtResource("2_lql3s")
+
+[node name="Bluh Bluh" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_jc8nk")
+position = Vector2(88, 1184)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-72, -24, -24, -24, 0, -24, 24, -48, 80, -8, 88, 0, 80, 72, 48, 48, 32, 32, -8, 40, -16, 64, -32, 88, -56, 96, -88, 96, -72, 72)
+uv = PackedVector2Array(11.6364, 21.3333, 46.5455, 21.3333, 64, 21.3333, 81.4545, 0, 122.182, 35.5556, 128, 42.6667, 122.182, 106.667, 98.9091, 85.3333, 87.2727, 71.1111, 58.1818, 78.2222, 52.3636, 99.5556, 40.7273, 120.889, 23.2727, 128, 0, 128, 11.6364, 106.667)
+script = ExtResource("2_lql3s")
+
+[node name="Crampus Country" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_o754a")
+position = Vector2(72, 1432)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-80, 80, -72, 88, -24, 80, 8, 32, 48, 80, 96, 72, 120, 16, 96, -24, 56, -56, 32, -80, 8, -80, -24, -64, -8, -32, -32, -24, -48, -24, -64, -16, -56, 32)
+uv = PackedVector2Array(0, 121.905, 5.12, 128, 35.84, 121.905, 56.32, 85.3333, 81.92, 121.905, 112.64, 115.81, 128, 73.1429, 112.64, 42.6667, 87.04, 18.2857, 71.68, 0, 56.32, 0, 35.84, 12.1905, 46.08, 36.5714, 30.72, 42.6667, 20.48, 42.6667, 10.24, 48.7619, 15.36, 85.3333)
+script = ExtResource("2_lql3s")
+power = 2
+
+[node name="Last Coast" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_m8k0k")
+position = Vector2(200, 1520)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(24, 80, 8, 48, 16, 24, 40, 0, 56, -40, 48, -72, 40, -104, 0, -72, -32, 0, -40, 40, -8, 80)
+uv = PackedVector2Array(85.3333, 128, 64, 105.739, 74.6667, 89.0435, 106.667, 72.3478, 128, 44.5217, 117.333, 22.2609, 106.667, 0, 53.3333, 22.2609, 10.6667, 72.3478, 0, 100.174, 42.6667, 128)
+script = ExtResource("2_lql3s")
+
+[node name="Midland" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_1yaky")
+position = Vector2(128, 1304)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-64, -32, -40, 0, -40, 40, -16, 40, 48, 96, 72, 136, 104, 104, 40, 8, 40, -40, -8, -80, -40, -72, -48, -48)
+uv = PackedVector2Array(0, 28.4444, 18.2857, 47.4074, 18.2857, 71.1111, 36.5714, 71.1111, 85.3333, 104.296, 103.619, 128, 128, 109.037, 79.2381, 52.1481, 79.2381, 23.7037, 42.6667, 0, 18.2857, 4.74074, 12.1905, 18.963)
+script = ExtResource("2_lql3s")
+
+[node name="Mushroom Meadow" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_r5odx")
+position = Vector2(-8, 1336)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-56, -48, -56, 24, 8, 72, 32, 64, 48, 64, 56, 56, 48, 32, 88, 8, 88, -32, 64, -56, 40, -48, 0, -48, -32, -56)
+uv = PackedVector2Array(0, 8, 0, 80, 56.8889, 128, 78.2222, 120, 92.4444, 120, 99.5556, 112, 92.4444, 88, 128, 64, 128, 24, 106.667, 0, 85.3333, 8, 49.7778, 8, 21.3333, 0)
+script = ExtResource("2_lql3s")
+
+[node name="Blue Beach" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_rnx2k")
+position = Vector2(208, 1240)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(80, -144, 16, -120, -24, -64, -32, 72, 32, 168, 24, 64, 32, -40)
+uv = PackedVector2Array(128, 0, 54.8571, 9.84615, 9.14286, 32.8205, 0, 88.6154, 73.1429, 128, 64, 85.3333, 73.1429, 42.6667)
+script = ExtResource("2_lql3s")
+power = 0
+
+[node name="Northern Lamanch" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ghnu5")
+position = Vector2(-160, 1728)
+offset = Vector2(96, 32)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-48, -56, 40, -32, 136, -24, 144, 32, 120, 56, 88, 48, 56, 24, 16, 40, -16, 40, -32, 24, -48, 0, -80, -8, -104, -8, -128, -32, -128, -72)
+uv = PackedVector2Array(37.6471, 16, 79.0588, 40, 124.235, 48, 128, 104, 116.706, 128, 101.647, 120, 86.5882, 96, 67.7647, 112, 52.7059, 112, 45.1765, 96, 37.6471, 72, 22.5882, 64, 11.2941, 64, 0, 40, 0, 0)
+script = ExtResource("2_lql3s")
+
+[node name="Southern Lamanch" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_8pqck")
+position = Vector2(8, 1864)
+offset = Vector2(-104, -16)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-104, -96, -40, -72, -8, -40, 32, -24, 80, -24, 120, -16, 152, -8, 176, -16, 176, 8, 168, 40, 104, 48, 48, 48, -8, 40, -40, 16, -56, -24, -96, -40, -112, -40)
+uv = PackedVector2Array(3.55556, 0, 32, 21.3333, 46.2222, 49.7778, 64, 64, 85.3333, 64, 103.111, 71.1111, 117.333, 78.2222, 128, 71.1111, 128, 92.4444, 124.444, 120.889, 96, 128, 71.1111, 128, 46.2222, 120.889, 32, 99.5556, 24.8889, 64, 7.11111, 49.7778, 0, 49.7778)
+script = ExtResource("2_lql3s")
+
+[node name="Lake of Dess" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_c1jpu")
+position = Vector2(-176, 1464)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-72, 40, -32, 80, 32, 120, 144, 96, 160, 48, 184, 0, 176, -48, 144, -72, 104, -96, 80, -80, 56, -88, 16, -80, -16, -96, -48, -96, -56, -64, -96, -32, -104, -16, -104, 8, -80, 0, -56, -24, -24, -32, 0, -32, 32, -48, 96, -48, 112, -24, 128, 0, 112, 32, 96, 40, 80, 48, 56, 48, 32, 48, 16, 32, 0, 16, -32, 16, -56, 16, -64, 24, -88, 32)
+uv = PackedVector2Array(14.2222, 80.5926, 32, 104.296, 60.4444, 128, 110.222, 113.778, 117.333, 85.3333, 128, 56.8889, 124.444, 28.4444, 110.222, 14.2222, 92.4444, 0, 81.7778, 9.48148, 71.1111, 4.74074, 53.3333, 9.48148, 39.1111, 0, 24.8889, 0, 21.3333, 18.963, 3.55556, 37.9259, 0, 47.4074, 0, 61.6296, 10.6667, 56.8889, 21.3333, 42.6667, 35.5556, 37.9259, 46.2222, 37.9259, 60.4444, 28.4444, 88.8889, 28.4444, 96, 42.6667, 103.111, 56.8889, 96, 75.8519, 88.8889, 80.5926, 81.7778, 85.3333, 71.1111, 85.3333, 60.4444, 85.3333, 53.3333, 75.8519, 46.2222, 66.3704, 32, 66.3704, 21.3333, 66.3704, 17.7778, 71.1111, 7.11111, 75.8519)
+script = ExtResource("2_lql3s")
+max_power = 7
+
+[node name="Lamanch Lowlands" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ckd4f")
+position = Vector2(-96, 1640)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-128, 8, -104, 40, -16, 56, 72, 80, 72, 48, 80, 16, 80, -16, 56, -16, 24, -16, -8, -24, -16, -56, -56, -48, -112, -88, -128, -32)
+uv = PackedVector2Array(0, 73.1429, 14.7692, 97.5238, 68.9231, 109.714, 123.077, 128, 123.077, 103.619, 128, 79.2381, 128, 54.8571, 113.231, 54.8571, 93.5385, 54.8571, 73.8462, 48.7619, 68.9231, 24.381, 44.3077, 30.4762, 9.84615, 0, 0, 42.6667)
+script = ExtResource("2_lql3s")
+
+[node name="Lamanch Grove" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_u21jv")
+position = Vector2(96, 1704)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-104, -80, -104, -40, -112, -8, -112, 16, -16, 24, -8, 56, 64, 48, 96, 24, 112, -8, 152, -16, 168, -48, 152, -88, 128, -96, 96, -96, 64, -80, 64, -32, 16, -48, -40, -16, -56, -56)
+uv = PackedVector2Array(3.65714, 13.4737, 3.65714, 47.1579, 0, 74.1053, 0, 94.3158, 43.8857, 101.053, 47.5429, 128, 80.4571, 121.263, 95.0857, 101.053, 102.4, 74.1053, 120.686, 67.3684, 128, 40.4211, 120.686, 6.73684, 109.714, 0, 95.0857, 0, 80.4571, 13.4737, 80.4571, 53.8947, 58.5143, 40.4211, 32.9143, 67.3684, 25.6, 33.6842)
+script = ExtResource("2_lql3s")
+power = 0
+max_power = 6
+
+[node name="Red Bay" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_j5jdh")
+position = Vector2(136, 1824)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-48, -56, -48, -8, -48, 32, -56, 72, -56, 112, -8, 128, 64, 120, 104, 104, 88, 80, 48, 64, 32, 32, 48, 0, 56, -40, 56, -88, 24, -64)
+uv = PackedVector2Array(6.4, 18.963, 6.4, 47.4074, 6.4, 71.1111, 0, 94.8148, 0, 118.519, 38.4, 128, 96, 123.259, 128, 113.778, 115.2, 99.5556, 83.2, 90.0741, 70.4, 71.1111, 83.2, 52.1481, 89.6, 28.4444, 89.6, 0, 64, 14.2222)
+script = ExtResource("2_lql3s")
+
+[node name="Red Camping" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_f7wla")
+position = Vector2(80, 1592)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-88, 24, -32, 48, -24, 88, 32, 56, 72, 72, 72, 24, 104, 8, 72, -32, 80, -80, 32, -72, 0, -112, -24, -72, -80, -64, -56, -16)
+uv = PackedVector2Array(0, 87.04, 37.3333, 102.4, 42.6667, 128, 80, 107.52, 106.667, 117.76, 106.667, 87.04, 128, 76.8, 106.667, 51.2, 112, 20.48, 80, 25.6, 58.6667, 0, 42.6667, 25.6, 5.33333, 30.72, 21.3333, 61.44)
+script = ExtResource("2_lql3s")
+alignment = 3
+
+[node name="Lahama" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_oqtg0")
+position = Vector2(-48, 1592)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(-56, -8, -48, 16, -24, 24, 32, 24, 64, -16, 40, -64, 24, -24)
+uv = PackedVector2Array(0, 81.4545, 8.53333, 116.364, 34.1333, 128, 93.8667, 128, 128, 69.8182, 102.4, 0, 85.3333, 58.1818)
+script = ExtResource("2_lql3s")
+power = 0
+max_power = 4
+
+[node name="???" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_7x2w6")
+position = Vector2(608, 2072)
+texture = ExtResource("3_ek2to")
+polygon = PackedVector2Array(0, -16, -8, -24, -16, -24, -24, -16, -24, -8, -16, 8, 0, 24, 16, 8, 24, -8, 24, -16, 16, -24, 8, -24)
+uv = PackedVector2Array(64, 21.3333, 42.6667, 0, 21.3333, 0, 0, 21.3333, 0, 42.6667, 21.3333, 85.3333, 64, 128, 106.667, 85.3333, 128, 42.6667, 128, 21.3333, 106.667, 0, 85.3333, 0)
+script = ExtResource("2_lql3s")
+
+[node name="Lamanch" type="Line2D" parent="."]
+position = Vector2(384, 1496)
+points = PackedVector2Array(-584, 240, -552, 264, -536, 264, -520, 280, -496, 280, -480, 304, -464, 304, -440, 320, -424, 304, -400, 312, -376, 304, -352, 328, -336, 320, -312, 328, -304, 304)
+width = 20.0
+default_color = Color(0.247059, 0.247059, 0.247059, 1)
+
+[node name="TextBox" parent="." instance=ExtResource("3_thjdb")]
+self_modulate = Color(0.729412, 0.737255, 0.803922, 1)
+offset_left = -768.0
+offset_top = 969.0
+offset_right = -736.0
+offset_bottom = 1001.0
+text = "When you hover over a city, if the turn order is visible, sometimes you
+will get shown a set of numbers. This tells you the sums of power of all
+regions connected to the hovered region, so you can more easily tell if
+an attack is able to capture that region."
