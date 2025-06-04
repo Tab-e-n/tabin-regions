@@ -8,6 +8,9 @@ const PLAY_ORDER_VERTICAL_OFFSET : float = 44
 const PLAY_ORDER_MAX_SIZE : float = 1024
 
 
+var selector : Sprite2D = null
+
+
 func add_leader(pos : int, alignment : int) -> Sprite2D:
 	var leader : Sprite2D = Sprite2D.new()
 	leader.name = String.num(alignment)
@@ -15,6 +18,7 @@ func add_leader(pos : int, alignment : int) -> Sprite2D:
 	leader.hframes = AIControl.PACKED_CONTROLERS.size()
 	leader.position.x = PLAY_ORDER_SPACING / 2 + PLAY_ORDER_SPACING * pos
 	leader.position.y = PLAY_ORDER_VERTICAL_OFFSET
+	leader.z_index = 1
 	add_child(leader)
 	var new_sweat : Sprite2D = Sprite2D.new()
 	new_sweat.texture = preload("res://sprites/leader_sweat.png")
@@ -31,7 +35,7 @@ func random_leader_indicators(amount : int):
 		leader.texture = preload("res://sprites/align_picker_random.png")
 		leader.position.x = PLAY_ORDER_SPACING / 2 + PLAY_ORDER_SPACING * i
 		leader.position.y = PLAY_ORDER_VERTICAL_OFFSET
-		leader.z_index = -1
+		leader.z_index = 0
 		add_child(leader)
 
 
@@ -127,3 +131,11 @@ func update_list(region_control : RegionControl):
 		else:
 			leader_sweat(leader, true)
 
+
+func select_leader(alignment : int):
+	if not selector:
+		selector = Sprite2D.new()
+		selector.texture = preload("res://sprites/leader_outline.png")
+		selector.z_index = 0
+		add_child(selector)
+	selector.position = get_leader(alignment).position

@@ -686,7 +686,7 @@ func turn_end(record : bool):
 	for i in range(region_amount.size()):
 		if region_amount[i] != last_turn_region_amount[i] and region_amount[i] == 0: 
 			GameStats.set_stat(i + 1, "placement", placement)
-			if game_control:
+			if game_control and not align_names[i + 1].is_empty():
 				game_control.new_callout(align_names[i + 1] + " got eliminated!")
 #			GameStats.stats[i + 1]["placement"] = placement
 			current_placement -= 1

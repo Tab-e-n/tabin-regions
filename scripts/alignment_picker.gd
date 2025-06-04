@@ -87,6 +87,7 @@ func choose_align(align : int):
 			var leader : Sprite2D = players.add_leader(i, align)
 			leader.frame = 0
 			players.color_leader(leader, current_map.align_color[align])
+			available.select_leader(align)
 			break
 
 

@@ -113,7 +113,7 @@ UIHideable = NodePath("UI/Hideable")
 PauseMenu = NodePath("UI/pause")
 PlayerInfo = NodePath("UI/player_info")
 PlayerActions = NodePath("UI/Hideable/PlayerActions")
-MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/Hideable/turn_order")])
+MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/turn_order")])
 ActionChangeParticle = ExtResource("4_s5wqb")
 AdvanceTurnButton = NodePath("UI/Hideable/PlayerActions/AdvanceTurn")
 AdvanceActionLight = NodePath("UI/Hideable/PlayerActions/action_light")
@@ -124,7 +124,7 @@ EndTurnButton = NodePath("UI/Hideable/PlayerActions/EndTurn")
 ForfeitButton = NodePath("UI/Hideable/PlayerActions/Forfeit")
 PauseButton = NodePath("UI/gearbox")
 LeaveButton = NodePath("UI/pause/leave")
-TurnOrder = NodePath("UI/Hideable/turn_order")
+TurnOrder = NodePath("UI/turn_order")
 Attacks = NodePath("../Attacks")
 PowerSprite = NodePath("UI/Hideable/Power")
 PowerAmount = NodePath("UI/Hideable/Power/text")
@@ -286,12 +286,12 @@ theme_override_font_sizes/font_size = 32
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="turn_order" type="Panel" parent="GameCamera/UI/Hideable"]
+[node name="turn_order" type="Panel" parent="GameCamera/UI"]
 layout_mode = 0
-offset_left = 64.0
-offset_top = 8.0
-offset_right = 128.0
-offset_bottom = 104.0
+offset_left = -512.0
+offset_top = -312.0
+offset_right = -448.0
+offset_bottom = -216.0
 pivot_offset = Vector2(0, 96)
 theme_override_styles/panel = ExtResource("5_mbtgw")
 script = ExtResource("8_y476x")

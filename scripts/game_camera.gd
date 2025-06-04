@@ -219,6 +219,7 @@ func _ready_turn_order():
 		return
 	
 	TurnOrder._ready_list(region_control)
+	TurnOrder.select_leader(region_control.current_playing_align)
 	
 #	if Attacks:
 #		if TurnOrder.size.x > AlignmentList.PLAY_ORDER_MAX_SIZE:
@@ -344,6 +345,7 @@ func _turn_ended():
 	
 	if TurnOrder:
 		TurnOrder.update_list(region_control)
+		TurnOrder.select_leader(region_control.current_playing_align)
 	
 	if not region_control.is_player_controled:
 		hovering_advance_turn = false
