@@ -61,6 +61,7 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.text = stats["placement"]
+	label.self_modulate = RegionControl.text_color(stats["align color"].v)
 	
 	$columbs.add_child(label)
 	

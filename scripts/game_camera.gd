@@ -21,6 +21,10 @@ const BASE_MOVE_SPEED : float = 8
 
 @export_subgroup("Buttons")
 @export var AdvanceTurnButton : BaseButton
+@export var AdvanceActionLight : Sprite2D
+@export var AdvanceActionDark : Sprite2D
+@export var AdvanceMobilizeLight : Sprite2D
+@export var AdvanceMobilizeDark : Sprite2D
 @export var EndTurnButton : BaseButton
 @export var ForfeitButton : BaseButton
 @export var PauseButton : BaseButton
@@ -32,6 +36,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var PowerSprite : TextureRect
 @export var PowerAmount : Label
 @export var CurrentTurn : Label
+@export var CurrentAlignment : Label
 @export var CurrentAction : Label
 
 @export_subgroup("Messages")
@@ -198,6 +203,7 @@ func _deffered_ready():
 	call_deferred("_ready_turn_order")
 	
 	update_current_turn()
+	update_alignment_label()
 	
 	Attacks.scale = Vector2(region_control.city_size, region_control.city_size);
 
@@ -297,23 +303,40 @@ func update_ui_color():
 		PlayerActions.modulate = region_control.align_color[region_control.current_playing_align]
 		PlayerActions.modulate.a = 1
 		PlayerActions.visible = region_control.is_player_controled and not ReplayControl.replay_active
-		if AdvanceTurnButton:
-			AdvanceTurnButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if AdvanceActionLight:
+			AdvanceActionLight.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if AdvanceActionDark:
+			AdvanceActionDark.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if AdvanceMobilizeLight:
+			AdvanceMobilizeLight.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if AdvanceMobilizeDark:
+			AdvanceMobilizeDark.material.set_shader_parameter("value", PlayerActions.modulate.v)
 		if EndTurnButton:
 			EndTurnButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
 		if ForfeitButton:
 			ForfeitButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
+		if CurrentAction:
+			if region_control.is_player_controled:
+				CurrentAction.self_modulate = RegionControl.text_color(PlayerActions.modulate.v)
+			else:
+				CurrentAction.self_modulate = Color.WHITE
 	if PowerSprite:
 		PowerSprite.self_modulate = region_control.align_color[region_control.current_playing_align]
 		PowerSprite.self_modulate.a = 1
-		if PowerAmount:
-			PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
+	if PowerAmount:
+		PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
 
 
 func update_current_action(current_action : int):
 	if CurrentAction:
 		const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
 		CurrentAction.text = ACTIONS[current_action]
+		if current_action == RegionControl.ACTION_MOBILIZE:
+			advance_turn_visual(2)
+		elif current_action == RegionControl.ACTION_BONUS and region_control.bonus_action_amount == 0:
+			advance_turn_visual(0)
+		else:
+			advance_turn_visual(1)
 
 
 func _turn_ended():
@@ -327,6 +350,8 @@ func _turn_ended():
 	
 	update_current_turn()
 	update_current_action(region_control.current_action)
+	
+	update_alignment_label()
 
 
 func _turn_phase_changed(current_action : int):
@@ -425,7 +450,7 @@ func _TurnOrder_cam_enable():
 
 func update_current_turn():
 	if CurrentTurn:
-		CurrentTurn.text = "TURN " + str(region_control.current_turn)
+		CurrentTurn.text = "Turn " + str(region_control.current_turn)
 
 
 func toggle_pause_menu():
@@ -544,3 +569,40 @@ func changed_action_amount(amount : int, color : Color) -> void:
 	part.position = Vector2(-448, 208)
 	part.color = color
 	UI.add_child(part)
+	
+	if AdvanceActionLight:
+		if region_control.current_action == RegionControl.ACTION_NORMAL and region_control.action_amount == 0:
+			advance_turn_visual(0)
+		if region_control.current_action == RegionControl.ACTION_BONUS and region_control.bonus_action_amount == 0:
+			advance_turn_visual(0)
+
+
+func advance_turn_visual(type : int):
+	if AdvanceActionLight:
+		if type == 0:
+			AdvanceActionLight.visible = true
+		else:
+			AdvanceActionLight.visible = false
+	
+	if AdvanceActionDark:
+		if type == 1:
+			AdvanceActionDark.visible = true
+		else:
+			AdvanceActionDark.visible = false
+	
+	if AdvanceMobilizeLight:
+		if type == 2:
+			AdvanceMobilizeLight.visible = true
+		else:
+			AdvanceMobilizeLight.visible = false
+	
+	if AdvanceMobilizeDark:
+		if type == 3:
+			AdvanceMobilizeDark.visible = true
+		else:
+			AdvanceMobilizeDark.visible = false
+
+
+func update_alignment_label():
+	if CurrentAlignment:
+		CurrentAlignment.text = region_control.align_names[region_control.current_playing_align]
