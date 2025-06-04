@@ -1,4 +1,4 @@
-[gd_scene load_steps=13 format=3 uid="uid://didhhghxmey0r"]
+[gd_scene load_steps=16 format=3 uid="uid://didhhghxmey0r"]
 
 [ext_resource type="Script" path="res://scripts/setup_scene.gd" id="1_f6cc2"]
 [ext_resource type="Texture2D" uid="uid://cci2sp743u6hi" path="res://sprites/ai_selected.png" id="2_1q3y1"]
@@ -11,6 +11,9 @@
 [ext_resource type="Texture2D" uid="uid://1i36seg78ctk" path="res://sprites/ai_cheater.png" id="5_qe1ei"]
 [ext_resource type="Texture2D" uid="uid://deqhvnfw114vp" path="res://sprites/advance.png" id="5_x6iy8"]
 [ext_resource type="Texture2D" uid="uid://c23kwcfws5x1n" path="res://sprites/save_replay.png" id="8_jp1fi"]
+[ext_resource type="Texture2D" uid="uid://fo6lu5lqw04d" path="res://sprites/next_pressed.png" id="10_qo64o"]
+[ext_resource type="Texture2D" uid="uid://mbmk666gc1gh" path="res://sprites/save_replay_pressed.png" id="12_jfhey"]
+[ext_resource type="Texture2D" uid="uid://dmfov6gdj5eub" path="res://sprites/advance_pressed.png" id="14_pdvw5"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_kl6wx"]
 bg_color = Color(0, 0, 0, 0.498039)
@@ -186,6 +189,7 @@ offset_top = 216.0
 offset_right = 1120.0
 offset_bottom = 280.0
 texture_normal = ExtResource("2_q4ghs")
+texture_pressed = ExtResource("10_qo64o")
 
 [node name="replay" type="TextureButton" parent="tintable_ui"]
 z_index = 100
@@ -194,6 +198,7 @@ offset_top = 480.0
 offset_right = 976.0
 offset_bottom = 608.0
 texture_normal = ExtResource("8_jp1fi")
+texture_pressed = ExtResource("12_jfhey")
 
 [node name="play" type="TextureButton" parent="tintable_ui"]
 z_index = 100
@@ -202,6 +207,7 @@ offset_top = 480.0
 offset_right = 1120.0
 offset_bottom = 608.0
 texture_normal = ExtResource("5_x6iy8")
+texture_pressed = ExtResource("14_pdvw5")
 
 [node name="replay_window" type="FileDialog" parent="."]
 initial_position = 1

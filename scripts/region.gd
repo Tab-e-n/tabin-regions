@@ -329,19 +329,32 @@ func update_cursor():
 	elif not region_control.is_player_controled:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
-	elif region_control.current_playing_align == alignment:
-		if region_control.current_action == RegionControl.ACTION_MOBILIZE:
-			if power > 1:
-				GameControl.set_cursor(GameControl.CURSOR.PLUS)
-				
-			else:
-				GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+	elif region_control.current_action == RegionControl.ACTION_NORMAL:
+		if region_control.action_amount == 0:
+			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+			
+		elif region_control.current_playing_align == alignment:
+			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
+		
+		else:
+			GameControl.set_cursor(GameControl.CURSOR.SWORD)
+			
+	elif region_control.current_action == RegionControl.ACTION_MOBILIZE:
+		if region_control.current_playing_align == alignment and power > 1:
+			GameControl.set_cursor(GameControl.CURSOR.PLUS)
 			
 		else:
-			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
+			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
-	elif region_control.current_action != RegionControl.ACTION_MOBILIZE:
-		GameControl.set_cursor(GameControl.CURSOR.SWORD)
+	elif region_control.current_action == RegionControl.ACTION_BONUS:
+		if region_control.bonus_action_amount == 0:
+			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+			
+		elif region_control.current_playing_align == alignment:
+			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
+		
+		else:
+			GameControl.set_cursor(GameControl.CURSOR.SWORD)
 		
 	else:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)

@@ -46,8 +46,8 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	
 	var sprite : Sprite2D = Sprite2D.new()
 	
-	sprite.texture = preload("res://sprites/capital.png")
-	sprite.scale = Vector2(0.8, 0.8)
+	sprite.texture = preload("res://sprites/capital_highres.png")
+	sprite.scale = Vector2(0.45, 0.45)
 	sprite.position.x = 192 * pos + 32
 	sprite.position.y = 32
 	sprite.modulate = stats["align color"]

@@ -198,6 +198,8 @@ func _deffered_ready():
 	call_deferred("_ready_turn_order")
 	
 	update_current_turn()
+	
+	Attacks.scale = Vector2(region_control.city_size, region_control.city_size);
 
 
 func connect_region_control_signals():
@@ -212,11 +214,11 @@ func _ready_turn_order():
 	
 	TurnOrder._ready_list(region_control)
 	
-	if Attacks:
-		if TurnOrder.size.x > AlignmentList.PLAY_ORDER_MAX_SIZE:
-			Attacks.size.x = AlignmentList.PLAY_ORDER_MAX_SIZE
-		else:
-			Attacks.size.x = TurnOrder.size.x
+#	if Attacks:
+#		if TurnOrder.size.x > AlignmentList.PLAY_ORDER_MAX_SIZE:
+#			Attacks.size.x = AlignmentList.PLAY_ORDER_MAX_SIZE
+#		else:
+#			Attacks.size.x = TurnOrder.size.x
 
 
 func _process(delta):
@@ -466,9 +468,7 @@ func set_turn_order_visibility(visibility : bool):
 
 
 func show_attacks(region : Region):
-	if not TurnOrder:
-		return
-	if not TurnOrder.visible:
+	if not Attacks:
 		return
 	
 	var adjanced : Array[int] = region.get_adjacent_attack_power()
@@ -485,12 +485,14 @@ func show_attacks(region : Region):
 		text += "[cell][bgcolor=#" + color.to_html() + "][color=#" + text_color.to_html() + "] "
 		text += String.num(adjanced[alignment]) + " [/color][/bgcolor][/cell]"
 	
-	if Attacks and align_amount > 0:
+	if align_amount > 0:
 		text = "[center][table=" + String.num(align_amount) + "]" + text + "[/table][/center]"
 		
 		Attacks.clear()
 		Attacks.append_text(text)
 		Attacks.visible = true
+	
+	Attacks.position = region.position + Vector2(-Attacks.size.x, City.CAPITAL_TEXTURE_SIZE.y if region.is_capital else City.CITY_TEXTURE_SIZE.y) * Attacks.scale * 0.5
 
 
 func hide_attacks():

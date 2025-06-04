@@ -1,10 +1,13 @@
-[gd_scene load_steps=6 format=3 uid="uid://dl73eme14hwup"]
+[gd_scene load_steps=9 format=3 uid="uid://dl73eme14hwup"]
 
 [ext_resource type="Script" path="res://scripts/stats.gd" id="1_4gg3l"]
 [ext_resource type="StyleBox" uid="uid://l8vkqqi4prkx" path="res://styles/style_label_normal_box.tres" id="1_8movm"]
 [ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://sprites/exit.png" id="2_y6cxs"]
 [ext_resource type="Texture2D" uid="uid://dubjrpib0fm5n" path="res://sprites/save_csv.png" id="3_0g6er"]
+[ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/exit_pressed.png" id="4_cccmx"]
 [ext_resource type="Texture2D" uid="uid://c23kwcfws5x1n" path="res://sprites/save_replay.png" id="4_ur71k"]
+[ext_resource type="Texture2D" uid="uid://ci3e17tq2lbgh" path="res://sprites/save_csv_pressed.png" id="6_c7alf"]
+[ext_resource type="Texture2D" uid="uid://mbmk666gc1gh" path="res://sprites/save_replay_pressed.png" id="8_ckspg"]
 
 [node name="Stats" type="Node2D"]
 script = ExtResource("1_4gg3l")
@@ -25,6 +28,7 @@ offset_top = 32.0
 offset_right = 96.0
 offset_bottom = 96.0
 texture_normal = ExtResource("2_y6cxs")
+texture_pressed = ExtResource("4_cccmx")
 
 [node name="csv" type="TextureButton" parent="buttons"]
 modulate = Color(0.933333, 0.933333, 0.933333, 1)
@@ -34,6 +38,7 @@ offset_top = 352.0
 offset_right = 160.0
 offset_bottom = 480.0
 texture_normal = ExtResource("3_0g6er")
+texture_pressed = ExtResource("6_c7alf")
 
 [node name="replay" type="TextureButton" parent="buttons"]
 modulate = Color(0.933333, 0.933333, 0.933333, 1)
@@ -43,6 +48,7 @@ offset_top = 480.0
 offset_right = 160.0
 offset_bottom = 608.0
 texture_normal = ExtResource("4_ur71k")
+texture_pressed = ExtResource("8_ckspg")
 
 [node name="expo1" type="Label" parent="buttons"]
 visible = false

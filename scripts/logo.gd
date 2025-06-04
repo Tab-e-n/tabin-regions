@@ -1,7 +1,7 @@
 extends Node2D
 
 
-enum {PHASE_START, PHASE_HOLD, PHASE_END}
+enum {PHASE_WAIT_LOAD, PHASE_START, PHASE_HOLD, PHASE_END}
 
 
 var phase : int = PHASE_START
@@ -35,6 +35,11 @@ func _input(event):
 
 
 func _process(delta):
+	if phase == PHASE_WAIT_LOAD:
+		timer += delta
+		if timer >= 1.0:
+			timer = 0.0
+			phase = PHASE_START
 	if phase == PHASE_START:
 		timer += delta
 		if timer >= 0.075:

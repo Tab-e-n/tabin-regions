@@ -1,6 +1,11 @@
 extends TextureButton
 class_name City
 
+
+const CITY_TEXTURE_SIZE = Vector2(64, 64)
+const CAPITAL_TEXTURE_SIZE = Vector2(80, 80)
+
+
 @export var is_capital : bool = false
 
 @onready var region : Region = get_parent()
@@ -17,10 +22,10 @@ func _ready():
 	
 	if is_capital:
 		texture_normal = preload("res://sprites/capital.png")
-		offset = Vector2(40, 40)
+		offset = CAPITAL_TEXTURE_SIZE * 0.5
 	else:
 		texture_normal = preload("res://sprites/city.png")
-		offset = Vector2(32, 32)
+		offset = CITY_TEXTURE_SIZE * 0.5
 	z_index = 20
 	var city_size : float = 0.8
 	if region.region_control:
