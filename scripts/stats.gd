@@ -12,6 +12,8 @@ var input_delay : bool = true
 
 
 func _ready():
+	GameControl.set_cursor(GameControl.CURSOR.NORMAL)
+	
 	# bad code inbound
 	var pos : int = 1
 	var size : int = GameStats.stats.size()

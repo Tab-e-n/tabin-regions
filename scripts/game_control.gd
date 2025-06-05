@@ -2,7 +2,7 @@ extends Node2D
 class_name GameControl
 
 
-enum CURSOR {NORMAL, BLOCKED, PLUS, SHIELD, SWORD, FULL_PLUS, FULL_SHIELD, FULL_SWORD}
+enum CURSOR {NORMAL, BLOCKED, PLUS, SHIELD, SWORD, FULL_PLUS, FULL_SHIELD, FULL_SWORD, HAND}
 
 @export var map : String = "2._Testlandia.tscn"
 
@@ -19,6 +19,8 @@ var win_timer : float = -1
 var inputs_active : bool = true
 
 func _ready():
+	GameControl.set_cursor(CURSOR.NORMAL)
+	
 	if not MapSetup.current_map_name.is_empty():
 		map = MapSetup.current_map_name
 	
@@ -209,7 +211,7 @@ static func set_cursor(cursor : CURSOR):
 		CURSOR.NORMAL:
 			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))
 		CURSOR.BLOCKED:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_block.png"))
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_block.png"), Input.CURSOR_ARROW, Vector2(16, 16))
 		CURSOR.PLUS:
 			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_plus.png"))
 		CURSOR.SHIELD:
@@ -217,10 +219,12 @@ static func set_cursor(cursor : CURSOR):
 		CURSOR.SWORD:
 			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_sword.png"))
 		CURSOR.FULL_PLUS:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_plus.png"))
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_plus.png"), Input.CURSOR_ARROW, Vector2(16, 16))
 		CURSOR.FULL_SHIELD:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_shield.png"))
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_shield.png"), Input.CURSOR_ARROW, Vector2(16, 16))
 		CURSOR.FULL_SWORD:
 			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_sword.png"))
+		CURSOR.HAND:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_hand.png"), Input.CURSOR_ARROW, Vector2(16, 16))
 		_:
 			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))

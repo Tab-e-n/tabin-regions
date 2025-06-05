@@ -341,7 +341,7 @@ func update_cursor():
 			
 	elif region_control.current_action == RegionControl.ACTION_MOBILIZE:
 		if region_control.current_playing_align == alignment and power > 1:
-			GameControl.set_cursor(GameControl.CURSOR.PLUS)
+			GameControl.set_cursor(GameControl.CURSOR.HAND)
 			
 		else:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)

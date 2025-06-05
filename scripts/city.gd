@@ -30,6 +30,7 @@ func _ready():
 	var city_size : float = 0.8
 	if region.region_control:
 		city_size = region.region_control.city_size * 0.8
+		region.region_control.turn_ended.connect(_on_turn_end)
 	position = offset * -city_size
 	scale = Vector2(city_size, city_size)
 	
@@ -37,7 +38,7 @@ func _ready():
 	text.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	text.size = offset * 4
 	text.z_index = 1
-	text.add_theme_font_size_override("font_size", offset.x * 1.2)
+	text.add_theme_font_size_override("font_size", (int)(offset.x * 1.2))
 	text.scale = Vector2(0.5, 0.5)
 	add_child(text)
 	
@@ -108,3 +109,13 @@ func show_attacks():
 func hide_attacks():
 	if region.region_control and not region.region_control.dummy:
 		region.region_control.game_camera.hide_attacks()
+
+
+func _on_turn_end():
+	if not Options.action_change_particles:
+		return
+	if is_capital and region.alignment == region.region_control.current_playing_align:
+		var part : Node2D = preload("res://objects/particle_number.tscn").instantiate()
+		part.color = self_modulate
+		part.text = "+1"
+		add_child(part)

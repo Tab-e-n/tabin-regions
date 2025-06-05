@@ -28,6 +28,8 @@ var current_menu : int = 0
 
 
 func _ready():
+	GameControl.set_cursor(GameControl.CURSOR.NORMAL)
+	
 	Options.save_options()
 	
 	maps = DirAccess.get_files_at("res://maps")
