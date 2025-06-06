@@ -105,7 +105,7 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 scroll_active = false
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -135,6 +135,7 @@ VictoryMessage = NodePath("UI/win")
 DefeatMessage = NodePath("UI/lose")
 LeaveMessage = NodePath("UI/leave")
 ForfeitMessage = NodePath("UI/forfeit")
+LeftoverMessage = NodePath("UI/leftover")
 CommandCallout = NodePath("UI/command_callout")
 MouseScroll = NodePath("UI/pause/mouse_scroll")
 AutoPhase = NodePath("UI/pause/auto_phase")
@@ -616,6 +617,43 @@ offset_bottom = 144.0
 texture_normal = ExtResource("18_mtr1x")
 texture_pressed = ExtResource("33_4nel1")
 
+[node name="leftover" type="Label" parent="GameCamera/UI"]
+visible = false
+layout_mode = 0
+offset_left = -144.0
+offset_top = -120.0
+offset_right = 144.0
+offset_bottom = 80.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("16_ixm5t")
+text = "You haven't used
+all your actions.
+End turn anyway?
+ "
+horizontal_alignment = 1
+
+[node name="yes" type="TextureButton" parent="GameCamera/UI/leftover"]
+modulate = Color(0.713726, 0.890196, 0.65098, 1)
+material = SubResource("ShaderMaterial_rh36y")
+layout_mode = 0
+offset_left = 80.0
+offset_top = 136.0
+offset_right = 128.0
+offset_bottom = 184.0
+texture_normal = ExtResource("17_0hp27")
+texture_pressed = ExtResource("30_yn8sd")
+
+[node name="no" type="TextureButton" parent="GameCamera/UI/leftover"]
+modulate = Color(1, 0.717647, 0.698039, 1)
+material = SubResource("ShaderMaterial_lcdv6")
+layout_mode = 0
+offset_left = 160.0
+offset_top = 136.0
+offset_right = 208.0
+offset_bottom = 184.0
+texture_normal = ExtResource("18_mtr1x")
+texture_pressed = ExtResource("33_4nel1")
+
 [connection signal="toggled" from="GameCamera/UI/pause/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="GameCamera/UI/pause/auto_phase" to="." method="set_auto_phases"]
 [connection signal="toggled" from="GameCamera/UI/pause/fast_ai" to="." method="set_speedrun_ai"]
@@ -627,3 +665,5 @@ texture_pressed = ExtResource("33_4nel1")
 [connection signal="pressed" from="GameCamera/UI/leave/no" to="GameCamera" method="_not_leaving"]
 [connection signal="pressed" from="GameCamera/UI/forfeit/yes" to="GameCamera" method="_forfeit"]
 [connection signal="pressed" from="GameCamera/UI/forfeit/no" to="GameCamera" method="_forfeit_hide"]
+[connection signal="pressed" from="GameCamera/UI/leftover/yes" to="GameCamera" method="end_turn"]
+[connection signal="pressed" from="GameCamera/UI/leftover/no" to="GameCamera" method="_leftover_hide"]

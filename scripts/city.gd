@@ -114,6 +114,8 @@ func hide_attacks():
 func _on_turn_end():
 	if not Options.action_change_particles:
 		return
+	if not region.region_control.is_player_controled:
+		return
 	if is_capital and region.alignment == region.region_control.current_playing_align:
 		var part : Node2D = preload("res://objects/particle_number.tscn").instantiate()
 		part.color = self_modulate

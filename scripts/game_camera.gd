@@ -44,6 +44,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var DefeatMessage : Control
 @export var LeaveMessage : Control
 @export var ForfeitMessage : Control
+@export var LeftoverMessage : Control
 @export var CommandCallout : CommandCallouts
 
 @export_subgroup("Pause Options")
@@ -162,7 +163,7 @@ func _deffered_ready():
 		AdvanceTurnButton.mouse_entered.connect(_button_cam_disable)
 		AdvanceTurnButton.mouse_exited.connect(_button_cam_enable)
 	if EndTurnButton:
-		EndTurnButton.pressed.connect(_end_turn)
+		EndTurnButton.pressed.connect(try_end_turn)
 		EndTurnButton.mouse_entered.connect(_button_cam_disable)
 		EndTurnButton.mouse_exited.connect(_button_cam_enable)
 	if ForfeitButton:
@@ -403,8 +404,28 @@ func _advance_turn():
 	region_control.change_current_action()
 
 
-func _end_turn():
+func try_end_turn():
+	if region_control.current_action == RegionControl.ACTION_NORMAL and region_control.action_amount > 0:
+		_leftover_show()
+	elif region_control.bonus_action_amount > 0:
+		_leftover_show()
+	else:
+		end_turn()
+
+
+func end_turn():
+	_leftover_hide()
 	region_control.turn_end(true)
+
+
+func _leftover_show():
+	if LeftoverMessage:
+		LeftoverMessage.visible = true
+
+
+func _leftover_hide():
+	if LeftoverMessage:
+		LeftoverMessage.visible = false
 
 
 func _forfeit_show():
