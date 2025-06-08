@@ -171,7 +171,7 @@ func new_callout(text: String):
 
 
 func load_map(map_name : String):
-	var packed_map : PackedScene = load("res://maps/" + map_name)
+	var packed_map : PackedScene = load(MapSetup.current_directory + "/" + map_name)
 	region_control = packed_map.instantiate()
 	add_child(region_control)
 	move_child(region_control, 1)

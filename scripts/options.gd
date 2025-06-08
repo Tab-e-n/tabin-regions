@@ -8,6 +8,7 @@ var speedrun_ai : bool = false
 var mouse_scroll_active : bool = true
 var auto_end_turn_phases : bool = false
 var action_change_particles : bool = true
+var allowed_directories : Array = []
 
 
 func _ready():
@@ -20,6 +21,7 @@ func save_options():
 		"mouse_scroll_active" : mouse_scroll_active,
 		"auto_end_turn_phases" : auto_end_turn_phases,
 		"action_change_particles" : action_change_particles,
+		"allowed_directories" : allowed_directories,
 	}
 	
 	var file = FileAccess.open(SAVEFILE, FileAccess.WRITE)

@@ -47,6 +47,7 @@ func get_next_move():
 
 func save_replay(replay_name : String):
 	var replay_save : Dictionary = {
+		"replay_dir" : MapSetup.current_directory,
 		"replay_map" : MapSetup.current_map_name,
 		"replay_play_order" : replay_play_order,
 		"replay_aliances" : replay_aliances,
@@ -81,6 +82,7 @@ func load_replay(replay_name : String):
 		
 		file.close()
 		
+		MapSetup.current_directory = replay_save["replay_dir"]
 		MapSetup.current_map_name = replay_save["replay_map"]
 		
 		replay_play_order = replay_save["replay_play_order"]

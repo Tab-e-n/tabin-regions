@@ -834,9 +834,6 @@ func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 	if opposing_align < 0 or opposing_align >= align_amount:
 		return false
 	return alignment_aliances[your_align] == alignment_aliances[opposing_align]
-#	if your_align == opposing_align:
-#		return true
-#	return false
 
 
 func alignment_neutral(align : int) -> bool:
