@@ -333,7 +333,7 @@ func update_cursor():
 		if region_control.action_amount == 0:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
-		elif region_control.current_playing_align == alignment:
+		elif region_control.alignment_friendly(region_control.current_playing_align, alignment):
 			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
 		
 		else:
@@ -350,7 +350,7 @@ func update_cursor():
 		if region_control.bonus_action_amount == 0:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
-		elif region_control.current_playing_align == alignment:
+		elif region_control.alignment_friendly(region_control.current_playing_align, alignment):
 			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
 		
 		else:

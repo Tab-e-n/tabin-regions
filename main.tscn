@@ -4,7 +4,6 @@
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
 [ext_resource type="Script" path="res://ai/ai_control.gd" id="2_w08l3"]
 [ext_resource type="PackedScene" uid="uid://cpgxwqs1hap0p" path="res://objects/particle_number.tscn" id="4_s5wqb"]
-[ext_resource type="StyleBox" uid="uid://crwlkegnfaves" path="res://styles/style_label_align_picker.tres" id="5_mbtgw"]
 [ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://sprites/current_power.png" id="6_duti3"]
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="6_hw6d1"]
 [ext_resource type="Texture2D" uid="uid://b5wmm400auwgm" path="res://sprites/pause_button.png" id="7_6wsra"]
@@ -67,6 +66,11 @@ shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
 shader_parameter/mask = ExtResource("11_1122e")
 
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opdnj"]
+draw_center = false
+border_width_bottom = 8
+border_color = Color(1, 1, 1, 0)
+
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4hw3"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
@@ -105,7 +109,7 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 scroll_active = false
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastAI", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -144,6 +148,10 @@ ActionChangePart = NodePath("UI/pause/particles")
 VisCapitals = NodePath("UI/pause/vis_capitals")
 VisUI = NodePath("UI/pause/vis_ui")
 VisTurnOrder = NodePath("UI/pause/vis_turn_order")
+TooltipActions = NodePath("UI/Hideable/Tooltips/Actions")
+TooltipPhase = NodePath("UI/Hideable/Tooltips/Phase")
+TooltipEndTurn = NodePath("UI/Hideable/Tooltips/EndTurn")
+TooltipForfeit = NodePath("UI/Hideable/Tooltips/Forfeit")
 
 [node name="UI" type="Control" parent="GameCamera"]
 layout_mode = 3
@@ -176,7 +184,7 @@ offset_left = 72.0
 offset_top = 528.0
 offset_right = 1080.0
 offset_bottom = 648.0
-theme_override_styles/panel = ExtResource("5_mbtgw")
+theme_override_styles/panel = ExtResource("16_ixm5t")
 
 [node name="Alignment" type="Label" parent="GameCamera/UI/Hideable"]
 layout_mode = 0
@@ -258,6 +266,58 @@ offset_bottom = 88.0
 texture_normal = ExtResource("8_chkrk")
 texture_pressed = ExtResource("16_5cdry")
 
+[node name="Tooltips" type="Control" parent="GameCamera/UI/Hideable"]
+anchors_preset = 0
+offset_left = 72.0
+offset_top = 488.0
+offset_right = 1080.0
+offset_bottom = 528.0
+mouse_filter = 2
+
+[node name="Actions" type="Label" parent="GameCamera/UI/Hideable/Tooltips"]
+visible = false
+layout_mode = 0
+offset_left = -8.0
+offset_right = 136.0
+offset_bottom = 32.0
+theme_override_styles/normal = ExtResource("16_ixm5t")
+text = "ACTION AMOUNT"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Phase" type="Label" parent="GameCamera/UI/Hideable/Tooltips"]
+visible = false
+layout_mode = 0
+offset_left = 512.0
+offset_right = 656.0
+offset_bottom = 32.0
+theme_override_styles/normal = ExtResource("16_ixm5t")
+text = "CHANGE PHASE?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="EndTurn" type="Label" parent="GameCamera/UI/Hideable/Tooltips"]
+visible = false
+layout_mode = 0
+offset_left = 816.0
+offset_right = 928.0
+offset_bottom = 32.0
+theme_override_styles/normal = ExtResource("16_ixm5t")
+text = "END TURN?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Forfeit" type="Label" parent="GameCamera/UI/Hideable/Tooltips"]
+visible = false
+layout_mode = 0
+offset_left = 896.0
+offset_right = 1008.0
+offset_bottom = 32.0
+theme_override_styles/normal = ExtResource("16_ixm5t")
+text = "FORFEIT?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [node name="Action" type="Label" parent="GameCamera/UI/Hideable"]
 layout_mode = 0
 offset_left = 520.0
@@ -280,12 +340,14 @@ texture = ExtResource("6_duti3")
 
 [node name="text" type="Label" parent="GameCamera/UI/Hideable/Power"]
 layout_mode = 0
-offset_top = 40.0
 offset_right = 96.0
 offset_bottom = 96.0
+mouse_filter = 0
 theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = SubResource("StyleBoxFlat_opdnj")
+text = "1"
 horizontal_alignment = 1
-vertical_alignment = 1
+vertical_alignment = 2
 
 [node name="turn_order" type="Panel" parent="GameCamera/UI"]
 layout_mode = 0
@@ -294,7 +356,7 @@ offset_top = -312.0
 offset_right = -448.0
 offset_bottom = -216.0
 pivot_offset = Vector2(0, 96)
-theme_override_styles/panel = ExtResource("5_mbtgw")
+theme_override_styles/panel = ExtResource("16_ixm5t")
 script = ExtResource("8_y476x")
 
 [node name="gearbox" type="TextureButton" parent="GameCamera/UI"]

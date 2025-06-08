@@ -56,6 +56,12 @@ const BASE_MOVE_SPEED : float = 8
 @export var VisUI : BaseButton
 @export var VisTurnOrder : BaseButton
 
+@export_subgroup("Tooltips")
+@export var TooltipActions : Label
+@export var TooltipPhase : Label
+@export var TooltipEndTurn : Label
+@export var TooltipForfeit : Label
+
 @onready var game_control : GameControl = get_parent()
 @onready var region_control : RegionControl
 @onready var window_size : Vector2
@@ -105,6 +111,43 @@ func _ready():
 		LeaveMessage.visible = false
 	if ForfeitMessage:
 		ForfeitMessage.visible = false
+	
+	if AdvanceTurnButton:
+		AdvanceTurnButton.pressed.connect(_advance_turn)
+		AdvanceTurnButton.mouse_entered.connect(show_tooltip_phase)
+		AdvanceTurnButton.mouse_exited.connect(hide_tooltip_phase)
+	if EndTurnButton:
+		EndTurnButton.pressed.connect(try_end_turn)
+		EndTurnButton.mouse_entered.connect(show_tooltip_end_turn)
+		EndTurnButton.mouse_exited.connect(hide_tooltip_end_turn)
+	if ForfeitButton:
+		ForfeitButton.pressed.connect(_forfeit_show)
+		ForfeitButton.mouse_entered.connect(show_tooltip_forfeit)
+		ForfeitButton.mouse_exited.connect(hide_tooltip_forfeit)
+	if PowerAmount:
+		PowerAmount.mouse_entered.connect(show_tooltip_actions)
+		PowerAmount.mouse_exited.connect(hide_tooltip_actions)
+	if TurnOrder:
+		TurnOrder.mouse_entered.connect(_TurnOrder_cam_disable)
+		TurnOrder.mouse_exited.connect(_TurnOrder_cam_enable)
+	if PauseButton:
+		PauseButton.pressed.connect(toggle_pause_menu)
+	if LeaveButton:
+		LeaveButton.pressed.connect(_leaving)
+	
+	if MouseScroll:
+		MouseScroll.button_pressed = Options.mouse_scroll_active
+	if AutoPhase:
+		AutoPhase.button_pressed = Options.auto_end_turn_phases
+	if FastAI:
+		FastAI.button_pressed = Options.speedrun_ai
+	if ActionChangePart:
+		ActionChangePart.button_pressed = Options.action_change_particles
+	if VisUI and UIHideable:
+		VisUI.button_pressed = UIHideable.visible
+	if VisTurnOrder and TurnOrder:
+		VisTurnOrder.button_pressed = TurnOrder.visible
+	
 
 
 func _deffered_ready():
@@ -158,40 +201,8 @@ func _deffered_ready():
 		position.y = farthest_up
 	next_position = position
 	
-	if AdvanceTurnButton:
-		AdvanceTurnButton.pressed.connect(_advance_turn)
-		AdvanceTurnButton.mouse_entered.connect(_button_cam_disable)
-		AdvanceTurnButton.mouse_exited.connect(_button_cam_enable)
-	if EndTurnButton:
-		EndTurnButton.pressed.connect(try_end_turn)
-		EndTurnButton.mouse_entered.connect(_button_cam_disable)
-		EndTurnButton.mouse_exited.connect(_button_cam_enable)
-	if ForfeitButton:
-		ForfeitButton.pressed.connect(_forfeit_show)
-		ForfeitButton.mouse_entered.connect(_button_cam_disable)
-		ForfeitButton.mouse_exited.connect(_button_cam_enable)
-	if TurnOrder:
-		TurnOrder.mouse_entered.connect(_TurnOrder_cam_disable)
-		TurnOrder.mouse_exited.connect(_TurnOrder_cam_enable)
-	if PauseButton:
-		PauseButton.pressed.connect(toggle_pause_menu)
-	if LeaveButton:
-		LeaveButton.pressed.connect(_leaving)
-	
-	if MouseScroll:
-		MouseScroll.button_pressed = Options.mouse_scroll_active
-	if AutoPhase:
-		AutoPhase.button_pressed = Options.auto_end_turn_phases
-	if FastAI:
-		FastAI.button_pressed = Options.speedrun_ai
-	if ActionChangePart:
-		ActionChangePart.button_pressed = Options.action_change_particles
 	if VisCapitals and region_control:
 		VisCapitals.button_pressed = region_control.cities_visible
-	if VisUI and UIHideable:
-		VisUI.button_pressed = UIHideable.visible
-	if VisTurnOrder and TurnOrder:
-		VisTurnOrder.button_pressed = TurnOrder.visible
 	
 	update_ui_color()
 	update_current_action(region_control.current_action)
@@ -455,11 +466,63 @@ func _forfeit():
 	region_control.forfeit()
 
 
-func _button_cam_disable():
+func show_tooltip_actions():
+	TooltipActions.visible = true
+	TooltipPhase.visible = false
+	TooltipEndTurn.visible = false
+	TooltipForfeit.visible = false
+	button_cam_disable()
+
+
+func hide_tooltip_actions():
+	TooltipActions.visible = false
+	button_cam_enable()
+
+
+func show_tooltip_phase():
+	TooltipActions.visible = false
+	TooltipPhase.visible = true
+	TooltipEndTurn.visible = false
+	TooltipForfeit.visible = false
+	button_cam_disable()
+
+
+func hide_tooltip_phase():
+	TooltipPhase.visible = false
+	button_cam_enable()
+
+
+func show_tooltip_end_turn():
+	TooltipActions.visible = false
+	TooltipPhase.visible = false
+	TooltipEndTurn.visible = true
+	TooltipForfeit.visible = false
+	button_cam_disable()
+
+
+func hide_tooltip_end_turn():
+	TooltipEndTurn.visible = false
+	button_cam_enable()
+
+
+func show_tooltip_forfeit():
+	TooltipActions.visible = false
+	TooltipPhase.visible = false
+	TooltipEndTurn.visible = false
+	TooltipForfeit.visible = true
+	button_cam_disable()
+
+
+func hide_tooltip_forfeit():
+	TooltipForfeit.visible = false
+	button_cam_enable()
+
+
+func button_cam_disable():
 	hovering_advance_turn = true
 
 
-func _button_cam_enable():
+func button_cam_enable():
 	hovering_advance_turn = false
 
 
