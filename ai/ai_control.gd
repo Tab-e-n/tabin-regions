@@ -153,14 +153,14 @@ func think():
 	else:
 		find_owned_regions()
 		
-		match region_control.current_action:
-			region_control.ACTION_NORMAL:
+		match region_control.current_phase:
+			region_control.PHASE_NORMAL:
 				if controlers[current_controler].has_method("think_normal"):
 					controlers[current_controler].call("think_normal")
-			region_control.ACTION_MOBILIZE:
+			region_control.PHASE_MOBILIZE:
 				if controlers[current_controler].has_method("think_mobilize"):
 					controlers[current_controler].call("think_mobilize")
-			region_control.ACTION_BONUS:
+			region_control.PHASE_BONUS:
 				if controlers[current_controler].has_method("think_bonus"):
 					controlers[current_controler].call("think_bonus")
 
@@ -184,7 +184,7 @@ func timer_ended():
 	elif CALL_change_current_action:
 		reset_CALL()
 		region_control.change_current_action()
-		should_think = region_control.current_action != RegionControl.ACTION_NORMAL
+		should_think = region_control.current_phase != RegionControl.PHASE_NORMAL
 	elif CALL_cheat:
 		reset_CALL()
 		region_control.add_action()
@@ -279,7 +279,7 @@ func get_bonus_action_amount() -> int:
 
 
 func get_actions_contextual() -> int:
-	if region_control.current_action == RegionControl.ACTION_NORMAL:
+	if region_control.current_phase == RegionControl.PHASE_NORMAL:
 		return region_control.action_amount
 	else:
 		return region_control.bonus_action_amount

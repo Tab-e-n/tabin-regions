@@ -94,7 +94,6 @@ func _ready():
 	
 	game_control.game_camera = self
 	game_control.command_callout = CommandCallout
-	call_deferred("_deffered_ready")
 	
 	zoom_level = ZOOM_START
 	zoom_change(0)
@@ -113,7 +112,7 @@ func _ready():
 		ForfeitMessage.visible = false
 	
 	if AdvanceTurnButton:
-		AdvanceTurnButton.pressed.connect(_advance_turn)
+		AdvanceTurnButton.pressed.connect(try_advance_turn)
 		AdvanceTurnButton.mouse_entered.connect(show_tooltip_phase)
 		AdvanceTurnButton.mouse_exited.connect(hide_tooltip_phase)
 	if EndTurnButton:
@@ -148,6 +147,7 @@ func _ready():
 	if VisTurnOrder and TurnOrder:
 		VisTurnOrder.button_pressed = TurnOrder.visible
 	
+	call_deferred("_deffered_ready")
 
 
 func _deffered_ready():
@@ -205,10 +205,12 @@ func _deffered_ready():
 		VisCapitals.button_pressed = region_control.cities_visible
 	
 	update_ui_color()
-	update_current_action(region_control.current_action)
+	update_current_action(region_control.current_phase)
 	
 	for path in MapTintList:
 		get_node(path).self_modulate = region_control.color
+	
+	CommandCallout.default_color = region_control.command_callout_color
 	
 	connect_region_control_signals()
 	
@@ -245,7 +247,7 @@ func _process(delta):
 		cam_movement_stop = 1
 	
 	if PowerAmount:
-		if region_control.current_action == RegionControl.ACTION_NORMAL:
+		if region_control.current_phase == RegionControl.PHASE_NORMAL:
 			PowerAmount.text = String.num(region_control.action_amount)
 		else:
 			PowerAmount.text = String.num(region_control.bonus_action_amount)
@@ -340,13 +342,13 @@ func update_ui_color():
 		PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
 
 
-func update_current_action(current_action : int):
+func update_current_action(current_phase : int):
 	if CurrentAction:
 		const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
-		CurrentAction.text = ACTIONS[current_action]
-		if current_action == RegionControl.ACTION_MOBILIZE:
+		CurrentAction.text = ACTIONS[current_phase]
+		if current_phase == RegionControl.PHASE_MOBILIZE:
 			advance_turn_visual(2)
-		elif current_action == RegionControl.ACTION_BONUS and region_control.bonus_action_amount == 0:
+		elif current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount == 0:
 			advance_turn_visual(0)
 		else:
 			advance_turn_visual(1)
@@ -363,13 +365,13 @@ func _turn_ended():
 		hovering_advance_turn = false
 	
 	update_current_turn()
-	update_current_action(region_control.current_action)
+	update_current_action(region_control.current_phase)
 	
 	update_alignment_label()
 
 
-func _turn_phase_changed(current_action : int):
-	update_current_action(current_action)
+func _turn_phase_changed(current_phase : int):
+	update_current_action(current_phase)
 
 
 func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
@@ -411,12 +413,19 @@ func reset_zoom():
 	zoom_change(0)
 
 
-func _advance_turn():
+func try_advance_turn():
+	if region_control.current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount > 0:
+		_leftover_show()
+	else:
+		advance_turn()
+
+
+func advance_turn():
 	region_control.change_current_action()
 
 
 func try_end_turn():
-	if region_control.current_action == RegionControl.ACTION_NORMAL and region_control.action_amount > 0:
+	if region_control.current_phase == RegionControl.PHASE_NORMAL and region_control.action_amount > 0:
 		_leftover_show()
 	elif region_control.bonus_action_amount > 0:
 		_leftover_show()
@@ -657,9 +666,9 @@ func changed_action_amount(amount : int, color : Color) -> void:
 	UI.add_child(part)
 	
 	if AdvanceActionLight:
-		if region_control.current_action == RegionControl.ACTION_NORMAL and region_control.action_amount == 0:
+		if region_control.current_phase == RegionControl.PHASE_NORMAL and region_control.action_amount == 0:
 			advance_turn_visual(0)
-		if region_control.current_action == RegionControl.ACTION_BONUS and region_control.bonus_action_amount == 0:
+		if region_control.current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount == 0:
 			advance_turn_visual(0)
 
 

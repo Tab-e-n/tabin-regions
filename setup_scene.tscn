@@ -307,6 +307,7 @@ popup_window = true
 ok_button_text = "Select Current Folder"
 dialog_hide_on_ok = true
 file_mode = 2
+access = 1
 filters = PackedStringArray("*.json")
 
 [connection signal="item_activated" from="tintable_ui/map_list" to="." method="_on_map_list_item_activated"]

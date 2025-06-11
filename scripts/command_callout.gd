@@ -7,6 +7,7 @@ const MAX_CALLOUTS : int = 8
 
 
 @export var right : bool = false
+@export var default_color : Color = Color(1, 1, 1, 1)
 
 
 var callouts : Array[Label] = []
@@ -32,7 +33,7 @@ func remove_oldest_callout():
 	remove_callout.queue_free()
 
 
-func new_callout(text : String):
+func new_callout(text : String, color : Color = default_color):
 	var callout_number : int = callouts.size()
 	if callout_number >= MAX_CALLOUTS:
 		remove_oldest_callout()
@@ -43,6 +44,7 @@ func new_callout(text : String):
 	callout.size.x = size.x
 	callout.text = text
 	callout.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	callout.modulate = color
 	
 	if right:
 		callout.horizontal_alignment = HORIZONTAL_ALIGNMENT_RIGHT

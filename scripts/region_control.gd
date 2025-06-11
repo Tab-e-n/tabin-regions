@@ -159,12 +159,12 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 		Color("eda75b"), # sandstorm
 		Color("2e5949"), # dark green
 ]
-## Names of alignments. Includes the neutral alignment.
+## Names of alignments. Includes the name of the neutral alignment, at index 0.
 @export var align_names : Array[String] = []
 ## Determines what message gets show at the end of the game.
 ## When set to 0 or lower, map will always show a victory message.
 ## When set to a positive integer, map will show a victory message only if an alignment of the same number wins, else it will show defeat.
-## If aliances are turn on, this check applies to aliances and not to individual alignments.
+## If aliances are turned on, this check applies to aliances and not to individual alignments.
 @export var main_character : int = 0
 ## When set to true, the RegionControl will color itself based on which alignment is currently playing.
 @export var color_bg_according_to_alignment : bool = true
@@ -176,6 +176,8 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var hide_turn_order : bool = false
 ## When false, regions will not spawn particles.
 @export var spawn_particles : bool = true
+## What color does the text in the command callout have.
+@export var command_callout_color : Color = Color(1, 1, 1, 1)
 
 @export_subgroup("Editor")
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
@@ -187,6 +189,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var render_range : float = 20
 ## When set to true, RegionControl wil not do anything on its own. This is intended to be used by other scenes, not RegionControl itself.
 @export var dummy : bool = false
+## When false, cities won't be rendered. Can be toggled in-game.
 @export var cities_visible : bool = true
 @export var print_more_info : bool = false
 ## Holds the connections of all regions. When the map is readying, RegionControl will attempt to make every connection in this array.
@@ -207,9 +210,9 @@ var capital_amount : Array = []
 
 var removed_alignments : Array = []
 
-enum {ACTION_NORMAL, ACTION_MOBILIZE, ACTION_BONUS}
-const ACTION_MODES_AMOUNT : int = 3
-var current_action : int = ACTION_NORMAL
+enum {PHASE_NORMAL, PHASE_MOBILIZE, PHASE_BONUS}
+const AMOUNT_OF_PHASES : int = 3
+var current_phase : int = PHASE_NORMAL
 
 var action_amount : int = 1
 var bonus_action_amount : int = 0
@@ -589,11 +592,11 @@ func change_region_amount(amount : int, alignment : int, is_capital : bool):
 
 
 func add_action():
-	match(current_action):
-		ACTION_NORMAL:
+	match(current_phase):
+		PHASE_NORMAL:
 			action_amount += 1
 			game_camera.changed_action_amount(1, align_color[current_playing_align])
-		ACTION_MOBILIZE, ACTION_BONUS:
+		PHASE_MOBILIZE, PHASE_BONUS:
 			bonus_action_amount += 1
 			game_camera.changed_action_amount(1, align_color[current_playing_align])
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "add_action")
@@ -601,7 +604,7 @@ func add_action():
 
 func action_done(region_name : String, amount : int = 1):
 	var auto_end_phase : bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
-	if current_action == ACTION_NORMAL:
+	if current_phase == PHASE_NORMAL:
 		if action_amount > 0:
 			GameStats.add_to_stat(current_playing_align, "first actions done", 1)
 			action_amount -= 1
@@ -609,12 +612,12 @@ func action_done(region_name : String, amount : int = 1):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 		if action_amount <= 0 and auto_end_phase:
 			change_current_action()
-	elif current_action == ACTION_MOBILIZE:
+	elif current_phase == PHASE_MOBILIZE:
 		bonus_action_amount += amount
 		game_camera.changed_action_amount(amount, align_color[current_playing_align])
 		for i in range(amount):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
-	elif current_action == ACTION_BONUS:
+	elif current_phase == PHASE_BONUS:
 		if bonus_action_amount > 0:
 			GameStats.add_to_stat(current_playing_align, "bonus actions done", 1)
 			bonus_action_amount -= 1
@@ -632,26 +635,26 @@ func overtake_region(region_name : String):
 
 
 func has_enough_actions() -> bool:
-	if current_action == ACTION_NORMAL:
+	if current_phase == PHASE_NORMAL:
 		return action_amount > 0
-	elif current_action == ACTION_BONUS:
+	elif current_phase == PHASE_BONUS:
 		return bonus_action_amount > 0
 	else:
 		return true
 
 
 func change_current_action():
-	if current_action == ACTION_NORMAL and action_amount > 0:
+	if current_phase == PHASE_NORMAL and action_amount > 0:
 		bonus_action_amount = action_amount
-	current_action += 1
+	current_phase += 1
 	
 	var call_end_turn : bool = false
 	
-	if current_action == ACTION_MODES_AMOUNT:
-		current_action = ACTION_NORMAL
+	if current_phase == AMOUNT_OF_PHASES:
+		current_phase = PHASE_NORMAL
 		call_end_turn = true
 	
-	turn_phase_changed.emit(current_action)
+	turn_phase_changed.emit(current_phase)
 	
 	if call_end_turn:
 		turn_end(false)
@@ -763,7 +766,7 @@ func reset():
 	calculate_penalty(current_playing_align)
 	action_amount = capital_amount[current_playing_align - 1] - penalty_amount[current_playing_align - 1]
 	bonus_action_amount = 1 if action_amount == 0 and not use_aliances else 0
-	current_action = ACTION_MOBILIZE if action_amount == 0 else ACTION_NORMAL
+	current_phase = PHASE_MOBILIZE if action_amount == 0 else PHASE_NORMAL
 	
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)

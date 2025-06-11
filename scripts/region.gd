@@ -18,7 +18,7 @@ signal reinforced(amount : int)
 signal mobilized()
 
 
-## Which alignment owns the region.
+## Which alignment owns the region. Alignment 0 is neutral.
 @export var alignment : int = 0
 ## Current power of the region.
 @export var power : int = 1
@@ -28,7 +28,7 @@ signal mobilized()
 @export var is_capital : bool = false
 
 @export_subgroup("Cosmetic")
-## Setting kinetic to true makes region arrows constantly update themselfs.
+## When true, region connections will update their position when the region moves.
 @export var kinetic : bool = false
 
 @export_subgroup("Editor")
@@ -205,7 +205,7 @@ func set_max_power(new_max : int, reduce_power : bool = true):
 
 
 func action_decided():
-	if region_control.current_action != region_control.ACTION_MOBILIZE:
+	if region_control.current_phase != region_control.PHASE_MOBILIZE:
 		if region_control.has_enough_actions():
 			if region_control.alignment_friendly(region_control.current_playing_align, alignment):
 				if reinforce(region_control.current_playing_align):
@@ -329,7 +329,7 @@ func update_cursor():
 	elif not region_control.is_player_controled:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
-	elif region_control.current_action == RegionControl.ACTION_NORMAL:
+	elif region_control.current_phase == RegionControl.PHASE_NORMAL:
 		if region_control.action_amount == 0:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
@@ -339,14 +339,14 @@ func update_cursor():
 		else:
 			GameControl.set_cursor(GameControl.CURSOR.SWORD)
 			
-	elif region_control.current_action == RegionControl.ACTION_MOBILIZE:
+	elif region_control.current_phase == RegionControl.PHASE_MOBILIZE:
 		if region_control.current_playing_align == alignment and power > 1:
 			GameControl.set_cursor(GameControl.CURSOR.HAND)
 			
 		else:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
-	elif region_control.current_action == RegionControl.ACTION_BONUS:
+	elif region_control.current_phase == RegionControl.PHASE_BONUS:
 		if region_control.bonus_action_amount == 0:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
