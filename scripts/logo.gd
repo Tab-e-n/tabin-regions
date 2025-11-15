@@ -68,6 +68,6 @@ func _process(delta):
 		elif timer >= 1.5:
 				get_tree().change_scene_to_file("res://title.tscn")
 		for i in range(current_region):
-			region_velocities[i].y += 48
+			region_velocities[i].y += 2880 * delta
 			var region = get_node(str(i))
 			region.position += region_velocities[i] * delta
