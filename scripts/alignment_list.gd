@@ -15,7 +15,7 @@ func add_leader(pos : int, alignment : int) -> Sprite2D:
 	var leader : Sprite2D = Sprite2D.new()
 	leader.name = String.num(alignment)
 	leader.texture = preload("res://sprites/turn_order_players.png")
-	leader.hframes = AIControl.PACKED_CONTROLERS.size()
+	leader.hframes = DPControl.PACKED_CONTROLERS.size()
 	leader.position.x = PLAY_ORDER_SPACING / 2 + PLAY_ORDER_SPACING * pos
 	leader.position.y = PLAY_ORDER_VERTICAL_OFFSET
 	leader.z_index = 1

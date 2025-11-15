@@ -14,7 +14,7 @@ var current_menu : int = 0
 @onready var map_list : ItemList = $tintable_ui/map_list
 @onready var map_directory : OptionButton = $tintable_ui/map_directory
 @onready var map_options : Control = $tintable_ui/def
-@onready var map_ai : Control = $tintable_ui/diff
+@onready var map_dp : Control = $tintable_ui/diff
 
 @onready var map_name : Label = $tintable_ui/map_name
 @onready var map_lore : Label = $tintable_ui/lore
@@ -24,8 +24,8 @@ var current_menu : int = 0
 @onready var slider_leader : HSlider = $tintable_ui/def/leaders
 @onready var slider_aliances : HSlider = $tintable_ui/def/aliances
 
-@onready var ai_preset : Label = $tintable_ui/diff/preset
-@onready var ai_cursor : Sprite2D = $tintable_ui/diff/AiSelected
+@onready var dp_preset : Label = $tintable_ui/diff/preset
+@onready var dp_cursor : Sprite2D = $tintable_ui/diff/cursor
 
 
 func _ready():
@@ -185,12 +185,12 @@ func _on_map_list_item_selected(index):
 		slider_aliances.max_value = current_map.align_amount - 1
 		slider_aliances.tick_count = int(slider_aliances.max_value)
 		
-		ai_preset.visible = current_map.lock_ai_setup
-		ai_cursor.visible = not current_map.lock_ai_setup
-		if current_map.lock_ai_setup:
+		dp_preset.visible = current_map.lock_dp_setup
+		dp_cursor.visible = not current_map.lock_dp_setup
+		if current_map.lock_dp_setup:
 			$tintable_ui/diff/opponent.text = ""
 		else:
-			ai_selected_pos()
+			dp_selected_pos()
 		
 		map_lore.text = RegionControl.setup_tag_name(current_map.tag) + ", " + RegionControl.setup_complexity_name(current_map.complexity) + "\n" + current_map.lore
 		
@@ -213,8 +213,8 @@ func _on_map_list_item_selected(index):
 		slider_player.visible = false
 		slider_aliances.visible = false
 		map_lore.text = "This directory of maps is most likely empty."
-		ai_preset.visible = true
-		ai_cursor.visible = false
+		dp_preset.visible = true
+		dp_cursor.visible = false
 
 
 func map_data_text():
@@ -249,43 +249,43 @@ func _on_next_menu_pressed():
 	
 	map_lore.visible = current_menu == MENU_LORE
 	map_options.visible = current_menu == MENU_ALIGNMENTS
-	map_ai.visible = current_menu == MENU_DIFFICULTY
+	map_dp.visible = current_menu == MENU_DIFFICULTY
 
 
-func ai_selected_pos():
-	match(MapSetup.default_ai_controler):
-		AIControl.CONTROLER_TURTLE:
-			ai_cursor.position.x = $tintable_ui/diff/ai_turtle.position.x
+func dp_selected_pos():
+	match(MapSetup.default_digital_player):
+		DPControl.CONTROLER_TURTLE:
+			dp_cursor.position.x = $tintable_ui/diff/dp_turtle.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nTURTLE"
-		AIControl.CONTROLER_DEFAULT:
-			ai_cursor.position.x = $tintable_ui/diff/ai_default.position.x
+		DPControl.CONTROLER_DEFAULT:
+			dp_cursor.position.x = $tintable_ui/diff/dp_default.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nSIMPLETON"
-		AIControl.CONTROLER_NEURAL:
-			ai_cursor.position.x = $tintable_ui/diff/ai_neural.position.x
+		DPControl.CONTROLER_NEURAL:
+			dp_cursor.position.x = $tintable_ui/diff/dp_neural.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nTHINKER"
-		AIControl.CONTROLER_CHEATER:
-			ai_cursor.position.x = $tintable_ui/diff/ai_cheater.position.x
+		DPControl.CONTROLER_CHEATER:
+			dp_cursor.position.x = $tintable_ui/diff/dp_cheater.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nCHEATER"
 
 
-func _on_ai_turtle_pressed():
-	MapSetup.default_ai_controler = AIControl.CONTROLER_TURTLE
-	ai_selected_pos()
+func _on_dp_turtle_pressed():
+	MapSetup.default_digital_player = DPControl.CONTROLER_TURTLE
+	dp_selected_pos()
 
 
-func _on_ai_default_pressed():
-	MapSetup.default_ai_controler = AIControl.CONTROLER_DEFAULT
-	ai_selected_pos()
+func _on_dp_default_pressed():
+	MapSetup.default_digital_player = DPControl.CONTROLER_DEFAULT
+	dp_selected_pos()
 
 
-func _on_ai_neural_pressed():
-	MapSetup.default_ai_controler = AIControl.CONTROLER_NEURAL
-	ai_selected_pos()
+func _on_dp_neural_pressed():
+	MapSetup.default_digital_player = DPControl.CONTROLER_NEURAL
+	dp_selected_pos()
 
 
-func _on_ai_cheater_pressed():
-	MapSetup.default_ai_controler = AIControl.CONTROLER_CHEATER
-	ai_selected_pos()
+func _on_dp_cheater_pressed():
+	MapSetup.default_digital_player = DPControl.CONTROLER_CHEATER
+	dp_selected_pos()
 
 
 func _on_replay_pressed():

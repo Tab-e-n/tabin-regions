@@ -75,7 +75,7 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	columb.position.x = 192 * pos
 	# Why did i name it like this
 	var funny_spacing_value : String = "                "
-	columb.text = funny_spacing_value + stats["alignment name"] + "\n" + funny_spacing_value + AIControl.CONTROLER_NAMES[stats["controler"]]
+	columb.text = funny_spacing_value + stats["alignment name"] + "\n" + funny_spacing_value + DPControl.CONTROLER_NAMES[stats["controler"]]
 	columb.text += "\n\nTurns lasted:\n" + String.num(stats["turns lasted"])
 	columb.text += "\nFirst actions done:\n" + String.num(stats["first actions done"])
 	columb.text += "\nBonus actions done:\n" + String.num(stats["bonus actions done"])

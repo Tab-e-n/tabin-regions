@@ -173,13 +173,13 @@ theme_override_font_sizes/font_size = 20
 text = "OPPONENT:"
 horizontal_alignment = 1
 
-[node name="AiSelected" type="Sprite2D" parent="tintable_ui/diff"]
+[node name="cursor" type="Sprite2D" parent="tintable_ui/diff"]
 position = Vector2(664, 96)
 texture = ExtResource("2_1q3y1")
 centered = false
 offset = Vector2(-4, -4)
 
-[node name="ai_turtle" type="TextureButton" parent="tintable_ui/diff"]
+[node name="dp_turtle" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
 offset_left = 664.0
 offset_top = 96.0
@@ -187,7 +187,7 @@ offset_right = 760.0
 offset_bottom = 192.0
 texture_normal = ExtResource("2_wi0e8")
 
-[node name="ai_default" type="TextureButton" parent="tintable_ui/diff"]
+[node name="dp_default" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
 offset_left = 776.0
 offset_top = 96.0
@@ -195,7 +195,7 @@ offset_right = 872.0
 offset_bottom = 192.0
 texture_normal = ExtResource("2_qggyn")
 
-[node name="ai_neural" type="TextureButton" parent="tintable_ui/diff"]
+[node name="dp_neural" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
 offset_left = 888.0
 offset_top = 96.0
@@ -203,7 +203,7 @@ offset_right = 984.0
 offset_bottom = 192.0
 texture_normal = ExtResource("3_g3ljl")
 
-[node name="ai_cheater" type="TextureButton" parent="tintable_ui/diff"]
+[node name="dp_cheater" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
 offset_left = 1000.0
 offset_top = 96.0
@@ -292,7 +292,7 @@ size = Vector2i(480, 480)
 borderless = true
 transparent = true
 popup_window = true
-ok_button_text = "Open"
+ok_button_text = "Otevřít"
 file_mode = 0
 access = 1
 filters = PackedStringArray("*.json")
@@ -304,7 +304,7 @@ size = Vector2i(480, 480)
 borderless = true
 transparent = true
 popup_window = true
-ok_button_text = "Select Current Folder"
+ok_button_text = "Vybrat stávající složku"
 dialog_hide_on_ok = true
 file_mode = 2
 access = 1
@@ -318,10 +318,10 @@ filters = PackedStringArray("*.json")
 [connection signal="value_changed" from="tintable_ui/def/leaders" to="." method="_on_leaders_value_changed"]
 [connection signal="value_changed" from="tintable_ui/def/players" to="." method="_on_players_value_changed"]
 [connection signal="value_changed" from="tintable_ui/def/aliances" to="." method="_on_def_slider_value_changed"]
-[connection signal="pressed" from="tintable_ui/diff/ai_turtle" to="." method="_on_ai_turtle_pressed"]
-[connection signal="pressed" from="tintable_ui/diff/ai_default" to="." method="_on_ai_default_pressed"]
-[connection signal="pressed" from="tintable_ui/diff/ai_neural" to="." method="_on_ai_neural_pressed"]
-[connection signal="pressed" from="tintable_ui/diff/ai_cheater" to="." method="_on_ai_cheater_pressed"]
+[connection signal="pressed" from="tintable_ui/diff/dp_turtle" to="." method="_on_dp_turtle_pressed"]
+[connection signal="pressed" from="tintable_ui/diff/dp_default" to="." method="_on_dp_default_pressed"]
+[connection signal="pressed" from="tintable_ui/diff/dp_neural" to="." method="_on_dp_neural_pressed"]
+[connection signal="pressed" from="tintable_ui/diff/dp_cheater" to="." method="_on_dp_cheater_pressed"]
 [connection signal="pressed" from="tintable_ui/next_menu" to="." method="_on_next_menu_pressed"]
 [connection signal="pressed" from="tintable_ui/replay" to="." method="_on_replay_pressed"]
 [connection signal="pressed" from="tintable_ui/play" to="." method="_on_play_pressed"]

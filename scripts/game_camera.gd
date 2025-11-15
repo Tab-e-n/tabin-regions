@@ -38,6 +38,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var CurrentTurn : Label
 @export var CurrentAlignment : Label
 @export var CurrentAction : Label
+@export var PhaseInfo : Label
 
 @export_subgroup("Messages")
 @export var VictoryMessage : Control
@@ -50,7 +51,7 @@ const BASE_MOVE_SPEED : float = 8
 @export_subgroup("Pause Options")
 @export var MouseScroll : BaseButton
 @export var AutoPhase : BaseButton
-@export var FastAI : BaseButton
+@export var FastDP : BaseButton
 @export var ActionChangePart : BaseButton
 @export var VisCapitals : BaseButton
 @export var VisUI : BaseButton
@@ -138,8 +139,8 @@ func _ready():
 		MouseScroll.button_pressed = Options.mouse_scroll_active
 	if AutoPhase:
 		AutoPhase.button_pressed = Options.auto_end_turn_phases
-	if FastAI:
-		FastAI.button_pressed = Options.speedrun_ai
+	if FastDP:
+		FastDP.button_pressed = Options.dp_speedrun
 	if ActionChangePart:
 		ActionChangePart.button_pressed = Options.action_change_particles
 	if VisUI and UIHideable:
@@ -346,12 +347,19 @@ func update_current_action(current_phase : int):
 	if CurrentAction:
 		const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
 		CurrentAction.text = ACTIONS[current_phase]
-		if current_phase == RegionControl.PHASE_MOBILIZE:
-			advance_turn_visual(2)
-		elif current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount == 0:
-			advance_turn_visual(0)
-		else:
-			advance_turn_visual(1)
+	if current_phase == RegionControl.PHASE_MOBILIZE:
+		advance_turn_visual(2)
+	elif current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount == 0:
+		advance_turn_visual(0)
+	else:
+		advance_turn_visual(1)
+	if PhaseInfo:
+		const PHASE_INFO : Array[String] = [
+			"First Actions: Attack or defend regions!",
+			"Mobilization: Grab extra units!",
+			"Bonus Actions: Attack or defend regions with mobilized units!"
+		]
+		PhaseInfo.text = PHASE_INFO[current_phase]
 
 
 func _turn_ended():
@@ -368,6 +376,8 @@ func _turn_ended():
 	update_current_action(region_control.current_phase)
 	
 	update_alignment_label()
+	
+	hide_tooltips()
 
 
 func _turn_phase_changed(current_phase : int):
@@ -473,6 +483,14 @@ func show_defeat_message(alignment : int):
 func _forfeit():
 	_forfeit_hide()
 	region_control.forfeit()
+
+
+func hide_tooltips():
+	TooltipActions.visible = false
+	TooltipPhase.visible = false
+	TooltipEndTurn.visible = false
+	TooltipForfeit.visible = false
+	button_cam_enable()
 
 
 func show_tooltip_actions():

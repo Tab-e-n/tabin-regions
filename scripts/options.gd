@@ -4,7 +4,7 @@ extends Node
 const SAVEFILE : String = "user://OPTIONS.json"
 
 
-var speedrun_ai : bool = false
+var dp_speedrun : bool = false
 var mouse_scroll_active : bool = true
 var auto_end_turn_phases : bool = false
 var action_change_particles : bool = true
@@ -17,7 +17,7 @@ func _ready():
 
 func save_options():
 	var options : Dictionary = {
-		"speedrun_ai" : speedrun_ai,
+		"dp_speedrun" : dp_speedrun,
 		"mouse_scroll_active" : mouse_scroll_active,
 		"auto_end_turn_phases" : auto_end_turn_phases,
 		"action_change_particles" : action_change_particles,

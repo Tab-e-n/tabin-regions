@@ -39,7 +39,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 
 @onready var bg_color : Color = color
 @onready var game_control : GameControl
-@onready var ai_control : AIControl
+@onready var dp_control : DPControl
 @onready var game_camera : GameCamera
 
 
@@ -54,8 +54,8 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var lock_player_amount : bool = false
 ## Prevents users from changing the number of aliances.
 @export var lock_aliances : bool = false
-## Prevents users from changing the computer players. Set this to true if you need a specific AI active.
-@export var lock_ai_setup : bool = false
+## Prevents users from changing the digital players. Set this to true if you need a specific DP active.
+@export var lock_dp_setup : bool = false
 
 
 @export_subgroup("Gameplay")
@@ -92,15 +92,15 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 ## Specifies an unchanging turn order.
 @export var preset_alignments : Array[int] = []
 
-@export_subgroup("AI")
-## The default AI that computer players will use. Uses the 'CONTROLER_' enums from 'AIControl'.
+@export_subgroup("DP")
+## The default DP that computer players will use. Uses the 'CONTROLER_' enums from 'DPControl'.
 ## Default, Turtle, Neural and Cheater are all accessible in the setup scene.
-## The Dummy AI does nothing, expecting to be controled by the map.
-@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_ai_controler : int = AIControl.CONTROLER_DEFAULT
+## The Dummy DP does nothing, expecting to be controled by the map.
+@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_digital_player : int = DPControl.CONTROLER_DEFAULT
 
-@export var custom_ai_setup : Array[int] = []
-## If set to true, when starting the map custom_ai_setup will be shuffled so it is not the same every time.
-@export var shuffle_ai : bool = false
+@export var custom_dp_setup : Array[int] = []
+## If set to true, when starting the map custom_dp_setup will be shuffled so it is not the same every time.
+@export var shuffle_dp : bool = false
 
 @export_subgroup("Aliances")
 
@@ -235,7 +235,7 @@ func _ready():
 	game_control = get_parent()
 	game_control.region_control = self
 	game_camera = game_control.game_camera
-	ai_control = game_control.ai_control
+	dp_control = game_control.dp_control
 	
 	if ReplayControl.replay_active:
 		align_play_order = ReplayControl.replay_play_order
@@ -244,8 +244,8 @@ func _ready():
 		use_aliances = ReplayControl.replay_uses_aliances
 	else:
 		player_amount = MapSetup.player_amount
-		if not lock_ai_setup:
-			default_ai_controler = MapSetup.default_ai_controler
+		if not lock_dp_setup:
+			default_digital_player = MapSetup.default_digital_player
 		if not use_aliances and MapSetup.aliances_amount > 1:
 			use_aliances = true
 			use_autoaliances = true
@@ -365,17 +365,17 @@ func _ready():
 	current_playing_align = align_play_order[0]
 	
 	if not ReplayControl.replay_active:
-		if shuffle_ai:
+		if shuffle_dp:
 			randomize()
-			custom_ai_setup.shuffle()
+			custom_dp_setup.shuffle()
 		align_controlers.resize(align_amount - 1)
 		for i in range(align_amount - 1):
-			align_controlers[i] = default_ai_controler
-			if i < custom_ai_setup.size():
-				if custom_ai_setup[i] != 0:
-					align_controlers[i] = custom_ai_setup[i]
+			align_controlers[i] = default_digital_player
+			if i < custom_dp_setup.size():
+				if custom_dp_setup[i] != 0:
+					align_controlers[i] = custom_dp_setup[i]
 		for i in range(player_amount):
-			align_controlers[align_play_order[i] - 1] = AIControl.CONTROLER_USER
+			align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER_USER
 	
 	last_turn_region_amount = region_amount.duplicate()
 	
@@ -388,8 +388,8 @@ func _ready():
 			GameStats.set_stat(align, "controler", align_controlers[align - 1])
 #			GameStats.stats[align]["controler"] = align_controlers[align - 1]
 		else:
-			GameStats.set_stat(align, "controler", AIControl.CONTROLER_DUMMY)
-#			GameStats.stats[align]["controler"] = AIControl.CONTROLER_DUMMY
+			GameStats.set_stat(align, "controler", DPControl.CONTROLER_DUMMY)
+#			GameStats.stats[align]["controler"] = DPControl.CONTROLER_DUMMY
 	
 	current_placement = align_play_order.size()
 	
@@ -770,8 +770,8 @@ func reset():
 	
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
-		if Options.speedrun_ai:
-			if align_controlers[current_playing_align - 1] == AIControl.CONTROLER_USER:
+		if Options.dp_speedrun:
+			if align_controlers[current_playing_align - 1] == DPControl.CONTROLER_USER:
 				color = bg_color_tinted
 			else:
 				color = bg_color
@@ -781,10 +781,10 @@ func reset():
 	if ReplayControl.replay_active:
 		is_player_controled = false
 	else:
-		is_player_controled = align_controlers[current_playing_align - 1] == AIControl.CONTROLER_USER
+		is_player_controled = align_controlers[current_playing_align - 1] == DPControl.CONTROLER_USER
 	
 	if !is_player_controled:
-		ai_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
+		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
 
 
 func calculate_penalty(alignment : int, end_of_turn : bool = false):

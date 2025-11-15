@@ -10,8 +10,8 @@ class_name Volcano
 @export var amplitude : float = 32
 @export var period : float = 0.8
 
-@onready var controler : AIDummy
-@onready var ai_control : AIControl
+@onready var controler : DPDummy
+@onready var dp_control : DPControl
 @onready var region_control : RegionControl
 
 var pathways : Array[VolcanoPath] = []
@@ -60,11 +60,11 @@ func _ready():
 
 
 func _deferred_ready():
-	ai_control = region_control.ai_control
+	dp_control = region_control.dp_control
 	var controler_id = region_control.align_controlers[dummy_alignment - 1]
-	controler = ai_control.controlers[controler_id] as AIDummy
+	controler = dp_control.controlers[controler_id] as DPDummy
 	if not controler:
-		push_warning("Volcano could not find AIDummy, thus it is not functional.")
+		push_warning("Volcano could not find DPDummy, thus it is not functional.")
 		queue_free()
 		return
 	controler.started_turn.connect(_start_volcano_turn)
@@ -77,16 +77,16 @@ func _deferred_ready():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if ai_control.CALL_change_current_action:
+	if dp_control.CALL_change_current_action:
 		return
 	if not active:
-		ai_control.CALL_turn_end = true
+		dp_control.CALL_turn_end = true
 		return
 	
 	if region_control.action_amount == 0:
-		ai_control.CALL_cheat = true
+		dp_control.CALL_cheat = true
 	else:
-		ai_control.selected_capital = residing_region.name
+		dp_control.selected_capital = residing_region.name
 		active = false
 
 
@@ -95,11 +95,11 @@ func _think_mobilize():
 		return
 	
 	if residing_region.power == 1:
-		ai_control.CALL_change_current_action = true
+		dp_control.CALL_change_current_action = true
 		if region_control.game_camera:
 			region_control.game_camera.shake_camera(duration, amplitude, period)
 	else:
-		ai_control.selected_capital = residing_region.name
+		dp_control.selected_capital = residing_region.name
 
 
 func _think_bonus():
@@ -111,14 +111,14 @@ func _think_bonus():
 		if not path.active:
 			continue
 		call_end_turn = false
-		ai_control.CALL_overtake = true
-		ai_control.selected_capital = path.pathway_strings[path.current]
+		dp_control.CALL_overtake = true
+		dp_control.selected_capital = path.pathway_strings[path.current]
 		path.current += 1
 		if path.current >= path.pathway_strings.size():
 			path.active = false
 		break
 	if call_end_turn:
-		ai_control.CALL_turn_end = true
+		dp_control.CALL_turn_end = true
 		activate_pathways()
 
 
@@ -139,7 +139,7 @@ func _start_volcano_turn():
 		return
 	
 	if residing_region.power == residing_region.max_power:
-		ai_control.CALL_change_current_action = true
+		dp_control.CALL_change_current_action = true
 #		print("Volcano Busted")
 	
 	active = true

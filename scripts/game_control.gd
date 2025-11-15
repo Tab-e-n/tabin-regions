@@ -8,7 +8,7 @@ enum CURSOR {NORMAL, BLOCKED, PLUS, SHIELD, SWORD, FULL_PLUS, FULL_SHIELD, FULL_
 
 @onready var game_camera : GameCamera
 @onready var region_control : RegionControl
-@onready var ai_control : AIControl
+@onready var dp_control : DPControl
 @onready var command_callout : CommandCallouts
 
 var mouse_wheel_input : int = 0
@@ -115,14 +115,14 @@ func _process(delta):
 			if game_camera.AutoPhase:
 				game_camera.AutoPhase.button_pressed = Options.auto_end_turn_phases
 		
-		if Input.is_action_just_pressed("ai_speedrun"):
-			set_speedrun_ai(not Options.speedrun_ai)
-			if Options.speedrun_ai:
-				new_callout("Fast AI")
+		if Input.is_action_just_pressed("dp_speedrun"):
+			set_dp_speedrun(not Options.dp_speedrun)
+			if Options.dp_speedrun:
+				new_callout("Fast Digital Players")
 			else:
-				new_callout("Slow AI")
-			if game_camera.FastAI:
-				game_camera.FastAI.button_pressed = Options.speedrun_ai
+				new_callout("Slow Digital Players")
+			if game_camera.FastDP:
+				game_camera.FastDP.button_pressed = Options.dp_speedrun
 		
 		if Input.is_action_just_pressed("action_change_particles"):
 			set_action_change_particles(not Options.action_change_particles)
@@ -156,9 +156,9 @@ func set_auto_phases(auto : bool):
 	Options.auto_end_turn_phases = auto
 
 
-func set_speedrun_ai(speedy : bool):
-	Options.speedrun_ai = speedy
-	ai_control.speedrun_ai_update()
+func set_dp_speedrun(speedy : bool):
+	Options.dp_speedrun = speedy
+	dp_control.dp_speedrun_update()
 
 
 func set_action_change_particles(active : bool):
@@ -187,7 +187,7 @@ func change_map(map_name : String):
 	region_control.spawn_particles = false
 	game_camera.region_control = region_control
 	game_camera.connect_region_control_signals()
-	ai_control.region_control = region_control
+	dp_control.region_control = region_control
 	
 	ReplayControl.clear_replay()
 
