@@ -732,8 +732,6 @@ func _calculate_penalty(alignment : int, end_of_turn : bool = false):
 	penalty_amount[alignment - 1] = penalty_total
 
 
-
-
 ## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
 func get_region(reg_name : String) -> Region:
 	var node : Node = get_node(reg_name)
@@ -743,6 +741,7 @@ func get_region(reg_name : String) -> Region:
 		return null
 
 
+## Check if two alignments are allied.
 func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 	if your_align < 0 or your_align >= align_amount:
 		return false
@@ -751,28 +750,32 @@ func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 	return alignment_aliances[your_align] == alignment_aliances[opposing_align]
 
 
+## Check if the alignment does not have a digital player controling it.
 func alignment_inactive(align : int) -> bool:
 	return align <= 0 or align >= align_amount
 
 
+## Check if the alignment has a digital player controling it.
 func alignment_active(align : int) -> bool:
 	return align > 0 and align < align_amount
 
 
-func convert_alignment(align_old : int, align_new : int):
-	if align_old < 0:
-		push_warning("Alignment ", align_old, " cannot be converted.")
+## Turns all regions of alignment A into regions of alignment B
+func convert_alignment(alignment_a : int, alignment_b : int):
+	if alignment_a < 0:
+		push_warning("Alignment ", alignment_a, " cannot be converted.")
 		return
-	if align_new < 0:
-		push_warning("Alignment ", align_new, " cannot be converted to.")
+	if alignment_b < 0:
+		push_warning("Alignment ", alignment_b, " cannot be converted to.")
 		return
 	
 	for region in get_children():
 		if region is Region:
-			if region.alignment == align_old:
-				region.change_alignment(align_new)
+			if region.alignment == alignment_a:
+				region.change_alignment(alignment_b)
 
 
+## Grants victory to the specified alignment.
 func victory(align_victory : int):
 	dummy = true
 	
@@ -801,15 +804,18 @@ func victory(align_victory : int):
 	game_ended.emit(align_victory)
 
 
-func has_enough_actions() -> bool:
+## Check if the current player has enough actions left.
+func has_enough_actions(needed : int = 1) -> bool:
 	if current_phase == PHASE_NORMAL:
-		return action_amount > 0
+		return action_amount >= needed
 	elif current_phase == PHASE_BONUS:
-		return bonus_action_amount > 0
+		return bonus_action_amount >= needed
 	else:
 		return true
 
 
+## Spawns the cross particle at the specified position.
+## Used when the player attempts an illegal move.
 func spawn_cross_particle(capital_position : Vector2):
 	var part : Sprite2D = Sprite2D.new()
 	part.set_script(preload("res://scripts/particle_cross.gd"))
@@ -820,6 +826,7 @@ func spawn_cross_particle(capital_position : Vector2):
 	add_child(part)
 
 
+## Changes the current turn phase. Calls end turn if it is the Bonus Actions phase.
 func change_current_phase():
 	if current_phase == PHASE_NORMAL and action_amount > 0:
 		bonus_action_amount = action_amount
@@ -839,6 +846,7 @@ func change_current_phase():
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "change_current_phase")
 
 
+## Ends the current players turn.
 func end_turn(record : bool):
 	_calculate_penalty(current_playing_align, true)
 	
@@ -876,6 +884,7 @@ func end_turn(record : bool):
 		ReplayControl.record_move.call_deferred(ReplayControl.RECORD_TYPE_FUNCTION, "end_turn")
 
 
+## Makes the current player forfeit, turning their regions neutral.
 func forfeit():
 	convert_alignment(current_playing_align, 0)
 	
@@ -884,6 +893,7 @@ func forfeit():
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "forfeit")
 
 
+## Gives the current player an extra action.
 func add_action():
 	match(current_phase):
 		PHASE_NORMAL:
@@ -895,13 +905,15 @@ func add_action():
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "add_action")
 
 
+## Captures a region for the current player, regardless of the state the region is in.
 func overtake_region(region_name : String):
-	var region : Region = get_node(region_name) as Region
+	var region : Region = get_region(region_name)
 	if region:
 		region.overtake()
 		ReplayControl.record_move(ReplayControl.RECORD_TYPE_OVERTAKE, region_name)
 
 
+## Called after a region is pressed.
 func action_done(region_name : String, amount : int = 1):
 	var auto_end_phase : bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
 	if current_phase == PHASE_NORMAL:
@@ -925,6 +937,8 @@ func action_done(region_name : String, amount : int = 1):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 		if bonus_action_amount <= 0 and auto_end_phase:
 			change_current_phase()
+
+
 static func flip_color(c : Color) -> Color:
 	c.r = 1 - c.r
 	c.g = 1 - c.g

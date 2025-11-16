@@ -1,6 +1,7 @@
 extends Control
 class_name CommandCallouts
 
+
 const REMOVE_CALLOUT_TIME : float = 3.0
 const CALLOUT_SIZE : int = 16
 const MAX_CALLOUTS : int = 8
@@ -53,7 +54,7 @@ func new_callout(text : String, color : Color = default_color):
 	callouts.append(callout)
 	callout_timestamp.append(timer + REMOVE_CALLOUT_TIME)
 	position_callouts()
-	
+
 
 func position_callouts():
 	var callout_amount : int = callouts.size()

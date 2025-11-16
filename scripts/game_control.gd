@@ -2,9 +2,27 @@ extends Node2D
 class_name GameControl
 
 
-enum CURSOR {NORMAL, BLOCKED, PLUS, SHIELD, SWORD, FULL_PLUS, FULL_SHIELD, FULL_SWORD, HAND}
-
-@export var map : String = "2._Testlandia.tscn"
+## Possible cursor graphics that set_cursor can use.
+enum CURSOR {
+	## Regular cursor.
+	NORMAL,
+	## Blocked symbol.
+	BLOCKED,
+	## Regular cursor with an addition plus.
+	PLUS,
+	## Regular cursor with an addition shield.
+	SHIELD,
+	## Regular cursor with an addition sword.
+	SWORD,
+	## Plus symbol.
+	FULL_PLUS,
+	## Shield symbol.
+	FULL_SHIELD,
+	## Sword symbol.
+	FULL_SWORD,
+	## Hand symbol.
+	HAND
+}
 
 @onready var game_camera : GameCamera
 @onready var region_control : RegionControl
@@ -20,6 +38,8 @@ var inputs_active : bool = true
 
 func _ready():
 	GameControl.set_cursor(CURSOR.NORMAL)
+	
+	var map : String
 	
 	if not MapSetup.current_map_name.is_empty():
 		map = MapSetup.current_map_name
@@ -94,7 +114,7 @@ func _process(delta):
 			new_callout("Toggle turn order")
 		
 		if Input.is_action_just_pressed("hide_capitals"):
-			hide_capitals()
+			toggle_cities()
 			game_camera.CommandCallout.new_callout("Toggle hide capitols")
 		
 		if Input.is_action_just_pressed("disable_mouse_scroll"):
@@ -140,35 +160,42 @@ func _process(delta):
 	mouse_wheel_input = 0
 
 
-func hide_capitals():
+## Toggles if cities are visible or invisible.
+func toggle_cities():
 	if region_control:
-		region_control.cities_visible = not region_control.cities_visible
+		set_city_visibility(not region_control.cities_visible)
+
+
+## Sets the visibility of cities.
+func set_city_visibility(visibility : bool):
+	if region_control:
+		region_control.cities_visible = visibility
 		if game_camera.VisCapitals:
 			game_camera.VisCapitals.button_pressed = region_control.cities_visible
 
 
-func set_capital_visibility(visibility : bool):
-	if region_control:
-		region_control.cities_visible = visibility
-
-
+## Sets whether to use mouse camera scrolling or not.
 func set_mouse_scroll(scrolling : bool):
 	Options.mouse_scroll_active = scrolling
 
 
+## Sets whether to use automatic phases or not.
 func set_auto_phases(auto : bool):
 	Options.auto_end_turn_phases = auto
 
 
+## Sets whether to use digital player speedrun or not.
 func set_dp_speedrun(speedy : bool):
 	Options.dp_speedrun = speedy
 	dp_control.dp_speedrun_update()
 
 
+## Sets whether to show action change particles or not.
 func set_action_change_particles(active : bool):
 	Options.action_change_particles = active
 
 
+## Makes a new command callout.
 func new_callout(text: String):
 	if command_callout:
 		command_callout.new_callout(text)
@@ -181,6 +208,7 @@ func load_map(map_name : String):
 	move_child(region_control, 1)
 
 
+## Frees the current map and loads a new map from the current map directory.
 func change_map(map_name : String):
 	if region_control:
 		remove_child(region_control)
@@ -190,7 +218,7 @@ func change_map(map_name : String):
 	
 	region_control.spawn_particles = false
 	game_camera.region_control = region_control
-	game_camera.connect_region_control_signals()
+	game_camera._connect_region_control_signals()
 	dp_control.region_control = region_control
 	
 	ReplayControl.clear_replay()
@@ -210,6 +238,7 @@ func leave():
 	get_tree().change_scene_to_file("res://stats.tscn")
 
 
+## Sets the cursor graphic.
 static func set_cursor(cursor : CURSOR):
 	match cursor:
 		CURSOR.NORMAL:

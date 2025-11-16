@@ -124,8 +124,8 @@ func _process(delta):
 				var pos_range : float = region_control.render_range * 40
 				var col1 : float = 1.0 - clampf(abs(position.x) / pos_range, 0, 1)
 				var col2 : float = 1.0 - clampf(abs(position.y) / pos_range, 0, 1)
-				
 				color = Color(col1, col2, 0.5, 1)
+	
 	if not Engine.is_editor_hint():
 		if color_change_time < 1.0:
 			color_change_time += delta * COLOR_CHANGE_SPEED
@@ -135,26 +135,27 @@ func _process(delta):
 				material.set_shader_parameter("changing_color", false)
 
 
+## Attempts to reinforce the region.
 func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
 	if power >= max_power:
 		return false
 	power += addon_power
 	GameStats.add_to_stat(reinforce_align, "regions reinforced", 1)
-#	GameStats.stats[reinforce_align]["regions reinforced"] += 1
 	reinforced.emit(addon_power)
 	return true
 
 
+## Attempts to mobilize on the region.
 func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
 	if power <= 1:
 		return 0
 	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
-#	GameStats.stats[mobilize_align]["units mobilized"] += 1
 	power -= mobilize_amount
 	mobilized.emit()
 	return mobilize_amount
 
 
+## Attempts to capture the region.
 func incoming_attack(attack_align : int, attack_power : int = 0, test_only : bool = false):
 	attack_power += get_alignments_attack_power(attack_align)
 	if incoming_attack_captures(attack_power):
@@ -162,21 +163,18 @@ func incoming_attack(attack_align : int, attack_power : int = 0, test_only : boo
 			return true
 		GameStats.add_to_stat(attack_align, "enemy units removed", power)
 		GameStats.add_to_stat(alignment, "units lost", power)
-#		GameStats.stats[attack_align]["enemy units removed"] += power
-#		GameStats.stats[alignment]["units lost"] += power
 		power = 1
 		change_alignment(attack_align)
 		GameStats.add_to_stat(attack_align, "regions captured", 1)
-#		GameStats.stats[alignment]["regions captured"] += 1
 		if is_capital:
 			GameStats.add_to_stat(attack_align, "capital regions captured", 1)
-#			GameStats.stats[alignment]["capital regions captured"] += 1
 		captured.emit()
 		return true
 	else:
 		return false
 
 
+## Changes the regions alignment to a new one.
 func change_alignment(align : int, recolor_self : bool = true):
 	region_control._record_region_amount_change(-1, alignment, is_capital)
 	alignment = align
@@ -186,14 +184,16 @@ func change_alignment(align : int, recolor_self : bool = true):
 	changed_alignment.emit(alignment)
 
 
-func overtake():
+## Captures the region for the overtaker, regardless of the state the region is in.
+func overtake(overtaker : int = region_control.current_playing_align):
 	city_particle(false)
-	if region_control.alignment_friendly(region_control.current_playing_align, alignment):
-		reinforce(region_control.current_playing_align)
+	if region_control.alignment_friendly(overtaker, alignment):
+		reinforce(overtaker)
 	else:
-		incoming_attack(region_control.current_playing_align, max_power + 1)
+		incoming_attack(overtaker, max_power + 1)
 
 
+## Changes the max power of the region.
 func set_max_power(new_max : int, reduce_power : bool = true):
 	max_power = new_max
 	if reduce_power and power > max_power:
@@ -228,6 +228,7 @@ func action_decided():
 		region_control.spawn_cross_particle(position)
 
 
+## Checks if a region of the attackers alignment is connected to the current region.
 func alignment_can_attack(attack_align : int) -> bool:
 	for connection in connections:
 		var region : Region = connection.get_other_region(self)
@@ -236,6 +237,7 @@ func alignment_can_attack(attack_align : int) -> bool:
 	return false
 
 
+## Gets the regions attack power on the connected region.
 func connection_attack_power(connection : RegionConnection) -> int:
 	var region : Region = connection.get_other_region(self)
 	if region:
@@ -244,6 +246,7 @@ func connection_attack_power(connection : RegionConnection) -> int:
 		return 0
 
 
+## Calculates all possible attacks from all connected regions.
 func get_adjacent_attack_power() -> Array[int]:
 	var attacks : Array[int] = []
 	attacks.resize(region_control.align_amount)
@@ -256,6 +259,7 @@ func get_adjacent_attack_power() -> Array[int]:
 	return attacks
 
 
+## Returns the highest attack from connected regions.
 func strongest_enemy_attack(align : int = alignment) -> int:
 	var attacks : Array[int] = get_adjacent_attack_power()
 	var strongest : int = 0
@@ -267,10 +271,12 @@ func strongest_enemy_attack(align : int = alignment) -> int:
 	return strongest
 
 
+## Checks if attack power is enough to capture the region.
 func incoming_attack_captures(attack_power : int) -> bool:
 	return attack_power > power
 
 
+## Get the attack power of a specific alignment.
 func get_alignments_attack_power(align : int) -> int:
 	var attack_power : int = 0
 	for connection in connections:
@@ -280,10 +286,12 @@ func get_alignments_attack_power(align : int) -> int:
 	return attack_power
 
 
+## The difference between the regions power and an alignments attack
 func attack_power_difference(attack_align : int) -> int:
 	return power - get_alignments_attack_power(attack_align)
 
 
+## Recolors the region.
 func color_self(animate : bool = true, backup_color : Color = color):
 	if(animate):
 		material.set_shader_parameter("changing_color", true)
@@ -300,12 +308,14 @@ func color_self(animate : bool = true, backup_color : Color = color):
 		connection.update_gradient()
 
 
+## Makes a particle on the city.
 func city_particle(is_mobilized : bool):
 	if region_control and not region_control.spawn_particles:
 		return
 	city.call_deferred("make_particle", is_mobilized)
 
 
+## Shows the regions connections.
 func show_region_connections():
 	for i in range(connections.size()):
 		var connection : RegionConnection = connections[i]
@@ -313,6 +323,7 @@ func show_region_connections():
 		connection.show_self(self)
 
 
+## Hides the regions connections.
 func hide_region_connections():
 	for i in range(connections.size()):
 		var connection : RegionConnection = connections[i]
@@ -320,6 +331,7 @@ func hide_region_connections():
 		connection.hide_self()
 
 
+## Updates cursor based on the regions state.
 func update_cursor():
 	if region_control.dummy:
 		pass

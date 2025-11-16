@@ -214,7 +214,7 @@ func _deffered_ready():
 	
 	CommandCallout.default_color = region_control.command_callout_color
 	
-	connect_region_control_signals()
+	_connect_region_control_signals()
 	
 	call_deferred("_ready_turn_order")
 	
@@ -224,7 +224,7 @@ func _deffered_ready():
 	Attacks.scale = Vector2(region_control.city_size, region_control.city_size);
 
 
-func connect_region_control_signals():
+func _connect_region_control_signals():
 	if region_control:
 		region_control.turn_ended.connect(_turn_ended)
 		region_control.turn_phase_changed.connect(_turn_phase_changed)
