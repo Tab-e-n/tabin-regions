@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://cnxb64453xeqg" path="res://maps/A.2_Title_Map.tscn" id="1_dr8vy"]
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_wam5a"]
-[ext_resource type="Texture2D" uid="uid://tmryy03p6doc" path="res://sprites/ai_neuron.png" id="3_ofd00"]
+[ext_resource type="Texture2D" uid="uid://tmryy03p6doc" path="res://sprites/dp_neuron.png" id="3_ofd00"]
 [ext_resource type="PackedScene" uid="uid://ib7qg43imr83" path="res://objects/moving_polygon.tscn" id="4_xrc6d"]
 
 [node name="title" type="Node2D"]

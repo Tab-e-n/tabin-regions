@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://b24er4e3fq8o6"
-path="res://.godot/imported/ai_default.png-ae64b71f9c8946771cd90aecf08abf90.ctex"
+uid="uid://bdhc82g82oksd"
+path="res://.godot/imported/dp_neuron_real.png-85293bef4176573dfd9d464d501ed233.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://sprites/ai_default.png"
-dest_files=["res://.godot/imported/ai_default.png-ae64b71f9c8946771cd90aecf08abf90.ctex"]
+source_file="res://sprites/dp_neuron_real.png"
+dest_files=["res://.godot/imported/dp_neuron_real.png-85293bef4176573dfd9d464d501ed233.ctex"]
 
 [params]
 
