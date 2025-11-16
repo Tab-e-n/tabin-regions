@@ -14,15 +14,15 @@ const THINKING_TIMER_NETWORK : float = 0.001
 
 var thinking_timer : float = THINKING_TIMER_DEFAULT
 
-enum {CONTROLER_USER, CONTROLER_DEFAULT, CONTROLER_TURTLE, CONTROLER_NEURAL, CONTROLER_CHEATER, CONTROLER_DUMMY}
+enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY}
 const CONTROLER_NAMES : Array = ["User Controled", "Simple", "Turtle", "Neural", "Cheater", "Environment"]
 const PACKED_CONTROLERS : Array = [
-	null, # CONTROLER_USER (can be just null)
-	preload("res://dp/dp_normal.gd"), # CONTROLER_DEFAULT
-	preload("res://dp/dp_turtle.gd"), # CONTROLER_TURTLE
-	preload("res://dp/dp_neural.gd"), # CONTROLER_NEURAL
-	preload("res://dp/dp_normal.gd"), # CONTROLER_CHEATER
-	preload("res://dp/dp_dummy.gd") # CONTROLER_DUMMY
+	null, # CONTROLER.USER (can be just null)
+	preload("res://dp/dp_normal.gd"), # CONTROLER.DEFAULT
+	preload("res://dp/dp_turtle.gd"), # CONTROLER.TURTLE
+	preload("res://dp/dp_neural.gd"), # CONTROLER.NEURAL
+	preload("res://dp/dp_normal.gd"), # CONTROLER.CHEATER
+	preload("res://dp/dp_dummy.gd") # CONTROLER.DUMMY
 ]
 
 
@@ -36,8 +36,8 @@ var previous_moves : Array = []
 
 var selected_capital : String = ""
 
-var CALL_change_current_action : bool = false
-var CALL_turn_end : bool = false
+var CALL_change_current_phase : bool = false
+var CALL_end_turn : bool = false
 var CALL_forfeit : bool = false
 var CALL_nothing : bool = false
 var CALL_cheat : bool = false
@@ -61,7 +61,7 @@ func _ready():
 			controlers[i].set_script(PACKED_CONTROLERS[i])
 			controlers[i].controler = self
 			add_child(controlers[i])
-	controlers[CONTROLER_CHEATER].cheater = true
+	controlers[CONTROLER.CHEATER].cheater = true
 	
 	
 	timer_has_ended.connect(timer_ended)
@@ -142,10 +142,10 @@ func think():
 				match(next_move[1]):
 					"forfeit":
 						CALL_forfeit = true
-					"turn_end":
-						CALL_turn_end = true
-					"change_current_action":
-						CALL_change_current_action = true
+					"end_turn":
+						CALL_end_turn = true
+					"change_current_phase":
+						CALL_change_current_phase = true
 					"nothing":
 						CALL_nothing = true
 					"add_action":
@@ -177,13 +177,13 @@ func timer_ended():
 		reset_CALL()
 		region_control.forfeit()
 		should_think = false
-	elif CALL_turn_end:
+	elif CALL_end_turn:
 		reset_CALL()
-		region_control.turn_end(true)
+		region_control.end_turn(true)
 		should_think = false
-	elif CALL_change_current_action:
+	elif CALL_change_current_phase:
 		reset_CALL()
-		region_control.change_current_action()
+		region_control.change_current_phase()
 		should_think = region_control.current_phase != RegionControl.PHASE_NORMAL
 	elif CALL_cheat:
 		reset_CALL()
@@ -212,8 +212,8 @@ func timer_ended():
 
 func reset_CALL():
 	CALL_forfeit = false
-	CALL_turn_end = false
-	CALL_change_current_action = false
+	CALL_end_turn = false
+	CALL_change_current_phase = false
 	CALL_nothing = false
 	CALL_cheat = false
 	CALL_overtake = false
@@ -297,6 +297,6 @@ func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 	return region_control.alignment_friendly(your_align, opposing_align)
 
 
-func alignment_neutral(alignment : int = current_align()) -> bool:
-	return region_control.alignment_neutral(alignment)
+func alignment_inactive(alignment : int = current_align()) -> bool:
+	return region_control.alignment_inactive(alignment)
 

@@ -4,13 +4,15 @@ extends Node
 const SAVEFILE : String = "user://OPTIONS.json"
 
 
+var version : String = "v2.0.0"
+var replay_compatible_versions : Array[String] = [version]
+var editor : bool = OS.has_feature("editor")
+
 var dp_speedrun : bool = false
 var mouse_scroll_active : bool = true
 var auto_end_turn_phases : bool = false
 var action_change_particles : bool = true
 var allowed_directories : Array = []
-
-var editor : bool = OS.has_feature("editor")
 
 
 func _ready():

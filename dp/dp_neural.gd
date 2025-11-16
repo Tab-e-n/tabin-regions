@@ -83,7 +83,7 @@ func think_normal():
 		controler.CALL_nothing = true
 		return
 	if controler.get_actions_contextual() <= 0:
-		controler.CALL_change_current_action = true
+		controler.CALL_change_current_phase = true
 		return
 	
 	if trainer:
@@ -118,7 +118,7 @@ func think_normal():
 	var chosen_attack : Array = choose_using_network(network_attack, attack_regions)
 	var chosen_reinforce : Array = choose_using_network(network_reinforce, reinforce_regions)
 	if chosen_attack[0] == "" and chosen_reinforce[0] == "":
-		controler.CALL_change_current_action = true
+		controler.CALL_change_current_phase = true
 	else:
 		if chosen_attack[1] >= chosen_reinforce[1]:
 			controler.selected_capital = chosen_attack[0]
@@ -145,17 +145,17 @@ func think_mobilize():
 			can_mobilize = true
 	if not can_mobilize:
 		if controler.get_bonus_action_amount() <= 0:
-			controler.CALL_turn_end = true
+			controler.CALL_end_turn = true
 		else:
-			controler.CALL_change_current_action = true
+			controler.CALL_change_current_phase = true
 		return
 	
 	var chosen_mobilize : Array = choose_using_network(network_mobilize, mobilize_regions)
 	if chosen_mobilize[0] == "":
 		if controler.get_bonus_action_amount() <= 0:
-			controler.CALL_turn_end = true
+			controler.CALL_end_turn = true
 		else:
-			controler.CALL_change_current_action = true
+			controler.CALL_change_current_phase = true
 	else:
 		controler.selected_capital = chosen_mobilize[0]
 

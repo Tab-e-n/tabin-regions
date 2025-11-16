@@ -9,9 +9,6 @@ const DISTANCE_CAP : int = 0b1111_1111_1111_1111
 const COLOR_CHANGE_SPEED : float = 2.4
 
 
-enum RENDER_MODE {DISABLED, ALIGNMENT, POWER, MAX_POWER, CAPITAL, POSITION}
-
-
 signal captured()
 signal changed_alignment(alignment : int)
 signal reinforced(amount : int)
@@ -42,7 +39,7 @@ signal mobilized()
 @onready var city : City
 
 
-var tool_render_mode : int = RENDER_MODE.ALIGNMENT
+var tool_render_mode : int = RegionControl.RENDER_MODE.ALIGNMENT
 var distance_from_capital : int = DISTANCE_CAP
 
 var color_change_time : float = 1.0
@@ -110,20 +107,20 @@ func _process(delta):
 	if Engine.is_editor_hint() and region_control:
 		tool_render_mode = region_control.render_mode
 		match(tool_render_mode):
-			RENDER_MODE.DISABLED:
+			RegionControl.RENDER_MODE.DISABLED:
 				color = Color(1, 1, 1, 1)
-			RENDER_MODE.ALIGNMENT:
+			RegionControl.RENDER_MODE.ALIGNMENT:
 				color = region_control.align_color[alignment]
-			RENDER_MODE.POWER:
+			RegionControl.RENDER_MODE.POWER:
 				power_color(power, false)
-			RENDER_MODE.MAX_POWER:
+			RegionControl.RENDER_MODE.MAX_POWER:
 				power_color(max_power, true)
-			RENDER_MODE.CAPITAL:
+			RegionControl.RENDER_MODE.CAPITAL:
 				if is_capital:
 					color = Color(0.9, 1, 0.9, 1)
 				else:
 					color = Color(0.3, 0.1, 0.1, 1)
-			RENDER_MODE.POSITION:
+			RegionControl.RENDER_MODE.POSITION:
 				var pos_range : float = region_control.render_range * 40
 				var col1 : float = 1.0 - clampf(abs(position.x) / pos_range, 0, 1)
 				var col2 : float = 1.0 - clampf(abs(position.y) / pos_range, 0, 1)
@@ -181,11 +178,11 @@ func incoming_attack(attack_align : int, attack_power : int = 0, test_only : boo
 
 
 func change_alignment(align : int, recolor_self : bool = true):
-	region_control.change_region_amount(-1, alignment, is_capital)
+	region_control._record_region_amount_change(-1, alignment, is_capital)
 	alignment = align
 	if recolor_self:
 		color_self()
-	region_control.change_region_amount(1, alignment, is_capital)
+	region_control._record_region_amount_change(1, alignment, is_capital)
 	changed_alignment.emit(alignment)
 
 
@@ -217,7 +214,7 @@ func action_decided():
 					region_control.action_done(name)
 					city_particle(false)
 					return
-		region_control.cross(position)
+		region_control.spawn_cross_particle(position)
 	else:
 		if region_control.current_playing_align == alignment:
 			var amount_requested = 1
@@ -228,7 +225,7 @@ func action_decided():
 				region_control.action_done(name, amount_gotten)
 				city_particle(true)
 				return
-		region_control.cross(position)
+		region_control.spawn_cross_particle(position)
 
 
 func alignment_can_attack(attack_align : int) -> bool:

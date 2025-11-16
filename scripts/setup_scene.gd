@@ -254,37 +254,37 @@ func _on_next_menu_pressed():
 
 func dp_selected_pos():
 	match(MapSetup.default_digital_player):
-		DPControl.CONTROLER_TURTLE:
+		DPControl.CONTROLER.TURTLE:
 			dp_cursor.position.x = $tintable_ui/diff/dp_turtle.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nTURTLE"
-		DPControl.CONTROLER_DEFAULT:
+		DPControl.CONTROLER.DEFAULT:
 			dp_cursor.position.x = $tintable_ui/diff/dp_default.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nSIMPLETON"
-		DPControl.CONTROLER_NEURAL:
+		DPControl.CONTROLER.NEURAL:
 			dp_cursor.position.x = $tintable_ui/diff/dp_neural.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nTHINKER"
-		DPControl.CONTROLER_CHEATER:
+		DPControl.CONTROLER.CHEATER:
 			dp_cursor.position.x = $tintable_ui/diff/dp_cheater.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nCHEATER"
 
 
 func _on_dp_turtle_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER_TURTLE
+	MapSetup.default_digital_player = DPControl.CONTROLER.TURTLE
 	dp_selected_pos()
 
 
 func _on_dp_default_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER_DEFAULT
+	MapSetup.default_digital_player = DPControl.CONTROLER.DEFAULT
 	dp_selected_pos()
 
 
 func _on_dp_neural_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER_NEURAL
+	MapSetup.default_digital_player = DPControl.CONTROLER.NEURAL
 	dp_selected_pos()
 
 
 func _on_dp_cheater_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER_CHEATER
+	MapSetup.default_digital_player = DPControl.CONTROLER.CHEATER
 	dp_selected_pos()
 
 
@@ -293,6 +293,17 @@ func _on_replay_pressed():
 
 
 func _on_replay_window_file_selected(path):
-	ReplayControl.load_replay(path)
-	get_tree().change_scene_to_file("res://main.tscn")
+	if ReplayControl.load_replay(path):
+		ReplayControl.paused = true
+		get_tree().change_scene_to_file("res://main.tscn")
+	else:
+		_show_replay_fail()
 #	print(path)
+
+
+func _show_replay_fail():
+	$tintable_ui/replay_fail.visible = true
+
+
+func _hide_replay_fail():
+	$tintable_ui/replay_fail.visible = false

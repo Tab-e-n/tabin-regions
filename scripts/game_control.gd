@@ -132,20 +132,24 @@ func _process(delta):
 				new_callout("Action change particles off")
 			if game_camera.ActionChangePart:
 				game_camera.ActionChangePart.button_pressed = Options.action_change_particles
+		
+		if ReplayControl.replay_active:
+			if Input.is_action_just_pressed("left_click"):
+				ReplayControl.toggle_pause()
 	
 	mouse_wheel_input = 0
 
 
 func hide_capitals():
 	if region_control:
-		region_control.hide_capitals()
+		region_control.cities_visible = not region_control.cities_visible
 		if game_camera.VisCapitals:
 			game_camera.VisCapitals.button_pressed = region_control.cities_visible
 
 
 func set_capital_visibility(visibility : bool):
 	if region_control:
-		region_control.set_capital_visibility(visibility)
+		region_control.cities_visible = visibility
 
 
 func set_mouse_scroll(scrolling : bool):

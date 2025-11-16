@@ -39,6 +39,7 @@ const BASE_MOVE_SPEED : float = 8
 @export var CurrentAlignment : Label
 @export var CurrentAction : Label
 @export var PhaseInfo : Label
+@export var ReplayPausedLabel : Label
 
 @export_subgroup("Messages")
 @export var VictoryMessage : Control
@@ -295,6 +296,9 @@ func _process(delta):
 		else:
 			PlayerInfo.visible = false
 	
+	if ReplayControl.replay_active:
+		ReplayPausedLabel.visible = ReplayControl.paused
+	
 	var shake_offset : Vector2 = Vector2(0.0, 0.0)
 	
 	if shake_time > 0.0:
@@ -431,7 +435,7 @@ func try_advance_turn():
 
 
 func advance_turn():
-	region_control.change_current_action()
+	region_control.change_current_phase()
 
 
 func try_end_turn():
@@ -445,7 +449,7 @@ func try_end_turn():
 
 func end_turn():
 	_leftover_hide()
-	region_control.turn_end(true)
+	region_control.end_turn(true)
 
 
 func _leftover_show():

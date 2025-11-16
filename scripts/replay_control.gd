@@ -1,6 +1,8 @@
 extends Node
 
 
+const NOTHING_MOVE = [1, "nothing"]
+
 enum {RECORD_TYPE_REGION, RECORD_TYPE_FUNCTION, RECORD_TYPE_OVERTAKE}
 
 
@@ -16,6 +18,8 @@ var replay_uses_aliances : bool = false
 var replay_aliances : Array[int] = []
 
 var replay_removed_alignments : Array = []
+
+var paused : bool = false
 
 
 func clear_replay():
@@ -36,17 +40,24 @@ func record_move(type : int, action : String):
 
 
 func get_next_move():
+	if paused:
+		return NOTHING_MOVE
 	if current_replay_pos < replay.keys().size():
 		var next_move = replay[str(current_replay_pos)]
 		current_replay_pos += 1
 #		print(current_replay_pos)
 		return next_move
 	else:
-		return [1, "nothing"]
+		return NOTHING_MOVE
+
+
+func toggle_pause():
+	paused = not paused
 
 
 func save_replay(replay_name : String):
 	var replay_save : Dictionary = {
+		"game_version" : Options.version,
 		"replay_dir" : MapSetup.current_directory,
 		"replay_map" : MapSetup.current_map_name,
 		"replay_play_order" : replay_play_order,
@@ -81,6 +92,11 @@ func load_replay(replay_name : String):
 		replay_save = JSON.parse_string(file.get_as_text())
 		
 		file.close()
+		
+		if not replay_save.has("game_version"):
+			return false
+		if replay_save["game_version"] not in Options.replay_compatible_versions:
+			return false
 		
 		MapSetup.current_directory = replay_save["replay_dir"]
 		MapSetup.current_map_name = replay_save["replay_map"]

@@ -18,27 +18,76 @@ signal game_ended(winner : int)
 
 ## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
 const COLOR_TOO_BRIGHT : float = 0.85
-
-enum APPLY_PENALTIES {OFF, CURRENT_CAPITAL, PREVIOUS_CAPITAL}
-## Skirmishes are free-for-all maps, this is the default tag.
-## Challenges are curated experiences that are meant to challenge the player in some way.
-## Bot battles are maps with no human players.
-enum SETUP_TAG {SKIRMISH, CHALLENGE, BOT_BATTLE, GUIDE}
+## Modes for power_gain_penalties.
+enum APPLY_PENALTIES {
+	## No penalties will be present.
+	OFF,
+	## Penalties will be applied based on how many capitals the alignment has.
+	CURRENT_CAPITAL,
+	## Penalties will be applied based on how many capitals the alignment had the previous turn.
+	PREVIOUS_CAPITAL
+}
+## What category the map is.
+enum SETUP_TAG {
+	## Free-for-all maps, usually all customization options present. This is the default tag.
+	SKIRMISH,
+	## Curated experiences meant to challenge the player in some way.
+	CHALLENGE,
+	## Maps with no human players.
+	BOT_BATTLE,
+	## Curated experiences meant to teach the player in some way.
+	GUIDE
+}
 ## Labels that tell the player how experienced with the game they have to be to play this map.
-## There are some guidelines you can follow when choosing a maps complexity.
-## BEGINNER maps are intended to be played by players who just started the game and should
-## only use normal connections between regions,
-## have the turn order hidden by default
-## and should not have aliances.
-## SIMPLE maps can use all default map features.
-## INTERMEDIATE and onwards can use custom gimmicks, only differing in how hard the map is to understand.
-enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DIFFICULT, EXTREME, ROCKET_SCIENCE}
-
-
-@onready var bg_color : Color = color
-@onready var game_control : GameControl
-@onready var dp_control : DPControl
-@onready var game_camera : GameCamera
+## There are some guidelines you should follow when choosing a maps complexity.
+enum SETUP_COMPLEXITY {
+	## Map that uses custom gimmicks or non-default gameplay objects.
+	## (U.)
+	UNSPECIFIED,
+	## Maps that are intended to be played by newbies.
+	## They should only use normal connections between regions and
+	## have the turn order hidden by default.
+	## (A.)
+	BEGINNER,
+	## Map has all basic map features.
+	## Standard regions gameplay.
+	## (B.)
+	SIMPLE,
+	## Map for average players.
+	## Features one big custom gimmick or a few small gimmicks.
+	## (C.)
+	INTERMEDIATE,
+	## Map to push average players into harder territories. /
+	## Features a few custom gimmicks.
+	## (D.)
+	ADVANCED,
+	## Map for players seeking a more involved experience than the regular game. /
+	## Features a dozen custom gimmicks.
+	## (E.)
+	DIFFICULT,
+	## Map pushing the limits of the game. /
+	## Features a loads of custom gimmicks.
+	## (F.)
+	EXTREME,
+	## Map that is nolonger simple regional warfare.
+	## I doubt an official map will ever go here.
+	## (R.)
+	ROCKET_SCIENCE
+}
+enum RENDER_MODE {
+	## Regions will be white.
+	DISABLED,
+	## Regions will be colored based on their alignment.
+	ALIGNMENT,
+	## Will color regions based on the regions current power. Darker regions have more power.
+	POWER,
+	## Will color regions based on the regions maximum power. Darker regions have a higher max.
+	MAX_POWER,
+	## Regions will be green if the're a capital, red if not.
+	CAPITAL,
+	## Colors the regions based on their position.
+	POSITION
+}
 
 
 @export_subgroup("Setup Scene")
@@ -57,7 +106,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 
 
 @export_subgroup("Gameplay")
-
+## Specifies the behaviour of power_gain_penalties.
 @export_enum ("Off", "Current Capital Amount", "Previous Capital Amount") var apply_penalties : int = APPLY_PENALTIES.OFF
 ## Sets penalties to slow down players who get ahead, so they don't snowball too hard.
 ## The keys should be intigers, values should be floats representing percentages.
@@ -70,7 +119,7 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 } 
 
 @export_subgroup("Alignments & Players")
-## The number of alignments the map uses. It equals the number of all active alignments + the neutral alignment.
+## The number of alignments the map uses. It equals the number of all active alignments + alignment 0 for neutral regions.
 @export var align_amount : int = 3
 ## Will specify the amount of alignments that are used. When the map has more alignments than the amount specified with this property,
 ## random alignments not picked by players will have their regions converted to neutral.
@@ -80,7 +129,8 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var remove_capitals_with_alignments : bool = true
 ## The intended amount of players the map should have. Can be overwritten in the setup scene unless allow_map_spec_change is set to false.
 @export var player_amount : int = 1
-
+## Players will only be able to play as alignments 1 to the number specified here.
+## Setting this to 0 allows them to be any active alignment.
 @export var random_player_align_range : int = 0
 ## The maximum amount of players the map allows to be played. There can be more alignments than players.
 ## When set to -1, the max amount of players is equal to the number of active alignments.
@@ -91,24 +141,28 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 @export var preset_alignments : Array[int] = []
 
 @export_subgroup("Digital Players")
-## The default digital player the map uses. Uses the 'CONTROLER_' enums from 'DPControl'.
+## The default digital player the map uses. Uses the CONTROLER from 'DPControl'.
 ## Default, Turtle, Neural and Cheater are all accessible in the setup scene.
 ## The Dummy DP does nothing, expecting to be controled by the map.
-@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_digital_player : int = DPControl.CONTROLER_DEFAULT
-## List of digital players the individual alignments use.
+@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_digital_player : int = DPControl.CONTROLER.DEFAULT
+## List of digital players the individual alignments use. Excludes aligment 0.
 ## 0 gets overriden during map setup, 1-5 force a specific alignment to be controled by a specific digital player.
 @export var custom_dp_setup : Array[int] = []
-## If set to true, when starting the map custom_dp_setup will be sashuffled so it is not the same every time.
+## If set to true, when starting the map custom_dp_setup will be shuffled so it is not the same every time.
 @export var shuffle_dp : bool = false
 
 @export_subgroup("Aliances")
-
+## Enable aliances. When off, every alignment will internally be in a separate alience.
 @export var use_aliances : bool = false
-
+## What aliance an alignment belongs to. Includes alignment 0.
+## Doesn't need to encompass all alignments. Alignments who weren't given an
+## alignment will have alignment 0.
 @export var alignment_aliances : Array[int] = []
-
+## When set to true, alignments will be automatically divided into aliances
+## based on autoaliances_divisions_amount. If you specified your own aliances using
+## alignment_aliances, autoaliances will only override alience 0.
 @export var use_autoaliances : bool = false
-
+## The amount of aliance divisions when using autoaliances.
 @export var autoaliances_divisions_amount : int = 2
 
 @export_subgroup("Cosmetics")
@@ -180,20 +234,25 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 
 @export_subgroup("Editor")
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
-## Alignment will color regions based on their alignment.
-## Power and Max Power will color regions based on the regions current power and max possible power respectively. Darker regions have more power.
-## Capital will color regions based on if they are a capital or not. Green means it is a capital, red means it is not.
-## Position colors the regions based on their position.
-@export_enum("Disabled", "Alignment", "Power", "Max Power", "Capital", "Position") var render_mode : int = 0
+@export var render_mode : RENDER_MODE = RENDER_MODE.DISABLED
+## The range visible during render modes. Certain render modes use this to figure out how to color the regions.
 @export var render_range : float = 20
-## When set to true, RegionControl wil not do anything on its own. This is intended to be used by other scenes, not RegionControl itself.
+## When set to true, RegionControl wil not do anything on its own.
+## This is intended to be used by other scenes, not RegionControl itself.
 @export var dummy : bool = false
 ## When false, cities won't be rendered. Can be toggled in-game.
 @export var cities_visible : bool = true
+## Print more info about the map to the console. Useful when debugging, should be off for released maps.
 @export var print_more_info : bool = false
 ## Holds the connections of all regions. When the map is readying, RegionControl will attempt to make every connection in this array.
 ## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
 @export var connections : Array = []
+
+
+@onready var bg_color : Color = color
+@onready var game_control : GameControl
+@onready var dp_control : DPControl
+@onready var game_camera : GameCamera
 
 
 var current_playing_align : int = 1
@@ -227,7 +286,7 @@ func _ready():
 		return
 	
 	if Options.editor:
-		check_duplicate_connetions()
+		_check_duplicate_connections()
 #		check_capital_distance()
 	if print_more_info:
 		MapSetup.print_map_data()
@@ -259,28 +318,7 @@ func _ready():
 #			use_preset_alignments = true
 		used_alignments = MapSetup.used_aligments
 	
-	for link in connections:
-		var link_power_reduction = 0
-		if link.size() >= 3:
-			link_power_reduction = link[2]
-		var region_from : Region = get_node(link[0]) as Region
-		var region_to : Region = get_node(link[1]) as Region
-		if region_from == null:
-			push_warning(link[0], " does not exist.")
-			continue
-		if region_to == null:
-			push_warning(link[1], " does not exist.")
-			continue
-		var connection : RegionConnection = RegionConnection.new()
-		connection.region_from = region_from
-		connection.region_to = region_to
-		connection.power_reduction = link_power_reduction
-		connection.kinetic = region_from.kinetic or region_to.kinetic
-		add_child(connection)
-		region_from.connections.append(connection)
-		region_to.connections.append(connection)
-	
-	region_connections_ready.emit()
+	_create_region_connections()
 	
 	region_amount.resize(align_amount - 1)
 	capital_amount.resize(align_amount - 1)
@@ -290,9 +328,9 @@ func _ready():
 		capital_amount[i] = 0
 		penalty_amount[i] = 0
 	
-	count_up_regions()
+	_count_up_regions()
 	
-	bake_capital_distance()
+	_bake_capital_distance()
 	
 	if not ReplayControl.replay_active:
 		var rng : RandomNumberGenerator = RandomNumberGenerator.new()
@@ -323,7 +361,7 @@ func _ready():
 			for i in range(removed_align_count):
 				var pos : int = rng.randi_range(0, players.size() - 1)
 				var alignment : int = players.pop_at(pos)
-				remove_alignment(alignment, remove_capitals_with_alignments)
+				_remove_alignment(alignment, remove_capitals_with_alignments)
 				removed_alignments.append(alignment)
 		
 		if random_player_align_range < max_player_amount:
@@ -359,7 +397,7 @@ func _ready():
 	else:
 		removed_alignments = ReplayControl.replay_removed_alignments.duplicate()
 		for alignment in removed_alignments:
-			remove_alignment(alignment, remove_capitals_with_alignments)
+			_remove_alignment(alignment, remove_capitals_with_alignments)
 	
 	if print_more_info:
 		print(align_play_order)
@@ -377,7 +415,7 @@ func _ready():
 				if custom_dp_setup[i] != 0:
 					align_controlers[i] = custom_dp_setup[i]
 		for i in range(player_amount):
-			align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER_USER
+			align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER.USER
 	
 	last_turn_region_amount = region_amount.duplicate()
 	
@@ -390,8 +428,8 @@ func _ready():
 			GameStats.set_stat(align, "controler", align_controlers[align - 1])
 #			GameStats.stats[align]["controler"] = align_controlers[align - 1]
 		else:
-			GameStats.set_stat(align, "controler", DPControl.CONTROLER_DUMMY)
-#			GameStats.stats[align]["controler"] = DPControl.CONTROLER_DUMMY
+			GameStats.set_stat(align, "controler", DPControl.CONTROLER.DUMMY)
+#			GameStats.stats[align]["controler"] = DPControl.CONTROLER.DUMMY
 	
 	current_placement = align_play_order.size()
 	
@@ -400,17 +438,10 @@ func _ready():
 			alignment_aliances.resize(align_amount)
 		
 		if not use_aliances:
-			for i in range(align_amount):
-				alignment_aliances[i] = i
+			_fill_aliances(align_amount, false)
 		else:
 			if use_autoaliances:
-				alignment_aliances[0] = 0
-				var current_aliance : int = 1
-				for i in range(align_play_order.size()):
-					alignment_aliances[align_play_order[i]] = current_aliance
-					current_aliance += 1
-					if current_aliance > autoaliances_divisions_amount:
-						current_aliance = 1
+				_fill_aliances(autoaliances_divisions_amount)
 	
 	align_names.resize(align_amount)
 	for align in range(align_amount):
@@ -418,7 +449,7 @@ func _ready():
 	for align in removed_alignments:
 		GameStats.set_stat(align, "placement", "X")
 	
-	reset()
+	_start_turn()
 	
 	if hide_turn_order:
 		game_camera.toggle_turn_order_visibility()
@@ -432,37 +463,11 @@ func _ready():
 					if region.is_capital:
 						break
 		game_camera.call_deferred("center_camera", center_camera)
-		
-	call_deferred("save_replay_data")
-
-
-func check_duplicate_connetions():
-	var regions : Dictionary = {}
 	
-	for link in connections:
-		if link[0] == link[1]:
-			push_warning("Connections cannot be connect to themselfs. [", link[0], "]")
-			continue
-		if regions.has(link[0]):
-			if regions[link[0]].has(link[1]):
-				push_warning("Connection ", link[0], " - ", link[1], " already exists.")
-			else:
-				regions[link[0]].append(link[1])
-		else:
-			regions[link[0]] = [link[1]]
-		if regions.has(link[1]):
-			if regions[link[1]].has(link[0]):
-				push_warning("Connection ", link[1], " - ", link[0], " already exists.")
-			else:
-				regions[link[1]].append(link[0])
-		else:
-			regions[link[1]] = [link[0]]
-	
-	if print_more_info:
-		print(regions)
+	_save_replay_data.call_deferred()
 
 
-func save_replay_data():
+func _save_replay_data():
 	if not ReplayControl.replay_active:
 		ReplayControl.clear_replay()
 		
@@ -475,26 +480,32 @@ func save_replay_data():
 		ReplayControl.replay_removed_alignments = removed_alignments
 
 
-func _process(_delta):
-	if Engine.is_editor_hint():
-		return
+func _create_region_connections():
+	for link in connections:
+		var link_power_reduction = 0
+		if link.size() >= 3:
+			link_power_reduction = link[2]
+		var region_from : Region = get_node(link[0]) as Region
+		var region_to : Region = get_node(link[1]) as Region
+		if region_from == null:
+			push_warning(link[0], " does not exist.")
+			continue
+		if region_to == null:
+			push_warning(link[1], " does not exist.")
+			continue
+		var connection : RegionConnection = RegionConnection.new()
+		connection.region_from = region_from
+		connection.region_to = region_to
+		connection.power_reduction = link_power_reduction
+		connection.kinetic = region_from.kinetic or region_to.kinetic
+		add_child(connection)
+		region_from.connections.append(connection)
+		region_to.connections.append(connection)
 	
-	if dummy:
-		return
-	
-	if is_player_controled:
-		if Input.is_action_just_pressed("forfeit"):
-			forfeit()
-			game_camera.CommandCallout.new_callout("Forfeit")
-		elif Input.is_action_just_pressed("plus_foward"):
-			turn_end(true)
-			game_camera.CommandCallout.new_callout("End turn")
-		elif Input.is_action_just_pressed("plus_turn"):
-			change_current_action()
-			game_camera.CommandCallout.new_callout("Advance turn")
+	region_connections_ready.emit()
 
 
-func count_up_regions():
+func _count_up_regions():
 	for i in range(region_amount.size()):
 		region_amount[i] = 0
 	for region in get_children():
@@ -507,15 +518,7 @@ func count_up_regions():
 			capital_amount[region.alignment - 1] += 1
 
 
-func get_region(reg_name : String) -> Region:
-	var node : Node = get_node(reg_name)
-	if node is Region:
-		return node
-	else:
-		return null
-
-
-func bake_capital_distance():
+func _bake_capital_distance():
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
@@ -561,19 +564,20 @@ func bake_capital_distance():
 			i += 1
 
 
-func check_capital_distance():
+func _check_capital_distance():
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
 			if region.distance_from_capital == Region.DISTANCE_CAP:
-				push_warning(region.name, "has the max value of capital distance. Set call_bake_capital_distance to fix.")
+				push_warning(region.name, "has the max value of capital distance.")
 			if (region.is_capital) != (region.distance_from_capital == 0):
-				push_warning(region.name, "has an incorrect capital distance. Set call_bake_capital_distance to fix.")
+				push_warning(region.name, "has an incorrect capital distance.")
 
 
-func remove_alignment(align : int, remove_capitals : bool):
-	for region in get_children():
-		if not region is Region:
+func _remove_alignment(align : int, remove_capitals : bool):
+	for node in get_children():
+		var region : Region = node as Region
+		if not region:
 			continue
 		if region.alignment == align:
 			region.change_alignment(0, false)
@@ -581,149 +585,98 @@ func remove_alignment(align : int, remove_capitals : bool):
 				region.is_capital = false
 
 
-func cross(capital_position : Vector2):
-	var part : Sprite2D = Sprite2D.new()
-	part.set_script(preload("res://scripts/particle_cross.gd"))
-	part.texture = preload("res://sprites/cross.png")
-	part.position = capital_position
-	part.set_color(color)
-	part.z_index = 25
-	add_child(part)
+func _fill_aliances(divisions : int, keep_existing : bool = true):
+	alignment_aliances[0] = 0
+	var current_aliance : int = 1
+	for i in range(align_play_order.size()):
+		var alignment : int = align_play_order[i]
+		if keep_existing and alignment_aliances[alignment] != 0:
+			continue
+		alignment_aliances[alignment] = current_aliance
+		current_aliance += 1
+		if current_aliance > divisions:
+			current_aliance = 1
 
 
-func hide_capitals():
-	cities_visible = not cities_visible
+func _check_duplicate_connections():
+	var regions : Dictionary = {}
+	
+	for link in connections:
+		if link[0] == link[1]:
+			push_warning("Connections cannot be connect to themselfs. [", link[0], "]")
+			continue
+		if regions.has(link[0]):
+			if regions[link[0]].has(link[1]):
+				push_warning("Connection ", link[0], " - ", link[1], " already exists.")
+			else:
+				regions[link[0]].append(link[1])
+		else:
+			regions[link[0]] = [link[1]]
+		if regions.has(link[1]):
+			if regions[link[1]].has(link[0]):
+				push_warning("Connection ", link[1], " - ", link[0], " already exists.")
+			else:
+				regions[link[1]].append(link[0])
+		else:
+			regions[link[1]] = [link[0]]
+	
+	if print_more_info:
+		print(regions)
 
 
-func set_capital_visibility(visibility : bool):
-	cities_visible = visibility
+func _process(_delta):
+	if Engine.is_editor_hint():
+		return
+	
+	if dummy:
+		return
+	
+	if is_player_controled:
+		if Input.is_action_just_pressed("forfeit"):
+			forfeit()
+			game_camera.CommandCallout.new_callout("Forfeit")
+		elif Input.is_action_just_pressed("plus_foward"):
+			end_turn(true)
+			game_camera.CommandCallout.new_callout("End turn")
+		elif Input.is_action_just_pressed("plus_turn"):
+			change_current_phase()
+			game_camera.CommandCallout.new_callout("Advance turn")
 
 
-func change_region_amount(amount : int, alignment : int, is_capital : bool):
-	if alignment > 0 and alignment < align_amount and region_amount.size() > 0:
-		region_amount[alignment - 1] += amount
-		if is_capital:
-			capital_amount[alignment - 1] += amount
-			calculate_penalty(alignment)
-
-
-func add_action():
-	match(current_phase):
-		PHASE_NORMAL:
-			action_amount += 1
-			game_camera.changed_action_amount(1, align_color[current_playing_align])
-		PHASE_MOBILIZE, PHASE_BONUS:
-			bonus_action_amount += 1
-			game_camera.changed_action_amount(1, align_color[current_playing_align])
-	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "add_action")
-
-
-func action_done(region_name : String, amount : int = 1):
-	var auto_end_phase : bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
-	if current_phase == PHASE_NORMAL:
-		if action_amount > 0:
-			GameStats.add_to_stat(current_playing_align, "first actions done", 1)
-			action_amount -= 1
-			game_camera.changed_action_amount(-1, align_color[current_playing_align])
-			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
-		if action_amount <= 0 and auto_end_phase:
-			change_current_action()
-	elif current_phase == PHASE_MOBILIZE:
-		bonus_action_amount += amount
-		game_camera.changed_action_amount(amount, align_color[current_playing_align])
-		for i in range(amount):
-			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
-	elif current_phase == PHASE_BONUS:
-		if bonus_action_amount > 0:
-			GameStats.add_to_stat(current_playing_align, "bonus actions done", 1)
-			bonus_action_amount -= 1
-			game_camera.changed_action_amount(-1, align_color[current_playing_align])
-			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
-		if bonus_action_amount <= 0 and auto_end_phase:
-			change_current_action()
-
-
-func overtake_region(region_name : String):
-	var region : Region = get_node(region_name) as Region
-	if region:
-		region.overtake()
-		ReplayControl.record_move(ReplayControl.RECORD_TYPE_OVERTAKE, region_name)
-
-
-func has_enough_actions() -> bool:
-	if current_phase == PHASE_NORMAL:
-		return action_amount > 0
-	elif current_phase == PHASE_BONUS:
-		return bonus_action_amount > 0
+func _start_turn():
+	var reg_amount : int = GameStats.get_stat(current_playing_align, "most regions owned", 0)
+	var cap_amount : int = GameStats.get_stat(current_playing_align, "most capitals owned", 0)
+	if region_amount[current_playing_align - 1] > reg_amount:
+		GameStats.set_stat(current_playing_align, "most regions owned", region_amount[current_playing_align - 1])
+	if capital_amount[current_playing_align - 1] > cap_amount:
+		GameStats.set_stat(current_playing_align, "most capitals owned", capital_amount[current_playing_align - 1])
+	
+	_calculate_penalty(current_playing_align)
+	
+	action_amount = capital_amount[current_playing_align - 1] - penalty_amount[current_playing_align - 1]
+	bonus_action_amount = 1 if action_amount == 0 and not use_aliances else 0
+	current_phase = PHASE_MOBILIZE if action_amount == 0 else PHASE_NORMAL
+	
+	if color_bg_according_to_alignment:
+		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
+		if Options.dp_speedrun:
+			if align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER:
+				color = bg_color_tinted
+			else:
+				color = bg_color
+		else:
+			color = bg_color_tinted
+	
+	if ReplayControl.replay_active:
+		is_player_controled = false
 	else:
-		return true
+		is_player_controled = align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER
+	
+	if not is_player_controled:
+		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
 
 
-func change_current_action():
-	if current_phase == PHASE_NORMAL and action_amount > 0:
-		bonus_action_amount = action_amount
-	current_phase += 1
-	
-	var call_end_turn : bool = false
-	
-	if current_phase == AMOUNT_OF_PHASES:
-		current_phase = PHASE_NORMAL
-		call_end_turn = true
-	
-	turn_phase_changed.emit(current_phase)
-	
-	if call_end_turn:
-		turn_end(false)
-	
-	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "change_current_action")
-
-
-func turn_end(record : bool):
-	calculate_penalty(current_playing_align, true)
-	
-	if region_amount[current_playing_align - 1] > 0:
-		GameStats.set_stat(current_playing_align, "turns lasted", current_turn)
-#		GameStats.stats[current_playing_align]["turns lasted"] = current_turn
-	var first_loop = true
-	var starting_player = play_order_i
-	var round_end : bool = false
-	while region_amount[current_playing_align - 1] == 0 or first_loop:
-		play_order_i += 1
-		if play_order_i == align_play_order.size():
-			play_order_i = 0
-			current_turn += 1
-			round_end = true
-		current_playing_align = align_play_order[play_order_i]
-		first_loop = false
-		if play_order_i == starting_player:
-#			victory(current_playing_align)
-			break
-	check_victory()
-	
-	var placement = String.num(current_placement)
-	
-	for i in range(region_amount.size()):
-		if region_amount[i] != last_turn_region_amount[i] and region_amount[i] == 0: 
-			GameStats.set_stat(i + 1, "placement", placement)
-			if game_control and not align_names[i + 1].is_empty():
-				game_control.new_callout(align_names[i + 1] + " got eliminated!")
-#			GameStats.stats[i + 1]["placement"] = placement
-			current_placement -= 1
-	
-	last_turn_region_amount = region_amount.duplicate()
-	
-	reset()
-	
-	turn_ended.emit()
-	if round_end:
-		round_ended.emit()
-	
-	if record:
-		ReplayControl.call_deferred("record_move", ReplayControl.RECORD_TYPE_FUNCTION, "turn_end")
-#		ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "turn_end")
-
-
-func check_victory():
+func _check_victory():
 	var aliance : int = 0
 	var victory_align : int = 0
 	for i in range(region_amount.size()):
@@ -736,6 +689,88 @@ func check_victory():
 			elif aliance != alignment_aliances[i + 1]:
 				return
 	victory(victory_align)
+
+
+func _check_eliminations():
+	var placement = String.num(current_placement)
+	
+	for i in range(region_amount.size()):
+		if region_amount[i] != last_turn_region_amount[i] and region_amount[i] == 0: 
+			GameStats.set_stat(i + 1, "placement", placement)
+			if game_control and not align_names[i + 1].is_empty():
+				game_control.new_callout(align_names[i + 1] + " got eliminated!")
+			current_placement -= 1
+
+
+func _record_region_amount_change(amount : int, alignment : int, is_capital : bool):
+	if alignment > 0 and alignment < align_amount and region_amount.size() > 0:
+		region_amount[alignment - 1] += amount
+		if is_capital:
+			capital_amount[alignment - 1] += amount
+			_calculate_penalty(alignment)
+
+
+func _calculate_penalty(alignment : int, end_of_turn : bool = false):
+	if apply_penalties == APPLY_PENALTIES.OFF:
+		return
+	if apply_penalties == APPLY_PENALTIES.PREVIOUS_CAPITAL and not end_of_turn:
+		return
+	if power_gain_penalties.size() == 0:
+		return
+	
+	var capitals : int = capital_amount[alignment - 1]
+	
+	var penalty : float = 0.0
+	for i in power_gain_penalties.keys():
+		if capitals <= i:
+			break
+		penalty += float(capitals - i) * power_gain_penalties[i]
+	var penalty_total = int(penalty)
+	
+#	print(penalty_total)
+	
+	penalty_amount[alignment - 1] = penalty_total
+
+
+
+
+## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
+func get_region(reg_name : String) -> Region:
+	var node : Node = get_node(reg_name)
+	if node is Region:
+		return node
+	else:
+		return null
+
+
+func alignment_friendly(your_align : int, opposing_align : int) -> bool:
+	if your_align < 0 or your_align >= align_amount:
+		return false
+	if opposing_align < 0 or opposing_align >= align_amount:
+		return false
+	return alignment_aliances[your_align] == alignment_aliances[opposing_align]
+
+
+func alignment_inactive(align : int) -> bool:
+	return align <= 0 or align >= align_amount
+
+
+func alignment_active(align : int) -> bool:
+	return align > 0 and align < align_amount
+
+
+func convert_alignment(align_old : int, align_new : int):
+	if align_old < 0:
+		push_warning("Alignment ", align_old, " cannot be converted.")
+		return
+	if align_new < 0:
+		push_warning("Alignment ", align_new, " cannot be converted to.")
+		return
+	
+	for region in get_children():
+		if region is Region:
+			if region.alignment == align_old:
+				region.change_alignment(align_new)
 
 
 func victory(align_victory : int):
@@ -766,103 +801,130 @@ func victory(align_victory : int):
 	game_ended.emit(align_victory)
 
 
-func reset():
-	var reg_amount = GameStats.get_stat(current_playing_align, "most regions owned")
-	if reg_amount == null:
-		reg_amount = 0
-	var cap_amount = GameStats.get_stat(current_playing_align, "most capitals owned")
-	if cap_amount == null:
-		cap_amount = 0
-	if region_amount[current_playing_align - 1] > int(reg_amount): #GameStats.stats[current_playing_align]["most regions owned"]
-		GameStats.set_stat(current_playing_align, "most regions owned", region_amount[current_playing_align - 1])
-#		GameStats.stats[current_playing_align]["most regions owned"] = region_amount[current_playing_align - 1]
-	if capital_amount[current_playing_align - 1] > int(cap_amount): #GameStats.stats[current_playing_align]["most capitals owned"]
-		GameStats.set_stat(current_playing_align, "most capitals owned", capital_amount[current_playing_align - 1])
-#		GameStats.stats[current_playing_align]["most capitals owned"] = capital_amount[current_playing_align - 1]
-	calculate_penalty(current_playing_align)
-	action_amount = capital_amount[current_playing_align - 1] - penalty_amount[current_playing_align - 1]
-	bonus_action_amount = 1 if action_amount == 0 and not use_aliances else 0
-	current_phase = PHASE_MOBILIZE if action_amount == 0 else PHASE_NORMAL
-	
-	if color_bg_according_to_alignment:
-		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
-		if Options.dp_speedrun:
-			if align_controlers[current_playing_align - 1] == DPControl.CONTROLER_USER:
-				color = bg_color_tinted
-			else:
-				color = bg_color
-		else:
-			color = bg_color_tinted
-	
-	if ReplayControl.replay_active:
-		is_player_controled = false
+func has_enough_actions() -> bool:
+	if current_phase == PHASE_NORMAL:
+		return action_amount > 0
+	elif current_phase == PHASE_BONUS:
+		return bonus_action_amount > 0
 	else:
-		is_player_controled = align_controlers[current_playing_align - 1] == DPControl.CONTROLER_USER
-	
-	if !is_player_controled:
-		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
+		return true
 
 
-func calculate_penalty(alignment : int, end_of_turn : bool = false):
-	if apply_penalties == APPLY_PENALTIES.OFF:
-		return
-	if apply_penalties == APPLY_PENALTIES.PREVIOUS_CAPITAL and not end_of_turn:
-		return
-	if power_gain_penalties.size() == 0:
-		return
+func spawn_cross_particle(capital_position : Vector2):
+	var part : Sprite2D = Sprite2D.new()
+	part.set_script(preload("res://scripts/particle_cross.gd"))
+	part.texture = preload("res://sprites/cross.png")
+	part.position = capital_position
+	part.set_color(color)
+	part.z_index = 25
+	add_child(part)
+
+
+func change_current_phase():
+	if current_phase == PHASE_NORMAL and action_amount > 0:
+		bonus_action_amount = action_amount
+	current_phase += 1
 	
-	var capitals : int = capital_amount[alignment - 1]
+	var call_end_turn : bool = false
 	
-	var penalty : float = 0.0
-	for i in power_gain_penalties.keys():
-		if capitals <= i:
+	if current_phase == AMOUNT_OF_PHASES:
+		current_phase = PHASE_NORMAL
+		call_end_turn = true
+	
+	turn_phase_changed.emit(current_phase)
+	
+	if call_end_turn:
+		end_turn(false)
+	
+	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "change_current_phase")
+
+
+func end_turn(record : bool):
+	_calculate_penalty(current_playing_align, true)
+	
+	if region_amount[current_playing_align - 1] > 0:
+		GameStats.set_stat(current_playing_align, "turns lasted", current_turn)
+	
+	# Go to next player in turn order
+	var first_loop = true
+	var starting_player = play_order_i
+	var round_end : bool = false
+	while first_loop or region_amount[current_playing_align - 1] == 0:
+		play_order_i += 1
+		if play_order_i == align_play_order.size():
+			play_order_i = 0
+			current_turn += 1
+			round_end = true
+		current_playing_align = align_play_order[play_order_i]
+		first_loop = false
+		if play_order_i == starting_player:
 			break
-		penalty += float(capitals - i) * power_gain_penalties[i]
-	var penalty_total = int(penalty)
 	
-#	print(penalty_total)
+	_check_victory()
 	
-	penalty_amount[alignment - 1] = penalty_total
+	_check_eliminations()
+	
+	last_turn_region_amount = region_amount.duplicate()
+	
+	_start_turn()
+	
+	turn_ended.emit()
+	if round_end:
+		round_ended.emit()
+	
+	if record:
+		ReplayControl.record_move.call_deferred(ReplayControl.RECORD_TYPE_FUNCTION, "end_turn")
 
 
 func forfeit():
 	convert_alignment(current_playing_align, 0)
 	
-	turn_end(false)
+	end_turn(false)
 	
 	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "forfeit")
 
 
-func convert_alignment(align_old : int, align_new : int):
-	if align_old < 0:
-		push_warning("Alignment ", align_old, " cannot be converted.")
-		return
-	if align_new < 0:
-		push_warning("Alignment ", align_new, " cannot be converted to.")
-		return
-	
-	for region in get_children():
-		if region is Region:
-			if region.alignment == align_old:
-				region.change_alignment(align_new)
+func add_action():
+	match(current_phase):
+		PHASE_NORMAL:
+			action_amount += 1
+			game_camera.changed_action_amount(1, align_color[current_playing_align])
+		PHASE_MOBILIZE, PHASE_BONUS:
+			bonus_action_amount += 1
+			game_camera.changed_action_amount(1, align_color[current_playing_align])
+	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "add_action")
 
 
-func alignment_friendly(your_align : int, opposing_align : int) -> bool:
-	if your_align < 0 or your_align >= align_amount:
-		return false
-	if opposing_align < 0 or opposing_align >= align_amount:
-		return false
-	return alignment_aliances[your_align] == alignment_aliances[opposing_align]
+func overtake_region(region_name : String):
+	var region : Region = get_node(region_name) as Region
+	if region:
+		region.overtake()
+		ReplayControl.record_move(ReplayControl.RECORD_TYPE_OVERTAKE, region_name)
 
 
-func alignment_neutral(align : int) -> bool:
-	return align == 0 or align >= align_amount
-
-
-func alignment_active(align : int) -> bool:
-	return align > 0 and align < align_amount
-
-
+func action_done(region_name : String, amount : int = 1):
+	var auto_end_phase : bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
+	if current_phase == PHASE_NORMAL:
+		if action_amount > 0:
+			GameStats.add_to_stat(current_playing_align, "first actions done", 1)
+			action_amount -= 1
+			game_camera.changed_action_amount(-1, align_color[current_playing_align])
+			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
+		if action_amount <= 0 and auto_end_phase:
+			change_current_phase()
+	elif current_phase == PHASE_MOBILIZE:
+		bonus_action_amount += amount
+		game_camera.changed_action_amount(amount, align_color[current_playing_align])
+		for i in range(amount):
+			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
+	elif current_phase == PHASE_BONUS:
+		if bonus_action_amount > 0:
+			GameStats.add_to_stat(current_playing_align, "bonus actions done", 1)
+			bonus_action_amount -= 1
+			game_camera.changed_action_amount(-1, align_color[current_playing_align])
+			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
+		if bonus_action_amount <= 0 and auto_end_phase:
+			change_current_phase()
 static func flip_color(c : Color) -> Color:
 	c.r = 1 - c.r
 	c.g = 1 - c.g

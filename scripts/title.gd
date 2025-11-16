@@ -31,7 +31,7 @@ func _ready():
 	alignments = range(1, 31)
 	alignments.shuffle()
 	
-	if OS.has_feature("editor"):
+	if Options.editor:
 		$network.visible = true
 	
 	curr_color = $title.align_color[alignments[current_align]]

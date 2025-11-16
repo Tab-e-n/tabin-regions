@@ -19,10 +19,10 @@ func think_bonus():
 
 func think_normal(is_bonus : bool = false):
 	if is_bonus and controler.get_bonus_action_amount() == 0:
-		controler.CALL_change_current_action = true
+		controler.CALL_change_current_phase = true
 		return
 	if not is_bonus and controler.get_action_amount() == 0:
-		controler.CALL_change_current_action = true
+		controler.CALL_change_current_phase = true
 		return
 	
 #	print("think default first")
@@ -45,7 +45,7 @@ func think_normal(is_bonus : bool = false):
 			if controler.alignment_friendly(current_alignment, target.alignment):
 #				print("friendly alignment")
 				continue
-			if not controler.alignment_neutral(target.alignment):
+			if not controler.alignment_inactive(target.alignment):
 				in_threat = true
 #				print("align ", connection.alignment)
 			if region.alignment != current_alignment:
@@ -88,7 +88,7 @@ func think_normal(is_bonus : bool = false):
 		if eligable_regions.size() > 0:
 			controler.selected_capital = eligable_regions[rng.randi_range(0, eligable_regions.size() - 1)].name
 		else:
-			controler.CALL_change_current_action = true
+			controler.CALL_change_current_phase = true
 	
 #	print(controler.selected_capital)
 
@@ -104,13 +104,13 @@ func think_mobilize():
 #	print("think default mobilize")
 	if no_more_extra:
 		if controler.get_bonus_action_amount() == 0:
-			controler.CALL_turn_end = true
+			controler.CALL_end_turn = true
 		else:
 			if cheater and not cheated and controler.region_control.current_turn % 6 == 0:
 				controler.CALL_cheat = true
 				cheated = true
 			else:
-				controler.CALL_change_current_action = true
+				controler.CALL_change_current_phase = true
 
 
 func calculate_benefit_default(region : Region, is_bonus : bool):

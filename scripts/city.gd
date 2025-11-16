@@ -30,7 +30,7 @@ func _ready():
 	var city_size : float = 0.8
 	if region.region_control:
 		city_size = region.region_control.city_size * 0.8
-		region.region_control.turn_ended.connect(_on_turn_end)
+		region.region_control.turn_ended.connect(_on_end_turn)
 	position = offset * -city_size
 	scale = Vector2(city_size, city_size)
 	
@@ -71,7 +71,7 @@ func _process(_delta):
 		
 		if Input.is_action_just_pressed("show_extra") and region.power > 1:
 			if Input.is_action_pressed("shift"):
-				if region.region_control.current_playing_align != region.alignment and not region.region_control.alignment_neutral(region.alignment):
+				if region.region_control.current_playing_align != region.alignment and not region.region_control.alignment_inactive(region.alignment):
 					make_particle(true)
 			else:
 				if region.region_control.current_playing_align == region.alignment:
@@ -80,7 +80,7 @@ func _process(_delta):
 
 func update_region_name():
 	region_name.text = region.name + " (" + String.num(region.max_power) + ")"
-	if OS.has_feature("editor"):
+	if Options.editor:
 		region_name.text += " (" + String.num(region.distance_from_capital) + ")"
 	region_name.size = region_name.get_theme_font("font").get_string_size(region_name.text, HORIZONTAL_ALIGNMENT_CENTER, -1, 16)
 	region_name.position = Vector2((offset.x - region_name.size.x * 0.5 - 4), -offset.y)
@@ -111,7 +111,7 @@ func hide_attacks():
 		region.region_control.game_camera.hide_attacks()
 
 
-func _on_turn_end():
+func _on_end_turn():
 	if not Options.action_change_particles:
 		return
 	if not region.region_control.is_player_controled:

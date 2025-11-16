@@ -285,6 +285,30 @@ offset_bottom = 256.0
 texture_normal = ExtResource("23_56xsy")
 texture_pressed = ExtResource("24_uyu6e")
 
+[node name="replay_fail" type="Label" parent="tintable_ui"]
+visible = false
+offset_left = 440.0
+offset_top = 224.0
+offset_right = 712.0
+offset_bottom = 416.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("17_tni5w")
+text = "Sadly the replay
+could not loaded.
+:("
+horizontal_alignment = 1
+
+[node name="ok" type="TextureButton" parent="tintable_ui/replay_fail"]
+modulate = Color(0.713726, 0.890196, 0.65098, 1)
+material = SubResource("ShaderMaterial_l4hw3")
+layout_mode = 0
+offset_left = 112.0
+offset_top = 136.0
+offset_right = 160.0
+offset_bottom = 184.0
+texture_normal = ExtResource("20_fokjq")
+texture_pressed = ExtResource("21_pjtuv")
+
 [node name="replay_window" type="FileDialog" parent="."]
 initial_position = 1
 title = "Open a File"
@@ -292,7 +316,7 @@ size = Vector2i(480, 480)
 borderless = true
 transparent = true
 popup_window = true
-ok_button_text = "Otevřít"
+ok_button_text = "Open"
 file_mode = 0
 access = 1
 filters = PackedStringArray("*.json")
@@ -304,7 +328,7 @@ size = Vector2i(480, 480)
 borderless = true
 transparent = true
 popup_window = true
-ok_button_text = "Vybrat stávající složku"
+ok_button_text = "Select Current Folder"
 dialog_hide_on_ok = true
 file_mode = 2
 access = 1
@@ -327,5 +351,6 @@ filters = PackedStringArray("*.json")
 [connection signal="pressed" from="tintable_ui/play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="tintable_ui/dir_warning/yes" to="." method="_dir_warning_confirm"]
 [connection signal="pressed" from="tintable_ui/dir_warning/no" to="." method="_dir_warning_close"]
+[connection signal="pressed" from="tintable_ui/replay_fail/ok" to="." method="_hide_replay_fail"]
 [connection signal="file_selected" from="replay_window" to="." method="_on_replay_window_file_selected"]
 [connection signal="dir_selected" from="dir_window" to="." method="_on_dir_window_dir_selected"]

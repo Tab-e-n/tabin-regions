@@ -11,10 +11,10 @@ func think_bonus():
 
 func think_normal(is_bonus : bool = false):
 	if is_bonus and controler.region_control.bonus_action_amount == 0:
-		controler.CALL_turn_end = true
+		controler.CALL_end_turn = true
 		return
 	if not is_bonus and controler.region_control.action_amount == 0:
-		controler.CALL_turn_end = true
+		controler.CALL_end_turn = true
 		return
 	
 #	print("think default first")
@@ -42,7 +42,7 @@ func think_normal(is_bonus : bool = false):
 				if controler.alignment_friendly(current_alignment, target.alignment):
 #					print("friendly alignment")
 					continue
-				if not controler.alignment_neutral(target.alignment):
+				if not controler.alignment_inactive(target.alignment):
 					in_threat = true
 #					print("not neutral")
 				if not target.incoming_attack(current_alignment, 0, true):
@@ -70,7 +70,7 @@ func think_normal(is_bonus : bool = false):
 			if results:
 				controler.selected_capital = results[rng.randi_range(0, results.size() - 1)]
 		else:
-			controler.CALL_turn_end = true
+			controler.CALL_end_turn = true
 
 
 func think_mobilize():
@@ -94,11 +94,11 @@ func think_mobilize():
 	#	print("think default mobilize")
 		if no_more_extra:
 			if controler.get_bonus_action_amount() == 0:
-				controler.CALL_turn_end = true
+				controler.CALL_end_turn = true
 			else:
-				controler.CALL_change_current_action = true
+				controler.CALL_change_current_phase = true
 	else:
-		controler.CALL_change_current_action = true
+		controler.CALL_change_current_phase = true
 
 
 func calculate_benefit_default(region : Region, is_bonus : bool):

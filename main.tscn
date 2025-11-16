@@ -109,7 +109,7 @@ theme_override_font_sizes/normal_font_size = 24
 bbcode_enabled = true
 scroll_active = false
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -136,6 +136,7 @@ CurrentTurn = NodePath("UI/Hideable/Turn")
 CurrentAlignment = NodePath("UI/Hideable/Alignment")
 CurrentAction = NodePath("UI/Hideable/Action")
 PhaseInfo = NodePath("UI/Hideable/PhaseText")
+ReplayPausedLabel = NodePath("UI/Hideable/replay_pause")
 VictoryMessage = NodePath("UI/win")
 DefeatMessage = NodePath("UI/lose")
 LeaveMessage = NodePath("UI/leave")
@@ -144,6 +145,7 @@ LeftoverMessage = NodePath("UI/leftover")
 CommandCallout = NodePath("UI/command_callout")
 MouseScroll = NodePath("UI/pause/mouse_scroll")
 AutoPhase = NodePath("UI/pause/auto_phase")
+FastDP = NodePath("UI/pause/fast_dp")
 ActionChangePart = NodePath("UI/pause/particles")
 VisCapitals = NodePath("UI/pause/vis_capitals")
 VisUI = NodePath("UI/pause/vis_ui")
@@ -359,6 +361,19 @@ theme_override_styles/normal = SubResource("StyleBoxFlat_opdnj")
 text = "1"
 horizontal_alignment = 1
 vertical_alignment = 2
+
+[node name="replay_pause" type="Label" parent="GameCamera/UI/Hideable"]
+visible = false
+layout_mode = 0
+offset_left = 376.0
+offset_top = 496.0
+offset_right = 1176.0
+offset_bottom = 544.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+text = "REPLAY IS PAUSED. PRESS LEFT CLICK TO UNPAUSE."
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="turn_order" type="Panel" parent="GameCamera/UI"]
 layout_mode = 0

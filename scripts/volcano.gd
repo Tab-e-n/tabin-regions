@@ -77,10 +77,10 @@ func _deferred_ready():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.CALL_change_current_action:
+	if dp_control.CALL_change_current_phase:
 		return
 	if not active:
-		dp_control.CALL_turn_end = true
+		dp_control.CALL_end_turn = true
 		return
 	
 	if region_control.action_amount == 0:
@@ -95,7 +95,7 @@ func _think_mobilize():
 		return
 	
 	if residing_region.power == 1:
-		dp_control.CALL_change_current_action = true
+		dp_control.CALL_change_current_phase = true
 		if region_control.game_camera:
 			region_control.game_camera.shake_camera(duration, amplitude, period)
 	else:
@@ -118,7 +118,7 @@ func _think_bonus():
 			path.active = false
 		break
 	if call_end_turn:
-		dp_control.CALL_turn_end = true
+		dp_control.CALL_end_turn = true
 		activate_pathways()
 
 
@@ -139,7 +139,7 @@ func _start_volcano_turn():
 		return
 	
 	if residing_region.power == residing_region.max_power:
-		dp_control.CALL_change_current_action = true
+		dp_control.CALL_change_current_phase = true
 #		print("Volcano Busted")
 	
 	active = true

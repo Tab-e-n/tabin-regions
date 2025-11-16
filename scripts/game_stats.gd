@@ -54,9 +54,9 @@ func set_stat(align : int, key : String, value):
 	stats[align][key] = value
 
 
-func get_stat(align : int, key : String):
+func get_stat(align : int, key : String, failsafe = null):
 	if not stat_exists(align, key):
-		return null
+		return failsafe
 	return stats[align][key]
 
 
