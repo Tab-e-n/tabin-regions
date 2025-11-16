@@ -10,6 +10,8 @@ var auto_end_turn_phases : bool = false
 var action_change_particles : bool = true
 var allowed_directories : Array = []
 
+var editor : bool = OS.has_feature("editor")
+
 
 func _ready():
 	DirAccess.make_dir_absolute("user://Dev")

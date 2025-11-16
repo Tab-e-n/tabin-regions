@@ -64,7 +64,7 @@ func _deferred_ready():
 	var controler_id = region_control.align_controlers[dummy_alignment - 1]
 	controler = dp_control.controlers[controler_id] as DPDummy
 	if not controler:
-		push_warning("Volcano could not find DPDummy, thus it is not functional.")
+		push_warning("Volcano could not find DPDummy, thus it is not functional. Use custom_dp_setup to force the dummy_alignment to have DPDummy.")
 		queue_free()
 		return
 	controler.started_turn.connect(_start_volcano_turn)

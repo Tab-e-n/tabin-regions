@@ -6,8 +6,6 @@ class_name RegionControl
 ## Emitted once after RegionControl makes all region connections, so the mapmaker can edit them before the capital distance is calculated.
 ## Intended for maps that want to have different region structure every time players play them.
 signal region_connections_ready
-
-signal capital_distance_ready
 ## Emitted when a players turn ends.
 signal turn_ended
 ## Emitted when a player changes the turns phase. First argument will is the turn phase which just started.
@@ -92,14 +90,15 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 ## Specifies an unchanging turn order.
 @export var preset_alignments : Array[int] = []
 
-@export_subgroup("DP")
-## The default DP that computer players will use. Uses the 'CONTROLER_' enums from 'DPControl'.
+@export_subgroup("Digital Players")
+## The default digital player the map uses. Uses the 'CONTROLER_' enums from 'DPControl'.
 ## Default, Turtle, Neural and Cheater are all accessible in the setup scene.
 ## The Dummy DP does nothing, expecting to be controled by the map.
 @export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy") var default_digital_player : int = DPControl.CONTROLER_DEFAULT
-
+## List of digital players the individual alignments use.
+## 0 gets overriden during map setup, 1-5 force a specific alignment to be controled by a specific digital player.
 @export var custom_dp_setup : Array[int] = []
-## If set to true, when starting the map custom_dp_setup will be shuffled so it is not the same every time.
+## If set to true, when starting the map custom_dp_setup will be sashuffled so it is not the same every time.
 @export var shuffle_dp : bool = false
 
 @export_subgroup("Aliances")
@@ -196,10 +195,10 @@ enum SETUP_COMPLEXITY {UNSPECIFIED, BEGINNER, SIMPLE, INTERMEDIATE, ADVANCED, DI
 ## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
 @export var connections : Array = []
 
+
 var current_playing_align : int = 1
 var align_play_order : Array = []
 var play_order_i : int = 0
-
 
 var align_controlers : Array = []
 var is_player_controled : bool
@@ -224,18 +223,23 @@ var penalty_amount : Array = []
 
 
 func _ready():
-	if OS.has_feature("editor"):
+	if Engine.is_editor_hint():
+		return
+	
+	if Options.editor:
 		check_duplicate_connetions()
+#		check_capital_distance()
 	if print_more_info:
 		MapSetup.print_map_data()
 	
 	if dummy:
 		return
 	
-	game_control = get_parent()
-	game_control.region_control = self
-	game_camera = game_control.game_camera
-	dp_control = game_control.dp_control
+	game_control = get_parent() as GameControl
+	if game_control:
+		game_control.region_control = self
+		game_camera = game_control.game_camera
+		dp_control = game_control.dp_control
 	
 	if ReplayControl.replay_active:
 		align_play_order = ReplayControl.replay_play_order
@@ -289,8 +293,6 @@ func _ready():
 	count_up_regions()
 	
 	bake_capital_distance()
-	
-	capital_distance_ready.emit()
 	
 	if not ReplayControl.replay_active:
 		var rng : RandomNumberGenerator = RandomNumberGenerator.new()
@@ -515,6 +517,10 @@ func get_region(reg_name : String) -> Region:
 
 func bake_capital_distance():
 	for node in get_children():
+		var region : Region = node as Region
+		if region:
+			region.distance_from_capital = Region.DISTANCE_CAP
+	for node in get_children():
 		var capital : Region = node as Region
 		if not capital:
 			continue
@@ -553,6 +559,16 @@ func bake_capital_distance():
 			links.clear()
 			
 			i += 1
+
+
+func check_capital_distance():
+	for node in get_children():
+		var region : Region = node as Region
+		if region:
+			if region.distance_from_capital == Region.DISTANCE_CAP:
+				push_warning(region.name, "has the max value of capital distance. Set call_bake_capital_distance to fix.")
+			if (region.is_capital) != (region.distance_from_capital == 0):
+				push_warning(region.name, "has an incorrect capital distance. Set call_bake_capital_distance to fix.")
 
 
 func remove_alignment(align : int, remove_capitals : bool):
