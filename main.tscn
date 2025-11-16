@@ -746,7 +746,7 @@ texture_pressed = ExtResource("33_4nel1")
 [connection signal="toggled" from="GameCamera/UI/pause/auto_phase" to="." method="set_auto_phases"]
 [connection signal="toggled" from="GameCamera/UI/pause/fast_dp" to="." method="set_dp_speedrun"]
 [connection signal="toggled" from="GameCamera/UI/pause/particles" to="." method="set_action_change_particles"]
-[connection signal="toggled" from="GameCamera/UI/pause/vis_capitals" to="." method="set_capital_visibility"]
+[connection signal="toggled" from="GameCamera/UI/pause/vis_capitals" to="." method="set_city_visibility"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_ui" to="GameCamera" method="set_ui_visibility"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_turn_order" to="GameCamera" method="set_turn_order_visibility"]
 [connection signal="pressed" from="GameCamera/UI/leave/yes" to="GameCamera" method="_confirmed_leave"]

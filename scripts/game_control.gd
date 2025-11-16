@@ -171,7 +171,7 @@ func set_city_visibility(visibility : bool):
 	if region_control:
 		region_control.cities_visible = visibility
 		if game_camera.VisCapitals:
-			game_camera.VisCapitals.button_pressed = region_control.cities_visible
+			game_camera.VisCapitals.set_pressed_no_signal(region_control.cities_visible)
 
 
 ## Sets whether to use mouse camera scrolling or not.
