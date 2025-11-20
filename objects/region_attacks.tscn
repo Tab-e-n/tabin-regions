@@ -1,0 +1,17 @@
+[gd_scene load_steps=2 format=3 uid="uid://ce2f11mxw2a6h"]
+
+[ext_resource type="Script" path="res://scripts/region_attacks.gd" id="1_qbejm"]
+
+[node name="RegionAttacks" type="Node2D"]
+z_index = 30
+script = ExtResource("1_qbejm")
+
+[node name="Label" type="RichTextLabel" parent="."]
+offset_right = 576.0
+offset_bottom = 32.0
+mouse_filter = 2
+theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_constants/outline_size = 0
+theme_override_font_sizes/normal_font_size = 24
+bbcode_enabled = true
+scroll_active = false

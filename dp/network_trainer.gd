@@ -70,7 +70,7 @@ func _ready():
 	MapSetup.player_amount = 0
 	MapSetup.default_digital_player = DPControl.CONTROLER.NEURAL
 	MapSetup.aliances_amount = 1
-	MapSetup.used_aligments = 65532
+	MapSetup.used_alignments = 65532
 	MapSetup.preset_alignments = []
 	
 	choosable_networks = range(network_amount)
@@ -299,6 +299,7 @@ func win(_align : int):
 		print("New variation, number: ", chosen_variations)
 	
 	change_map(MapSetup.current_map_name)
+	region_control.spawn_particles = false
 	region_control.turn_ended.connect(_turn_ended)
 	region_control.visible = region_control_visible
 

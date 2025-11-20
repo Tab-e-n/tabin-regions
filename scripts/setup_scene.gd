@@ -205,7 +205,7 @@ func _on_map_list_item_selected(index):
 		else:
 			slider_player.value = MapSetup.player_amount
 			slider_aliances.value = MapSetup.aliances_amount
-			slider_leader.value = MapSetup.used_aligments
+			slider_leader.value = MapSetup.used_alignments
 	else:
 		tintable_ui.modulate = Color.WHITE
 		map_name.text = "No map selected."
@@ -235,7 +235,7 @@ func start_playing(index):
 		MapSetup.current_map_name = maps[index]
 		MapSetup.player_amount = int(slider_player.value)
 		MapSetup.aliances_amount = int(slider_aliances.value)
-		MapSetup.used_aligments = int(slider_leader.value)
+		MapSetup.used_alignments = int(slider_leader.value)
 		if current_map.use_alignment_picker and MapSetup.player_amount > 0:
 			get_tree().change_scene_to_file("res://alignment_picker.tscn")
 		else:

@@ -83,7 +83,7 @@ func _think_normal():
 		dp_control.CALL_end_turn = true
 		return
 	
-	if region_control.action_amount == 0:
+	if region_control.get_action_amount() == 0:
 		dp_control.CALL_cheat = true
 	else:
 		dp_control.selected_capital = residing_region.name

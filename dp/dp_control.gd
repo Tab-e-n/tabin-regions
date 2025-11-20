@@ -271,20 +271,18 @@ func get_current_moves() -> Array:
 
 
 func get_action_amount() -> int:
-	return region_control.action_amount
+	return region_control.get_action_amount()
+
+
+func get_first_action_amount() -> int:
+	return region_control.first_action_amount
 
 
 func get_bonus_action_amount() -> int:
 	return region_control.bonus_action_amount
 
 
-func get_actions_contextual() -> int:
-	if region_control.current_phase == RegionControl.PHASE_NORMAL:
-		return region_control.action_amount
-	else:
-		return region_control.bonus_action_amount
-
-
+## TODO: Fix this typo
 func get_alingment_amount() -> int:
 	return region_control.align_amount
 

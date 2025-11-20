@@ -1,7 +1,7 @@
 extends Node
 
 
-var DEFAULT_STATS : Dictionary = {
+const DEFAULT_STATS : Dictionary = {
 	"alignment name" : "",
 	"align color" : Color(0, 0, 0, 0),
 	"controler" : 0,

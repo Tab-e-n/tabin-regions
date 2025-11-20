@@ -82,7 +82,7 @@ func think_normal():
 	if not network_attack or not network_reinforce:
 		controler.CALL_nothing = true
 		return
-	if controler.get_actions_contextual() <= 0:
+	if controler.get_action_amount() <= 0:
 		controler.CALL_change_current_phase = true
 		return
 	
@@ -197,7 +197,7 @@ func calculate_benefit(network : Network, region : Region) -> float:
 	inputs[INPUT_MAX_POWER] = region.max_power
 	inputs[INPUT_CAPITAL_DISTANCE] = region.distance_from_capital
 	
-	inputs[INPUT_ACTIONS] = controler.get_actions_contextual()
+	inputs[INPUT_ACTIONS] = controler.get_action_amount()
 	
 	inputs[INPUT_ATTACK_POWER] = region.strongest_enemy_attack(current_alignment)
 	inputs[INPUT_OWN_ATTACK_POWER] = region.get_alignments_attack_power(current_alignment)

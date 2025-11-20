@@ -103,12 +103,12 @@ func make_particle(mobilize : bool):
 
 func show_attacks():
 	if region.region_control and not region.region_control.dummy:
-		region.region_control.game_camera.call_deferred("show_attacks", region)
+		region.region_control.show_region_attackers.call_deferred(region)
 
 
 func hide_attacks():
 	if region.region_control and not region.region_control.dummy:
-		region.region_control.game_camera.hide_attacks()
+		region.region_control.hide_region_attackers()
 
 
 func _on_end_turn():

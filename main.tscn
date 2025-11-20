@@ -97,19 +97,7 @@ script = ExtResource("1_2axsc")
 [node name="AIControler" type="Node" parent="."]
 script = ExtResource("2_w08l3")
 
-[node name="Attacks" type="RichTextLabel" parent="."]
-visible = false
-z_index = 30
-offset_right = 576.0
-offset_bottom = 32.0
-mouse_filter = 2
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
-theme_override_constants/outline_size = 0
-theme_override_font_sizes/normal_font_size = 24
-bbcode_enabled = true
-scroll_active = false
-
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "Attacks", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -129,7 +117,6 @@ ForfeitButton = NodePath("UI/Hideable/PlayerActions/Forfeit")
 PauseButton = NodePath("UI/gearbox")
 LeaveButton = NodePath("UI/pause/leave")
 TurnOrder = NodePath("UI/turn_order")
-Attacks = NodePath("../Attacks")
 PowerSprite = NodePath("UI/Hideable/Power")
 PowerAmount = NodePath("UI/Hideable/Power/text")
 CurrentTurn = NodePath("UI/Hideable/Turn")

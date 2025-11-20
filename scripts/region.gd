@@ -338,8 +338,8 @@ func update_cursor():
 	elif not region_control.is_player_controled:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
-	elif region_control.current_phase == RegionControl.PHASE_NORMAL:
-		if region_control.action_amount == 0:
+	elif region_control.current_phase in [RegionControl.PHASE_NORMAL, RegionControl.PHASE_BONUS]:
+		if region_control.get_action_amount() == 0:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
 		elif region_control.alignment_friendly(region_control.current_playing_align, alignment):
@@ -354,16 +354,6 @@ func update_cursor():
 			
 		else:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
-			
-	elif region_control.current_phase == RegionControl.PHASE_BONUS:
-		if region_control.bonus_action_amount == 0:
-			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
-			
-		elif region_control.alignment_friendly(region_control.current_playing_align, alignment):
-			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
-		
-		else:
-			GameControl.set_cursor(GameControl.CURSOR.SWORD)
 		
 	else:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)

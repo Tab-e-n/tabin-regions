@@ -6,14 +6,11 @@ func start_turn(align : int):
 
 
 func think_bonus():
-	think_normal(true)
+	think_normal()
 
 
-func think_normal(is_bonus : bool = false):
-	if is_bonus and controler.region_control.bonus_action_amount == 0:
-		controler.CALL_end_turn = true
-		return
-	if not is_bonus and controler.region_control.action_amount == 0:
+func think_normal():
+	if controler.get_action_amount() == 0:
 		controler.CALL_end_turn = true
 		return
 	
@@ -56,11 +53,11 @@ func think_normal(is_bonus : bool = false):
 		
 		if eligable_regions.size() > 0:
 			controler.selected_capital = eligable_regions[0].name
-			var highest_benefit = calculate_benefit_default(eligable_regions.pop_front(), is_bonus)
+			var highest_benefit = calculate_benefit_default(eligable_regions.pop_front())
 			rng.randomize()
 			var results : Array = []
 			for region in eligable_regions:
-				var benefit = calculate_benefit_default(region, is_bonus)
+				var benefit = calculate_benefit_default(region)
 				if benefit > highest_benefit:
 					results = [region.name]
 					highest_benefit = benefit
@@ -74,15 +71,6 @@ func think_normal(is_bonus : bool = false):
 
 
 func think_mobilize():
-#	if region_control.capital_amount[current_alignment - 1] == 0:
-#		var forfeit : bool = true
-#		for region in owned_regions[current_alignment]:
-#			if region.power > 1:
-#				forfeit = false
-#				break
-#		if forfeit:
-#			CALL_forfeit = true
-	
 	if controler.get_capital_amount() == 0:
 		var no_more_extra : bool = true
 		for region in controler.get_owned_regions():
@@ -101,12 +89,8 @@ func think_mobilize():
 		controler.CALL_change_current_phase = true
 
 
-func calculate_benefit_default(region : Region, is_bonus : bool):
-	var action_amount : int
-	if not is_bonus:
-		action_amount = controler.get_action_amount()
-	else:
-		action_amount = controler.get_bonus_action_amount()
+func calculate_benefit_default(region : Region):
+	var action_amount : int = controler.get_action_amount()
 	var benefit = 0
 	if region.alignment == current_alignment:
 		var threat : int = determine_attacks(region)

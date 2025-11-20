@@ -32,7 +32,6 @@ const BASE_MOVE_SPEED : float = 8
 
 @export_subgroup("Info")
 @export var TurnOrder : AlignmentList
-@export var Attacks : RichTextLabel
 @export var PowerSprite : TextureRect
 @export var PowerAmount : Label
 @export var CurrentTurn : Label
@@ -91,8 +90,7 @@ var shake_period : float
 
 func _ready():
 	z_index = 100
-	window_size.x = ProjectSettings.get_setting("display/window/size/viewport_width")
-	window_size.y = ProjectSettings.get_setting("display/window/size/viewport_height")
+	window_size = GameCamera.get_window_size()
 	
 	game_control.game_camera = self
 	game_control.command_callout = CommandCallout
@@ -149,10 +147,10 @@ func _ready():
 	if VisTurnOrder and TurnOrder:
 		VisTurnOrder.button_pressed = TurnOrder.visible
 	
-	call_deferred("_deffered_ready")
+	call_deferred("_deferred_ready")
 
 
-func _deffered_ready():
+func _deferred_ready():
 	region_control = game_control.region_control as RegionControl
 	
 	for i in region_control.polygon:
@@ -220,14 +218,18 @@ func _deffered_ready():
 	
 	update_current_turn()
 	update_alignment_label()
-	
-	Attacks.scale = Vector2(region_control.city_size, region_control.city_size);
 
 
 func _connect_region_control_signals():
 	if region_control:
 		region_control.turn_ended.connect(_turn_ended)
 		region_control.turn_phase_changed.connect(_turn_phase_changed)
+
+
+func _disconnect_region_control_signals():
+	if region_control:
+		region_control.turn_ended.disconnect(_turn_ended)
+		region_control.turn_phase_changed.disconnect(_turn_phase_changed)
 
 
 func _ready_turn_order():
@@ -249,10 +251,7 @@ func _process(delta):
 		cam_movement_stop = 1
 	
 	if PowerAmount:
-		if region_control.current_phase == RegionControl.PHASE_NORMAL:
-			PowerAmount.text = String.num(region_control.action_amount)
-		else:
-			PowerAmount.text = String.num(region_control.bonus_action_amount)
+		PowerAmount.text = String.num(region_control.get_action_amount())
 	
 	if PlayerInfo:
 		PlayerInfo.visible = hovering_turn_order
@@ -439,9 +438,7 @@ func advance_turn():
 
 
 func try_end_turn():
-	if region_control.current_phase == RegionControl.PHASE_NORMAL and region_control.action_amount > 0:
-		_leftover_show()
-	elif region_control.bonus_action_amount > 0:
+	if region_control.get_action_amount() > 0:
 		_leftover_show()
 	else:
 		end_turn()
@@ -599,47 +596,14 @@ func set_ui_visibility(visibility : bool):
 
 func toggle_turn_order_visibility():
 	if TurnOrder:
-		TurnOrder.visible = not TurnOrder.visible
-		if VisTurnOrder:
-			VisTurnOrder.button_pressed = TurnOrder.visible
+		set_turn_order_visibility(not TurnOrder.visible)
 
 
 func set_turn_order_visibility(visibility : bool):
 	if TurnOrder:
 		TurnOrder.visible = visibility
-
-
-func show_attacks(region : Region):
-	if not Attacks:
-		return
-	
-	var adjanced : Array[int] = region.get_adjacent_attack_power()
-	
-	var text : String = ""
-	var align_amount : int = region_control.align_amount
-	
-	for alignment in range(adjanced.size()):
-		if alignment == 0 or adjanced[alignment] == 0:
-			align_amount -= 1
-			continue
-		var color : Color = region_control.align_color[alignment]
-		var text_color : Color = RegionControl.text_color(color.v)
-		text += "[cell][bgcolor=#" + color.to_html() + "][color=#" + text_color.to_html() + "] "
-		text += String.num(adjanced[alignment]) + " [/color][/bgcolor][/cell]"
-	
-	if align_amount > 0:
-		text = "[center][table=" + String.num(align_amount) + "]" + text + "[/table][/center]"
-		
-		Attacks.clear()
-		Attacks.append_text(text)
-		Attacks.visible = true
-	
-	Attacks.position = region.position + Vector2(-Attacks.size.x, City.CAPITAL_TEXTURE_SIZE.y if region.is_capital else City.CITY_TEXTURE_SIZE.y) * Attacks.scale * 0.5
-
-
-func hide_attacks():
-	if Attacks:
-		Attacks.visible = false
+		if VisTurnOrder:
+			VisTurnOrder.set_pressed_no_signal(TurnOrder.visible)
 
 
 func _leaving():
@@ -687,11 +651,8 @@ func changed_action_amount(amount : int, color : Color) -> void:
 	part.color = color
 	UI.add_child(part)
 	
-	if AdvanceActionLight:
-		if region_control.current_phase == RegionControl.PHASE_NORMAL and region_control.action_amount == 0:
-			advance_turn_visual(0)
-		if region_control.current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount == 0:
-			advance_turn_visual(0)
+	if region_control.get_action_amount() == 0:
+		advance_turn_visual(0)
 
 
 func advance_turn_visual(type : int):
@@ -723,3 +684,10 @@ func advance_turn_visual(type : int):
 func update_alignment_label():
 	if CurrentAlignment:
 		CurrentAlignment.text = region_control.align_names[region_control.current_playing_align]
+
+
+static func get_window_size() -> Vector2:
+	var window : Vector2 = Vector2(0, 0)
+	window.x = ProjectSettings.get_setting("display/window/size/viewport_width")
+	window.y = ProjectSettings.get_setting("display/window/size/viewport_height")
+	return window

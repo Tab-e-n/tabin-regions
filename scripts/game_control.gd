@@ -39,15 +39,22 @@ var inputs_active : bool = true
 func _ready():
 	GameControl.set_cursor(CURSOR.NORMAL)
 	
-	var map : String
+	var map : String = "A.2_Title_Map.tscn"
 	
 	if not MapSetup.current_map_name.is_empty():
 		map = MapSetup.current_map_name
+	else:
+		push_warning("current_map_name in Map Setup is empty.")
 	
-	load_map(map)
+	change_map(map, false)
+	
+	if not game_camera:
+		push_error("No Game Camera present.")
+	if not dp_control:
+		push_error("No Digital Player Control present.")
 
 
-func _input(event):
+func _input(event : InputEvent):
 	if event is InputEventMouseButton:
 		if event.is_pressed():
 			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
@@ -56,7 +63,7 @@ func _input(event):
 				mouse_wheel_input = -1
 
 
-func _process(delta):
+func _process(delta : float):
 	if win_timer > 0:
 		win_timer -= delta
 		if win_timer <= 0:
@@ -65,9 +72,14 @@ func _process(delta):
 	
 	if inputs_active:
 		if Input.is_action_just_pressed("escape"):
-			if game_camera.LeaveMessage.visible:
+			if game_camera:
+				if game_camera.LeaveMessage.visible:
+					leave()
+					return
+				game_camera.LeaveMessage.visible = true
+			else:
 				leave()
-			game_camera.LeaveMessage.visible = true
+				return
 		
 		mouse_position = get_viewport().get_mouse_position()
 		var shift = Input.is_action_pressed("shift")
@@ -83,39 +95,48 @@ func _process(delta):
 		if Input.is_action_pressed("up"):
 			direction.y -= 1
 		
-		if game_camera.cam_movement_stop > 0:
-			game_camera.cam_movement_stop -= 1
-		elif Options.mouse_scroll_active:
-			if mouse_position.x > game_camera.window_size.x - 16:
+		var mouse_scrolling : bool = Options.mouse_scroll_active
+		var window_limits : Vector2 = Vector2(0, 0)
+		if game_camera:
+			if game_camera.cam_movement_stop > 0:
+				game_camera.cam_movement_stop -= 1
+				mouse_scrolling = false
+			window_limits = game_camera.window_size
+		else:
+			window_limits = GameCamera.get_window_size()
+		
+		if mouse_scrolling:
+			if mouse_position.x > window_limits.x - 16:
 				direction.x += 1
 			if mouse_position.x < 16:
 				direction.x -= 1
-			if mouse_position.y > game_camera.window_size.y - 16:
+			if mouse_position.y > window_limits.y - 16:
 				direction.y += 1
 			if mouse_position.y < 16:
 				direction.y -= 1
 		
-		game_camera.move_camera(delta, direction, shift, ctrl)
-		
-		if Input.is_action_just_pressed("zoom_out") or mouse_wheel_input < 0:
-			game_camera.zoom_change(-1)
-		if Input.is_action_just_pressed("zoom_in") or mouse_wheel_input > 0:
-			game_camera.zoom_change(1)
-		if Input.is_action_just_pressed("zoom_reset"):
-			game_camera.reset_zoom()
-			new_callout("Reset zoom")
-		
-		if Input.is_action_just_pressed("hide_ui"):
-			game_camera.toggle_ui_visibility()
-			new_callout("Toggle hide UI")
-		
-		if Input.is_action_just_pressed("hide_turn_order"):
-			game_camera.toggle_turn_order_visibility()
-			new_callout("Toggle turn order")
+		if game_camera:
+			game_camera.move_camera(delta, direction, shift, ctrl)
+			
+			if Input.is_action_just_pressed("zoom_out") or mouse_wheel_input < 0:
+				game_camera.zoom_change(-1)
+			if Input.is_action_just_pressed("zoom_in") or mouse_wheel_input > 0:
+				game_camera.zoom_change(1)
+			if Input.is_action_just_pressed("zoom_reset"):
+				game_camera.reset_zoom()
+				new_callout("Reset zoom")
+			
+			if Input.is_action_just_pressed("hide_ui"):
+				game_camera.toggle_ui_visibility()
+				new_callout("Toggle hide UI")
+			
+			if Input.is_action_just_pressed("hide_turn_order"):
+				game_camera.toggle_turn_order_visibility()
+				new_callout("Toggle turn order")
 		
 		if Input.is_action_just_pressed("hide_capitals"):
 			toggle_cities()
-			game_camera.CommandCallout.new_callout("Toggle hide capitols")
+			new_callout("Toggle hide capitols")
 		
 		if Input.is_action_just_pressed("disable_mouse_scroll"):
 			set_mouse_scroll(not Options.mouse_scroll_active)
@@ -123,7 +144,7 @@ func _process(delta):
 				new_callout("Mouse scrolling active")
 			else:
 				new_callout("Mouse scrolling disabled")
-			if game_camera.MouseScroll:
+			if game_camera and game_camera.MouseScroll:
 				game_camera.MouseScroll.button_pressed = Options.mouse_scroll_active
 		
 		if Input.is_action_just_pressed("auto_phase"):
@@ -132,7 +153,7 @@ func _process(delta):
 				new_callout("Phases end when no actions are left")
 			else:
 				new_callout("Phases end only after user input")
-			if game_camera.AutoPhase:
+			if game_camera and game_camera.AutoPhase:
 				game_camera.AutoPhase.button_pressed = Options.auto_end_turn_phases
 		
 		if Input.is_action_just_pressed("dp_speedrun"):
@@ -141,7 +162,7 @@ func _process(delta):
 				new_callout("Fast Digital Players")
 			else:
 				new_callout("Slow Digital Players")
-			if game_camera.FastDP:
+			if game_camera and game_camera.FastDP:
 				game_camera.FastDP.button_pressed = Options.dp_speedrun
 		
 		if Input.is_action_just_pressed("action_change_particles"):
@@ -150,7 +171,7 @@ func _process(delta):
 				new_callout("Action change particles on")
 			else:
 				new_callout("Action change particles off")
-			if game_camera.ActionChangePart:
+			if game_camera and game_camera.ActionChangePart:
 				game_camera.ActionChangePart.button_pressed = Options.action_change_particles
 		
 		if ReplayControl.replay_active:
@@ -170,7 +191,7 @@ func toggle_cities():
 func set_city_visibility(visibility : bool):
 	if region_control:
 		region_control.cities_visible = visibility
-		if game_camera.VisCapitals:
+		if game_camera and game_camera.VisCapitals:
 			game_camera.VisCapitals.set_pressed_no_signal(region_control.cities_visible)
 
 
@@ -187,7 +208,8 @@ func set_auto_phases(auto : bool):
 ## Sets whether to use digital player speedrun or not.
 func set_dp_speedrun(speedy : bool):
 	Options.dp_speedrun = speedy
-	dp_control.dp_speedrun_update()
+	if dp_control:
+		dp_control.dp_speedrun_update()
 
 
 ## Sets whether to show action change particles or not.
@@ -201,36 +223,57 @@ func new_callout(text: String):
 		command_callout.new_callout(text)
 
 
-func load_map(map_name : String):
-	var packed_map : PackedScene = load(MapSetup.current_directory + "/" + map_name)
-	region_control = packed_map.instantiate()
-	add_child(region_control)
-	move_child(region_control, 1)
+func unload_current_map() -> void:
+	if not region_control:
+		return
+	if game_camera:
+		game_camera._disconnect_region_control_signals()
+	remove_child(region_control)
+	region_control.queue_free()
+	region_control = null
 
 
-## Frees the current map and loads a new map from the current map directory.
-func change_map(map_name : String):
-	if region_control:
-		remove_child(region_control)
-		region_control.queue_free()
-	
-	load_map(map_name)
-	
-	region_control.spawn_particles = false
-	game_camera.region_control = region_control
-	game_camera._connect_region_control_signals()
-	dp_control.region_control = region_control
-	
-	ReplayControl.clear_replay()
+func load_map(map_name : String) -> RegionControl:
+	var packed_map : PackedScene = load(MapSetup.current_directory + "/" + map_name) as PackedScene
+	if not packed_map:
+		push_error(map_name, " is not a Scene, could not load.")
+		return null
+	var new_map : RegionControl = packed_map.instantiate() as RegionControl
+	if not new_map:
+		push_warning(map_name, " is not a RegionControl, refused to load.")
+		return null
+	return new_map
+
+
+## Tries to load a new map and if it succeeds, replaces the current map with the new one.
+func change_map(map_name : String, update_others : bool = true) -> void:
+	var new_map : RegionControl = load_map(map_name)
+	if new_map:
+		unload_current_map()
+		
+		region_control = new_map
+		add_child(region_control)
+		move_child(region_control, 1)
+		
+		if update_others:
+			if game_camera:
+				game_camera.region_control = region_control
+				game_camera._connect_region_control_signals()
+			if dp_control:
+				dp_control.region_control = region_control
+			
+			ReplayControl.clear_replay()
 
 
 func win(align : int):
-	game_camera.show_victory_message(align)
+	if game_camera:
+		game_camera.show_victory_message(align)
 	win_timer = 5.0
 
 
 func lose(align : int):
-	game_camera.show_defeat_message(align)
+	if game_camera:
+		game_camera.show_defeat_message(align)
 	win_timer = 5.0
 
 

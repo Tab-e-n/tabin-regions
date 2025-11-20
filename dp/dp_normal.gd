@@ -14,14 +14,11 @@ func start_turn(align : int):
 
 
 func think_bonus():
-	think_normal(true)
+	think_normal()
 
 
-func think_normal(is_bonus : bool = false):
-	if is_bonus and controler.get_bonus_action_amount() == 0:
-		controler.CALL_change_current_phase = true
-		return
-	if not is_bonus and controler.get_action_amount() == 0:
+func think_normal():
+	if controler.get_action_amount() == 0:
 		controler.CALL_change_current_phase = true
 		return
 	
@@ -65,11 +62,11 @@ func think_normal(is_bonus : bool = false):
 	
 	if eligable_regions.size() > 0:
 		controler.selected_capital = eligable_regions[0].name
-		var highest_benefit : int = calculate_benefit_default(eligable_regions.pop_front(), is_bonus)
+		var highest_benefit : int = calculate_benefit_default(eligable_regions.pop_front())
 		var lowest_distance : int
 		var results : Array = []
 		for region in eligable_regions:
-			var benefit : int = calculate_benefit_default(region, is_bonus)
+			var benefit : int = calculate_benefit_default(region)
 			var distance = region.distance_from_capital
 			if benefit > highest_benefit or (benefit == highest_benefit and distance < lowest_distance):
 				results = [region.name]
@@ -113,12 +110,8 @@ func think_mobilize():
 				controler.CALL_change_current_phase = true
 
 
-func calculate_benefit_default(region : Region, is_bonus : bool):
-	var action_amount : int
-	if not is_bonus:
-		action_amount = controler.get_action_amount()
-	else:
-		action_amount = controler.get_bonus_action_amount()
+func calculate_benefit_default(region : Region):
+	var action_amount : int = controler.get_action_amount()
 	var benefit : int = 0
 	if controler.alignment_friendly(current_alignment, region.alignment):
 		var threat : int = determine_attacks(region)
