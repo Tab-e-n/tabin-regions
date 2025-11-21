@@ -1,0 +1,555 @@
+[gd_scene load_steps=29 format=3 uid="uid://dm5mmo4tjcdat"]
+
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_bt8n7"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_8y5lh"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_l3uxk"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_j7dqx"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_11m6x"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="5_u4a4u"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="7_arpvv"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ytq4n"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hw7p3"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_h1lsq"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8qs6p"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_hcmox"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5tp4v"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g5bkx"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_fw1an"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1041y"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wacml"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_er5iu"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_66ct4"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ywwns"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bcafb"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6fp82"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yffj7"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nbvs8"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kjtpq"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sn26r"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_m4skf"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_egb3q"]
+shader = ExtResource("3_j7dqx")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[node name="pentagon" type="Polygon2D" node_paths=PackedStringArray("region_links")]
+color = Color(0.521569, 0.521569, 0.603922, 1)
+polygon = PackedVector2Array(-392, 568, 424, 520, 640, -160, 0, -664, -656, -192)
+script = ExtResource("1_bt8n7")
+lock_align_amount = false
+align_amount = 6
+complexity = 1
+lore = "Not the pentagon, just a pentagon."
+align_names = Array[String](["Penta Gone", "Burbulence", "Frugals", "Tees", "UOR", "Jocks"])
+region_links = NodePath("links")
+
+[node name="links" type="Node" parent="."]
+
+[node name="Kindness Valley-Burbulence" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Burbulence")
+to_path = NodePath("../../Kindness Valley")
+
+[node name="Pottery-Kindness Valley" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Kindness Valley")
+to_path = NodePath("../../Pottery")
+
+[node name="Pottery-Jockay" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Pottery")
+to_path = NodePath("../../Jockay")
+
+[node name="Reference Mine-Pottery" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Reference Mine")
+to_path = NodePath("../../Pottery")
+
+[node name="Jockay-Gallump" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Gallump")
+to_path = NodePath("../../Jockay")
+
+[node name="Reference Mine-Crown Jewels" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Crown Jewels")
+to_path = NodePath("../../Reference Mine")
+
+[node name="Gallump-Crown Jewels" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Crown Jewels")
+to_path = NodePath("../../Gallump")
+
+[node name="Pottery-Crown Jewels" type="Line2D" parent="links"]
+points = PackedVector2Array(344, 392)
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Crown Jewels")
+to_path = NodePath("../../Pottery")
+
+[node name="Wwenches-Burbulence" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Wwenches")
+to_path = NodePath("../../Burbulence")
+
+[node name="Wwenches-Kindness Valley" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Wwenches")
+to_path = NodePath("../../Kindness Valley")
+
+[node name="Wwenches-Pottery" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Wwenches")
+to_path = NodePath("../../Pottery")
+
+[node name="Reference Mine-Wwenches" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Wwenches")
+to_path = NodePath("../../Reference Mine")
+
+[node name="Hoggers-Ues Ofey" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Hoggers")
+to_path = NodePath("../../Ues Ofey")
+
+[node name="Gallump-Hoggers" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Hoggers")
+to_path = NodePath("../../Gallump")
+
+[node name="Johnsville-Reference Mine" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Johnsville")
+to_path = NodePath("../../Reference Mine")
+
+[node name="Crown Jewels-Johnsville" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Johnsville")
+to_path = NodePath("../../Crown Jewels")
+
+[node name="Johnsville-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Sleighway")
+to_path = NodePath("../../Johnsville")
+
+[node name="Crown Jewels-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Sleighway")
+to_path = NodePath("../../Crown Jewels")
+
+[node name="Gallump-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Sleighway")
+to_path = NodePath("../../Gallump")
+
+[node name="Hoggers-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Sleighway")
+to_path = NodePath("../../Hoggers")
+
+[node name="Sleighway-Ues Ofey" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Sleighway")
+to_path = NodePath("../../Ues Ofey")
+
+[node name="Gasoline Road-Johnsville" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Gasoline Road")
+to_path = NodePath("../../Johnsville")
+
+[node name="Gasoline Road-TeeTeeTee" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Gasoline Road")
+to_path = NodePath("../../TeeTeeTee")
+
+[node name="Frugal People-Tristan\'s Rock" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Tristan\'s Rock")
+to_path = NodePath("../../Frugal People")
+
+[node name="Noaforce-TeeTeeTee" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Noaforce")
+to_path = NodePath("../../TeeTeeTee")
+
+[node name="Hund in German-Noaforce" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Hund in German")
+to_path = NodePath("../../Noaforce")
+
+[node name="Gasoline Road-Hund in German" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Hund in German")
+to_path = NodePath("../../Gasoline Road")
+
+[node name="Hund in German-Johnsville" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Hund in German")
+to_path = NodePath("../../Johnsville")
+
+[node name="Hund in German-Tristan\'s Rock" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Hund in German")
+to_path = NodePath("../../Tristan\'s Rock")
+
+[node name="Kirt Connagan-Tristan\'s Rock" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Kirt Connagan")
+to_path = NodePath("../../Tristan\'s Rock")
+
+[node name="Frugal People-Kirt Connagan" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Kirt Connagan")
+to_path = NodePath("../../Frugal People")
+
+[node name="Cryptic Minor-Kirt Connagan" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Cryptic Minor")
+to_path = NodePath("../../Kirt Connagan")
+
+[node name="Cryptic Minor-Tristan\'s Rock" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Cryptic Minor")
+to_path = NodePath("../../Tristan\'s Rock")
+
+[node name="Cryptic Minor-Hund in German" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Cryptic Minor")
+to_path = NodePath("../../Hund in German")
+
+[node name="Cryptic Minor-Johnsville" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Cryptic Minor")
+to_path = NodePath("../../Johnsville")
+
+[node name="Cryptic Minor-Reference Mine" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Cryptic Minor")
+to_path = NodePath("../../Reference Mine")
+
+[node name="Final Filler-Kirt Connagan" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Final Filler")
+to_path = NodePath("../../Kirt Connagan")
+
+[node name="Cryptic Minor-Final Filler" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Final Filler")
+to_path = NodePath("../../Cryptic Minor")
+
+[node name="Final Filler-Reference Mine" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Final Filler")
+to_path = NodePath("../../Reference Mine")
+
+[node name="Final Filler-Wwenches" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Final Filler")
+to_path = NodePath("../../Wwenches")
+
+[node name="Gasoline Road-Noaforce" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Noaforce")
+to_path = NodePath("../../Gasoline Road")
+
+[node name="Noaforce-Tristan\'s Rock" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Noaforce")
+to_path = NodePath("../../Tristan\'s Rock")
+
+[node name="Gallump-Pottery" type="Line2D" parent="links"]
+script = ExtResource("2_8y5lh")
+from_path = NodePath("../../Gallump")
+to_path = NodePath("../../Pottery")
+
+[node name="bg" parent="." instance=ExtResource("2_l3uxk")]
+
+[node name="Burbulence" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ytq4n")
+position = Vector2(-288, 416)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-88, 8, -64, 88, 24, 80, 104, -8, -16, -88)
+uv = PackedVector2Array(0, 69.8182, 16, 128, 74.6667, 122.182, 128, 58.1818, 48, 0)
+script = ExtResource("5_u4a4u")
+alignment = 1
+power = 2
+is_capital = true
+
+[node name="Frugal People" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_hw7p3")
+position = Vector2(-504, -144)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-40, 80, 56, 88, 104, 0, 56, -72, -16, -72, -80, -24)
+uv = PackedVector2Array(27.8261, 121.6, 94.6087, 128, 128, 57.6, 94.6087, 0, 44.5217, 0, 0, 38.4)
+script = ExtResource("5_u4a4u")
+alignment = 2
+power = 2
+is_capital = true
+
+[node name="TeeTeeTee" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_h1lsq")
+position = Vector2(0, -488)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-40, -48, 0, -88, 40, -48, 104, 64, 72, 88, 40, 48, -40, 120, -80, 72, -16, -24)
+uv = PackedVector2Array(27.8261, 24.6154, 55.6522, 0, 83.4783, 24.6154, 128, 93.5385, 105.739, 108.308, 83.4783, 83.6923, 27.8261, 128, 0, 98.4615, 44.5217, 39.3846)
+script = ExtResource("5_u4a4u")
+alignment = 3
+power = 2
+is_capital = true
+
+[node name="Ues Ofey" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_8qs6p")
+position = Vector2(464, -152)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-80, 40, -16, 40, 16, 80, 48, 48, 80, 80, 112, 8, 56, -40, -88, -40)
+uv = PackedVector2Array(5.12, 85.3333, 46.08, 85.3333, 66.56, 128, 87.04, 93.8667, 107.52, 128, 128, 51.2, 92.16, 0, 0, 0)
+script = ExtResource("5_u4a4u")
+alignment = 4
+power = 2
+is_capital = true
+
+[node name="Jockay" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_hcmox")
+position = Vector2(336, 384)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(48, 72, 80, 0, 24, -96, 16, -192, 0, -144, -48, -48, -80, -96, -168, -72, -192, 16, -64, 80)
+uv = PackedVector2Array(112.941, 124.235, 128, 90.3529, 101.647, 45.1765, 97.8824, 0, 90.3529, 22.5882, 67.7647, 67.7647, 52.7059, 45.1765, 11.2941, 56.4706, 0, 97.8824, 60.2353, 128)
+script = ExtResource("5_u4a4u")
+alignment = 5
+power = 2
+is_capital = true
+
+[node name="Kindness Valley" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_5tp4v")
+position = Vector2(-152, 352)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-24, 48, 48, 16, 152, 16, 152, -80, 88, -88, -8, -64, -72, 16)
+uv = PackedVector2Array(27.4286, 128, 68.5714, 97.8824, 128, 97.8824, 128, 7.52941, 91.4286, 0, 36.5714, 22.5882, 0, 97.8824)
+script = ExtResource("5_u4a4u")
+
+[node name="Pottery" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_g5bkx")
+position = Vector2(88, 280)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-80, 88, 40, 112, 72, 24, 160, 0, 104, -88, 32, -64, 48, -128, -32, -168, -56, -112, -136, -104, -160, -32, -96, -16, -72, -40)
+uv = PackedVector2Array(32, 117.029, 80, 128, 92.8, 87.7714, 128, 76.8, 105.6, 36.5714, 76.8, 47.5429, 83.2, 18.2857, 51.2, 0, 41.6, 25.6, 9.6, 29.2571, 0, 62.1714, 25.6, 69.4857, 35.2, 58.5143)
+script = ExtResource("5_u4a4u")
+
+[node name="Reference Mine" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_fw1an")
+position = Vector2(-40, 48)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-56, 120, 64, 112, 120, 0, 32, -96, -88, -96, -64, -72, 32, -72, 96, -8, 0, -8, -96, -88, -144, 32, -64, 112, -56, 88, -120, 24, -88, -56, -16, 16)
+uv = PackedVector2Array(42.6667, 128, 100.848, 123.259, 128, 56.8889, 85.3333, 0, 27.1515, 0, 38.7879, 14.2222, 85.3333, 14.2222, 116.364, 52.1481, 69.8182, 52.1481, 23.2727, 4.74074, 0, 75.8519, 38.7879, 123.259, 42.6667, 109.037, 11.6364, 71.1111, 27.1515, 23.7037, 62.0606, 66.3704)
+script = ExtResource("5_u4a4u")
+
+[node name="Gallump" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_1041y")
+position = Vector2(280, 160)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(8, 160, -80, 24, -88, -48, -64, -112, -16, -128, 40, -104, 72, -48, 72, 16, 48, 80)
+uv = PackedVector2Array(76.8, 128, 6.4, 67.5556, 0, 35.5556, 19.2, 7.11111, 57.6, 0, 102.4, 10.6667, 128, 35.5556, 128, 64, 108.8, 92.4444)
+script = ExtResource("5_u4a4u")
+
+[node name="Crown Jewels" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_wacml")
+position = Vector2(136, 72)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-8, 136, 56, 112, 48, 40, 72, -24, 24, -40, -16, -96, -88, -72, -48, -32, -72, 32, 8, 72)
+uv = PackedVector2Array(64, 128, 115.2, 114.759, 108.8, 75.0345, 128, 39.7241, 89.6, 30.8966, 57.6, 0, 0, 13.2414, 32, 35.3103, 12.8, 70.6207, 76.8, 92.6897)
+script = ExtResource("5_u4a4u")
+
+[node name="Wwenches" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_er5iu")
+position = Vector2(-192, 232)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-112, 88, -40, 128, 24, 48, 104, 24, 136, -56, 72, -48, 8, -80, -16, -144, -56, -64, -56, 16)
+uv = PackedVector2Array(0, 109.176, 37.1613, 128, 70.1936, 90.3529, 111.484, 79.0588, 128, 41.4118, 94.9677, 45.1765, 61.9355, 30.1176, 49.5484, 0, 28.9032, 37.6471, 28.9032, 75.2941)
+script = ExtResource("5_u4a4u")
+
+[node name="Hoggers" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_66ct4")
+position = Vector2(416, -24)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-64, 112, -24, 88, -32, 64, 24, 8, 40, 32, 64, 8, 48, -8, 88, -16, 104, -48, 96, -72, 80, -40, 56, -40, 40, -64, 24, -64, 8, -72, -40, -64, -32, -56, -56, -40, -120, 48, -144, 56, -96, 72)
+uv = PackedVector2Array(41.2903, 128, 61.9355, 111.304, 57.8064, 94.6087, 86.7097, 55.6522, 94.9677, 72.3478, 107.355, 55.6522, 99.0968, 44.5217, 119.742, 38.9565, 128, 16.6957, 123.871, 0, 115.613, 22.2609, 103.226, 22.2609, 94.9677, 5.56522, 86.7097, 5.56522, 78.4516, 0, 53.6774, 5.56522, 57.8064, 11.1304, 45.4194, 22.2609, 12.3871, 83.4783, 0, 89.0435, 24.7742, 100.174)
+script = ExtResource("5_u4a4u")
+
+[node name="Johnsville" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ywwns")
+position = Vector2(64, -120)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-24, 112, 56, 88, 56, 16, 72, 8, 56, -8, 48, -24, 64, -40, 72, -24, 64, -16, 72, -8, 88, -16, 88, -32, 104, -40, 128, -24, 128, 0, 152, 8, 176, 8, 160, -8, 144, -8, 144, -24, 144, -48, 120, -64, 96, -64, 96, -104, -8, -104, -8, -48, -120, -48, -128, 16, -56, 16, -56, 72)
+uv = PackedVector2Array(43.7895, 128, 77.4737, 113.778, 77.4737, 71.1111, 84.2105, 66.3704, 77.4737, 56.8889, 74.1053, 47.4074, 80.8421, 37.9259, 84.2105, 47.4074, 80.8421, 52.1481, 84.2105, 56.8889, 90.9474, 52.1481, 90.9474, 42.6667, 97.6842, 37.9259, 107.789, 47.4074, 107.789, 61.6296, 117.895, 66.3704, 128, 66.3704, 121.263, 56.8889, 114.526, 56.8889, 114.526, 47.4074, 114.526, 33.1852, 104.421, 23.7037, 94.3158, 23.7037, 94.3158, 0, 50.5263, 0, 50.5263, 33.1852, 3.36842, 33.1852, 0, 71.1111, 30.3158, 71.1111, 30.3158, 104.296)
+script = ExtResource("5_u4a4u")
+
+[node name="Sleighway" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_bcafb")
+position = Vector2(216, -40)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-48, -80, -88, -56, -88, 16, -48, 64, 0, 80, 48, 64, 72, 56, 136, -32, 160, -40, 152, -56, 160, -72, 152, -152, 112, -168, 48, -152, 40, -120, 48, -80, 32, -64, 0, -64)
+uv = PackedVector2Array(20.6452, 45.4194, 0, 57.8064, 0, 94.9677, 20.6452, 119.742, 45.4194, 128, 70.1936, 119.742, 82.5806, 115.613, 115.613, 70.1936, 128, 66.0645, 123.871, 57.8064, 128, 49.5484, 123.871, 8.25806, 103.226, 0, 70.1936, 8.25806, 66.0645, 24.7742, 70.1936, 45.4194, 61.9355, 53.6774, 45.4194, 53.6774)
+script = ExtResource("5_u4a4u")
+
+[node name="Gasoline Road" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_6fp82")
+position = Vector2(72, -320)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-16, 88, 88, 88, 64, 56, 48, 8, 56, -40, 56, -80, 40, -96, 0, -64, -32, -104, -72, -72, -40, -48, -40, -24, -48, 8, -48, 48)
+uv = PackedVector2Array(44.8, 128, 128, 128, 108.8, 106.667, 96, 74.6667, 102.4, 42.6667, 102.4, 16, 89.6, 5.33333, 57.6, 26.6667, 32, 0, 0, 21.3333, 25.6, 37.3333, 25.6, 53.3333, 19.2, 74.6667, 19.2, 101.333)
+script = ExtResource("5_u4a4u")
+
+[node name="Tristan\'s Rock" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_yffj7")
+position = Vector2(-264, -192)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-160, 0, -104, 16, -24, 8, -56, -8, -56, -56, -24, -80, 8, -72, 32, -56, 24, -16, 72, -48, 104, -96, 144, -56, 120, -32, 88, 8, 64, 32, 32, 56, -24, 64, -80, 56, -120, 72, -136, 64, -128, 48)
+uv = PackedVector2Array(0, 73.1429, 23.5789, 85.3333, 57.2632, 79.2381, 43.7895, 67.0476, 43.7895, 30.4762, 57.2632, 12.1905, 70.7368, 18.2857, 80.8421, 30.4762, 77.4737, 60.9524, 97.6842, 36.5714, 111.158, 0, 128, 30.4762, 117.895, 48.7619, 104.421, 79.2381, 94.3158, 97.5238, 80.8421, 115.81, 57.2632, 121.905, 33.6842, 115.81, 16.8421, 128, 10.1053, 121.905, 13.4737, 109.714)
+script = ExtResource("5_u4a4u")
+
+[node name="Noaforce" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_nbvs8")
+position = Vector2(-64, -320)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-96, 24, -80, -80, -64, -48, -16, -88, 24, -40, 56, -64, 88, -48, 88, -24, 80, 8, 80, 48, 88, 64, 56, 56, 48, 32, 24, 56, -16, 40, -48, 72)
+uv = PackedVector2Array(0, 89.6, 11.1304, 6.4, 22.2609, 32, 55.6522, 0, 83.4783, 38.4, 105.739, 19.2, 128, 32, 128, 51.2, 122.435, 76.8, 122.435, 108.8, 128, 121.6, 105.739, 115.2, 100.174, 96, 83.4783, 115.2, 55.6522, 102.4, 33.3913, 128)
+script = ExtResource("5_u4a4u")
+
+[node name="Hund in German" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kjtpq")
+position = Vector2(-96, -200)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(144, 24, 144, -32, 128, -48, 80, -56, 80, -80, 56, -56, 16, -72, -8, -40, -24, -40, -56, 0, -80, 24, -96, 40, -80, 64, 24, 72, 32, 24)
+uv = PackedVector2Array(128, 87.5789, 128, 40.4211, 119.467, 26.9474, 93.8667, 20.2105, 93.8667, 0, 81.0667, 20.2105, 59.7333, 6.73684, 46.9333, 33.6842, 38.4, 33.6842, 21.3333, 67.3684, 8.53333, 87.5789, 0, 101.053, 8.53333, 121.263, 64, 128, 68.2667, 87.5789)
+script = ExtResource("5_u4a4u")
+
+[node name="Kirt Connagan" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_sn26r")
+position = Vector2(-352, -64)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(-80, 0, -48, -56, -32, -48, 8, -64, 64, -56, 88, -8, 48, -8, 24, -32, 48, 0, 80, 0, 72, 24, 40, 48, 8, 24, 8, -16, 0, 24, 24, 56, -8, 72, -32, 48, -40, 16)
+uv = PackedVector2Array(0, 60.2353, 24.381, 7.52941, 36.5714, 15.0588, 67.0476, 0, 109.714, 7.52941, 128, 52.7059, 97.5238, 52.7059, 79.2381, 30.1176, 97.5238, 60.2353, 121.905, 60.2353, 115.81, 82.8235, 91.4286, 105.412, 67.0476, 82.8235, 67.0476, 45.1765, 60.9524, 82.8235, 79.2381, 112.941, 54.8571, 128, 36.5714, 105.412, 30.4762, 75.2941)
+script = ExtResource("5_u4a4u")
+
+[node name="Cryptic Minor" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_m4skf")
+position = Vector2(-136, -88)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(136, 32, 136, -8, 56, -8, 64, -32, -48, -40, -64, -64, -96, -40, -144, -32, -120, 16, -88, 8, -72, 32)
+uv = PackedVector2Array(128, 128, 128, 74.6667, 91.4286, 74.6667, 95.0857, 42.6667, 43.8857, 32, 36.5714, 0, 21.9429, 32, 0, 42.6667, 10.9714, 106.667, 25.6, 96, 32.9143, 128)
+script = ExtResource("5_u4a4u")
+
+[node name="Final Filler" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_egb3q")
+position = Vector2(-248, 32)
+texture = ExtResource("4_11m6x")
+polygon = PackedVector2Array(0, 120, -8, 64, -56, 32, -104, -16, -64, -40, -24, -72, -16, -96, 24, -104, 40, -80, 112, -80, 56, 48, 32, 48)
+uv = PackedVector2Array(61.6296, 128, 56.8889, 96, 28.4444, 77.7143, 0, 50.2857, 23.7037, 36.5714, 47.4074, 18.2857, 52.1481, 4.57143, 75.8519, 0, 85.3333, 13.7143, 128, 13.7143, 94.8148, 86.8571, 80.5926, 86.8571)
+script = ExtResource("5_u4a4u")
+
+[node name="CloudSpawner" parent="." instance=ExtResource("7_arpvv")]
+time_range_bottom = 10.0
+time_range_top = 25.0
+speed = 10.0
+rarity = 55

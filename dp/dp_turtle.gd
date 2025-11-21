@@ -31,8 +31,8 @@ func think_normal():
 		for region in controler.get_owned_regions():
 #			print("owned: ", region.name)
 			var in_threat : bool = false
-			for connection in region.connections:
-				var target : Region = connection.get_other_region(region)
+			for link in region.links:
+				var target : Region = link.get_other_region(region)
 				if not target:
 					continue
 #				print("connected: ", target.name)

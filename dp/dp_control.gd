@@ -154,13 +154,13 @@ func think():
 		find_owned_regions()
 		
 		match region_control.current_phase:
-			region_control.PHASE_NORMAL:
+			RegionControl.PHASE.NORMAL:
 				if controlers[current_controler].has_method("think_normal"):
 					controlers[current_controler].call("think_normal")
-			region_control.PHASE_MOBILIZE:
+			RegionControl.PHASE.MOBILIZE:
 				if controlers[current_controler].has_method("think_mobilize"):
 					controlers[current_controler].call("think_mobilize")
-			region_control.PHASE_BONUS:
+			RegionControl.PHASE.BONUS:
 				if controlers[current_controler].has_method("think_bonus"):
 					controlers[current_controler].call("think_bonus")
 
@@ -184,7 +184,7 @@ func timer_ended():
 	elif CALL_change_current_phase:
 		reset_CALL()
 		region_control.change_current_phase()
-		should_think = region_control.current_phase != RegionControl.PHASE_NORMAL
+		should_think = region_control.current_phase != RegionControl.PHASE.NORMAL
 	elif CALL_cheat:
 		reset_CALL()
 		region_control.add_action()
@@ -260,8 +260,8 @@ func get_allied_regions(alignment : int = current_align()) -> Array:
 	return allied_regs
 
 
-func get_region(connection_name : String) -> Region:
-	return region_control.get_node(connection_name)
+func get_region(region_name : String) -> Region:
+	return region_control.get_node(region_name)
 
 
 func get_current_moves() -> Array:

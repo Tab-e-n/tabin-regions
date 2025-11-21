@@ -7,9 +7,12 @@ const CLOUD_DISTANCE_COVERED : float = 1024
 @export var enabled : bool = true
 @export var time_range_bottom : float = 8
 @export var time_range_top : float = 24
+
+@export_subgroup("Cloud")
+@export var speed : float = 16
 @export var color : Color = Color(1, 1, 1, 1)
 @export var rarity : int = 49
-@export var rare_cloud : int = -1
+@export var rare_cloud : DecorCloud.CLOUD_TYPE = DecorCloud.CLOUD_TYPE.NO_PREFERENCE
 
 
 var packed_cloud : PackedScene = preload("res://objects/particle_cloud.tscn")
@@ -41,6 +44,7 @@ func _process(delta):
 		var cloud : DecorCloud = packed_cloud.instantiate() as DecorCloud
 		cloud.speed = CLOUD_DISTANCE_COVERED / DecorCloud.CLOUD_DURATION
 		cloud.self_modulate = color
+		cloud.speed = speed
 		if game_camera:
 			cloud.position.x = randf_range(game_camera.farthest_left + cloud_offset.x, game_camera.farthest_right + cloud_offset.y)
 			cloud.position.y = randf_range(game_camera.farthest_up + cloud_offset.z, game_camera.farthest_down + cloud_offset.w)

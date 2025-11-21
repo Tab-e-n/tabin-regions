@@ -102,8 +102,8 @@ func think_normal():
 		if region.alignment != current_alignment:
 #			print("allies region, cannot attack through")
 			continue
-		for connection in region.connections:
-			var target = connection.get_other_region(region)
+		for link in region.links:
+			var target = link.get_other_region(region)
 			if not target:
 				continue
 #			print("--> ", target.name)

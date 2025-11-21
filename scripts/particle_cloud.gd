@@ -2,6 +2,16 @@ extends Sprite2D
 class_name DecorCloud
 
 
+enum CLOUD_TYPE {
+	NO_RARE_CLOUDS = -2,
+	NO_PREFERENCE = -1,
+	SONIC_RUNNER,
+	PIXELATED,
+	SELF_REFERENCE,
+	SNOOZY,
+	BOTCH,
+}
+
 const CLOUD_DURATION : float = 64
 const CLOUDS : Array[Texture2D] = [
 	preload("res://sprites/cloud_0.png"),
@@ -13,6 +23,7 @@ const CLOUDS : Array[Texture2D] = [
 	preload("res://sprites/cloud_6.png"),
 	preload("res://sprites/cloud_7.png"),
 ]
+# If you added secret clouds, also update enum in cloud spawner
 const SECRET_CLOUDS : Array[Texture2D] = [
 	preload("res://sprites/cloud_secret_0.png"),
 	preload("res://sprites/cloud_secret_1.png"),
@@ -23,11 +34,11 @@ const SECRET_CLOUDS : Array[Texture2D] = [
 
 @export var speed : float = 16
 @export var rarity : int = 49
-@export var rare_cloud : int = -1
+@export var rare_cloud : CLOUD_TYPE = CLOUD_TYPE.NO_PREFERENCE
 
 
 func _ready():
-	if randi_range(0, rarity):
+	if rare_cloud < -1 or randi_range(0, rarity):
 		var r : int = randi_range(0, CLOUDS.size() - 1)
 		texture = CLOUDS[r]
 	elif rare_cloud >= 0 and rare_cloud < SECRET_CLOUDS.size():

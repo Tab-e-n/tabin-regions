@@ -34,8 +34,8 @@ func think_normal():
 	for region in friendly_regions:
 #		print("FROM: ", region.name)
 		var in_threat : bool = false
-		for connection in region.connections:
-			var target : Region = connection.get_other_region(region)
+		for link in region.links:
+			var target : Region = link.get_other_region(region)
 			if not target:
 				continue
 #			print("--> ", target.name)
@@ -44,7 +44,7 @@ func think_normal():
 				continue
 			if not controler.alignment_inactive(target.alignment):
 				in_threat = true
-#				print("align ", connection.alignment)
+#				print("align ", target.alignment)
 			if region.alignment != current_alignment:
 #				print("allies region, cannot attack through")
 				continue

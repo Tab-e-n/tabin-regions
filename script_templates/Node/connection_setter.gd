@@ -1,4 +1,4 @@
-extends %BASE%
+extends _BASE_
 
 var connections : Array = [
 #	Basic Connections are defined as such:

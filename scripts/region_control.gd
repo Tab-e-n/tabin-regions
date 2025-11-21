@@ -4,21 +4,24 @@ class_name RegionControl
 
 
 signal center_camera_to_position(center : Vector2)
-## Emitted once after RegionControl makes all region connections, so the mapmaker can edit them before the capital distance is calculated.
-## Intended for maps that want to have different region structure every time players play them.
+## Emitted once after RegionControl makes all RegionLinks defined through region_connections,
+## before the capital distance is calculated.
 signal region_connections_ready
 ## Emitted when a players turn ends.
 signal turn_ended
-## Emitted when a player changes the turns phase. First argument will is the turn phase which just started.
-signal turn_phase_changed(phase : int)
+## Emitted when a player changes the turns phase. First argument is the turn phase which just started.
+signal turn_phase_changed(phase : PHASE)
 ## Emitted when all alignments played their turn.
 signal round_ended
 ## Emitted after the an alignment ends their turn and no unfriendly alignments towards them are left.
 signal game_ended(winner : int)
 
 
-## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
-const COLOR_TOO_BRIGHT : float = 0.85
+enum PHASE {
+	NORMAL, 
+	MOBILIZE, 
+	BONUS
+}
 ## Modes for power_gain_penalties.
 enum APPLY_PENALTIES {
 	## No penalties will be present.
@@ -46,7 +49,7 @@ enum SETUP_COMPLEXITY {
 	## (U.)
 	UNSPECIFIED,
 	## Maps that are intended to be played by newbies.
-	## They should only use normal connections between regions and
+	## They should only use base links between regions and
 	## have the turn order hidden by default.
 	## (A.)
 	BEGINNER,
@@ -89,6 +92,10 @@ enum RENDER_MODE {
 	## Colors the regions based on their position.
 	POSITION
 }
+
+const LAST_PHASE : PHASE = PHASE.BONUS
+## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
+const COLOR_TOO_BRIGHT : float = 0.85
 
 
 @export_subgroup("Setup Scene")
@@ -238,14 +245,23 @@ enum RENDER_MODE {
 @export var render_mode : RENDER_MODE = RENDER_MODE.DISABLED
 ## The range visible during render modes. Certain render modes use this to figure out how to color the regions.
 @export var render_range : float = 20
-## When set to true, RegionControl wil not do anything on its own.
-## This is intended to be used by other scenes, not RegionControl itself.
-@export var dummy : bool = false
 ## When false, cities won't be rendered. Can be toggled in-game.
 @export var cities_visible : bool = true
 ## Print more info about the map to the console. Useful when debugging, should be off for released maps.
 @export var print_more_info : bool = false
-## Holds the connections of all regions. When the map is readying, RegionControl will attempt to make every connection in this array.
+## When the project is launched through editor, cache gets saved when exiting the map.
+## On the release build, cache gets loaded from a .cache file.
+## Make sure to package your map with it's .cache file.
+## Use this if there is an expensive function that requires the map to be loaded to
+## calculate, but always calculates to the same result, you can use set_cache to store
+## the values and then in the release build call get_cache instead of the expensive function. 
+@export var save_cache : bool = false
+## When set to true, RegionControl wil not do anything on its own.
+## This is intended to be used by other scenes, not RegionControl itself.
+@export var dummy : bool = false
+## A node that will hold all RegionLink.
+@export var region_links : Node
+## Holds the links of all regions. When the map is readying, RegionControl will attempt to make every link in this array.
 ## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
 @export var connections : Array = []
 
@@ -255,6 +271,10 @@ enum RENDER_MODE {
 @onready var dp_control : DPControl
 @onready var game_camera : GameCamera
 
+
+var cache_filename : String = ""
+var modified_cache : bool = false
+var cache : Dictionary = {}
 
 var current_playing_align : int = 1
 var align_play_order : Array = []
@@ -269,9 +289,7 @@ var capital_amount : Array[int] = []
 
 var removed_alignments : Array = []
 
-enum {PHASE_NORMAL, PHASE_MOBILIZE, PHASE_BONUS}
-const AMOUNT_OF_PHASES : int = 3
-var current_phase : int = PHASE_NORMAL
+var current_phase : PHASE = PHASE.NORMAL
 
 var first_action_amount : int = 1
 var bonus_action_amount : int = 0
@@ -282,6 +300,53 @@ var current_placement : int = 0
 var penalty_amount : Array = []
 
 var particle_attacks : RegionAttacks = null
+
+
+func _load_cache():
+	cache_filename = game_control.map_name + ".cache"
+	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.READ)
+	
+	if file:
+		var file_cache = JSON.parse_string(file.get_as_text())
+		if file_cache:
+			cache = file_cache
+		else:
+			push_warning("Could not parse ", cache_filename)
+		
+		file.close()
+	elif print_more_info:
+		print("No cache file name ", cache_filename, " exists")
+
+
+func _save_cache():
+	if cache.is_empty():
+		return
+	
+	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.WRITE)
+	
+	if file:
+		var file_cache : String = JSON.stringify(cache)
+		
+		file.store_pascal_string(file_cache)
+		
+		file.close()
+	else:
+		push_warning("Could not open ", cache_filename)
+
+
+func set_cache(key : String, value : Variant):
+	if cache.has(key) and cache[key] == value:
+		return
+	modified_cache = true
+	cache[key] = value
+	return
+
+
+func get_cache(key : String) -> Variant:
+	if cache.has(key):
+		return cache[key]
+	push_error("Cache does not have ", key)
+	return null
 
 
 func _ready():
@@ -322,27 +387,26 @@ func _ready():
 		if not lock_align_amount:
 			used_alignments = MapSetup.used_alignments
 	
+	if save_cache:
+		_load_cache()
+	
+	# -- REGION LINKS --
+	if not region_links:
+		region_links = Node.new()
+		add_child(region_links)
+	
 	_create_region_connections()
 	
 	# -- REGION AMOUNTS --
 	region_amount.resize(align_amount - 1)
 	capital_amount.resize(align_amount - 1)
-	penalty_amount.resize(align_amount - 1)
-	for i in range(align_amount - 1):
-		region_amount[i] = 0
-		capital_amount[i] = 0
-		penalty_amount[i] = 0
 	
 	_count_up_regions()
 	
 	last_turn_region_amount = region_amount.duplicate()
 	
 	# -- CAPITAL DISTANCE --
-	# TODO: Toggle for baking
-	# Where True saves a dists to a file
-	# And false always recalculates them on level launch
-	# Also allow mapmakers to add their own stuff to this file
-	_bake_capital_distance()
+	_set_capital_distance()
 	
 	# -- TURN ORDER --
 	var player_alignments : Array[int] = []
@@ -412,6 +476,10 @@ func _ready():
 				_fill_aliances(autoaliances_divisions_amount)
 	
 	# -- MISC --
+	penalty_amount.resize(align_amount - 1)
+	for i in range(align_amount - 1):
+		penalty_amount[i] = 0
+	
 	current_placement = align_play_order.size()
 	
 	align_names.resize(align_amount)
@@ -465,37 +533,35 @@ func _save_replay_data():
 
 
 func _create_region_connections():
-	var connections_group : Node2D = Node2D.new()
-	add_child(connections_group)
-	for link in connections:
-		var link_power_reduction = 0
-		if link.size() >= 3:
-			link_power_reduction = link[2]
-		var region_from : Region = get_node(link[0]) as Region
-		var region_to : Region = get_node(link[1]) as Region
+	for connection in connections:
+		var power_reduction = 0
+		if connection.size() >= 3:
+			power_reduction = connection[2]
+		var region_from : Region = get_node(connection[0]) as Region
+		var region_to : Region = get_node(connection[1]) as Region
 		if region_from == null:
-			push_warning(link[0], " does not exist.")
+			push_warning(connection[0], " does not exist.")
 			continue
 		if region_to == null:
-			push_warning(link[1], " does not exist.")
+			push_warning(connection[1], " does not exist.")
 			continue
-		var connection : RegionConnection = RegionConnection.new()
-		connection.region_from = region_from
-		connection.region_to = region_to
-		connection.power_reduction = link_power_reduction
-		connection.kinetic = region_from.kinetic or region_to.kinetic
-		connections_group.add_child(connection)
-		region_from.connections.append(connection)
-		region_to.connections.append(connection)
+		var link : RegionLink = RegionLink.new()
+		link.from = region_from
+		link.to = region_to
+		link.power_reduction = power_reduction
+		link.kinetic = region_from.kinetic or region_to.kinetic
+		region_links.add_child(link)
 	
 	region_connections_ready.emit()
 
 
 func _count_up_regions():
-	for i in range(region_amount.size()):
+	for i in range(align_amount - 1):
 		region_amount[i] = 0
-	for region in get_children():
-		if not region is Region:
+		capital_amount[i] = 0
+	for node in get_children():
+		var region : Region = node as Region
+		if not region:
 			continue
 		if region.alignment == 0 or region.alignment >= align_amount:
 			continue
@@ -504,50 +570,53 @@ func _count_up_regions():
 			capital_amount[region.alignment - 1] += 1
 
 
-func _bake_capital_distance():
+func _set_capital_distance():
+#	var time_start : int = Time.get_ticks_usec()
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
 			region.distance_from_capital = Region.DISTANCE_CAP
+	
 	for node in get_children():
 		var capital : Region = node as Region
-		if not capital:
+		if not capital or not capital.is_capital:
 			continue
-		if not capital.is_capital:
-			continue
+#		print(capital.name)
 		capital.distance_from_capital = 0
+		
 		var current_distance : int = 2
-		var links : Array[RegionConnection] = []
 		var regions : Array[Region] = [capital]
-		var i : int = 0
-		while i != regions.size():
-			if not regions[i]:
-				i += 1
+		var visited : Set = Set.new()
+		visited.add(capital)
+		var current_start : int = 0
+		while current_start < regions.size():
+			var start : Region = regions[current_start] as Region
+			current_start += 1
+			if not start:
 				continue
 			
-			links = regions[i].connections.duplicate()
+			if start.distance_from_capital & 1:
+				current_distance += 3
+			else:
+				current_distance += 2
 			
-			current_distance = snapped(regions[i].distance_from_capital + 0.1, 2) + 2
-			
-			for connection in links:
-				var region : Region = connection.get_other_region(regions[i]) as Region
-				if not region:
+			for link in start.links:
+				var region : Region = link.get_other_region(start) as Region
+				if not region or region.distance_from_capital < current_distance:
 					continue
-				if region.distance_from_capital < current_distance:
-					continue
-				var has_visited : bool = regions.has(region)
+#				print(region.name)
 				if region.is_capital:
 					region.distance_from_capital = 0
+					
 				elif region.distance_from_capital > current_distance:
 					region.distance_from_capital = current_distance
-					if not has_visited:
+					if not visited.contains(region):
 						regions.append(region)
-				elif not has_visited and region.distance_from_capital == current_distance:
+						visited.add(region)
+					
+				elif region.distance_from_capital == current_distance and not visited.contains(region):
 					region.distance_from_capital -= 1
-			
-			links.clear()
-			
-			i += 1
+#	print(Time.get_ticks_usec() - time_start)
 
 
 func _check_capital_distance():
@@ -658,6 +727,11 @@ func _check_duplicate_connections():
 		print(regions)
 
 
+func _exit_tree():
+	if save_cache and modified_cache and Options.editor:
+		_save_cache()
+
+
 func _process(_delta):
 	if Engine.is_editor_hint():
 		return
@@ -692,7 +766,7 @@ func _start_turn():
 	
 	first_action_amount = capital_amount[current_playing_align - 1] - penalty_amount[current_playing_align - 1]
 	bonus_action_amount = 1 if first_action_amount == 0 and not use_aliances else 0
-	current_phase = PHASE_MOBILIZE if first_action_amount == 0 else PHASE_NORMAL
+	current_phase = PHASE.MOBILIZE if first_action_amount == 0 else PHASE.NORMAL
 	
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
@@ -772,12 +846,12 @@ func _calculate_penalty(alignment : int, end_of_turn : bool = false):
 func _modify_action_amount(amount : int, announce : bool = true) -> bool:
 	match(current_phase):
 		
-		PHASE_NORMAL:
+		PHASE.NORMAL:
 			if first_action_amount + amount < 0:
 				return false
 			first_action_amount += amount
 		
-		PHASE_MOBILIZE, PHASE_BONUS:
+		PHASE.MOBILIZE, PHASE.BONUS:
 			if bonus_action_amount + amount < 0:
 				return false
 			bonus_action_amount += amount
@@ -862,18 +936,18 @@ func victory(align_victory : int):
 
 ## Amount of actions the player has.
 func get_action_amount() -> int:
-	if current_phase in [PHASE_NORMAL]:
+	if current_phase in [PHASE.NORMAL]:
 		return first_action_amount
-	elif current_phase in [PHASE_MOBILIZE, PHASE_BONUS]:
+	elif current_phase in [PHASE.MOBILIZE, PHASE.BONUS]:
 		return bonus_action_amount
 	return 0
 
 
 ## Check if the current player has enough actions left.
 func has_enough_actions(needed : int = 1) -> bool:
-	if current_phase == PHASE_NORMAL:
+	if current_phase == PHASE.NORMAL:
 		return first_action_amount >= needed
-	elif current_phase == PHASE_BONUS:
+	elif current_phase == PHASE.BONUS:
 		return bonus_action_amount >= needed
 	return true
 
@@ -926,17 +1000,26 @@ func hide_region_attackers() -> void:
 		particle_attacks = null
 
 
+func next_phase(phase : PHASE) -> PHASE:
+	match(phase):
+		PHASE.NORMAL:
+			return PHASE.MOBILIZE
+		PHASE.MOBILIZE:
+			return PHASE.BONUS
+		PHASE.BONUS:
+			return PHASE.NORMAL
+		_:
+			return PHASE.NORMAL
+
+
 ## Changes the current turn phase. Calls end turn if it is the Bonus Actions phase.
 func change_current_phase():
-	if current_phase == PHASE_NORMAL and first_action_amount > 0:
+	if current_phase == PHASE.NORMAL and first_action_amount > 0:
 		bonus_action_amount = first_action_amount
-	current_phase += 1
 	
-	var call_end_turn : bool = false
+	var call_end_turn : bool = current_phase == LAST_PHASE
 	
-	if current_phase == AMOUNT_OF_PHASES:
-		current_phase = PHASE_NORMAL
-		call_end_turn = true
+	current_phase = next_phase(current_phase)
 	
 	turn_phase_changed.emit(current_phase)
 	
@@ -1011,7 +1094,7 @@ func overtake_region(region_name : String):
 func action_done(region_name : String, amount : int = 1):
 	var auto_end_phase : bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
 	
-	if current_phase == PHASE_MOBILIZE:
+	if current_phase == PHASE.MOBILIZE:
 		_modify_action_amount(amount)
 		for i in range(amount):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
@@ -1019,9 +1102,9 @@ func action_done(region_name : String, amount : int = 1):
 	
 	if _modify_action_amount(-amount):
 		var stat : String = "null"
-		if current_phase == PHASE_NORMAL:
+		if current_phase == PHASE.NORMAL:
 			stat = "first actions done"
-		elif current_phase == PHASE_BONUS:
+		elif current_phase == PHASE.BONUS:
 			stat = "bonus actions done"
 		GameStats.add_to_stat(current_playing_align, stat, amount)
 		for i in range(amount):

@@ -4,7 +4,7 @@ class_name DecorThunderCloud
 
 @export var speed : float = 16
 @export var rarity : int = 49
-@export var rare_cloud : int = -1
+@export var rare_cloud : DecorCloud.CLOUD_TYPE = DecorCloud.CLOUD_TYPE.NO_PREFERENCE
 @export var color_cloud : Color = Color(1, 1, 1, 1)
 
 @export var time_range_bottom : float = 3

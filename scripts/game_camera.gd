@@ -350,9 +350,9 @@ func update_current_action(current_phase : int):
 	if CurrentAction:
 		const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
 		CurrentAction.text = ACTIONS[current_phase]
-	if current_phase == RegionControl.PHASE_MOBILIZE:
+	if current_phase == RegionControl.PHASE.MOBILIZE:
 		advance_turn_visual(2)
-	elif current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount == 0:
+	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
 		advance_turn_visual(0)
 	else:
 		advance_turn_visual(1)
@@ -427,7 +427,7 @@ func reset_zoom():
 
 
 func try_advance_turn():
-	if region_control.current_phase == RegionControl.PHASE_BONUS and region_control.bonus_action_amount > 0:
+	if region_control.current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount > 0:
 		_leftover_show()
 	else:
 		advance_turn()

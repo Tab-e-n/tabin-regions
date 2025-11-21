@@ -36,17 +36,18 @@ var win_timer : float = -1
 
 var inputs_active : bool = true
 
+var map_name : String = "A.2_Title_Map.tscn"
+
+
 func _ready():
 	GameControl.set_cursor(CURSOR.NORMAL)
 	
-	var map : String = "A.2_Title_Map.tscn"
-	
 	if not MapSetup.current_map_name.is_empty():
-		map = MapSetup.current_map_name
+		map_name = MapSetup.current_map_name
 	else:
 		push_warning("current_map_name in Map Setup is empty.")
 	
-	change_map(map, false)
+	change_map(map_name, false)
 	
 	if not game_camera:
 		push_error("No Game Camera present.")
@@ -233,23 +234,25 @@ func unload_current_map() -> void:
 	region_control = null
 
 
-func load_map(map_name : String) -> RegionControl:
-	var packed_map : PackedScene = load(MapSetup.current_directory + "/" + map_name) as PackedScene
+func load_map(_map_name : String) -> RegionControl:
+	var packed_map : PackedScene = load(MapSetup.current_directory + "/" + _map_name) as PackedScene
 	if not packed_map:
-		push_error(map_name, " is not a Scene, could not load.")
+		push_error(_map_name, " is not a Scene, could not load.")
 		return null
 	var new_map : RegionControl = packed_map.instantiate() as RegionControl
 	if not new_map:
-		push_warning(map_name, " is not a RegionControl, refused to load.")
+		push_warning(_map_name, " is not a RegionControl, refused to load.")
 		return null
 	return new_map
 
 
 ## Tries to load a new map and if it succeeds, replaces the current map with the new one.
-func change_map(map_name : String, update_others : bool = true) -> void:
-	var new_map : RegionControl = load_map(map_name)
+func change_map(new_map_name : String, update_others : bool = true) -> void:
+	var new_map : RegionControl = load_map(new_map_name)
 	if new_map:
 		unload_current_map()
+		
+		map_name = new_map_name
 		
 		region_control = new_map
 		add_child(region_control)

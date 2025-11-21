@@ -25,13 +25,13 @@ signal mobilized()
 @export var is_capital : bool = false
 
 @export_subgroup("Cosmetic")
-## When true, region connections will update their position when the region moves.
+## When true, region links made through RegionControl.connections will update their position when the region moves.
 @export var kinetic : bool = false
 
 @export_subgroup("Editor")
 ## Hides the capital if set to true.
 @export var hide_capital : bool = false
-@export var connections : Array[RegionConnection] = []
+@export var links : Array[RegionLink] = []
 
 
 @onready var region_control : RegionControl = get_parent() as RegionControl
@@ -202,7 +202,7 @@ func set_max_power(new_max : int, reduce_power : bool = true):
 
 
 func action_decided():
-	if region_control.current_phase != region_control.PHASE_MOBILIZE:
+	if region_control.current_phase != RegionControl.PHASE.MOBILIZE:
 		if region_control.has_enough_actions():
 			if region_control.alignment_friendly(region_control.current_playing_align, alignment):
 				if reinforce(region_control.current_playing_align):
@@ -230,18 +230,18 @@ func action_decided():
 
 ## Checks if a region of the attackers alignment is connected to the current region.
 func alignment_can_attack(attack_align : int) -> bool:
-	for connection in connections:
-		var region : Region = connection.get_other_region(self)
+	for link in links:
+		var region : Region = link.get_other_region(self)
 		if region and region.alignment == attack_align:
 			return true
 	return false
 
 
 ## Gets the regions attack power on the connected region.
-func connection_attack_power(connection : RegionConnection) -> int:
-	var region : Region = connection.get_other_region(self)
+func link_attack_power(link : RegionLink) -> int:
+	var region : Region = link.get_other_region(self)
 	if region:
-		return max(region.power - connection.power_reduction, 0)
+		return max(region.power - link.power_reduction, 0)
 	else:
 		return 0
 
@@ -251,10 +251,10 @@ func get_adjacent_attack_power() -> Array[int]:
 	var attacks : Array[int] = []
 	attacks.resize(region_control.align_amount)
 	
-	for connection in connections:
-		var target : Node = connection.get_other_region(self)
+	for link in links:
+		var target : Node = link.get_other_region(self)
 		if target and region_control.alignment_active(target.alignment):
-			attacks[target.alignment] += connection_attack_power(connection)
+			attacks[target.alignment] += link_attack_power(link)
 	
 	return attacks
 
@@ -279,10 +279,10 @@ func incoming_attack_captures(attack_power : int) -> bool:
 ## Get the attack power of a specific alignment.
 func get_alignments_attack_power(align : int) -> int:
 	var attack_power : int = 0
-	for connection in connections:
-		var region : Region = connection.get_other_region(self)
+	for link in links:
+		var region : Region = link.get_other_region(self)
 		if region and region.alignment == align:
-			attack_power += connection_attack_power(connection)
+			attack_power += link_attack_power(link)
 	return attack_power
 
 
@@ -304,8 +304,8 @@ func color_self(animate : bool = true, backup_color : Color = color):
 		color = backup_color
 	if city:
 		city.color_self(color)
-	for connection in connections:
-		connection.update_gradient()
+	for link in links:
+		link.update_gradient()
 
 
 ## Makes a particle on the city.
@@ -315,20 +315,20 @@ func city_particle(is_mobilized : bool):
 	city.call_deferred("make_particle", is_mobilized)
 
 
-## Shows the regions connections.
-func show_region_connections():
-	for i in range(connections.size()):
-		var connection : RegionConnection = connections[i]
-		connection.num = i
-		connection.show_self(self)
+## Shows the regions links.
+func show_region_links():
+	for i in range(links.size()):
+		var link : RegionLink = links[i]
+		link.num = i
+		link.show_self(self)
 
 
-## Hides the regions connections.
-func hide_region_connections():
-	for i in range(connections.size()):
-		var connection : RegionConnection = connections[i]
-		connection.num = i
-		connection.hide_self()
+## Hides the regions links.
+func hide_region_links():
+	for i in range(links.size()):
+		var link : RegionLink = links[i]
+		link.num = i
+		link.hide_self()
 
 
 ## Updates cursor based on the regions state.
@@ -338,7 +338,7 @@ func update_cursor():
 	elif not region_control.is_player_controled:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
-	elif region_control.current_phase in [RegionControl.PHASE_NORMAL, RegionControl.PHASE_BONUS]:
+	elif region_control.current_phase in [RegionControl.PHASE.NORMAL, RegionControl.PHASE.BONUS]:
 		if region_control.get_action_amount() == 0:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
@@ -348,7 +348,7 @@ func update_cursor():
 		else:
 			GameControl.set_cursor(GameControl.CURSOR.SWORD)
 			
-	elif region_control.current_phase == RegionControl.PHASE_MOBILIZE:
+	elif region_control.current_phase == RegionControl.PHASE.MOBILIZE:
 		if region_control.current_playing_align == alignment and power > 1:
 			GameControl.set_cursor(GameControl.CURSOR.HAND)
 			
@@ -366,7 +366,7 @@ func _on_capital_pressed():
 
 
 func _on_mouse_entered():
-	show_region_connections()
+	show_region_links()
 	update_cursor()
 
 

@@ -6,85 +6,85 @@
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_johd2"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="4_1i1aq"]
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_m0o3b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_l5fwe"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_gy53n"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_u2bdw"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_5bfld"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_byobd"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ac6nq"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_n40f7"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_i3s0b"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_1spb6"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_va5uy"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_g0i8c"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_yk2qs"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nrj56"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0fje"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_4ev13"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_pm5ma"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_aamal"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_a0a5j"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_km1we"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_qxx7u"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5ufiv"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_na6w8"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_nski3"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_agm66"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_5if5d"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_ylhsm"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7ov8h"]
 shader = ExtResource("2_m54rg")
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
@@ -97,7 +97,7 @@ script = ExtResource("1_se211")
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 
 [node name="0" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_m0o3b")
+material = SubResource("ShaderMaterial_l5fwe")
 position = Vector2(-712, -40)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -107,7 +107,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="1" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_gy53n")
+material = SubResource("ShaderMaterial_u2bdw")
 position = Vector2(-576, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -117,7 +117,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="2" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_5bfld")
+material = SubResource("ShaderMaterial_byobd")
 position = Vector2(-800, -240)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -127,7 +127,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="3" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_ac6nq")
+material = SubResource("ShaderMaterial_n40f7")
 position = Vector2(-352, -32)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -137,7 +137,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="4" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_i3s0b")
+material = SubResource("ShaderMaterial_1spb6")
 position = Vector2(-232, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -147,7 +147,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="5" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_va5uy")
+material = SubResource("ShaderMaterial_g0i8c")
 position = Vector2(-144, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -157,7 +157,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="6" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_yk2qs")
+material = SubResource("ShaderMaterial_nrj56")
 position = Vector2(-800, -240)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -167,7 +167,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="7" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_v0fje")
+material = SubResource("ShaderMaterial_4ev13")
 position = Vector2(80, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -177,7 +177,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="8" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_pm5ma")
+material = SubResource("ShaderMaterial_aamal")
 position = Vector2(176, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -187,7 +187,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="9" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_a0a5j")
+material = SubResource("ShaderMaterial_km1we")
 position = Vector2(280, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -197,7 +197,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="10" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_qxx7u")
+material = SubResource("ShaderMaterial_5ufiv")
 position = Vector2(376, -16)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -207,7 +207,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="11" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_na6w8")
+material = SubResource("ShaderMaterial_nski3")
 position = Vector2(488, 8)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -217,7 +217,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="12" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_agm66")
+material = SubResource("ShaderMaterial_5if5d")
 position = Vector2(600, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
@@ -227,7 +227,7 @@ script = ExtResource("4_1i1aq")
 hide_capital = true
 
 [node name="13" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_ylhsm")
+material = SubResource("ShaderMaterial_7ov8h")
 position = Vector2(744, 0)
 color = Color(0.0745098, 0.054902, 0.0666667, 1)
 texture = ExtResource("3_johd2")
