@@ -97,7 +97,7 @@ script = ExtResource("1_2axsc")
 [node name="AIControler" type="Node" parent="."]
 script = ExtResource("2_w08l3")
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "PILeader", "PICity", "PICapital", "PIRegions", "PIPower", "PIName", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
 z_index = 30
 script = ExtResource("1_we6ai")
 UI = NodePath("UI")
@@ -124,6 +124,12 @@ CurrentAlignment = NodePath("UI/Hideable/Alignment")
 CurrentAction = NodePath("UI/Hideable/Action")
 PhaseInfo = NodePath("UI/Hideable/PhaseText")
 ReplayPausedLabel = NodePath("UI/Hideable/replay_pause")
+PILeader = NodePath("UI/player_info/Player")
+PICity = NodePath("UI/player_info/City")
+PICapital = NodePath("UI/player_info/Capital")
+PIRegions = NodePath("UI/player_info/CityAmount")
+PIPower = NodePath("UI/player_info/CapitalAmount")
+PIName = NodePath("UI/player_info/Name")
 VictoryMessage = NodePath("UI/win")
 DefeatMessage = NodePath("UI/lose")
 LeaveMessage = NodePath("UI/leave")
@@ -383,7 +389,6 @@ texture_normal = ExtResource("7_6wsra")
 texture_pressed = ExtResource("20_p63tb")
 
 [node name="player_info" type="Panel" parent="GameCamera/UI"]
-visible = false
 layout_mode = 0
 offset_left = -104.0
 offset_top = -208.0
@@ -734,11 +739,11 @@ texture_pressed = ExtResource("33_4nel1")
 [connection signal="toggled" from="GameCamera/UI/pause/fast_dp" to="." method="set_dp_speedrun"]
 [connection signal="toggled" from="GameCamera/UI/pause/particles" to="." method="set_action_change_particles"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_capitals" to="." method="set_city_visibility"]
-[connection signal="toggled" from="GameCamera/UI/pause/vis_ui" to="GameCamera" method="set_ui_visibility"]
-[connection signal="toggled" from="GameCamera/UI/pause/vis_turn_order" to="GameCamera" method="set_turn_order_visibility"]
-[connection signal="pressed" from="GameCamera/UI/leave/yes" to="GameCamera" method="_confirmed_leave"]
-[connection signal="pressed" from="GameCamera/UI/leave/no" to="GameCamera" method="_not_leaving"]
-[connection signal="pressed" from="GameCamera/UI/forfeit/yes" to="GameCamera" method="_forfeit"]
-[connection signal="pressed" from="GameCamera/UI/forfeit/no" to="GameCamera" method="_forfeit_hide"]
-[connection signal="pressed" from="GameCamera/UI/leftover/yes" to="GameCamera" method="end_turn"]
-[connection signal="pressed" from="GameCamera/UI/leftover/no" to="GameCamera" method="_leftover_hide"]
+[connection signal="toggled" from="GameCamera/UI/pause/vis_ui" to="GameCamera" method="set_ui_visible"]
+[connection signal="toggled" from="GameCamera/UI/pause/vis_turn_order" to="GameCamera" method="set_turn_order_visible"]
+[connection signal="pressed" from="GameCamera/UI/leave/yes" to="GameCamera" method="_on_leave_confirmed"]
+[connection signal="pressed" from="GameCamera/UI/leave/no" to="GameCamera" method="_on_leave_canceled"]
+[connection signal="pressed" from="GameCamera/UI/forfeit/yes" to="GameCamera" method="_on_forfeit_confirmed"]
+[connection signal="pressed" from="GameCamera/UI/forfeit/no" to="GameCamera" method="_on_forfeit_canceled"]
+[connection signal="pressed" from="GameCamera/UI/leftover/yes" to="GameCamera" method="_on_leftover_confirmed"]
+[connection signal="pressed" from="GameCamera/UI/leftover/no" to="GameCamera" method="_on_leftover_canceled"]

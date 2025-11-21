@@ -13,6 +13,7 @@ signal captured()
 signal changed_alignment(alignment : int)
 signal reinforced(amount : int)
 signal mobilized()
+signal power_changed(power : int)
 
 
 ## Which alignment owns the region. Alignment 0 is neutral.
@@ -46,9 +47,11 @@ var color_change_time : float = 1.0
 
 
 func _ready():
-	texture = preload("res://sprites/region.png")
-	material = ShaderMaterial.new()
-	material.shader = preload("res://scripts/shader_region.gdshader")
+	if not texture:
+		texture = preload("res://sprites/region.png")
+	if not material:
+		material = ShaderMaterial.new()
+		material.shader = preload("res://scripts/shader_region.gdshader")
 	
 	if polygon.size() > 0:
 		var far_left : float = polygon[0].x
@@ -95,10 +98,15 @@ func _ready_deferred():
 	city = City.new()
 	city.is_capital = is_capital
 	add_child(city)
-	if region_control and not region_control.dummy:
+	power_changed.connect(city._on_power_changed)
+	if RegionControl.active(region_control):
 		city.pressed.connect(_on_capital_pressed)
 		city.mouse_entered.connect(_on_mouse_entered)
 		city.mouse_exited.connect(_on_mouse_exited)
+		region_control.turn_ended.connect(city._on_end_turn)
+		if region_control.game_control:
+			region_control.game_control.show_extra_current.connect(city._on_show_extra_current)
+			region_control.game_control.show_extra_other.connect(city._on_show_extra_other)
 		
 	color_self(false)
 
@@ -135,11 +143,28 @@ func _process(delta):
 				material.set_shader_parameter("changing_color", false)
 
 
+func _set_power(value : int, minimum : int = 1) -> bool:
+	if value < minimum or value > max_power:
+		return false
+	power = value
+	power_changed.emit(power)
+	return true
+
+
+func _city_visible() -> bool:
+	var cities_visible : bool = true
+	if region_control:
+		cities_visible = region_control.cities_visible
+	return not hide_capital and cities_visible 
+
+
 ## Attempts to reinforce the region.
 func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
-	if power >= max_power:
+	if not _set_power(power + addon_power, 0):
 		return false
-	power += addon_power
+#	if power >= max_power:
+#		return false
+#	power += addon_power
 	GameStats.add_to_stat(reinforce_align, "regions reinforced", 1)
 	reinforced.emit(addon_power)
 	return true
@@ -147,10 +172,12 @@ func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
 
 ## Attempts to mobilize on the region.
 func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
-	if power <= 1:
+	if not _set_power(power - mobilize_amount):
 		return 0
+#	if power <= 1:
+#		return 0
 	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
-	power -= mobilize_amount
+#	power -= mobilize_amount
 	mobilized.emit()
 	return mobilize_amount
 
@@ -163,7 +190,7 @@ func incoming_attack(attack_align : int, attack_power : int = 0, test_only : boo
 			return true
 		GameStats.add_to_stat(attack_align, "enemy units removed", power)
 		GameStats.add_to_stat(alignment, "units lost", power)
-		power = 1
+		_set_power(1)
 		change_alignment(attack_align)
 		GameStats.add_to_stat(attack_align, "regions captured", 1)
 		if is_capital:
@@ -197,7 +224,7 @@ func overtake(overtaker : int = region_control.current_playing_align):
 func set_max_power(new_max : int, reduce_power : bool = true):
 	max_power = new_max
 	if reduce_power and power > max_power:
-		power = max_power
+		_set_power(max_power)
 	city.update_region_name()
 
 
@@ -333,9 +360,9 @@ func hide_region_links():
 
 ## Updates cursor based on the regions state.
 func update_cursor():
-	if region_control.dummy:
-		pass
-	elif not region_control.is_player_controled:
+	if not RegionControl.active(region_control):
+		return
+	if not region_control.is_player_controled:
 		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
 	elif region_control.current_phase in [RegionControl.PHASE.NORMAL, RegionControl.PHASE.BONUS]:
@@ -360,7 +387,7 @@ func update_cursor():
 
 
 func _on_capital_pressed():
-	if region_control.is_player_controled and not region_control.dummy:
+	if RegionControl.active(region_control) and region_control.is_player_controled:
 		action_decided()
 	update_cursor()
 

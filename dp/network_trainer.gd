@@ -9,6 +9,8 @@ const ALLOWED_MAPS : Dictionary = {
 	"B.5_Testlandia.tscn" : [5, 20],
 	
 	"A.4_Cubical_Warfare.tscn" : [4, 20],
+	"A.5_Game_Club.tscn" : [5, 23],
+	"A.5_Pentagon.tscn" : [5, 23],
 	"A.6_Honeycomb_Madness.tscn" : [6, 25],
 	"A.6_Under_Lock_And_Lock.tscn" : [6, 25],
 	"B.3_Trees_Trees_Trees.tscn" : [3, 25],

@@ -2,6 +2,10 @@ extends Node2D
 class_name GameControl
 
 
+signal show_extra_current(alignment : int)
+signal show_extra_other(alignment : int)
+
+
 ## Possible cursor graphics that set_cursor can use.
 enum CURSOR {
 	## Regular cursor.
@@ -37,6 +41,31 @@ var win_timer : float = -1
 var inputs_active : bool = true
 
 var map_name : String = "A.2_Title_Map.tscn"
+
+
+## Sets the cursor graphic.
+static func set_cursor(cursor : CURSOR):
+	match cursor:
+		CURSOR.NORMAL:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))
+		CURSOR.BLOCKED:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_block.png"), Input.CURSOR_ARROW, Vector2(16, 16))
+		CURSOR.PLUS:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_plus.png"))
+		CURSOR.SHIELD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_shield.png"))
+		CURSOR.SWORD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_sword.png"))
+		CURSOR.FULL_PLUS:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_plus.png"), Input.CURSOR_ARROW, Vector2(16, 16))
+		CURSOR.FULL_SHIELD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_shield.png"), Input.CURSOR_ARROW, Vector2(16, 16))
+		CURSOR.FULL_SWORD:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_sword.png"))
+		CURSOR.HAND:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_hand.png"), Input.CURSOR_ARROW, Vector2(16, 16))
+		_:
+			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))
 
 
 func _ready():
@@ -128,11 +157,11 @@ func _process(delta : float):
 				new_callout("Reset zoom")
 			
 			if Input.is_action_just_pressed("hide_ui"):
-				game_camera.toggle_ui_visibility()
+				game_camera.toggle_ui_visible()
 				new_callout("Toggle hide UI")
 			
 			if Input.is_action_just_pressed("hide_turn_order"):
-				game_camera.toggle_turn_order_visibility()
+				game_camera.toggle_turn_order_visible()
 				new_callout("Toggle turn order")
 		
 		if Input.is_action_just_pressed("hide_capitals"):
@@ -178,6 +207,24 @@ func _process(delta : float):
 		if ReplayControl.replay_active:
 			if Input.is_action_just_pressed("left_click"):
 				ReplayControl.toggle_pause()
+		
+		if region_control:
+			if region_control.is_player_controled:
+				if Input.is_action_just_pressed("forfeit"):
+					region_control.forfeit()
+					new_callout("Forfeit")
+				elif Input.is_action_just_pressed("plus_foward"):
+					region_control.end_turn(true)
+					new_callout("End turn")
+				elif Input.is_action_just_pressed("plus_turn"):
+					region_control.change_current_phase()
+					new_callout("Advance turn")
+			
+			if Input.is_action_just_pressed("show_extra"):
+				if Input.is_action_pressed("shift"):
+					show_extra_other.emit(region_control.current_playing_align)
+				else:
+					show_extra_current.emit(region_control.current_playing_align)
 	
 	mouse_wheel_input = 0
 
@@ -282,28 +329,3 @@ func lose(align : int):
 
 func leave():
 	get_tree().change_scene_to_file("res://stats.tscn")
-
-
-## Sets the cursor graphic.
-static func set_cursor(cursor : CURSOR):
-	match cursor:
-		CURSOR.NORMAL:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))
-		CURSOR.BLOCKED:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_block.png"), Input.CURSOR_ARROW, Vector2(16, 16))
-		CURSOR.PLUS:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_plus.png"))
-		CURSOR.SHIELD:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_shield.png"))
-		CURSOR.SWORD:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_addon_sword.png"))
-		CURSOR.FULL_PLUS:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_plus.png"), Input.CURSOR_ARROW, Vector2(16, 16))
-		CURSOR.FULL_SHIELD:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_shield.png"), Input.CURSOR_ARROW, Vector2(16, 16))
-		CURSOR.FULL_SWORD:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_sword.png"))
-		CURSOR.HAND:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor_hand.png"), Input.CURSOR_ARROW, Vector2(16, 16))
-		_:
-			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))

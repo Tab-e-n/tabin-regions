@@ -74,8 +74,7 @@ func _ready_deferred():
 
 
 func _process(delta):
-	
-	if region_control.dummy:
+	if not RegionControl.active(region_control):
 		return
 	
 #	print(timer)

@@ -2,13 +2,26 @@ extends Camera2D
 class_name GameCamera
 
 
-const PREVENT_CAMERA_MOVEMENT_START : float = 1
+enum TOOLTIP {
+	ACTIONS,
+	PHASE,
+	END_TURN,
+	FORFEIT,
+}
 
+const PREVENT_CAMERA_MOVEMENT_START : float = 1
 
 const ZOOM_OUT_MAX : int = -10
 const ZOOM_START : int = 0
 const ZOOM_IN_MAX : int = 5
 const BASE_MOVE_SPEED : float = 8
+
+const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
+const PHASE_INFO : Array[String] = [
+	"First Actions: Attack or defend regions!",
+	"Mobilization: Grab extra units!",
+	"Bonus Actions: Attack or defend regions with mobilized units!"
+]
 
 
 @export var UI : Control
@@ -39,6 +52,14 @@ const BASE_MOVE_SPEED : float = 8
 @export var CurrentAction : Label
 @export var PhaseInfo : Label
 @export var ReplayPausedLabel : Label
+
+@export_subgroup("Player Info")
+@export var PILeader : Sprite2D
+@export var PICity : Sprite2D
+@export var PICapital : Sprite2D
+@export var PIRegions : Label
+@export var PIPower : Label
+@export var PIName : Label
 
 @export_subgroup("Messages")
 @export var VictoryMessage : Control
@@ -77,7 +98,7 @@ var next_position : Vector2 = position
 
 var zoom_level : int = 0
 
-var hovering_advance_turn : bool = false
+var disable_camera_movement : bool = false
 var hovering_turn_order : bool = false
 
 var hovered_player : int = -1
@@ -86,6 +107,13 @@ var shake_duration : float
 var shake_time : float
 var shake_amplitude : float
 var shake_period : float
+
+
+static func get_window_size() -> Vector2:
+	var window : Vector2 = Vector2(0, 0)
+	window.x = ProjectSettings.get_setting("display/window/size/viewport_width")
+	window.y = ProjectSettings.get_setting("display/window/size/viewport_height")
+	return window
 
 
 func _ready():
@@ -100,6 +128,13 @@ func _ready():
 	
 	if PlayerInfo:
 		PlayerInfo.visible = false
+		if PILeader:
+			var leader : Sprite2D = AlignmentList.make_leader(0)
+			leader.position = PILeader.position
+			leader.scale = PILeader.scale
+			PILeader.queue_free()
+			PlayerInfo.add_child(leader)
+			PILeader = leader
 	if PauseMenu:
 		PauseMenu.visible = false
 	if VictoryMessage:
@@ -113,26 +148,26 @@ func _ready():
 	
 	if AdvanceTurnButton:
 		AdvanceTurnButton.pressed.connect(try_advance_turn)
-		AdvanceTurnButton.mouse_entered.connect(show_tooltip_phase)
-		AdvanceTurnButton.mouse_exited.connect(hide_tooltip_phase)
+		AdvanceTurnButton.mouse_entered.connect(show_tooltip.bind(TOOLTIP.PHASE))
+		AdvanceTurnButton.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.PHASE))
 	if EndTurnButton:
 		EndTurnButton.pressed.connect(try_end_turn)
-		EndTurnButton.mouse_entered.connect(show_tooltip_end_turn)
-		EndTurnButton.mouse_exited.connect(hide_tooltip_end_turn)
+		EndTurnButton.mouse_entered.connect(show_tooltip.bind(TOOLTIP.END_TURN))
+		EndTurnButton.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.END_TURN))
 	if ForfeitButton:
-		ForfeitButton.pressed.connect(_forfeit_show)
-		ForfeitButton.mouse_entered.connect(show_tooltip_forfeit)
-		ForfeitButton.mouse_exited.connect(hide_tooltip_forfeit)
+		ForfeitButton.pressed.connect(try_forfeit)
+		ForfeitButton.mouse_entered.connect(show_tooltip.bind(TOOLTIP.FORFEIT))
+		ForfeitButton.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.FORFEIT))
 	if PowerAmount:
-		PowerAmount.mouse_entered.connect(show_tooltip_actions)
-		PowerAmount.mouse_exited.connect(hide_tooltip_actions)
+		PowerAmount.mouse_entered.connect(show_tooltip.bind(TOOLTIP.ACTIONS))
+		PowerAmount.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.ACTIONS))
 	if TurnOrder:
-		TurnOrder.mouse_entered.connect(_TurnOrder_cam_disable)
-		TurnOrder.mouse_exited.connect(_TurnOrder_cam_enable)
+		TurnOrder.mouse_entered.connect(_on_turn_order_hovered)
+		TurnOrder.mouse_exited.connect(_on_turn_order_left)
 	if PauseButton:
 		PauseButton.pressed.connect(toggle_pause_menu)
 	if LeaveButton:
-		LeaveButton.pressed.connect(_leaving)
+		LeaveButton.pressed.connect(try_leaving)
 	
 	if MouseScroll:
 		MouseScroll.button_pressed = Options.mouse_scroll_active
@@ -204,7 +239,7 @@ func _deferred_ready():
 	if VisCapitals and region_control:
 		VisCapitals.button_pressed = region_control.cities_visible
 	
-	update_ui_color()
+	update_alignment_colored_ui()
 	update_current_action(region_control.current_phase)
 	
 	for path in MapTintList:
@@ -214,86 +249,34 @@ func _deferred_ready():
 	
 	_connect_region_control_signals()
 	
-	call_deferred("_ready_turn_order")
-	
 	update_current_turn()
 	update_alignment_label()
+	
+	if TurnOrder:
+		TurnOrder.ready_list(region_control)
+		TurnOrder.select_leader(region_control.current_playing_align)
 
 
 func _connect_region_control_signals():
 	if region_control:
-		region_control.turn_ended.connect(_turn_ended)
-		region_control.turn_phase_changed.connect(_turn_phase_changed)
+		region_control.turn_ended.connect(_on_turn_ended)
+		region_control.turn_phase_changed.connect(_on_turn_phase_changed)
+		region_control.actions_modified.connect(_on_actions_modified)
 
 
 func _disconnect_region_control_signals():
 	if region_control:
-		region_control.turn_ended.disconnect(_turn_ended)
-		region_control.turn_phase_changed.disconnect(_turn_phase_changed)
-
-
-func _ready_turn_order():
-	if not TurnOrder:
-		return
-	
-	TurnOrder._ready_list(region_control)
-	TurnOrder.select_leader(region_control.current_playing_align)
-	
-#	if Attacks:
-#		if TurnOrder.size.x > AlignmentList.PLAY_ORDER_MAX_SIZE:
-#			Attacks.size.x = AlignmentList.PLAY_ORDER_MAX_SIZE
-#		else:
-#			Attacks.size.x = TurnOrder.size.x
+		region_control.turn_ended.disconnect(_on_turn_ended)
+		region_control.turn_phase_changed.disconnect(_on_turn_phase_changed)
+		region_control.actions_modified.disconnect(_on_actions_modified)
 
 
 func _process(delta):
-	if hovering_advance_turn or hovering_turn_order:
+	if disable_camera_movement or hovering_turn_order:
 		cam_movement_stop = 1
 	
-	if PowerAmount:
-		PowerAmount.text = String.num(region_control.get_action_amount())
-	
-	if PlayerInfo:
-		PlayerInfo.visible = hovering_turn_order
-	if hovering_turn_order and TurnOrder and PlayerInfo:
-		var hovering_over_player : int = int((game_control.mouse_position.x - AlignmentList.PLAY_ORDER_SCREEN_BORDER_GAP) / (AlignmentList.PLAY_ORDER_SPACING * TurnOrder.scale.x))
-		
-		if hovering_over_player >= region_control.align_amount - 1:
-			hovering_over_player = region_control.align_amount - 2
-		if hovering_over_player < 0:
-			hovering_over_player = 0
-		
-		var new_player : bool = false
-		if hovered_player != hovering_over_player:
-			hovered_player = hovering_over_player
-			new_player = true
-		
-		var player_alignment : int = region_control.align_play_order[hovered_player]
-		var leader : Sprite2D = TurnOrder.get_node(String.num(player_alignment)) as Sprite2D
-		if leader.visible:
-			var city_amount : Label = PlayerInfo.get_node("CityAmount") as Label
-			var capital_amount : Label = PlayerInfo.get_node("CapitalAmount") as Label
-			if new_player:
-				var info_leader : Sprite2D = PlayerInfo.get_node("Player") as Sprite2D
-				info_leader.self_modulate = leader.self_modulate
-				info_leader.frame = leader.frame
-				PlayerInfo.self_modulate = leader.self_modulate
-				PlayerInfo.get_node("City").self_modulate = leader.self_modulate
-				PlayerInfo.get_node("Capital").self_modulate = leader.self_modulate
-				if leader.self_modulate.v > region_control.COLOR_TOO_BRIGHT:
-					city_amount.self_modulate = Color(0, 0, 0)
-					capital_amount.self_modulate = Color(0, 0, 0)
-				else:
-					city_amount.self_modulate = Color(1, 1, 1)
-					capital_amount.self_modulate = Color(1, 1, 1)
-				PlayerInfo.get_node("Name").text = region_control.align_names[player_alignment]
-			
-			city_amount.text = String.num(region_control.region_amount[player_alignment - 1])
-			capital_amount.text = String.num(region_control.capital_amount[player_alignment - 1])
-			if region_control.penalty_amount[player_alignment - 1] > 0:
-				capital_amount.text += "\n-" + String.num(region_control.penalty_amount[player_alignment - 1])
-		else:
-			PlayerInfo.visible = false
+	if hovering_turn_order:
+		update_player_info()
 	
 	if ReplayControl.replay_active:
 		ReplayPausedLabel.visible = ReplayControl.paused
@@ -302,89 +285,29 @@ func _process(delta):
 	
 	if shake_time > 0.0:
 		shake_time -= delta
-		var damp : float = shake_time / shake_duration
-		shake_offset.x = shake_amplitude * (abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.15) * 13.3) - 0.5) * damp
-		shake_offset.y = shake_amplitude * abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.4) * 5.0) * damp
-#		print(shake_offset)
+		shake_offset = _camera_shake_offset()
 		if shake_time <= 0.0:
-			shake_time = 0.0
-			shake_duration = 0.0
-			shake_amplitude = 0.0
-			shake_period = 0.0
+			reset_camera_shake()
 	
 	position = next_position + shake_offset
 	force_update_scroll()
-#	call_deferred("set", "position", next_position)
 
 
-func update_ui_color():
-	if PlayerActions:
-		PlayerActions.modulate = region_control.align_color[region_control.current_playing_align]
-		PlayerActions.modulate.a = 1
-		PlayerActions.visible = region_control.is_player_controled and not ReplayControl.replay_active
-		if AdvanceActionLight:
-			AdvanceActionLight.material.set_shader_parameter("value", PlayerActions.modulate.v)
-		if AdvanceActionDark:
-			AdvanceActionDark.material.set_shader_parameter("value", PlayerActions.modulate.v)
-		if AdvanceMobilizeLight:
-			AdvanceMobilizeLight.material.set_shader_parameter("value", PlayerActions.modulate.v)
-		if AdvanceMobilizeDark:
-			AdvanceMobilizeDark.material.set_shader_parameter("value", PlayerActions.modulate.v)
-		if EndTurnButton:
-			EndTurnButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
-		if ForfeitButton:
-			ForfeitButton.material.set_shader_parameter("value", PlayerActions.modulate.v)
-		if CurrentAction:
-			if region_control.is_player_controled:
-				CurrentAction.self_modulate = RegionControl.text_color(PlayerActions.modulate.v)
-			else:
-				CurrentAction.self_modulate = Color.WHITE
-	if PowerSprite:
-		PowerSprite.self_modulate = region_control.align_color[region_control.current_playing_align]
-		PowerSprite.self_modulate.a = 1
-	if PowerAmount:
-		PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
+func _camera_shake_offset() -> Vector2:
+		var shake_offset : Vector2 = Vector2(0, 0)
+		var damp : float = shake_time / shake_duration
+		shake_offset.x = shake_amplitude * (abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.15) * 13.3) - 0.5) * damp
+		shake_offset.y = shake_amplitude * abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.4) * 5.0) * damp
+		return shake_offset
 
 
-func update_current_action(current_phase : int):
-	if CurrentAction:
-		const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
-		CurrentAction.text = ACTIONS[current_phase]
-	if current_phase == RegionControl.PHASE.MOBILIZE:
-		advance_turn_visual(2)
-	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
-		advance_turn_visual(0)
+func set_ui_shader_parameter(Element : CanvasItem, param : String, value : Variant) -> void:
+	if not Element:
+		return
+	if Element.material:
+		Element.material.set_shader_parameter(param, value)
 	else:
-		advance_turn_visual(1)
-	if PhaseInfo:
-		const PHASE_INFO : Array[String] = [
-			"First Actions: Attack or defend regions!",
-			"Mobilization: Grab extra units!",
-			"Bonus Actions: Attack or defend regions with mobilized units!"
-		]
-		PhaseInfo.text = PHASE_INFO[current_phase]
-
-
-func _turn_ended():
-	update_ui_color()
-	
-	if TurnOrder:
-		TurnOrder.update_list(region_control)
-		TurnOrder.select_leader(region_control.current_playing_align)
-	
-	if not region_control.is_player_controled:
-		hovering_advance_turn = false
-	
-	update_current_turn()
-	update_current_action(region_control.current_phase)
-	
-	update_alignment_label()
-	
-	hide_tooltips()
-
-
-func _turn_phase_changed(current_phase : int):
-	update_current_action(current_phase)
+		push_warning(Element, " doesn't have a shader material")
 
 
 func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
@@ -408,6 +331,10 @@ func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
 		next_position.y = farthest_down
 
 
+func center_camera(pos : Vector2):
+	next_position = pos
+
+
 func zoom_change(amount : int):
 	zoom_level += amount
 	if zoom_level < ZOOM_OUT_MAX:
@@ -426,47 +353,182 @@ func reset_zoom():
 	zoom_change(0)
 
 
+func reset_camera_shake() -> void:
+	shake_time = 0.0
+	shake_duration = 0.0
+	shake_amplitude = 0.0
+	shake_period = 0.0
+
+
+func shake_camera(duration : float, amplitude : float, period : float) -> void:
+	shake_duration += duration
+	shake_time += duration
+	shake_amplitude += amplitude
+	shake_period = max(period, shake_period)
+
+
+func try_leaving():
+	set_pause_menu_visible(false)
+	set_leave_message(true)
+
+
 func try_advance_turn():
-	if region_control.current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount > 0:
-		_leftover_show()
+	if region_control.current_phase == RegionControl.PHASE.BONUS and region_control.get_action_amount() > 0:
+		set_leftover_message(true)
 	else:
-		advance_turn()
-
-
-func advance_turn():
-	region_control.change_current_phase()
+		region_control.change_current_phase()
 
 
 func try_end_turn():
 	if region_control.get_action_amount() > 0:
-		_leftover_show()
+		set_leftover_message(true)
 	else:
-		end_turn()
+		region_control.end_turn(true)
 
 
-func end_turn():
-	_leftover_hide()
-	region_control.end_turn(true)
+func try_forfeit():
+	set_forfeit_message(true)
 
 
-func _leftover_show():
-	if LeftoverMessage:
-		LeftoverMessage.visible = true
+func make_action_changed_particle(amount : int, color : Color) -> void:
+	if not Options.action_change_particles:
+		return
+	if UIHideable and not UIHideable.visible:
+		return
+	
+	var part = ActionChangeParticle.instantiate()
+	part.text = str(amount)
+	if amount > 0:
+		part.text = "+" + part.text
+	part.position = Vector2(-448, 208)
+	part.color = color
+	
+	UI.add_child(part)
 
 
-func _leftover_hide():
-	if LeftoverMessage:
-		LeftoverMessage.visible = false
+func toggle_ui_visible():
+	set_ui_visible(not UIHideable.visible)
 
 
-func _forfeit_show():
-	if ForfeitMessage:
-		ForfeitMessage.visible = true
+func set_ui_visible(visibility : bool):
+	if UIHideable:
+		UIHideable.visible = visibility
+		if VisUI:
+			VisUI.set_pressed_no_signal(visibility)
 
 
-func _forfeit_hide():
-	if ForfeitMessage:
-		ForfeitMessage.visible = false
+func toggle_turn_order_visible():
+	if TurnOrder:
+		set_turn_order_visible(not TurnOrder.visible)
+
+
+func set_turn_order_visible(visibility : bool):
+	if TurnOrder:
+		TurnOrder.visible = visibility
+		if VisTurnOrder:
+			VisTurnOrder.set_pressed_no_signal(TurnOrder.visible)
+
+
+func set_player_info_visible(visibility : bool):
+	if PlayerInfo:
+		PlayerInfo.visible = visibility
+
+
+func update_player_info() -> void:
+	if not TurnOrder or not PlayerInfo:
+		return
+	
+	var recent_hovered_player : int = TurnOrder.get_leader_id_from_position(game_control.mouse_position)
+	
+	var new_player : bool = false
+	if hovered_player != recent_hovered_player:
+		hovered_player = recent_hovered_player
+		new_player = true
+	
+	var player_alignment : int = region_control.get_alignment_from_play_order(hovered_player)
+	var leader : Sprite2D = TurnOrder.get_leader(player_alignment) as Sprite2D
+	if leader and leader.visible:
+		var color : Color = leader.self_modulate
+		if new_player:
+			AlignmentList.color_leader(PILeader, color)
+			AlignmentList.set_leader_dp(PILeader, leader.frame)
+			PlayerInfo.self_modulate = color
+			PICity.self_modulate = color
+			PICapital.self_modulate = color
+			PIRegions.self_modulate = RegionControl.text_color(color.v)
+			PIPower.self_modulate = RegionControl.text_color(color.v)
+			PIName.text = region_control.get_alignment_name(player_alignment)
+		
+		PIRegions.text = String.num(region_control.get_alignment_regions(player_alignment))
+		PIPower.text = String.num(region_control.get_alignment_capitals(player_alignment))
+		AlignmentList.leader_sweat(PILeader, region_control.get_alignment_capitals(player_alignment) <= 0)
+		
+		if region_control.get_alignment_penalties(player_alignment) > 0:
+			PIPower.text += "\n-" + String.num(region_control.get_alignment_penalties(player_alignment))
+		
+	else:
+		set_player_info_visible(false)
+
+
+func update_alignment_colored_ui():
+	if PlayerActions:
+		PlayerActions.modulate = region_control.get_current_alignment_color()
+		PlayerActions.modulate.a = 1
+		PlayerActions.visible = region_control.is_player_controled and not ReplayControl.replay_active
+		var value : float = PlayerActions.modulate.v
+		set_ui_shader_parameter(AdvanceActionLight, "value", value)
+		set_ui_shader_parameter(AdvanceActionDark, "value", value)
+		set_ui_shader_parameter(AdvanceMobilizeLight, "value", value)
+		set_ui_shader_parameter(AdvanceMobilizeDark, "value", value)
+		set_ui_shader_parameter(EndTurnButton, "value", value)
+		set_ui_shader_parameter(ForfeitButton, "value", value)
+		if CurrentAction:
+			if region_control.is_player_controled:
+				CurrentAction.self_modulate = RegionControl.text_color(value)
+			else:
+				CurrentAction.self_modulate = Color.WHITE
+	if PowerSprite:
+		PowerSprite.self_modulate = region_control.get_current_alignment_color()
+		PowerSprite.self_modulate.a = 1
+		if PowerAmount:
+			PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
+
+
+func update_alignment_label():
+	if CurrentAlignment:
+		CurrentAlignment.text = region_control.get_current_alignment_name()
+
+
+func update_current_turn():
+	if CurrentTurn:
+		CurrentTurn.text = "Turn " + str(region_control.current_turn)
+
+
+func advance_turn_visual(type : int):
+	if AdvanceActionLight:
+		AdvanceActionLight.visible = type == 0
+	
+	if AdvanceActionDark:
+		AdvanceActionDark.visible = type == 1
+	
+	if AdvanceMobilizeLight:
+		AdvanceMobilizeLight.visible = type == 2
+	
+	if AdvanceMobilizeDark:
+		AdvanceMobilizeDark.visible = type == 3
+
+
+func update_current_action(current_phase : int):
+	if CurrentAction:
+		CurrentAction.text = ACTIONS[current_phase]
+	if current_phase == RegionControl.PHASE.MOBILIZE:
+		advance_turn_visual(2)
+	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
+		advance_turn_visual(0)
+	else:
+		advance_turn_visual(1)
+	if PhaseInfo:
+		PhaseInfo.text = PHASE_INFO[current_phase]
 
 
 func show_victory_message(alignment : int):
@@ -481,213 +543,124 @@ func show_defeat_message(alignment : int):
 		DefeatMessage.modulate = region_control.align_color[alignment]
 
 
-func _forfeit():
-	_forfeit_hide()
-	region_control.forfeit()
+func set_leave_message(visibility : bool):
+	if LeaveMessage:
+		LeaveMessage.visible = visibility
 
 
-func hide_tooltips():
-	TooltipActions.visible = false
-	TooltipPhase.visible = false
-	TooltipEndTurn.visible = false
-	TooltipForfeit.visible = false
-	button_cam_enable()
+func set_forfeit_message(visibility : bool):
+	if ForfeitMessage:
+		ForfeitMessage.visible = visibility
 
 
-func show_tooltip_actions():
-	TooltipActions.visible = true
-	TooltipPhase.visible = false
-	TooltipEndTurn.visible = false
-	TooltipForfeit.visible = false
-	button_cam_disable()
-
-
-func hide_tooltip_actions():
-	TooltipActions.visible = false
-	button_cam_enable()
-
-
-func show_tooltip_phase():
-	TooltipActions.visible = false
-	TooltipPhase.visible = true
-	TooltipEndTurn.visible = false
-	TooltipForfeit.visible = false
-	button_cam_disable()
-
-
-func hide_tooltip_phase():
-	TooltipPhase.visible = false
-	button_cam_enable()
-
-
-func show_tooltip_end_turn():
-	TooltipActions.visible = false
-	TooltipPhase.visible = false
-	TooltipEndTurn.visible = true
-	TooltipForfeit.visible = false
-	button_cam_disable()
-
-
-func hide_tooltip_end_turn():
-	TooltipEndTurn.visible = false
-	button_cam_enable()
-
-
-func show_tooltip_forfeit():
-	TooltipActions.visible = false
-	TooltipPhase.visible = false
-	TooltipEndTurn.visible = false
-	TooltipForfeit.visible = true
-	button_cam_disable()
-
-
-func hide_tooltip_forfeit():
-	TooltipForfeit.visible = false
-	button_cam_enable()
-
-
-func button_cam_disable():
-	hovering_advance_turn = true
-
-
-func button_cam_enable():
-	hovering_advance_turn = false
-
-
-func _TurnOrder_cam_disable():
-	hovering_turn_order = true
-
-
-func _TurnOrder_cam_enable():
-	hovering_turn_order = false
-
-
-func update_current_turn():
-	if CurrentTurn:
-		CurrentTurn.text = "Turn " + str(region_control.current_turn)
+func set_leftover_message(visibility : bool):
+	if LeftoverMessage:
+		LeftoverMessage.visible = visibility
 
 
 func toggle_pause_menu():
+	set_pause_menu_visible(not PauseMenu.visible)
+	set_leave_message(false)
+
+
+func set_pause_menu_visible(visibility : bool):
 	if PauseMenu:
-		PauseMenu.visible = not PauseMenu.visible
+		PauseMenu.visible = visibility
 		if game_control:
-			game_control.inputs_active = not PauseMenu.visible
-	_not_leaving()
+			game_control.inputs_active = not visibility
 
 
-func hide_pause_menu():
-	if PauseMenu:
-		PauseMenu.visible = false
-		if game_control:
-			game_control.inputs_active = true
+func show_tooltip(tooltip : TOOLTIP):
+	TooltipActions.visible = tooltip == TOOLTIP.ACTIONS
+	TooltipPhase.visible = tooltip == TOOLTIP.PHASE
+	TooltipEndTurn.visible = tooltip == TOOLTIP.END_TURN
+	TooltipForfeit.visible = tooltip == TOOLTIP.FORFEIT
+	disable_camera_movement = true
 
 
-func toggle_ui_visibility():
-	if UIHideable:
-		UIHideable.visible = not UIHideable.visible
-		if VisUI:
-			VisUI.button_pressed = UIHideable.visible
+func hide_tooltip(tooltip : TOOLTIP):
+	match tooltip:
+		TOOLTIP.ACTIONS:
+			TooltipActions.visible = false
+		TOOLTIP.PHASE:
+			TooltipPhase.visible = false
+		TOOLTIP.END_TURN:
+			TooltipEndTurn.visible = false
+		TOOLTIP.FORFEIT:
+			TooltipForfeit.visible = false
+	disable_camera_movement = false
 
 
-func set_ui_visibility(visibility : bool):
-	if UIHideable:
-		UIHideable.visible = visibility
+func hide_all_tooltips():
+	TooltipActions.visible = false
+	TooltipPhase.visible = false
+	TooltipEndTurn.visible = false
+	TooltipForfeit.visible = false
+	disable_camera_movement = false
 
 
-func toggle_turn_order_visibility():
-	if TurnOrder:
-		set_turn_order_visibility(not TurnOrder.visible)
-
-
-func set_turn_order_visibility(visibility : bool):
-	if TurnOrder:
-		TurnOrder.visible = visibility
-		if VisTurnOrder:
-			VisTurnOrder.set_pressed_no_signal(TurnOrder.visible)
-
-
-func _leaving():
-	hide_pause_menu()
-	if LeaveMessage:
-		LeaveMessage.visible = true
-	else:
-		_confirmed_leave()
-
-
-func _not_leaving():
-	if LeaveMessage:
-		LeaveMessage.visible = false
-
-
-func _confirmed_leave():
-	game_control.leave()
-
-
-func center_camera(pos : Vector2):
-	next_position = pos
-
-
-func shake_camera(duration : float, amplitude : float, period : float) -> void:
-	shake_duration += duration
-	shake_time += duration
-	shake_amplitude += amplitude
-	shake_period = max(period, shake_period)
-
-
-func changed_action_amount(amount : int, color : Color) -> void:
-	if not Options.action_change_particles:
-		return
-	if UIHideable:
-		if not UIHideable.visible:
-			return
-	if amount == 0:
-		return
-	var part = ActionChangeParticle.instantiate()
-	if amount > 0:
-		part.text = "+" + str(amount)
-	else:
-		part.text = str(amount)
-	part.position = Vector2(-448, 208)
-	part.color = color
-	UI.add_child(part)
+func _on_turn_ended():
+	update_alignment_colored_ui()
 	
+	if TurnOrder:
+		TurnOrder.update_list(region_control)
+		TurnOrder.select_leader(region_control.current_playing_align)
+	
+	if not region_control.is_player_controled:
+		disable_camera_movement = false
+	
+	update_current_turn()
+	update_current_action(region_control.current_phase)
+	
+	update_alignment_label()
+	
+	hide_all_tooltips()
+
+
+func _on_turn_phase_changed(current_phase : int):
+	update_current_action(current_phase)
+
+
+func _on_actions_modified(amount : int) -> void:
+	if PowerAmount:
+		PowerAmount.text = String.num(region_control.get_action_amount())
+	if amount != 0:
+		make_action_changed_particle(amount, region_control.get_current_alignment_color())
 	if region_control.get_action_amount() == 0:
 		advance_turn_visual(0)
 
 
-func advance_turn_visual(type : int):
-	if AdvanceActionLight:
-		if type == 0:
-			AdvanceActionLight.visible = true
-		else:
-			AdvanceActionLight.visible = false
-	
-	if AdvanceActionDark:
-		if type == 1:
-			AdvanceActionDark.visible = true
-		else:
-			AdvanceActionDark.visible = false
-	
-	if AdvanceMobilizeLight:
-		if type == 2:
-			AdvanceMobilizeLight.visible = true
-		else:
-			AdvanceMobilizeLight.visible = false
-	
-	if AdvanceMobilizeDark:
-		if type == 3:
-			AdvanceMobilizeDark.visible = true
-		else:
-			AdvanceMobilizeDark.visible = false
+func _on_turn_order_hovered():
+	hovering_turn_order = true
+	set_player_info_visible(true)
 
 
-func update_alignment_label():
-	if CurrentAlignment:
-		CurrentAlignment.text = region_control.align_names[region_control.current_playing_align]
+func _on_turn_order_left():
+	hovering_turn_order = false
+	set_player_info_visible(false)
 
 
-static func get_window_size() -> Vector2:
-	var window : Vector2 = Vector2(0, 0)
-	window.x = ProjectSettings.get_setting("display/window/size/viewport_width")
-	window.y = ProjectSettings.get_setting("display/window/size/viewport_height")
-	return window
+func _on_leave_confirmed():
+	game_control.leave()
+
+
+func _on_leave_canceled():
+	set_leave_message(false)
+
+
+func _on_leftover_confirmed():
+	set_leftover_message(false)
+	region_control.end_turn(true)
+
+
+func _on_leftover_canceled():
+	set_leftover_message(false)
+
+
+func _on_forfeit_confirmed():
+	set_forfeit_message(false)
+	region_control.forfeit()
+
+
+func _on_forfeit_canceled():
+	set_forfeit_message(false)

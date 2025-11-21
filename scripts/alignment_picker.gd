@@ -31,7 +31,7 @@ func _ready():
 	for i in range(align_size):
 		var leader : Sprite2D = available.add_leader(i, i + 1)
 		leader.frame = 0
-		available.color_leader(leader, current_map.align_color[i + 1])
+		AlignmentList.color_leader(leader, current_map.align_color[i + 1])
 	players.set_align_list_size(MapSetup.player_amount)
 	players.random_leader_indicators(MapSetup.player_amount)
 	
@@ -86,7 +86,7 @@ func choose_align(align : int):
 			player_alignments[i] = align
 			var leader : Sprite2D = players.add_leader(i, align)
 			leader.frame = 0
-			players.color_leader(leader, current_map.align_color[align])
+			AlignmentList.color_leader(leader, current_map.align_color[align])
 			available.select_leader(align)
 			break
 

@@ -7,6 +7,8 @@ signal center_camera_to_position(center : Vector2)
 ## Emitted once after RegionControl makes all RegionLinks defined through region_connections,
 ## before the capital distance is calculated.
 signal region_connections_ready
+
+signal actions_modified(amount : int)
 ## Emitted when a players turn ends.
 signal turn_ended
 ## Emitted when a player changes the turns phase. First argument is the turn phase which just started.
@@ -302,6 +304,71 @@ var penalty_amount : Array = []
 var particle_attacks : RegionAttacks = null
 
 
+static func active(region_control : RegionControl) -> bool:
+	return region_control and not region_control.dummy
+
+
+static func flip_color(c : Color) -> Color:
+	c.r = 1 - c.r
+	c.g = 1 - c.g
+	c.b = 1 - c.b
+	return c
+
+
+static func slight_tint(tint_color : Color) -> Color:
+	var temp_color : Color
+	
+	temp_color = flip_color(tint_color)
+	temp_color *= 0.333
+	temp_color = flip_color(temp_color)
+	temp_color.a = 1.0
+	
+	return temp_color
+
+
+static func setup_tag_name(stag : SETUP_TAG) -> String:
+	match(stag):
+		SETUP_TAG.SKIRMISH:
+			return "Skirmish"
+		SETUP_TAG.CHALLENGE:
+			return "Challenge"
+		SETUP_TAG.BOT_BATTLE:
+			return "Bot Battle"
+		SETUP_TAG.GUIDE:
+			return "Guide"
+		_:
+			return "No Tag"
+
+
+static func text_color(value : float) -> Color:
+	if value > COLOR_TOO_BRIGHT:
+		return Color(0, 0, 0, 1)
+	else:
+		return Color(1, 1, 1, 1)
+
+
+static func setup_complexity_name(compx : SETUP_COMPLEXITY) -> String:
+	match(compx):
+		SETUP_COMPLEXITY.UNSPECIFIED:
+			return "Unspecified"
+		SETUP_COMPLEXITY.BEGINNER:
+			return "Beginner"
+		SETUP_COMPLEXITY.SIMPLE:
+			return "Simple"
+		SETUP_COMPLEXITY.INTERMEDIATE:
+			return "Intermediate"
+		SETUP_COMPLEXITY.ADVANCED:
+			return "Advanced"
+		SETUP_COMPLEXITY.DIFFICULT:
+			return "Difficult"
+		SETUP_COMPLEXITY.EXTREME:
+			return "Extreme"
+		SETUP_COMPLEXITY.ROCKET_SCIENCE:
+			return "Rocket Science"
+		_:
+			return "Unknown"
+
+
 func _load_cache():
 	cache_filename = game_control.map_name + ".cache"
 	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.READ)
@@ -502,7 +569,7 @@ func _ready():
 	
 	# -- VISUAL --
 	if hide_turn_order and game_camera:
-		game_camera.set_turn_order_visibility(false)
+		game_camera.set_turn_order_visible(false)
 	
 	if snap_camera_to_first_align_capital:
 		var center_camera : Vector2 = Vector2(0, 0)
@@ -732,41 +799,29 @@ func _exit_tree():
 		_save_cache()
 
 
-func _process(_delta):
-	if Engine.is_editor_hint():
-		return
-	
-	if dummy:
-		return
-	
-	if is_player_controled:
-		if Input.is_action_just_pressed("forfeit"):
-			forfeit()
-			if game_control:
-				game_control.new_callout("Forfeit")
-		elif Input.is_action_just_pressed("plus_foward"):
-			end_turn(true)
-			if game_control:
-				game_control.new_callout("End turn")
-		elif Input.is_action_just_pressed("plus_turn"):
-			change_current_phase()
-			if game_control:
-				game_control.new_callout("Advance turn")
+#func _process(_delta):
+#	if Engine.is_editor_hint():
+#		return
+#
+#	if dummy:
+#		return
 
 
 func _start_turn():
 	var reg_amount : int = GameStats.get_stat(current_playing_align, "most regions owned", 0)
 	var cap_amount : int = GameStats.get_stat(current_playing_align, "most capitals owned", 0)
-	if region_amount[current_playing_align - 1] > reg_amount:
-		GameStats.set_stat(current_playing_align, "most regions owned", region_amount[current_playing_align - 1])
-	if capital_amount[current_playing_align - 1] > cap_amount:
-		GameStats.set_stat(current_playing_align, "most capitals owned", capital_amount[current_playing_align - 1])
+	if get_alignment_regions() > reg_amount:
+		GameStats.set_stat(current_playing_align, "most regions owned", get_alignment_regions())
+	if get_alignment_capitals() > cap_amount:
+		GameStats.set_stat(current_playing_align, "most capitals owned", get_alignment_capitals())
 	
 	_calculate_penalty(current_playing_align)
 	
-	first_action_amount = capital_amount[current_playing_align - 1] - penalty_amount[current_playing_align - 1]
+	first_action_amount = get_alignment_capitals() - get_alignment_penalties()
 	bonus_action_amount = 1 if first_action_amount == 0 and not use_aliances else 0
 	current_phase = PHASE.MOBILIZE if first_action_amount == 0 else PHASE.NORMAL
+	
+	_modify_action_amount(0)
 	
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
@@ -843,21 +898,32 @@ func _calculate_penalty(alignment : int, end_of_turn : bool = false):
 	penalty_amount[alignment - 1] = penalty_total
 
 
-func _modify_action_amount(amount : int, announce : bool = true) -> bool:
+func _set_action_amount(amount : int) -> bool:
+	if amount < 0:
+		return false
 	match(current_phase):
-		
+		PHASE.NORMAL:
+			first_action_amount = amount
+		PHASE.MOBILIZE, PHASE.BONUS:
+			bonus_action_amount = amount
+	
+	actions_modified.emit(amount)
+	
+	return true
+
+
+func _modify_action_amount(amount : int) -> bool:
+	match(current_phase):
 		PHASE.NORMAL:
 			if first_action_amount + amount < 0:
 				return false
 			first_action_amount += amount
-		
 		PHASE.MOBILIZE, PHASE.BONUS:
 			if bonus_action_amount + amount < 0:
 				return false
 			bonus_action_amount += amount
 	
-	if announce and game_camera:
-		game_camera.changed_action_amount(amount, align_color[current_playing_align])
+	actions_modified.emit(amount)
 	
 	return true
 
@@ -888,6 +954,24 @@ func alignment_inactive(align : int) -> bool:
 ## Check if the alignment has a digital player controling it.
 func alignment_active(align : int) -> bool:
 	return align > 0 and align < align_amount
+
+
+func get_alignment_from_play_order(id : int) -> int:
+	if id >= 0 and id < align_play_order.size():
+		return align_play_order[id]
+	return 0
+
+
+func get_alignment_regions(alignment : int = current_playing_align) -> int:
+	return region_amount[alignment - 1]
+
+
+func get_alignment_capitals(alignment : int = current_playing_align) -> int:
+	return capital_amount[alignment - 1]
+
+
+func get_alignment_penalties(alignment : int = current_playing_align) -> int:
+	return penalty_amount[alignment - 1]
 
 
 ## Turns all regions of alignment A into regions of alignment B
@@ -952,6 +1036,22 @@ func has_enough_actions(needed : int = 1) -> bool:
 	return true
 
 
+func get_alignment_color(alignment : int) -> Color:
+	return align_color[alignment]
+
+
+func get_current_alignment_color() -> Color:
+	return get_alignment_color(current_playing_align)
+
+
+func get_alignment_name(alignment : int) -> String:
+	return align_names[alignment]
+
+
+func get_current_alignment_name() -> String:
+	return get_alignment_name(current_playing_align)
+
+
 ## Spawns the cross particle at the specified position.
 ## Used when the player attempts an illegal move.
 func spawn_cross_particle(capital_position : Vector2):
@@ -1014,12 +1114,16 @@ func next_phase(phase : PHASE) -> PHASE:
 
 ## Changes the current turn phase. Calls end turn if it is the Bonus Actions phase.
 func change_current_phase():
-	if current_phase == PHASE.NORMAL and first_action_amount > 0:
-		bonus_action_amount = first_action_amount
+	var transfer_actions : int = 0
+	if current_phase == PHASE.NORMAL:
+		transfer_actions = first_action_amount
 	
 	var call_end_turn : bool = current_phase == LAST_PHASE
 	
 	current_phase = next_phase(current_phase)
+	
+	if transfer_actions > 0:
+		_set_action_amount(transfer_actions)
 	
 	turn_phase_changed.emit(current_phase)
 	
@@ -1111,64 +1215,3 @@ func action_done(region_name : String, amount : int = 1):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()
-
-
-static func flip_color(c : Color) -> Color:
-	c.r = 1 - c.r
-	c.g = 1 - c.g
-	c.b = 1 - c.b
-	return c
-
-
-static func slight_tint(tint_color : Color) -> Color:
-	var temp_color : Color
-	
-	temp_color = flip_color(tint_color)
-	temp_color *= 0.333
-	temp_color = flip_color(temp_color)
-	temp_color.a = 1.0
-	
-	return temp_color
-
-
-static func setup_tag_name(stag : SETUP_TAG) -> String:
-	match(stag):
-		SETUP_TAG.SKIRMISH:
-			return "Skirmish"
-		SETUP_TAG.CHALLENGE:
-			return "Challenge"
-		SETUP_TAG.BOT_BATTLE:
-			return "Bot Battle"
-		SETUP_TAG.GUIDE:
-			return "Guide"
-		_:
-			return "No Tag"
-
-
-static func text_color(value : float) -> Color:
-	if value > COLOR_TOO_BRIGHT:
-		return Color(0, 0, 0, 1)
-	else:
-		return Color(1, 1, 1, 1)
-
-
-static func setup_complexity_name(compx : SETUP_COMPLEXITY) -> String:
-	match(compx):
-		SETUP_COMPLEXITY.UNSPECIFIED:
-			return "Unspecified"
-		SETUP_COMPLEXITY.BEGINNER:
-			return "Beginner"
-		SETUP_COMPLEXITY.SIMPLE:
-			return "Simple"
-		SETUP_COMPLEXITY.INTERMEDIATE:
-			return "Intermediate"
-		SETUP_COMPLEXITY.ADVANCED:
-			return "Advanced"
-		SETUP_COMPLEXITY.DIFFICULT:
-			return "Difficult"
-		SETUP_COMPLEXITY.EXTREME:
-			return "Extreme"
-		SETUP_COMPLEXITY.ROCKET_SCIENCE:
-			return "Rocket Science"
-		_:
-			return "Unknown"

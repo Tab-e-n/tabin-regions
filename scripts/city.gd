@@ -17,8 +17,7 @@ var was_hovered : bool = false
 var offset : Vector2
 
 func _ready():
-	if region.hide_capital:
-		visible = false
+	visible = not region.hide_capital
 	
 	if is_capital:
 		texture_normal = preload("res://sprites/capital.png")
@@ -26,11 +25,12 @@ func _ready():
 	else:
 		texture_normal = preload("res://sprites/city.png")
 		offset = CITY_TEXTURE_SIZE * 0.5
+	
 	z_index = 20
+	
 	var city_size : float = 0.8
 	if region.region_control:
 		city_size = region.region_control.city_size * 0.8
-		region.region_control.turn_ended.connect(_on_end_turn)
 	position = offset * -city_size
 	scale = Vector2(city_size, city_size)
 	
@@ -54,28 +54,19 @@ func _ready():
 	
 	region_name.add_theme_stylebox_override("normal", preload("res://styles/style_label_city_name.tres"))
 	add_child(region_name)
+	
+	_on_power_changed(region.power)
 
 
 func _process(_delta):
-	text.text = String.num(region.power)
-	if not region.hide_capital and region.region_control:
-		visible = region.region_control.cities_visible
-	if region.region_control and not region.region_control.dummy:
-		if was_hovered != is_hovered():
-			was_hovered = is_hovered()
-			if was_hovered:
-				show_attacks()
-			else:
-				hide_attacks()
-			region_name.visible = is_hovered()
-		
-		if Input.is_action_just_pressed("show_extra") and region.power > 1:
-			if Input.is_action_pressed("shift"):
-				if region.region_control.current_playing_align != region.alignment and not region.region_control.alignment_inactive(region.alignment):
-					make_particle(true)
-			else:
-				if region.region_control.current_playing_align == region.alignment:
-					make_particle(true)
+	visible = region._city_visible()
+	if was_hovered != is_hovered():
+		was_hovered = is_hovered()
+		if was_hovered:
+			show_attacks()
+		else:
+			hide_attacks()
+		region_name.visible = was_hovered
 
 
 func update_region_name():
@@ -102,13 +93,17 @@ func make_particle(mobilize : bool):
 
 
 func show_attacks():
-	if region.region_control and not region.region_control.dummy:
+	if RegionControl.active(region.region_control):
 		region.region_control.show_region_attackers.call_deferred(region)
 
 
 func hide_attacks():
-	if region.region_control and not region.region_control.dummy:
+	if RegionControl.active(region.region_control):
 		region.region_control.hide_region_attackers()
+
+
+func _on_power_changed(power : int) -> void:
+	text.text = String.num(power)
 
 
 func _on_end_turn():
@@ -121,3 +116,15 @@ func _on_end_turn():
 		part.color = self_modulate
 		part.text = "+1"
 		add_child(part)
+
+
+func _on_show_extra_current(alignment : int):
+	if alignment == region.alignment and region.power > 1:
+		make_particle(true)
+
+
+func _on_show_extra_other(alignment : int):
+	if region.region_control and region.region_control.alignment_inactive(region.alignment):
+		return
+	if alignment != region.alignment and region.power > 1:
+		make_particle(true)

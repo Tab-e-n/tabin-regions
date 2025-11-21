@@ -132,7 +132,7 @@ func change_directory(dir : String):
 	if not maps.is_empty():
 		var map = maps.find(MapSetup.current_map_name)
 		
-		if map == -1:
+		if map < 0 or map >= map_list.item_count:
 			map_list.select(0)
 			_on_map_list_item_selected(0)
 		else:
