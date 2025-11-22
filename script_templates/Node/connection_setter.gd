@@ -1,3 +1,4 @@
+# The old way of doing RegionLinks
 extends _BASE_
 
 var connections : Array = [
@@ -9,6 +10,7 @@ var connections : Array = [
 
 
 func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
+	get_parent().connections = connections
+	queue_free.call_deferred()
+	Options.timestamp(" -- connections setter")
 

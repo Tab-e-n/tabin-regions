@@ -33,6 +33,9 @@ signal power_changed(power : int)
 ## Hides the capital if set to true.
 @export var hide_capital : bool = false
 @export var links : Array[RegionLink] = []
+@export var update_polygon : bool = false:
+	set(_update):
+		_recalculate_polygon()
 
 
 @onready var region_control : RegionControl = get_parent() as RegionControl
@@ -50,53 +53,13 @@ func _ready():
 	if not texture or not material:
 		_on_update_texture()
 	
-	if polygon.size() > 0:
-		var far_left : float = polygon[0].x
-		var far_right : float = polygon[0].x
-		var far_up : float = polygon[0].y
-		var far_down : float = polygon[0].y
-		
-		for i in polygon:
-			if i.x < far_left:
-				far_left = i.x
-			if i.x > far_right:
-				far_right = i.x
-			if i.y < far_up:
-				far_up = i.y
-			if i.y > far_down:
-				far_down = i.y
-		
-		var width : float = abs(far_right - far_left)
-		var height : float = abs(far_down - far_up)
-		if width == 0.0:
-			width = 1.0
-		else:
-			width = 1.0 / width
-		if height == 0.0:
-			height = 1.0
-		else:
-			height = 1.0 / height
-		
-		
-		var temp_uv : PackedVector2Array = PackedVector2Array()
-		temp_uv.resize(polygon.size())
-		
-		for i in range(temp_uv.size()):
-			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * width
-			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
-#			print(temp_uv[i])
-		
-		set_uv(temp_uv)
-		
-#		print(polygon, " ", uv)
-	
-	
 	if Engine.is_editor_hint():
+		_recalculate_polygon()
 		if region_control and not region_control.update_textures.is_connected(_on_update_texture):
 			region_control.update_textures.connect(_on_update_texture)
 		return
 	
-	call_deferred("_ready_deferred")
+	_ready_deferred.call_deferred()
 	
 	if RegionControl.active(region_control):
 		Options.timestamp(" -- " + name + " ready", "Regions")
@@ -424,3 +387,46 @@ func _on_update_texture():
 	texture = preload("res://sprites/region.png")
 	material = ShaderMaterial.new()
 	material.shader = preload("res://scripts/shader_region.gdshader")
+	_recalculate_polygon()
+
+
+func _recalculate_polygon():
+	if polygon.size() > 0:
+		var far_left : float = polygon[0].x
+		var far_right : float = polygon[0].x
+		var far_up : float = polygon[0].y
+		var far_down : float = polygon[0].y
+		
+		for i in polygon:
+			if i.x < far_left:
+				far_left = i.x
+			if i.x > far_right:
+				far_right = i.x
+			if i.y < far_up:
+				far_up = i.y
+			if i.y > far_down:
+				far_down = i.y
+		
+		var width : float = abs(far_right - far_left)
+		var height : float = abs(far_down - far_up)
+		if width == 0.0:
+			width = 1.0
+		else:
+			width = 1.0 / width
+		if height == 0.0:
+			height = 1.0
+		else:
+			height = 1.0 / height
+		
+		
+		var temp_uv : PackedVector2Array = PackedVector2Array()
+		temp_uv.resize(polygon.size())
+		
+		for i in range(temp_uv.size()):
+			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * width
+			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
+#			print(temp_uv[i])
+		
+		set_uv(temp_uv)
+		
+#		print(polygon, " ", uv)

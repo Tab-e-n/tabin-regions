@@ -307,7 +307,7 @@ var current_placement : int = 0
 
 var penalty_amount : Array = []
 
-var particle_attacks : RegionAttacks = null
+var region_description : RegionDescription = null
 
 
 static func active(region_control : RegionControl) -> bool:
@@ -626,18 +626,26 @@ func _save_replay_data():
 
 
 func _create_region_connections():
+	var regions : Dictionary = {}
+	for node in get_children():
+		var region : Region = node as Region
+		if region:
+			regions[region.name] = region
+	
 	for connection in connections:
 		var power_reduction = 0
 		if connection.size() >= 3:
 			power_reduction = connection[2]
-		var region_from : Region = get_node(connection[0]) as Region
-		var region_to : Region = get_node(connection[1]) as Region
-		if region_from == null:
+		
+		if not regions.has(connection[0]):
 			push_warning(connection[0], " does not exist.")
 			continue
-		if region_to == null:
+		if not regions.has(connection[1]):
 			push_warning(connection[1], " does not exist.")
 			continue
+		
+		var region_from : Region = regions[connection[0]] as Region
+		var region_to : Region = regions[connection[1]] as Region
 		var link : RegionLink = RegionLink.new()
 		link.from = region_from
 		link.to = region_to
@@ -1090,11 +1098,19 @@ func spawn_cross_particle(capital_position : Vector2):
 	add_child(part)
 
 
-func show_region_attackers(region : Region, singleton : bool = true) -> RegionAttacks:
-	var attacks : RegionAttacks = preload("res://objects/region_attacks.tscn").instantiate() as RegionAttacks
-	if not attacks:
-		push_error("Cannot load RegionAttacks")
+func show_region_description(region : Region, singleton : bool = true) -> RegionDescription:
+	if not region:
 		return null
+	var description : RegionDescription = null
+	if singleton and region_description:
+		region_description.visible = true
+		description = region_description
+	else:
+		description = preload("res://objects/region_description.tscn").instantiate() as RegionDescription
+		if not description:
+			push_error("Cannot load RegionDescription")
+			return null
+		add_child(description)
 	
 	var adjanced : Array[int] = region.get_adjacent_attack_power()
 	var colors : Array[Color] = []
@@ -1105,25 +1121,20 @@ func show_region_attackers(region : Region, singleton : bool = true) -> RegionAt
 		colors.append(align_color[alignment]) 
 		power.append(adjanced[alignment])
 	
-	region.add_child(attacks)
-	attacks.change_text(colors, power)
-	attacks.scale = Vector2(city_size, city_size);
-	attacks.position = attacks.scale * 0.5 * Vector2(
-		-attacks.text_size().x,
-		City.CAPITAL_TEXTURE_SIZE.y if region.is_capital else City.CITY_TEXTURE_SIZE.y
-	)
+	description.scale = Vector2(city_size, city_size);
+	description.position = region.position
+	description.update_attacks(colors, power)
+	description.update_name(region)
+	description.attacks_position(region.is_capital)
+	
 	if singleton:
-		hide_region_attackers()
-		particle_attacks = attacks
-	return attacks
+		region_description = description
+	return description
 
 
-func hide_region_attackers() -> void:
-	if particle_attacks:
-		var region : Node = particle_attacks.get_parent()
-		region.remove_child(particle_attacks)
-		particle_attacks.queue_free()
-		particle_attacks = null
+func hide_region_description() -> void:
+	if region_description:
+		region_description.visible = false
 
 
 func next_phase(phase : PHASE) -> PHASE:

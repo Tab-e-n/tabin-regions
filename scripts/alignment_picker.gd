@@ -45,7 +45,7 @@ func _process(_delta):
 		# AAAAAAAAAAAAAAA <- That is a reference to Punk Tactics
 	
 	if Input.is_action_just_pressed("escape"):
-		Options.timestamp("EXIT ALIGN PICKER")
+		Options.timestamp("EXIT ALIGN PICKER", "")
 		Options.discard_timestamp_sums()
 		get_tree().change_scene_to_file("res://setup_scene.tscn")
 	
@@ -100,7 +100,7 @@ func remove_align(pos : int):
 
 func _on_play_pressed():
 	MapSetup.preset_alignments = player_alignments.duplicate()
-	Options.timestamp("START MAP")
+	Options.timestamp("START MAP", "")
 	Options.discard_timestamp_sums()
 	get_tree().change_scene_to_file("res://main.tscn")
 

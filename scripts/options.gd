@@ -81,8 +81,9 @@ func timestamp(timestamp_name : String = "Timestamp", group : String = "Other") 
 	if duration >= TIMESTAMP_THRESHOLD:
 		_print_timestamp(timestamp_name, duration)
 	current_timestamp = new
-	timestamp_sums[group] = timestamp_sums.get(group, 0.0) + duration
-	timestamp_sums["TOTAL"] = timestamp_sums.get("TOTAL", 0.0) + duration
+	if not group.is_empty():
+		timestamp_sums[group] = timestamp_sums.get(group, 0.0) + duration
+		timestamp_sums["TOTAL"] = timestamp_sums.get("TOTAL", 0.0) + duration
 
 
 func discard_timestamp_sums():

@@ -189,7 +189,7 @@ func _ready():
 
 
 func _deferred_ready():
-	Options.timestamp("GameCamera deferred", "GameCamera")
+	Options.timestamp("GameCamera deferred")
 	
 	region_control = game_control.region_control as RegionControl
 	

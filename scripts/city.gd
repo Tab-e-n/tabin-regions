@@ -11,7 +11,6 @@ const CAPITAL_TEXTURE_SIZE = Vector2(80, 80)
 @onready var region : Region = get_parent()
 
 var text : Label = Label.new()
-var region_name : Label = Label.new()
 
 var was_hovered : bool = false
 var offset : Vector2
@@ -42,23 +41,10 @@ func _ready():
 	text.scale = Vector2(0.5, 0.5)
 	add_child(text)
 	
-	region_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	region_name.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	region_name.visible = false
-	region_name.z_index = 2
-	
-	region_name.add_theme_font_size_override("font_size", 32)
-	region_name.scale = Vector2(0.5, 0.5)
-	region_name.clip_contents = true
-	update_region_name()
-	
-	region_name.add_theme_stylebox_override("normal", preload("res://styles/style_label_city_name.tres"))
-	add_child(region_name)
-	
 	_on_power_changed(region.power)
 	
 	if RegionControl.active(region.region_control):
-		Options.timestamp(" -- " + region.name + " city ready", "Regions")
+		Options.timestamp(" -- " + region.name + " city ready", "Cities")
 
 
 func _process(_delta):
@@ -66,18 +52,9 @@ func _process(_delta):
 	if was_hovered != is_hovered():
 		was_hovered = is_hovered()
 		if was_hovered:
-			show_attacks()
+			show_description()
 		else:
-			hide_attacks()
-		region_name.visible = was_hovered
-
-
-func update_region_name():
-	region_name.text = region.name + " (" + String.num(region.max_power) + ")"
-	if Options.editor:
-		region_name.text += " (" + String.num(region.distance_from_capital) + ")"
-	region_name.size = region_name.get_theme_font("font").get_string_size(region_name.text, HORIZONTAL_ALIGNMENT_CENTER, -1, 16)
-	region_name.position = Vector2((offset.x - region_name.size.x * 0.5 - 4), -offset.y)
+			hide_description()
 
 
 func color_self(new_color : Color):
@@ -95,14 +72,14 @@ func make_particle(mobilize : bool):
 	add_child(part)
 
 
-func show_attacks():
+func show_description():
 	if RegionControl.active(region.region_control):
-		region.region_control.show_region_attackers.call_deferred(region)
+		region.region_control.show_region_description.call_deferred(region)
 
 
-func hide_attacks():
+func hide_description():
 	if RegionControl.active(region.region_control):
-		region.region_control.hide_region_attackers()
+		region.region_control.hide_region_description()
 
 
 func _on_power_changed(power : int) -> void:

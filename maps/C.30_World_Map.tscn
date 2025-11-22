@@ -770,8 +770,9 @@ var connections : Array = [
 ]
 
 func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
+	get_parent().connections = connections
+	queue_free.call_deferred()
+	Options.timestamp(\" -- connections setter\")
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p41mi"]
@@ -2606,6 +2607,7 @@ script = ExtResource("3_b6jsf")
 power = 3
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Switzerland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_0ptxw")
@@ -2618,6 +2620,7 @@ script = ExtResource("3_b6jsf")
 alignment = 15
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Germany" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_sulup")
@@ -2628,6 +2631,7 @@ polygon = PackedVector2Array(-48, 88, 48, 88, 56, 72, 32, 32, 64, 16, 80, 16, 80
 uv = PackedVector2Array(20.2105, 128, 101.053, 128, 107.789, 114.526, 87.5789, 80.8421, 114.526, 67.3684, 128, 67.3684, 128, 47.1579, 114.526, 33.6842, 114.526, 20.2105, 107.789, 6.73684, 74.1053, 13.4737, 60.6316, 0, 40.4211, 0, 33.6842, 20.2105, 13.4737, 20.2105, 13.4737, 47.1579, 0, 67.3684, 6.73684, 94.3158, 26.9474, 107.789)
 script = ExtResource("3_b6jsf")
 alignment = 15
+update_polygon = null
 
 [node name="Denmark" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_j2uv8")
@@ -2639,6 +2643,7 @@ uv = PackedVector2Array(14.2222, 128, 0, 109.714, 0, 54.8571, 28.4444, 18.2857, 
 script = ExtResource("3_b6jsf")
 alignment = 18
 max_power = 4
+update_polygon = null
 
 [node name="Sweden" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tolxg")
@@ -2651,6 +2656,7 @@ script = ExtResource("3_b6jsf")
 alignment = 18
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Norway" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ppf83")
@@ -2662,6 +2668,7 @@ uv = PackedVector2Array(31.2889, 120, 28.4444, 108, 25.6, 116, 19.9111, 116, 17.
 script = ExtResource("3_b6jsf")
 alignment = 18
 max_power = 4
+update_polygon = null
 
 [node name="Svalbard" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_lnlmu")
@@ -2674,6 +2681,7 @@ script = ExtResource("3_b6jsf")
 alignment = 7
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Novaya Zemlya" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wubc1")
@@ -2685,6 +2693,7 @@ uv = PackedVector2Array(55.6522, 128, 27.8261, 118.857, 22.2609, 109.714, 5.5652
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Zemlya Georga" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_4me8r")
@@ -2696,6 +2705,7 @@ uv = PackedVector2Array(0, 64, 34.1333, 64, 38.4, 128, 51.2, 128, 55.4667, 64, 7
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Commie Isles" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_besan")
@@ -2707,6 +2717,7 @@ uv = PackedVector2Array(0, 18.2857, 5.56522, 54.8571, 22.2609, 54.8571, 27.8261,
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Anzhu Islands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8pweg")
@@ -2718,6 +2729,7 @@ uv = PackedVector2Array(0, 18.2857, 10.6667, 54.8571, 32, 73.1429, 48, 54.8571, 
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Wrangel Island" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_m1x4x")
@@ -2729,6 +2741,7 @@ uv = PackedVector2Array(0, 42.6667, 21.3333, 128, 64, 128, 128, 85.3333, 128, 42
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 2
+update_polygon = null
 
 [node name="Finland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_vgn3r")
@@ -2740,6 +2753,7 @@ uv = PackedVector2Array(20.2105, 48, 33.6842, 42.6667, 40.4211, 53.3333, 47.1579
 script = ExtResource("3_b6jsf")
 alignment = 18
 max_power = 4
+update_polygon = null
 
 [node name="Karelia, Murmansk" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mgsl0")
@@ -2752,6 +2766,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Poland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xx231")
@@ -2762,6 +2777,7 @@ polygon = PackedVector2Array(-88, -24, -80, -24, -24, -56, -8, -40, 16, -48, 32,
 uv = PackedVector2Array(0, 32, 5.81818, 32, 46.5455, 0, 58.1818, 16, 75.6364, 8, 87.2727, 24, 104.727, 16, 116.364, 32, 116.364, 56, 110.545, 64, 116.364, 72, 128, 96, 110.545, 112, 110.545, 128, 93.0909, 120, 58.1818, 120, 23.2727, 88, 11.6364, 88, 11.6364, 64, 0, 48)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="France" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_513ge")
@@ -2772,6 +2788,7 @@ polygon = PackedVector2Array(16, 88, 16, 72, 24, 64, 48, 64, 56, 72, 72, 72, 88,
 uv = PackedVector2Array(80.5926, 128, 80.5926, 116.87, 85.3333, 111.304, 99.5556, 111.304, 104.296, 116.87, 113.778, 116.87, 123.259, 105.739, 113.778, 94.6087, 123.259, 77.913, 109.037, 66.7826, 123.259, 50.087, 128, 33.3913, 113.778, 22.2609, 71.1111, 0, 47.4074, 22.2609, 33.1852, 22.2609, 33.1852, 33.3913, 0, 33.3913, 0, 50.087, 9.48148, 55.6522, 18.963, 55.6522, 33.1852, 83.4783, 28.4444, 111.304, 33.1852, 122.435, 52.1481, 122.435, 61.6296, 128)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Netherlands, Belgium" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7yd52")
@@ -2782,6 +2799,7 @@ polygon = PackedVector2Array(32, 64, -40, 32, -24, 24, -8, 24, -8, 8, 0, -8, 16,
 uv = PackedVector2Array(115.2, 128, 0, 81.4545, 25.6, 69.8182, 51.2, 69.8182, 51.2, 46.5455, 64, 23.2727, 89.6, 23.2727, 115.2, 0, 128, 0, 128, 46.5455, 102.4, 81.4545)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Italy" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bnoqo")
@@ -2793,6 +2811,7 @@ polygon = PackedVector2Array(-456, -1048, -440, -1032, -424, -1032, -416, -1040,
 uv = PackedVector2Array(0, 27.4286, 9.48148, 36.5714, 18.963, 36.5714, 23.7037, 32, 37.9259, 36.5714, 42.6667, 50.2857, 71.1111, 73.1429, 75.8519, 73.1429, 94.8148, 86.8571, 104.296, 96, 94.8148, 105.143, 80.5926, 109.714, 66.3704, 105.143, 61.6296, 109.714, 71.1111, 123.429, 85.3333, 128, 94.8148, 123.429, 94.8148, 114.286, 99.5556, 109.714, 113.778, 96, 109.037, 86.8571, 113.778, 82.2857, 123.259, 91.4286, 128, 82.2857, 99.5556, 68.5714, 99.5556, 64, 85.3333, 59.4286, 75.8519, 41.1429, 61.6296, 36.5714, 61.6296, 18.2857, 71.1111, 18.2857, 71.1111, 4.57143, 61.6296, 4.57143, 56.8889, 0, 47.4074, 0, 42.6667, 4.57143, 33.1852, 9.14286, 18.963, 9.14286, 9.48148, 13.7143)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Austria" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ltp8h")
@@ -2806,6 +2825,7 @@ script = ExtResource("3_b6jsf")
 alignment = 15
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Spain" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ay5jw")
@@ -2817,6 +2837,7 @@ uv = PackedVector2Array(9.14286, 0, 77.7143, 5.81818, 82.2857, 17.4545, 100.571,
 script = ExtResource("3_b6jsf")
 alignment = 16
 max_power = 4
+update_polygon = null
 
 [node name="Portugal" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wnn5h")
@@ -2829,6 +2850,7 @@ script = ExtResource("3_b6jsf")
 alignment = 16
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Acores" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bx85b")
@@ -2840,6 +2862,7 @@ uv = PackedVector2Array(0, 18.2857, 128, 128, 106.667, 109.714, 120.889, 91.4286
 script = ExtResource("3_b6jsf")
 alignment = 16
 max_power = 3
+update_polygon = null
 
 [node name="Atlantis" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_h1dje")
@@ -2851,6 +2874,7 @@ uv = PackedVector2Array(69.8182, 0, 52.3636, 0, 29.0909, 4.74074, 17.4545, 4.740
 script = ExtResource("3_b6jsf")
 max_power = 6
 is_capital = true
+update_polygon = null
 
 [node name="Bermuda" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nahbc")
@@ -2863,6 +2887,7 @@ uv = PackedVector2Array(0, 0, 128, 128, 128, 0)
 script = ExtResource("3_b6jsf")
 alignment = 8
 max_power = 2
+update_polygon = null
 
 [node name="Britain" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_shkdn")
@@ -2873,6 +2898,7 @@ polygon = PackedVector2Array(-64, 56, -48, 48, 48, 32, 40, 16, 56, 8, 48, -8, 32
 uv = PackedVector2Array(15.0588, 128, 30.1176, 122.435, 120.471, 111.304, 112.941, 100.174, 128, 94.6087, 120.471, 83.4783, 105.412, 83.4783, 105.412, 66.7826, 75.2941, 44.5217, 52.7059, 38.9565, 82.8235, 22.2609, 75.2941, 11.1304, 52.7059, 16.6957, 52.7059, 0, 30.1176, 11.1304, 15.0588, 5.56522, 0, 16.6957, 15.0588, 22.2609, 22.5882, 38.9565, 37.6471, 44.5217, 30.1176, 55.6522, 52.7059, 55.6522, 52.7059, 77.913, 37.6471, 77.913, 22.5882, 100.174, 52.7059, 105.739, 30.1176, 111.304)
 script = ExtResource("3_b6jsf")
 alignment = 2
+update_polygon = null
 
 [node name="Ireland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_etadl")
@@ -2885,6 +2911,7 @@ script = ExtResource("3_b6jsf")
 alignment = 2
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Iceland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iinj7")
@@ -2898,6 +2925,7 @@ script = ExtResource("3_b6jsf")
 alignment = 7
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Greenland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xaft7")
@@ -2910,6 +2938,7 @@ script = ExtResource("3_b6jsf")
 alignment = 7
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Belarus" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_e0128")
@@ -2920,6 +2949,7 @@ polygon = PackedVector2Array(-72, 32, -64, 24, -64, 0, -32, -8, -24, -40, 0, -48
 uv = PackedVector2Array(0, 106.667, 6.73684, 96, 6.73684, 64, 33.6842, 53.3333, 40.4211, 10.6667, 60.6316, 0, 87.5789, 0, 101.053, 10.6667, 114.526, 53.3333, 128, 64, 114.526, 74.6667, 114.526, 106.667, 101.053, 128, 6.73684, 117.333)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Estonia, Latvia, Lithuania" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8or2r")
@@ -2930,6 +2960,7 @@ polygon = PackedVector2Array(-16, 56, -40, 64, -56, 48, -48, 40, -48, -8, -32, -
 uv = PackedVector2Array(42.6667, 110.933, 17.0667, 119.467, 0, 102.4, 8.53333, 93.8667, 8.53333, 42.6667, 25.6, 34.1333, 51.2, 51.2, 68.2667, 34.1333, 42.6667, 17.0667, 25.6, 25.6, 25.6, 8.53333, 42.6667, 8.53333, 59.7333, 0, 110.933, 0, 110.933, 42.6667, 128, 76.8, 102.4, 85.3333, 93.8667, 119.467, 59.7333, 128)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Ukraine" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_dmplw")
@@ -2940,6 +2971,7 @@ polygon = PackedVector2Array(-200, 8, -184, -8, -184, -24, -160, -40, -176, -64,
 uv = PackedVector2Array(0, 80, 6.5641, 64, 6.5641, 48, 16.4103, 32, 9.84615, 8, 55.7949, 16, 62.359, 0, 78.7692, 0, 85.3333, 16, 98.4615, 40, 111.59, 40, 114.872, 48, 124.718, 48, 128, 64, 128, 88, 118.154, 112, 91.8974, 128, 78.7692, 128, 72.2051, 112, 62.359, 128, 55.7949, 112, 55.7949, 104, 45.9487, 80, 32.8205, 80, 29.5385, 88, 6.5641, 88)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Romania" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_k75i1")
@@ -2952,6 +2984,7 @@ script = ExtResource("3_b6jsf")
 alignment = 14
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Balkan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bfrn6")
@@ -2964,6 +2997,7 @@ script = ExtResource("3_b6jsf")
 alignment = 14
 power = 2
 max_power = 4
+update_polygon = null
 
 [node name="Mediterranean Sea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_cy8sb")
@@ -2974,6 +3008,7 @@ polygon = PackedVector2Array(256, 8, 272, 0, 272, -8, 288, -16, 272, -16, 248, -
 uv = PackedVector2Array(25.6, 128, 76.8, 85.3333, 76.8, 42.6667, 128, 0, 76.8, 0, 0, 42.6667, 0, 85.3333)
 script = ExtResource("3_b6jsf")
 alignment = 5
+update_polygon = null
 
 [node name="Tyrrhenian Sea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_t4h7i")
@@ -2983,6 +3018,7 @@ texture = ExtResource("3_31u5u")
 polygon = PackedVector2Array(24, 32, 32, 32, 48, 16, 56, -8, 40, -24, 40, -32, 48, -40, 48, -48, 40, -56, 24, -48, 24, -32, 40, -24, 40, -16, 24, -8)
 uv = PackedVector2Array(0, 128, 32, 128, 96, 104.727, 128, 69.8182, 64, 46.5455, 64, 34.9091, 96, 23.2727, 96, 11.6364, 64, 0, 0, 11.6364, 0, 34.9091, 64, 46.5455, 64, 58.1818, 0, 69.8182)
 script = ExtResource("3_b6jsf")
+update_polygon = null
 
 [node name="Greece" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xjqpm")
@@ -2996,6 +3032,7 @@ script = ExtResource("3_b6jsf")
 alignment = 14
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Turkey" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_6isa4")
@@ -3007,6 +3044,7 @@ uv = PackedVector2Array(0, 45.1765, 8.72727, 60.2353, 8.72727, 75.2941, 14.5455,
 script = ExtResource("3_b6jsf")
 alignment = 5
 is_capital = true
+update_polygon = null
 
 [node name="Black Sea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ssnt6")
@@ -3016,6 +3054,7 @@ texture = ExtResource("3_31u5u")
 polygon = PackedVector2Array(-112, -96, -104, -104, -72, -104, -48, -80, -48, -72, -32, -56, 40, -56, 56, -40, 32, -16, 16, -32, 8, -56, -32, -56, -56, -24, -72, -40, -64, -56, -88, -88)
 uv = PackedVector2Array(0, 11.6364, 6.09524, 0, 30.4762, 0, 48.7619, 34.9091, 48.7619, 46.5455, 60.9524, 69.8182, 115.81, 69.8182, 128, 93.0909, 109.714, 128, 97.5238, 104.727, 91.4286, 69.8182, 60.9524, 69.8182, 42.6667, 116.364, 30.4762, 93.0909, 36.5714, 69.8182, 18.2857, 23.2727)
 script = ExtResource("3_b6jsf")
+update_polygon = null
 
 [node name="Syria" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_covfg")
@@ -3026,6 +3065,7 @@ polygon = PackedVector2Array(-48, 56, -16, 64, 8, 40, 48, 16, 56, -8, 48, -16, 6
 uv = PackedVector2Array(0, 118.154, 36.5714, 128, 64, 98.4615, 109.714, 68.9231, 118.857, 39.3846, 109.714, 29.5385, 128, 0, 91.4286, 0, 73.1429, 9.84615, 45.7143, 0, 9.14286, 9.84615, 0, 49.2308, 18.2857, 68.9231)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Iraq" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iubrh")
@@ -3036,6 +3076,7 @@ polygon = PackedVector2Array(-88, 0, -72, 32, -48, 32, 48, 104, 64, 96, 88, 72, 
 uv = PackedVector2Array(0, 58.6667, 11.6364, 80, 29.0909, 80, 98.9091, 128, 110.545, 122.667, 128, 106.667, 128, 85.3333, 93.0909, 48, 93.0909, 26.6667, 69.8182, 0, 46.5455, 0, 40.7273, 5.33333, 29.0909, 21.3333, 34.9091, 26.6667, 29.0909, 42.6667)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Iran" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_vccjg")
@@ -3047,6 +3088,7 @@ uv = PackedVector2Array(26.1224, 12.8, 20.898, 0, 15.6735, 3.2, 13.0612, 9.6, 0,
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Afghanistan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_uq52d")
@@ -3058,6 +3100,7 @@ uv = PackedVector2Array(0, 30.72, 0, 81.92, 10.24, 97.28, 20.48, 102.4, 20.48, 1
 script = ExtResource("3_b6jsf")
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Turkmenistan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_do5xx")
@@ -3068,6 +3111,7 @@ polygon = PackedVector2Array(-72, 64, -80, 24, -104, -8, -72, -24, -88, -40, -11
 uv = PackedVector2Array(19.3939, 96, 15.5152, 64, 3.87879, 38.4, 19.3939, 25.6, 11.6364, 12.8, 0, 12.8, 7.75758, 0, 31.0303, 25.6, 38.7879, 25.6, 46.5455, 0, 58.1818, 0, 69.8182, 25.6, 81.4545, 25.6, 96.9697, 57.6, 96.9697, 57.6, 128, 76.8, 116.364, 96, 116.364, 108.8, 100.848, 128, 93.0909, 128, 85.3333, 108.8, 58.1818, 83.2, 46.5455, 83.2, 42.6667, 70.4, 31.0303, 76.8)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Uzbekistan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qmoj6")
@@ -3078,6 +3122,7 @@ polygon = PackedVector2Array(-112, 32, -128, -16, -128, -56, -88, -72, -56, -48,
 uv = PackedVector2Array(6.4, 72.3478, 0, 38.9565, 0, 11.1304, 16, 0, 28.8, 16.6957, 44.8, 38.9565, 64, 33.3913, 83.2, 72.3478, 92.8, 72.3478, 108.8, 50.087, 112, 55.6522, 105.6, 66.7826, 112, 72.3478, 124.8, 72.3478, 128, 77.913, 112, 89.0435, 112, 77.913, 105.6, 77.913, 102.4, 89.0435, 92.8, 100.174, 99.2, 111.304, 99.2, 122.435, 92.8, 128, 86.4, 128, 86.4, 116.87, 60.8, 100.174, 48, 72.3478, 38.4, 72.3478, 28.8, 50.087, 19.2, 50.087, 12.8, 72.3478)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Caspian Basin" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_df720")
@@ -3089,6 +3134,7 @@ uv = PackedVector2Array(35.84, 66.2069, 25.6, 61.7931, 25.6, 52.9655, 0, 39.7241
 script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 3
+update_polygon = null
 
 [node name="Kazakh Desert" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_td7x3")
@@ -3100,6 +3146,7 @@ uv = PackedVector2Array(11.907, 60.6316, 8.93023, 40.4211, 14.8837, 33.6842, 14.
 script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 3
+update_polygon = null
 
 [node name="Central Kazakhstan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_i3br7")
@@ -3112,6 +3159,7 @@ script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Kazakhstani North" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tc3kk")
@@ -3123,6 +3171,7 @@ uv = PackedVector2Array(31.2195, 121.263, 21.8537, 107.789, 21.8537, 101.053, 24
 script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 4
+update_polygon = null
 
 [node name="Central West Kazakhstan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5spm3")
@@ -3134,6 +3183,7 @@ uv = PackedVector2Array(52.3636, 128, 81.4545, 112.941, 81.4545, 97.8824, 104.72
 script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 3
+update_polygon = null
 
 [node name="Altai" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_hdc7s")
@@ -3145,6 +3195,7 @@ uv = PackedVector2Array(85.3333, 128, 110.933, 116.364, 102.4, 93.0909, 128, 69.
 script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 2
+update_polygon = null
 
 [node name="Almaty Province" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5x4qe")
@@ -3156,6 +3207,7 @@ uv = PackedVector2Array(113.778, 128, 113.778, 93.8667, 92.4444, 59.7333, 128, 5
 script = ExtResource("3_b6jsf")
 alignment = 28
 max_power = 3
+update_polygon = null
 
 [node name="Tajikistan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qap08")
@@ -3166,6 +3218,7 @@ polygon = PackedVector2Array(-40, 32, -24, 40, 0, 40, 24, 8, 40, 16, 40, 40, 48,
 uv = PackedVector2Array(0, 104.727, 15.0588, 116.364, 37.6471, 116.364, 60.2353, 69.8182, 75.2941, 81.4545, 75.2941, 116.364, 82.8235, 128, 105.412, 104.727, 128, 116.364, 128, 81.4545, 97.8824, 46.5455, 30.1176, 46.5455, 30.1176, 34.9091, 45.1765, 23.2727, 45.1765, 0, 30.1176, 0, 22.5882, 23.2727, 0, 46.5455, 15.0588, 69.8182, 15.0588, 93.0909)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Altai Mountains" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_p21o3")
@@ -3177,6 +3230,7 @@ uv = PackedVector2Array(88.6154, 128, 68.9231, 128, 54.1538, 120, 54.1538, 96, 4
 script = ExtResource("3_b6jsf")
 alignment = 4
 max_power = 3
+update_polygon = null
 
 [node name="Northern Mongolia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3skwk")
@@ -3188,6 +3242,7 @@ uv = PackedVector2Array(0, 59.0769, 9.84615, 49.2308, 0, 29.5385, 0, 9.84615, 4.
 script = ExtResource("3_b6jsf")
 alignment = 4
 max_power = 3
+update_polygon = null
 
 [node name="Central Mongolia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tnqop")
@@ -3200,6 +3255,7 @@ script = ExtResource("3_b6jsf")
 alignment = 4
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Gobi Desert" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xjkrd")
@@ -3211,6 +3267,7 @@ uv = PackedVector2Array(8.34783, 60.2353, 22.2609, 75.2941, 25.0435, 82.8235, 33
 script = ExtResource("3_b6jsf")
 alignment = 4
 max_power = 3
+update_polygon = null
 
 [node name="Eastern Mongolia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_gg7lk")
@@ -3222,6 +3279,7 @@ uv = PackedVector2Array(0, 17.0667, 17.6552, 25.6, 30.8966, 17.0667, 39.7241, 17
 script = ExtResource("3_b6jsf")
 alignment = 4
 max_power = 3
+update_polygon = null
 
 [node name="Kyrgyzstan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iffuv")
@@ -3232,6 +3290,7 @@ polygon = PackedVector2Array(-80, -16, -64, -24, -56, -24, -40, -16, -32, -24, 5
 uv = PackedVector2Array(5.81818, 12.8, 17.4545, 0, 23.2727, 0, 34.9091, 12.8, 40.7273, 0, 104.727, 0, 128, 25.6, 104.727, 64, 93.0909, 64, 87.2727, 89.6, 69.8182, 76.8, 52.3636, 128, 0, 128, 0, 115.2, 11.6364, 102.4, 40.7273, 76.8, 34.9091, 64, 11.6364, 64, 0, 51.2, 11.6364, 25.6)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Pakistan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bkxfx")
@@ -3242,6 +3301,7 @@ polygon = PackedVector2Array(-96, 56, -8, 48, 32, 88, 80, 72, 88, 56, 56, 16, 64
 uv = PackedVector2Array(10.6667, 114.526, 49.7778, 111.158, 67.5556, 128, 88.8889, 121.263, 92.4444, 114.526, 78.2222, 97.6842, 81.7778, 87.5789, 92.4444, 87.5789, 117.333, 50.5263, 103.111, 40.4211, 99.5556, 23.5789, 117.333, 26.9474, 128, 16.8421, 99.5556, 3.36842, 88.8889, 0, 78.2222, 6.73684, 78.2222, 16.8421, 81.7778, 20.2105, 74.6667, 33.6842, 67.5556, 43.7895, 64, 53.8947, 56.8889, 53.8947, 46.2222, 57.2632, 46.2222, 70.7368, 35.5556, 70.7368, 32, 74.1053, 7.11111, 74.1053, 0, 70.7368, 10.6667, 84.2105, 14.2222, 84.2105, 24.8889, 97.6842, 10.6667, 104.421)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Palestinian Jordans" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_d0dnw")
@@ -3252,6 +3312,7 @@ polygon = PackedVector2Array(-8, -32, 24, -24, 48, -48, 64, -16, 24, -8, 40, 8, 
 uv = PackedVector2Array(32, 21.3333, 74.6667, 32, 106.667, 0, 128, 42.6667, 74.6667, 53.3333, 96, 74.6667, 96, 106.667, 53.3333, 128, 21.3333, 128, 21.3333, 106.667, 0, 64)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Saudi Arabia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_e0wv8")
@@ -3264,6 +3325,7 @@ script = ExtResource("3_b6jsf")
 alignment = 9
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Persian Gulf" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7mqp2")
@@ -3274,6 +3336,7 @@ polygon = PackedVector2Array(-48, -32, -72, -32, -96, -48, -72, -72, -56, -64)
 uv = PackedVector2Array(128, 128, 64, 128, 0, 76.8, 64, 0, 106.667, 25.6)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Yemen" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ohwo0")
@@ -3284,6 +3347,7 @@ polygon = PackedVector2Array(-104, -8, -88, -32, -64, -40, -40, -32, -8, -40, 0,
 uv = PackedVector2Array(0, 60.2353, 9.84615, 37.6471, 24.6154, 30.1176, 39.3846, 37.6471, 59.0769, 30.1176, 64, 15.0588, 88.6154, 0, 113.231, 0, 128, 45.1765, 118.154, 52.7059, 113.231, 75.2941, 73.8462, 105.412, 39.3846, 120.471, 29.5385, 128, 9.84615, 128, 9.84615, 105.412, 0, 90.3529)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Oman" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jxf1x")
@@ -3294,6 +3358,7 @@ polygon = PackedVector2Array(-88, 32, -40, 8, -24, -32, -48, -48, -32, -64, -24,
 uv = PackedVector2Array(0, 93.0909, 42.6667, 75.6364, 56.8889, 46.5455, 35.5556, 34.9091, 49.7778, 23.2727, 56.8889, 0, 78.2222, 11.6364, 113.778, 23.2727, 128, 40.7273, 113.778, 69.8182, 99.5556, 75.6364, 92.4444, 93.0909, 71.1111, 116.364, 56.8889, 116.364, 42.6667, 128, 21.3333, 128)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Arabian Sea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rcf3c")
@@ -3305,6 +3370,7 @@ polygon = PackedVector2Array(-208, 72, -192, 64, -176, 72, -200, 80)
 uv = PackedVector2Array(0, 64, 64, 0, 128, 64, 32, 128)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="United Arab Emirates, Quatar" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2beq7")
@@ -3317,6 +3383,7 @@ script = ExtResource("3_b6jsf")
 power = 3
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Georgia, Armenia, Azerbaijan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xyolk")
@@ -3327,6 +3394,7 @@ polygon = PackedVector2Array(-56, -32, -24, -32, 0, -16, 40, -16, 72, 16, 88, 24
 uv = PackedVector2Array(0, 0, 21.3333, 0, 37.3333, 17.0667, 64, 17.0667, 85.3333, 51.2, 96, 59.7333, 106.667, 51.2, 128, 76.8, 117.333, 85.3333, 117.333, 102.4, 112, 128, 101.333, 93.8667, 90.6667, 102.4, 85.3333, 119.467, 58.6667, 93.8667, 48, 76.8, 48, 51.2, 21.3333, 42.6667, 21.3333, 25.6)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="North Caucasian" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bkwod")
@@ -3340,6 +3408,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Southern Russia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_v4wio")
@@ -3351,6 +3420,7 @@ uv = PackedVector2Array(34.4615, 128, 14.7692, 115.81, 0, 103.619, 0, 97.5238, 9
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 4
+update_polygon = null
 
 [node name="Central Russia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ugn8r")
@@ -3363,6 +3433,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Northwest Russia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3mob5")
@@ -3375,6 +3446,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Volga" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_t6euo")
@@ -3386,6 +3458,7 @@ uv = PackedVector2Array(116.364, 102.4, 113.455, 98.1333, 113.455, 93.8667, 104.
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 4
+update_polygon = null
 
 [node name="Egypt" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mnpdu")
@@ -3395,6 +3468,7 @@ texture = ExtResource("3_31u5u")
 polygon = PackedVector2Array(-96, -104, -88, 112, 16, 112, 32, 104, 64, 104, 72, 120, 88, 120, 112, 80, 112, 64, 40, -64, 56, -56, 72, -24, 88, -32, 88, -64, 72, -96, 32, -96, 24, -104, 0, -104, -24, -88, -64, -104)
 uv = PackedVector2Array(0, 0, 4.92308, 123.429, 68.9231, 123.429, 78.7692, 118.857, 98.4615, 118.857, 103.385, 128, 113.231, 128, 128, 105.143, 128, 96, 83.6923, 22.8571, 93.5385, 27.4286, 103.385, 45.7143, 113.231, 41.1429, 113.231, 22.8571, 103.385, 4.57143, 78.7692, 4.57143, 73.8462, 0, 59.0769, 0, 44.3077, 9.14286, 19.6923, 0)
 script = ExtResource("3_b6jsf")
+update_polygon = null
 
 [node name="Libya" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_6xi0r")
@@ -3407,6 +3481,7 @@ script = ExtResource("3_b6jsf")
 power = 2
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Algeria" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_q7d2w")
@@ -3417,6 +3492,7 @@ polygon = PackedVector2Array(8, 192, 8, 208, 32, 208, 176, 104, 168, 88, 152, 88
 uv = PackedVector2Array(73.1429, 122.88, 73.1429, 128, 80.9796, 128, 128, 94.72, 125.388, 89.6, 120.163, 89.6, 114.939, 84.48, 112.327, 74.24, 114.939, 69.12, 114.939, 56.32, 112.327, 51.2, 112.327, 38.4, 104.49, 28.16, 101.878, 23.04, 107.102, 12.8, 107.102, 0, 94.0408, 0, 88.8163, 2.56, 83.5918, 0, 73.1429, 0, 70.5306, 2.56, 60.0816, 5.12, 54.8571, 10.24, 44.4082, 12.8, 44.4082, 25.6, 47.0204, 30.72, 47.0204, 35.84, 36.5714, 35.84, 31.3469, 40.96, 26.1224, 46.08, 20.898, 48.64, 18.2857, 51.2, 13.0612, 51.2, 5.22449, 56.32, 0, 61.44, 0, 69.12)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Morocco" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_v0nyq")
@@ -3427,6 +3503,7 @@ polygon = PackedVector2Array(-88, 88, -24, 104, -24, 80, -8, 64, 16, 48, 32, 48,
 uv = PackedVector2Array(0, 116.87, 39.3846, 128, 39.3846, 111.304, 49.2308, 100.174, 64, 89.0435, 73.8462, 89.0435, 78.7692, 83.4783, 88.6154, 77.913, 108.308, 55.6522, 128, 55.6522, 128, 44.5217, 123.077, 33.3913, 123.077, 5.56522, 93.5385, 5.56522, 88.6154, 0, 78.7692, 0, 73.8462, 5.56522, 73.8462, 16.6957, 64, 27.8261, 54.1538, 33.3913, 44.3077, 38.9565, 39.3846, 44.5217, 39.3846, 55.6522, 34.4615, 61.2174, 34.4615, 83.4783, 19.6923, 100.174)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="West Sahara" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wsj2h")
@@ -3437,6 +3514,7 @@ polygon = PackedVector2Array(-56, 72, 24, 72, 24, 32, 40, 24, 40, -32, 104, -32,
 uv = PackedVector2Array(0, 128, 53.3333, 128, 53.3333, 94.3158, 64, 87.5789, 64, 40.4211, 106.667, 40.4211, 106.667, 33.6842, 128, 33.6842, 106.667, 13.4737, 64, 0, 48, 13.4737, 42.6667, 26.9474, 32, 40.4211, 21.3333, 67.3684, 10.6667, 80.8421, 10.6667, 94.3158, 0, 107.789)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Canaries" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ljphp")
@@ -3449,6 +3527,7 @@ script = ExtResource("3_b6jsf")
 alignment = 16
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Niger" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_b57kq")
@@ -3459,6 +3538,7 @@ polygon = PackedVector2Array(-88, -32, 56, -136, 104, -112, 120, -112, 120, -88,
 uv = PackedVector2Array(34.5946, 52, 96.8649, 0, 117.622, 12, 124.541, 12, 124.541, 24, 128, 32, 128, 76, 110.703, 100, 110.703, 112, 103.784, 116, 93.4054, 116, 89.9459, 112, 76.1081, 120, 65.7297, 116, 55.3514, 116, 41.5135, 108, 34.5946, 112, 27.6757, 128, 17.2973, 128, 6.91892, 116, 0, 108, 0, 96, 6.91892, 96, 10.3784, 92, 27.6757, 92, 34.5946, 80)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Chad" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fvmec")
@@ -3469,6 +3549,7 @@ polygon = PackedVector2Array(-88, -160, -56, -176, 96, -96, 96, -8, 80, -8, 56, 
 uv = PackedVector2Array(10.24, 5.95349, 30.72, 0, 128, 29.7674, 128, 62.5116, 117.76, 62.5116, 102.4, 83.3488, 117.76, 104.186, 107.52, 104.186, 87.04, 119.07, 71.68, 119.07, 61.44, 125.023, 46.08, 128, 25.6, 128, 20.48, 119.07, 5.12, 113.116, 5.12, 110.14, 25.6, 110.14, 10.24, 83.3488, 0, 80.3721, 0, 71.4419, 25.6, 53.5814, 25.6, 20.8372, 20.48, 14.8837, 20.48, 5.95349)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Sudan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bugvx")
@@ -3479,6 +3560,7 @@ polygon = PackedVector2Array(-160, 72, -112, 184, -96, 144, -80, 136, -56, 160, 
 uv = PackedVector2Array(0, 85.3333, 18.7317, 128, 24.9756, 112.762, 31.2195, 109.714, 40.5854, 118.857, 46.8293, 112.762, 56.1951, 118.857, 65.561, 112.762, 74.9268, 115.81, 84.2927, 103.619, 84.2927, 97.5238, 90.5366, 97.5238, 90.5366, 106.667, 93.6585, 109.714, 103.024, 100.571, 103.024, 94.4762, 112.39, 88.381, 112.39, 67.0476, 115.512, 64, 115.512, 51.8095, 128, 45.7143, 118.634, 39.619, 115.512, 27.4286, 115.512, 15.2381, 103.024, 0, 93.6585, 15.2381, 87.4146, 15.2381, 84.2927, 9.14286, 71.8049, 9.14286, 65.561, 12.1905, 24.9756, 12.1905, 24.9756, 24.381, 15.6098, 30.4762, 15.6098, 64, 9.36585, 64)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="South Sudan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iohqv")
@@ -3489,6 +3571,7 @@ polygon = PackedVector2Array(16, 80, 64, 80, 80, 56, 112, 56, 88, 16, 72, -8, 56
 uv = PackedVector2Array(75.0345, 128, 101.517, 128, 110.345, 111.304, 128, 111.304, 114.759, 83.4783, 105.931, 66.7826, 97.1034, 61.2174, 97.1034, 55.6522, 105.931, 44.5217, 105.931, 22.2609, 101.517, 16.6957, 101.517, 0, 92.6897, 0, 92.6897, 11.1304, 79.4483, 33.3913, 66.2069, 27.8261, 52.9655, 38.9565, 39.7241, 27.8261, 30.8966, 38.9565, 17.6552, 22.2609, 8.82759, 27.8261, 0, 55.6522, 4.41379, 55.6522, 35.3103, 94.6087, 35.3103, 105.739, 44.1379, 111.304, 61.7931, 111.304, 66.2069, 122.435)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Eritrea, Djibouti" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_easl7")
@@ -3499,6 +3582,7 @@ polygon = PackedVector2Array(8, -40, -24, -24, -24, 8, -32, 16, -32, 40, -8, 40,
 uv = PackedVector2Array(37.6471, 0, 7.52941, 12.8, 7.52941, 38.4, 0, 44.8, 0, 64, 22.5882, 64, 22.5882, 51.2, 37.6471, 57.6, 67.7647, 57.6, 105.412, 96, 97.8824, 108.8, 97.8824, 128, 120.471, 128, 128, 115.2, 120.471, 96, 75.2941, 51.2, 60.2353, 51.2)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Somalia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_esrc3")
@@ -3509,6 +3593,7 @@ polygon = PackedVector2Array(-128, -16, -120, -32, -104, -8, -88, -8, -80, -16, 
 uv = PackedVector2Array(21.3333, 10.6667, 26.6667, 3.55556, 37.3333, 14.2222, 48, 14.2222, 53.3333, 10.6667, 69.3333, 10.6667, 74.6667, 7.11111, 101.333, 3.55556, 117.333, 0, 128, 0, 122.667, 24.8889, 96, 64, 64, 92.4444, 32, 106.667, 5.33333, 128, 0, 124.444, 0, 85.3333, 5.33333, 78.2222, 5.33333, 74.6667, 16, 74.6667, 21.3333, 71.1111, 26.6667, 71.1111, 32, 67.5556, 48, 67.5556, 85.3333, 39.1111, 85.3333, 35.5556, 58.6667, 35.5556, 53.3333, 32, 42.6667, 32, 21.3333, 17.7778)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Ethiopia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_lcxtk")
@@ -3519,6 +3604,7 @@ polygon = PackedVector2Array(-104, -32, -104, 0, -120, 16, -120, 24, -104, 32, -
 uv = PackedVector2Array(7.11111, 52, 7.11111, 68, 0, 76, 0, 80, 7.11111, 84, 14.2222, 96, 24.8889, 116, 35.5556, 116, 42.6667, 128, 56.8889, 128, 60.4444, 120, 81.7778, 120, 85.3333, 116, 88.8889, 116, 92.4444, 112, 103.111, 112, 128, 80, 128, 76, 110.222, 76, 106.667, 72, 99.5556, 72, 85.3333, 56, 85.3333, 48, 74.6667, 48, 74.6667, 36, 78.2222, 28, 60.4444, 4, 46.2222, 4, 39.1111, 0, 39.1111, 8, 28.4444, 8, 28.4444, 24, 17.7778, 32, 17.7778, 40)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Mali" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qc32p")
@@ -3529,6 +3615,7 @@ polygon = PackedVector2Array(88, -32, -72, -152, -88, -144, -80, 64, -200, 64, -
 uv = PackedVector2Array(118.4, 46.8293, 54.4, 0, 48, 3.12195, 51.2, 84.2927, 3.2, 84.2927, 0, 90.5366, 0, 99.9024, 3.2, 103.024, 3.2, 112.39, 22.4, 112.39, 32, 128, 51.2, 128, 51.2, 115.512, 57.6, 112.39, 60.8, 106.146, 70.4, 96.7805, 83.2, 90.5366, 83.2, 87.4146, 102.4, 87.4146, 105.6, 84.2927, 121.6, 84.2927, 128, 74.9268, 128, 53.0732, 118.4, 53.0732)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Senegal, Gambia, Guinea-Bissau" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fcdx6")
@@ -3540,6 +3627,7 @@ uv = PackedVector2Array(19.6923, 7.52941, 59.0769, 0, 118.154, 45.1765, 118.154,
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Cabo Verde" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_y5cw8")
@@ -3551,6 +3639,7 @@ uv = PackedVector2Array(18.2857, 109.714, 36.5714, 128, 54.8571, 109.714, 91.428
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Guinea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_sehs5")
@@ -3561,6 +3650,7 @@ polygon = PackedVector2Array(-80, 8, -48, 48, -32, 24, -8, 24, 8, 56, 24, 56, 24
 uv = PackedVector2Array(0, 51.2, 30.1176, 93.8667, 45.1765, 68.2667, 67.7647, 68.2667, 82.8235, 102.4, 97.8824, 102.4, 97.8824, 119.467, 105.412, 128, 112.941, 128, 120.471, 119.467, 128, 119.467, 128, 59.7333, 105.412, 17.0667, 45.1765, 17.0667, 37.6471, 0, 22.5882, 0, 22.5882, 25.6, 7.52941, 25.6)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Côte d\'Ivoire" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_o7pso")
@@ -3571,6 +3661,7 @@ polygon = PackedVector2Array(-56, 0, -56, 32, -40, 40, -40, 72, -16, 64, 24, 64,
 uv = PackedVector2Array(0, 56, 0, 88, 17.0667, 96, 17.0667, 128, 42.6667, 120, 85.3333, 120, 93.8667, 112, 102.4, 120, 119.467, 120, 119.467, 96, 102.4, 88, 102.4, 72, 128, 48, 128, 32, 110.933, 8, 85.3333, 8, 85.3333, 24, 59.7333, 0, 8.53333, 0, 8.53333, 56)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Sierra Liberia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_sfp6o")
@@ -3582,6 +3673,7 @@ uv = PackedVector2Array(0, 25.6, 9.14286, 51.2, 36.5714, 76.8, 109.714, 128, 128
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Burkina Faso" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5r82b")
@@ -3592,6 +3684,7 @@ polygon = PackedVector2Array(-72, 48, -48, 72, -48, 56, -24, 56, -24, 32, 48, 32
 uv = PackedVector2Array(0, 104, 20.2105, 128, 20.2105, 112, 40.4211, 112, 40.4211, 88, 101.053, 88, 107.789, 80, 121.263, 80, 128, 64, 94.3158, 24, 94.3158, 0, 67.3684, 0, 67.3684, 8, 40.4211, 24, 20.2105, 48, 13.4737, 64, 0, 72)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Ghana" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nf0es")
@@ -3603,6 +3696,7 @@ polygon = PackedVector2Array(-48, 24, -48, 40, -32, 48, -32, 72, -24, 80, -8, 72
 uv = PackedVector2Array(0, 78.2222, 0, 92.4444, 25.6, 99.5556, 25.6, 120.889, 38.4, 128, 64, 120.889, 89.6, 113.778, 128, 99.5556, 128, 49.7778, 115.2, 42.6667, 115.2, 0, 12.8, 0, 12.8, 21.3333, 38.4, 42.6667, 38.4, 56.8889)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Togo, Benin" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tcfij")
@@ -3613,6 +3707,7 @@ polygon = PackedVector2Array(-16, 72, 0, 72, 8, 64, 24, 64, 24, 0, 32, 0, 32, -1
 uv = PackedVector2Array(14.2222, 128, 42.6667, 128, 56.8889, 120.471, 85.3333, 120.471, 85.3333, 60.2353, 99.5556, 60.2353, 99.5556, 45.1765, 128, 37.6471, 128, 22.5882, 99.5556, 15.0588, 99.5556, 0, 71.1111, 0, 56.8889, 15.0588, 28.4444, 15.0588, 14.2222, 22.5882, 0, 22.5882, 0, 67.7647, 14.2222, 75.2941)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Nigeria" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wj2t0")
@@ -3625,6 +3720,7 @@ script = ExtResource("3_b6jsf")
 alignment = 30
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Cameroon" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bvwv4")
@@ -3635,6 +3731,7 @@ polygon = PackedVector2Array(-72, 0, -56, 8, -48, 24, -48, 48, 56, 48, 64, 64, 8
 uv = PackedVector2Array(0, 92.6897, 13.4737, 97.1034, 20.2105, 105.931, 20.2105, 119.172, 107.789, 119.172, 114.526, 128, 128, 128, 128, 114.759, 107.789, 101.517, 107.789, 92.6897, 101.053, 88.2759, 101.053, 70.6207, 114.526, 61.7931, 121.263, 52.9655, 114.526, 52.9655, 107.789, 39.7241, 87.5789, 30.8966, 87.5789, 26.4828, 114.526, 26.4828, 101.053, 0, 94.3158, 8.82759, 87.5789, 8.82759, 47.1579, 70.6207, 40.4211, 66.2069, 20.2105, 66.2069, 6.73684, 75.0345)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Gabon, Equatorial Guinea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_81q55")
@@ -3645,6 +3742,7 @@ polygon = PackedVector2Array(-32, -56, -40, -40, -40, 0, -48, 16, -48, 32, -32, 
 uv = PackedVector2Array(18.2857, 0, 9.14286, 14.2222, 9.14286, 49.7778, 0, 64, 0, 78.2222, 18.2857, 85.3333, 18.2857, 99.5556, 45.7143, 128, 54.8571, 113.778, 64, 120.889, 73.1429, 106.667, 54.8571, 106.667, 54.8571, 99.5556, 64, 92.4444, 73.1429, 92.4444, 82.2857, 78.2222, 91.4286, 92.4444, 118.857, 92.4444, 128, 78.2222, 128, 56.8889, 118.857, 56.8889, 118.857, 35.5556, 128, 28.4444, 109.714, 21.3333, 91.4286, 21.3333, 91.4286, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Republic of the Congo" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_omoyn")
@@ -3655,6 +3753,7 @@ polygon = PackedVector2Array(-96, 96, -72, 112, -64, 104, -56, 104, -40, 112, -3
 uv = PackedVector2Array(0, 117.333, 20.2105, 128, 26.9474, 122.667, 33.6842, 122.667, 47.1579, 128, 53.8947, 122.667, 60.6316, 128, 74.1053, 117.333, 87.5789, 112, 87.5789, 85.3333, 107.789, 69.3333, 114.526, 37.3333, 121.263, 16, 128, 16, 128, 0, 94.3158, 0, 87.5789, 16, 87.5789, 32, 74.1053, 32, 67.3684, 21.3333, 33.6842, 21.3333, 33.6842, 37.3333, 47.1579, 37.3333, 60.6316, 42.6667, 53.8947, 48, 53.8947, 64, 60.6316, 64, 60.6316, 80, 53.8947, 90.6667, 33.6842, 90.6667, 26.9474, 80, 20.2105, 90.6667, 13.4737, 90.6667, 6.73684, 96, 6.73684, 101.333, 20.2105, 101.333, 13.4737, 112, 6.73684, 106.667)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Democratic Republic of the Congo" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_myl8i")
@@ -3666,6 +3765,7 @@ uv = PackedVector2Array(0, 71.68, 0, 76.8, 2.78261, 79.36, 30.6087, 79.36, 30.60
 script = ExtResource("3_b6jsf")
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Rwanda, Burundi" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7ogac")
@@ -3676,6 +3776,7 @@ polygon = PackedVector2Array(-8, 40, 0, 40, 16, 24, 16, 16, 24, 8, 16, 0, 16, -8
 uv = PackedVector2Array(25.6, 128, 51.2, 128, 102.4, 99.5556, 102.4, 85.3333, 128, 71.1111, 102.4, 56.8889, 102.4, 42.6667, 128, 28.4444, 128, 14.2222, 102.4, 0, 51.2, 0, 25.6, 14.2222, 0, 42.6667, 0, 85.3333)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Uganda" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qbh56")
@@ -3686,6 +3787,7 @@ polygon = PackedVector2Array(-64, 80, -56, 72, -40, 72, -32, 64, 24, 64, 24, 32,
 uv = PackedVector2Array(0, 128, 9.14286, 120.471, 27.4286, 120.471, 36.5714, 112.941, 100.571, 112.941, 100.571, 82.8235, 128, 60.2353, 128, 45.1765, 118.857, 37.6471, 118.857, 22.5882, 109.714, 0, 91.4286, 22.5882, 36.5714, 22.5882, 36.5714, 60.2353, 18.2857, 67.7647, 9.14286, 82.8235, 9.14286, 97.8824, 0, 105.412)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Kenya" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_kiwky")
@@ -3698,6 +3800,7 @@ script = ExtResource("3_b6jsf")
 alignment = 26
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Angola" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8a4h7")
@@ -3708,6 +3811,7 @@ polygon = PackedVector2Array(-96, -136, -96, -112, -88, -104, -88, -88, -80, -80
 uv = PackedVector2Array(8.53333, 0, 8.53333, 11.2941, 12.8, 15.0588, 12.8, 22.5882, 17.0667, 26.3529, 12.8, 33.8824, 12.8, 45.1765, 21.3333, 48.9412, 17.0667, 67.7647, 8.53333, 75.2941, 4.26667, 86.5882, 4.26667, 97.8824, 0, 101.647, 0, 116.706, 17.0667, 116.706, 25.6, 120.471, 68.2667, 120.471, 76.8, 124.235, 93.8667, 128, 98.1333, 124.235, 115.2, 124.235, 119.467, 120.471, 102.4, 105.412, 102.4, 75.2941, 123.733, 75.2941, 123.733, 64, 128, 56.4706, 128, 52.7059, 110.933, 56.4706, 110.933, 41.4118, 106.667, 41.4118, 106.667, 26.3529, 102.4, 11.2941, 81.0667, 11.2941, 76.8, 15.0588, 76.8, 22.5882, 59.7333, 22.5882, 55.4667, 18.8235, 55.4667, 15.0588, 51.2, 7.52941, 51.2, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Namibia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_smbam")
@@ -3718,6 +3822,7 @@ polygon = PackedVector2Array(-96, -112, -96, -88, -48, 0, -48, 48, -40, 56, -40,
 uv = PackedVector2Array(0, 0, 0, 12, 24, 56, 24, 80, 28, 84, 28, 104, 32, 108, 32, 116, 44, 128, 48, 120, 56, 128, 72, 128, 76, 124, 76, 56, 88, 56, 88, 16, 92, 12, 112, 8, 116, 8, 124, 8, 128, 4, 112, 4, 108, 8, 92, 8, 88, 12, 72, 8, 64, 4, 24, 4, 16, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Botswana" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7u0v3")
@@ -3730,6 +3835,7 @@ script = ExtResource("3_b6jsf")
 alignment = 13
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Malawi" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_dyu64")
@@ -3740,6 +3846,7 @@ polygon = PackedVector2Array(0, -72, 8, -64, 8, -40, 0, -32, 0, -16, 8, -8, 8, 8
 uv = PackedVector2Array(54.8571, 0, 73.1429, 6.73684, 73.1429, 26.9474, 54.8571, 33.6842, 54.8571, 47.1579, 73.1429, 53.8947, 73.1429, 67.3684, 91.4286, 67.3684, 109.714, 74.1053, 128, 80.8421, 128, 101.053, 91.4286, 128, 54.8571, 107.789, 54.8571, 94.3158, 73.1429, 87.5789, 73.1429, 74.1053, 36.5714, 74.1053, 0, 67.3684, 0, 53.8947, 18.2857, 47.1579, 18.2857, 13.4737)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Mozambique" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ju7kx")
@@ -3751,6 +3858,7 @@ polygon = PackedVector2Array(-56, 192, -40, 184, -48, 160, -32, 144, 0, 136, 8, 
 uv = PackedVector2Array(23.7037, 128, 33.1852, 125.217, 28.4444, 116.87, 37.9259, 111.304, 56.8889, 108.522, 61.6296, 102.957, 61.6296, 86.2609, 52.1481, 72.3478, 75.8519, 61.2174, 75.8519, 55.6522, 80.5926, 55.6522, 94.8148, 50.087, 104.296, 50.087, 128, 36.1739, 123.259, 22.2609, 123.259, 8.34783, 118.519, 0, 109.037, 5.56522, 94.8148, 5.56522, 85.3333, 8.34783, 71.1111, 8.34783, 66.3704, 5.56522, 56.8889, 8.34783, 56.8889, 16.6957, 56.8889, 22.2609, 61.6296, 22.2609, 61.6296, 27.8261, 66.3704, 30.6087, 66.3704, 38.9565, 56.8889, 50.087, 47.4074, 41.7391, 47.4074, 36.1739, 52.1481, 33.3913, 52.1481, 27.8261, 42.6667, 27.8261, 33.1852, 25.0435, 18.963, 30.6087, 4.74074, 33.3913, 0, 38.9565, 33.1852, 47.3043, 33.1852, 75.1304, 23.7037, 77.913, 23.7037, 83.4783, 14.2222, 89.0435, 14.2222, 100.174, 18.963, 102.957, 18.963, 125.217)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Zimbabwe" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_t3inl")
@@ -3761,6 +3869,7 @@ polygon = PackedVector2Array(-80, -24, -48, -24, -40, -40, -24, -48, -16, -64, 8
 uv = PackedVector2Array(0, 42.6667, 28.4444, 42.6667, 35.5556, 28.4444, 49.7778, 21.3333, 56.8889, 7.11111, 78.2222, 0, 128, 21.3333, 128, 92.4444, 113.778, 99.5556, 113.778, 113.778, 99.5556, 128, 64, 128, 35.5556, 113.778, 35.5556, 99.5556, 7.11111, 71.1111, 7.11111, 64, 0, 56.8889)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="South Africa, Lesotho, Eswatini" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_n6eia")
@@ -3770,6 +3879,7 @@ texture = ExtResource("3_31u5u")
 polygon = PackedVector2Array(-160, -48, -152, -8, -128, 16, -144, 48, -128, 80, -104, 88, -96, 88, -80, 72, -56, 72, -48, 64, -24, 64, -8, 72, 8, 64, 32, 64, 64, 32, 104, 0, 112, -16, 112, -32, 136, -48, 144, -64, 144, -80, 136, -88, 136, -152, 128, -160, 128, -192, 88, -192, 48, -168, 32, -136, 16, -136, 8, -112, -8, -112, -24, -128, -32, -128, -40, -112, -40, -104, -48, -96, -56, -96, -72, -80, -80, -88, -80, -96, -72, -112, -96, -136, -96, -56, -104, -48, -136, -48, -152, -64)
 uv = PackedVector2Array(0, 65.8286, 3.36842, 84.1143, 13.4737, 95.0857, 6.73684, 109.714, 13.4737, 124.343, 23.5789, 128, 26.9474, 128, 33.6842, 120.686, 43.7895, 120.686, 47.1579, 117.029, 57.2632, 117.029, 64, 120.686, 70.7368, 117.029, 80.8421, 117.029, 94.3158, 102.4, 111.158, 87.7714, 114.526, 80.4571, 114.526, 73.1429, 124.632, 65.8286, 128, 58.5143, 128, 51.2, 124.632, 47.5429, 124.632, 18.2857, 121.263, 14.6286, 121.263, 0, 104.421, 0, 87.5789, 10.9714, 80.8421, 25.6, 74.1053, 25.6, 70.7368, 36.5714, 64, 36.5714, 57.2632, 29.2571, 53.8947, 29.2571, 50.5263, 36.5714, 50.5263, 40.2286, 47.1579, 43.8857, 43.7895, 43.8857, 37.0526, 51.2, 33.6842, 47.5429, 33.6842, 43.8857, 37.0526, 36.5714, 26.9474, 25.6, 26.9474, 62.1714, 23.5789, 65.8286, 10.1053, 65.8286, 3.36842, 58.5143)
 script = ExtResource("3_b6jsf")
+update_polygon = null
 
 [node name="Zambia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qjkay")
@@ -3781,6 +3891,7 @@ uv = PackedVector2Array(0, 66.3704, 0, 104.296, 17.0667, 123.259, 34.1333, 123.2
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Tanzania" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_srtrr")
@@ -3791,6 +3902,7 @@ polygon = PackedVector2Array(-96, -32, -96, 8, -80, 24, -80, 48, -72, 48, -64, 5
 uv = PackedVector2Array(0, 42.6667, 0, 64, 9.84615, 72.5333, 9.84615, 85.3333, 14.7692, 85.3333, 19.6923, 89.6, 19.6923, 93.8667, 49.2308, 110.933, 49.2308, 102.4, 54.1538, 102.4, 59.0769, 110.933, 59.0769, 128, 68.9231, 123.733, 73.8462, 128, 88.6154, 128, 98.4615, 123.733, 113.231, 123.733, 128, 110.933, 118.154, 106.667, 118.154, 98.1333, 113.231, 93.8667, 113.231, 89.6, 118.154, 85.3333, 118.154, 68.2667, 113.231, 64, 113.231, 55.4667, 118.154, 51.2, 113.231, 46.9333, 93.5385, 34.1333, 93.5385, 25.6, 49.2308, 0, 49.2308, 4.26667, 44.3077, 8.53333, 44.3077, 17.0667, 39.3846, 21.3333, 34.4615, 21.3333, 29.5385, 17.0667, 24.6154, 21.3333, 24.6154, 0, 14.7692, 0, 9.84615, 4.26667, 14.7692, 8.53333, 14.7692, 12.8, 9.84615, 17.0667, 9.84615, 21.3333, 14.7692, 25.6, 9.84615, 29.8667, 9.84615, 34.1333)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="CAR" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ntuyg")
@@ -3801,6 +3913,7 @@ polygon = PackedVector2Array(-24, 64, -24, 48, -16, 40, 8, 40, 8, 48, 24, 48, 48
 uv = PackedVector2Array(41.2903, 110.545, 41.2903, 98.9091, 45.4194, 93.0909, 57.8064, 93.0909, 57.8064, 98.9091, 66.0645, 98.9091, 78.4516, 104.727, 82.5806, 98.9091, 90.8387, 98.9091, 94.9677, 93.0909, 107.355, 93.0909, 111.484, 87.2727, 115.613, 93.0909, 128, 93.0909, 128, 81.4545, 99.0968, 40.7273, 94.9677, 40.7273, 82.5806, 0, 74.3226, 0, 57.8064, 29.0909, 45.4194, 29.0909, 37.1613, 40.7273, 24.7742, 46.5455, 12.3871, 46.5455, 8.25806, 58.1818, 0, 69.8182, 0, 93.0909, 4.12903, 98.9091, 4.12903, 110.545, 16.5161, 128, 20.6452, 110.545)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Mauritania" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7ya6k")
@@ -3813,6 +3926,7 @@ script = ExtResource("3_b6jsf")
 alignment = 20
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Tunisia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7rcnd")
@@ -3823,6 +3937,7 @@ polygon = PackedVector2Array(-48, 8, -40, 24, -16, 56, -16, 96, 0, 72, 0, 56, 24
 uv = PackedVector2Array(0, 60.9524, 14.2222, 73.1429, 56.8889, 97.5238, 56.8889, 128, 85.3333, 109.714, 85.3333, 97.5238, 128, 79.2381, 128, 67.0476, 85.3333, 54.8571, 113.778, 42.6667, 113.778, 30.4762, 99.5556, 24.381, 99.5556, 6.09524, 71.1111, 0, 28.4444, 6.09524, 28.4444, 36.5714)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Madagascar" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_robtl")
@@ -3834,6 +3949,7 @@ uv = PackedVector2Array(28.4444, 74.1053, 0, 94.3158, 7.11111, 117.895, 35.5556,
 script = ExtResource("3_b6jsf")
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Mayonnaise" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_p586w")
@@ -3844,6 +3960,7 @@ polygon = PackedVector2Array(0, 40, 8, 48, 9, 41, -32, 0, -32, 16, -24, 24, -24,
 uv = PackedVector2Array(99.9024, 106.667, 124.878, 128, 128, 109.333, 0, 0, 0, 42.6667, 24.9756, 64, 24.9756, 21.3333, 124.878, 106.667)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Maurice" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wj5le")
@@ -3854,6 +3971,7 @@ polygon = PackedVector2Array(-24, 48, -16, 40, -8, 40, 3, 46, 27, 30, 32, 24, 40
 uv = PackedVector2Array(0, 96, 16, 64, 32, 64, 54, 88, 102, 24, 112, 0, 128, 0, 128, 32, 112, 64, 96, 32, 48, 96, 32, 128, 16, 128)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Kerguelen" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xfrf6")
@@ -3865,6 +3983,7 @@ uv = PackedVector2Array(0, 96, 25.6, 0, 76.8, 64, 128, 32, 76.8, 128, 25.6, 96)
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 2
+update_polygon = null
 
 [node name="New Zealand" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tkjkb")
@@ -3876,6 +3995,7 @@ uv = PackedVector2Array(0, 124.121, 5.95349, 128, 17.8605, 128, 29.7674, 116.364
 script = ExtResource("3_b6jsf")
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Western Australia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_oeqt6")
@@ -3887,6 +4007,7 @@ uv = PackedVector2Array(128, 4.41379, 114.087, 64, 100.174, 105.931, 86.2609, 11
 script = ExtResource("3_b6jsf")
 alignment = 10
 max_power = 3
+update_polygon = null
 
 [node name="South Australia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ujcon")
@@ -3898,6 +4019,7 @@ uv = PackedVector2Array(21.3333, 0, 128, 0, 119.467, 27.6757, 98.1333, 86.4865, 
 script = ExtResource("3_b6jsf")
 alignment = 10
 max_power = 3
+update_polygon = null
 
 [node name="Northern Australia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_38x3m")
@@ -3909,6 +4031,7 @@ uv = PackedVector2Array(24.6154, 32, 34.4615, 32, 34.4615, 28.4444, 29.5385, 24.
 script = ExtResource("3_b6jsf")
 alignment = 10
 max_power = 3
+update_polygon = null
 
 [node name="Queensland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_c5svd")
@@ -3921,6 +4044,7 @@ script = ExtResource("3_b6jsf")
 alignment = 10
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Victoria" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_cyx65")
@@ -3932,6 +4056,7 @@ uv = PackedVector2Array(128, 100.571, 108.8, 73.1429, 102.4, 64, 89.6, 54.8571, 
 script = ExtResource("3_b6jsf")
 alignment = 10
 max_power = 3
+update_polygon = null
 
 [node name="New South Wales" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_0b6o4")
@@ -3943,6 +4068,7 @@ uv = PackedVector2Array(16.8421, 8.53333, 87.5789, 8.53333, 97.6842, 4.26667, 11
 script = ExtResource("3_b6jsf")
 alignment = 10
 max_power = 4
+update_polygon = null
 
 [node name="Tasmania" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jg235")
@@ -3955,6 +4081,7 @@ script = ExtResource("3_b6jsf")
 alignment = 10
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Myanmar" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2nxxr")
@@ -3965,6 +4092,7 @@ polygon = PackedVector2Array(8, -144, 24, -120, 32, -112, 32, -88, 16, -72, 24, 
 uv = PackedVector2Array(64, 0, 75.6364, 7.68, 81.4545, 10.24, 81.4545, 17.92, 69.8182, 23.04, 75.6364, 30.72, 87.2727, 30.72, 98.9091, 38.4, 98.9091, 43.52, 128, 48.64, 116.364, 56.32, 87.2727, 61.44, 87.2727, 71.68, 110.545, 87.04, 104.727, 92.16, 104.727, 97.28, 116.364, 102.4, 116.364, 107.52, 122.182, 117.76, 110.545, 128, 110.545, 110.08, 98.9091, 104.96, 98.9091, 99.84, 93.0909, 94.72, 93.0909, 89.6, 81.4545, 79.36, 64, 89.6, 46.5455, 89.6, 40.7273, 84.48, 46.5455, 71.68, 0, 51.2, 0, 46.08, 11.6364, 43.52, 11.6364, 30.72, 23.2727, 30.72, 29.0909, 20.48, 40.7273, 10.24, 58.1818, 7.68, 58.1818, 0)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Bangladesh" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qcy6q")
@@ -3977,6 +4105,7 @@ script = ExtResource("3_b6jsf")
 power = 3
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Nepal" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_cjsrl")
@@ -3987,6 +4116,7 @@ polygon = PackedVector2Array(-48, -8, 0, 24, 32, 32, 56, 48, 96, 48, 104, 56, 11
 uv = PackedVector2Array(0, 34.9091, 36.5714, 81.4545, 60.9524, 93.0909, 79.2381, 116.364, 109.714, 116.364, 115.81, 128, 121.905, 128, 121.905, 93.0909, 128, 81.4545, 128, 69.8182, 85.3333, 69.8182, 24.381, 0, 6.09524, 0, 6.09524, 11.6364, 0, 23.2727)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Tibet" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rbqy3")
@@ -3998,6 +4128,7 @@ uv = PackedVector2Array(5.95349, 11.1304, 14.8837, 16.6957, 20.8372, 11.1304, 38
 script = ExtResource("3_b6jsf")
 alignment = 3
 max_power = 3
+update_polygon = null
 
 [node name="Xinjiang" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ak6wv")
@@ -4010,6 +4141,7 @@ uv = PackedVector2Array(85.3333, 121.081, 90.6667, 121.081, 93.3333, 117.622, 90
 script = ExtResource("3_b6jsf")
 alignment = 3
 max_power = 3
+update_polygon = null
 
 [node name="Sri Lanka" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ce7hm")
@@ -4020,6 +4152,7 @@ polygon = PackedVector2Array(-8, -48, -16, -32, -16, 16, 0, 32, 8, 32, 24, 16, 2
 uv = PackedVector2Array(25.6, 0, 0, 25.6, 0, 102.4, 51.2, 128, 76.8, 128, 128, 102.4, 128, 76.8, 102.4, 38.4)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="South India" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_o0llm")
@@ -4031,6 +4164,7 @@ uv = PackedVector2Array(0, 64, 5.12, 53.3333, 25.6, 46.2222, 30.72, 42.6667, 30.
 script = ExtResource("3_b6jsf")
 alignment = 12
 max_power = 6
+update_polygon = null
 
 [node name="West India" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ckrqo")
@@ -4041,6 +4175,7 @@ polygon = PackedVector2Array(112, 16, 128, -8, 152, -16, 152, -32, 128, -40, 88,
 uv = PackedVector2Array(110.222, 58.1818, 117.333, 46.5455, 128, 42.6667, 128, 34.9091, 117.333, 31.0303, 99.5556, 23.2727, 92.4444, 7.75758, 71.1111, 0, 67.5556, 7.75758, 74.6667, 11.6364, 67.5556, 19.3939, 60.4444, 19.3939, 60.4444, 15.5152, 53.3333, 15.5152, 49.7778, 27.1515, 39.1111, 15.5152, 24.8889, 15.5152, 21.3333, 23.2727, 0, 31.0303, 10.6667, 38.7879, 17.7778, 38.7879, 21.3333, 34.9091, 21.3333, 42.6667, 10.6667, 46.5455, 21.3333, 62.0606, 32, 62.0606, 35.5556, 58.1818, 35.5556, 46.5455, 39.1111, 46.5455, 42.6667, 54.303, 42.6667, 73.697, 49.7778, 96.9697, 53.3333, 116.364, 60.4444, 128, 64, 116.364, 78.2222, 108.606, 81.7778, 104.727, 81.7778, 85.3333, 85.3333, 65.9394, 92.4444, 62.0606)
 script = ExtResource("3_b6jsf")
 alignment = 12
+update_polygon = null
 
 [node name="North India" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rb1v1")
@@ -4051,6 +4186,7 @@ polygon = PackedVector2Array(0, -120, -24, -96, -64, -104, -56, -64, -24, -40, -
 uv = PackedVector2Array(71.68, 3.87879, 56.32, 15.5152, 30.72, 11.6364, 35.84, 31.0303, 56.32, 42.6667, 20.48, 85.3333, 5.12, 85.3333, 0, 96.9697, 20.48, 116.364, 40.96, 116.364, 56.32, 128, 61.44, 116.364, 71.68, 116.364, 71.68, 120.242, 81.92, 120.242, 92.16, 112.485, 81.92, 108.606, 87.04, 100.848, 92.16, 85.3333, 87.04, 65.9394, 122.88, 73.697, 122.88, 69.8182, 128, 65.9394, 128, 62.0606, 107.52, 50.4242, 97.28, 42.6667, 92.16, 38.7879, 102.4, 34.9091, 102.4, 27.1515, 92.16, 19.3939, 102.4, 11.6364, 102.4, 3.87879, 92.16, 0, 81.92, 0)
 script = ExtResource("3_b6jsf")
 alignment = 12
+update_polygon = null
 
 [node name="East India" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_65frg")
@@ -4063,6 +4199,7 @@ uv = PackedVector2Array(128, 20.2105, 115.81, 20.2105, 109.714, 13.4737, 109.714
 script = ExtResource("3_b6jsf")
 alignment = 12
 max_power = 3
+update_polygon = null
 
 [node name="Central India" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_6b078")
@@ -4075,6 +4212,7 @@ script = ExtResource("3_b6jsf")
 alignment = 12
 max_power = 6
 is_capital = true
+update_polygon = null
 
 [node name="Bhutan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_go6t7")
@@ -4085,6 +4223,7 @@ polygon = PackedVector2Array(-8, 16, 24, 16, 32, 8, 32, -8, 24, -16, -24, -16, -
 uv = PackedVector2Array(48, 128, 112, 128, 128, 96, 128, 32, 112, 0, 16, 0, 16, 32, 0, 96)
 script = ExtResource("3_b6jsf")
 max_power = 2
+update_polygon = null
 
 [node name="Thailand" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_cbv42")
@@ -4095,6 +4234,7 @@ polygon = PackedVector2Array(8, 216, -8, 208, -24, 176, -40, 160, -40, 120, -24,
 uv = PackedVector2Array(64, 128, 51.2, 124.8, 38.4, 112, 25.6, 105.6, 25.6, 89.6, 38.4, 76.8, 32, 64, 32, 57.6, 19.2, 51.2, 19.2, 44.8, 25.6, 38.4, 0, 19.2, 0, 6.4, 32, 0, 51.2, 9.6, 51.2, 25.6, 64, 19.2, 76.8, 22.4, 89.6, 16, 108.8, 25.6, 108.8, 35.2, 128, 41.6, 128, 54.4, 96, 51.2, 76.8, 60.8, 89.6, 73.6, 64, 67.2, 57.6, 60.8, 51.2, 60.8, 44.8, 67.2, 44.8, 80, 32, 89.6, 51.2, 105.6, 57.6, 115.2, 89.6, 124.8, 76.8, 128)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Malaysia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mo4sr")
@@ -4105,6 +4245,7 @@ polygon = PackedVector2Array(-144, -56, -136, -24, -112, 16, -72, 48, -64, 64, 9
 uv = PackedVector2Array(0, 21.3333, 2.7234, 49.7778, 10.8936, 85.3333, 24.5106, 113.778, 27.234, 128, 81.7021, 128, 84.4255, 120.889, 98.0426, 120.889, 100.766, 106.667, 100.766, 99.5556, 103.489, 85.3333, 103.489, 71.1111, 108.936, 56.8889, 117.106, 56.8889, 119.83, 64, 125.277, 56.8889, 128, 42.6667, 125.277, 35.5556, 119.83, 28.4444, 114.383, 0, 100.766, 49.7778, 92.5957, 56.8889, 87.1489, 78.2222, 78.9787, 85.3333, 76.2553, 99.5556, 76.2553, 113.778, 70.8085, 113.778, 65.3617, 106.667, 65.3617, 113.778, 73.5319, 128, 32.6809, 128, 29.9574, 113.778, 27.234, 92.4444, 24.5106, 85.3333, 24.5106, 49.7778, 21.7872, 35.5556, 16.3404, 21.3333, 10.8936, 28.4444, 5.44681, 28.4444)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Philippines" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_31553")
@@ -4116,6 +4257,7 @@ polygon = PackedVector2Array(328, -64, 344, -48, 360, -48, 360, -56, 352, -72, 3
 uv = PackedVector2Array(94.6087, 120.686, 105.739, 128, 116.87, 128, 116.87, 124.343, 111.304, 117.029, 116.87, 113.371, 128, 120.686, 128, 113.371, 122.435, 102.4, 122.435, 95.0857, 105.739, 80.4571, 105.739, 73.1429, 111.304, 65.8286, 100.174, 62.1714, 94.6087, 62.1714, 83.4783, 47.5429, 66.7826, 43.8857, 50.087, 43.8857, 50.087, 36.5714, 44.5217, 32.9143, 44.5217, 29.2571, 50.087, 25.6, 61.2174, 14.6286, 50.087, 7.31429, 44.5217, 3.65714, 33.3913, 0, 27.8261, 3.65714, 27.8261, 21.9429, 22.2609, 29.2571, 33.3913, 40.2286, 38.9565, 51.2, 38.9565, 58.5143, 38.9565, 65.8286, 27.8261, 69.4857, 22.2609, 84.1143, 16.6957, 91.4286, 0, 98.7429, 0, 106.057, 16.6957, 98.7429, 33.3913, 84.1143, 27.8261, 80.4571, 38.9565, 69.4857, 38.9565, 62.1714, 50.087, 65.8286, 55.6522, 62.1714, 50.087, 54.8571, 50.087, 47.5429, 61.2174, 47.5429, 72.3478, 58.5143, 77.913, 65.8286, 94.6087, 69.4857, 89.0435, 76.8, 83.4783, 80.4571, 72.3478, 69.4857, 61.2174, 69.4857, 61.2174, 76.8, 72.3478, 84.1143, 72.3478, 95.0857, 77.913, 95.0857, 83.4783, 91.4286, 94.6087, 91.4286, 100.174, 87.7714, 89.0435, 84.1143, 94.6087, 80.4571, 105.739, 84.1143, 111.304, 95.0857, 100.174, 102.4, 83.4783, 102.4, 72.3478, 106.057, 66.7826, 113.371, 66.7826, 120.686, 77.913, 113.371, 89.0435, 109.714, 94.6087, 113.371)
 script = ExtResource("3_b6jsf")
 power = 0
+update_polygon = null
 
 [node name="Taiwan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_56wye")
@@ -4128,6 +4270,7 @@ script = ExtResource("3_b6jsf")
 power = 3
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Hainan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nvg1c")
@@ -4139,6 +4282,7 @@ polygon = PackedVector2Array(-8, -16, 16, -24, 24, -16, 24, 0, 8, 16, -8, 16, -1
 uv = PackedVector2Array(25.6, 25.6, 102.4, 0, 128, 25.6, 128, 76.8, 76.8, 128, 25.6, 128, 0, 102.4, 0, 51.2)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Sumatra" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_uus4i")
@@ -4150,6 +4294,7 @@ uv = PackedVector2Array(0, 0, 9.84615, 4.12903, 24.6154, 4.12903, 39.3846, 16.51
 script = ExtResource("3_b6jsf")
 alignment = 23
 max_power = 4
+update_polygon = null
 
 [node name="Andaman" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3xh0p")
@@ -4162,6 +4307,7 @@ script = ExtResource("3_b6jsf")
 alignment = 12
 power = 0
 max_power = 2
+update_polygon = null
 
 [node name="Nicobar" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8kgki")
@@ -4174,6 +4320,7 @@ script = ExtResource("3_b6jsf")
 alignment = 12
 power = 0
 max_power = 2
+update_polygon = null
 
 [node name="Kalimantan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iofv7")
@@ -4185,6 +4332,7 @@ uv = PackedVector2Array(10.24, 37.3333, 0, 53.3333, 0, 64, 5.12, 69.3333, 5.12, 
 script = ExtResource("3_b6jsf")
 alignment = 23
 max_power = 3
+update_polygon = null
 
 [node name="Sulawesi" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nv8ud")
@@ -4196,6 +4344,7 @@ uv = PackedVector2Array(8, 128, 24, 128, 24, 89.6, 32, 76.8, 40, 76.8, 48, 102.4
 script = ExtResource("3_b6jsf")
 alignment = 23
 max_power = 3
+update_polygon = null
 
 [node name="Java" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8o6ml")
@@ -4207,6 +4356,7 @@ uv = PackedVector2Array(6.09524, 0, 0, 54.8571, 12.1905, 73.1429, 36.5714, 91.42
 script = ExtResource("3_b6jsf")
 alignment = 23
 is_capital = true
+update_polygon = null
 
 [node name="Lesser Sunda Islands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_c42vv")
@@ -4218,6 +4368,7 @@ uv = PackedVector2Array(4.92308, 0, 0, 42.6667, 4.92308, 42.6667, 9.84615, 21.33
 script = ExtResource("3_b6jsf")
 alignment = 23
 max_power = 3
+update_polygon = null
 
 [node name="Timor-Leste" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jbg4l")
@@ -4228,6 +4379,7 @@ polygon = PackedVector2Array(-24, 0, -16, 16, 8, 8, 32, -8, 8, -16)
 uv = PackedVector2Array(0, 64, 18.2857, 128, 73.1429, 96, 128, 32, 73.1429, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Papua" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tpvme")
@@ -4239,6 +4391,7 @@ uv = PackedVector2Array(128, 128, 128, 32, 117.333, 26.6667, 90.6667, 16, 80, 16
 script = ExtResource("3_b6jsf")
 alignment = 23
 max_power = 3
+update_polygon = null
 
 [node name="Banda Arc" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ih7hi")
@@ -4250,6 +4403,7 @@ uv = PackedVector2Array(10.6667, 112.941, 0, 120.471, 10.6667, 128, 21.3333, 128
 script = ExtResource("3_b6jsf")
 alignment = 23
 max_power = 3
+update_polygon = null
 
 [node name="Papua New Guinea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7ucdi")
@@ -4260,6 +4414,7 @@ polygon = PackedVector2Array(-48, 72, -16, 72, -8, 48, 8, 40, 24, 40, 48, 56, 56
 uv = PackedVector2Array(0, 104.727, 23.2727, 104.727, 29.0909, 87.2727, 40.7273, 81.4545, 52.3636, 81.4545, 69.8182, 93.0909, 75.6364, 104.727, 93.0909, 122.182, 110.545, 122.182, 122.182, 128, 128, 122.182, 110.545, 104.727, 98.9091, 98.9091, 93.0909, 87.2727, 81.4545, 75.6364, 81.4545, 64, 93.0909, 64, 93.0909, 58.1818, 81.4545, 52.3636, 69.8182, 46.5455, 64, 29.0909, 17.4545, 5.81818, 0, 0)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Solomon Islands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_f0nny")
@@ -4271,6 +4426,7 @@ uv = PackedVector2Array(60, 44.5217, 68, 66.7826, 84, 94.6087, 92, 94.6087, 88, 
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Guam" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jghou")
@@ -4283,6 +4439,7 @@ uv = PackedVector2Array(0, 0, 128, 128, 128, 0)
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 2
+update_polygon = null
 
 [node name="New Caledonia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5i0h8")
@@ -4293,6 +4450,7 @@ polygon = PackedVector2Array(-24, -32, -24, -24, -8, 8, 32, 32, 40, 24, 8, -16, 
 uv = PackedVector2Array(0, 0, 0, 16, 32, 80, 112, 128, 128, 112, 64, 32, 32, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Vanuatu" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_hp65g")
@@ -4303,6 +4461,7 @@ polygon = PackedVector2Array(-40, 8, -24, 8, -16, 32, -8, 32, -16, 16, -8, 8, 0,
 uv = PackedVector2Array(0, 0, 51.2, 0, 76.8, 29.5385, 102.4, 29.5385, 76.8, 9.84615, 102.4, 0, 128, 9.84615, 128, 128, 102.4, 118.154, 128, 108.308, 128, 49.2308, 76.8, 49.2308, 51.2, 29.5385, 0, 9.84615)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Fiji" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_kpnqu")
@@ -4313,6 +4472,7 @@ polygon = PackedVector2Array(-8, 0, 0, 8, 16, 8, 24, 0, 8, -16, -8, -8)
 uv = PackedVector2Array(0, 85.3333, 32, 128, 96, 128, 128, 85.3333, 64, 0, 0, 42.6667)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Cambodia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_pauda")
@@ -4323,6 +4483,7 @@ polygon = PackedVector2Array(-56, -16, -40, 16, -32, 40, -16, 56, 0, 56, 8, 40, 
 uv = PackedVector2Array(0, 32, 19.6923, 74.6667, 29.5385, 106.667, 49.2308, 128, 68.9231, 128, 78.7692, 106.667, 98.4615, 106.667, 98.4615, 85.3333, 128, 64, 128, 0, 98.4615, 0, 88.6154, 21.3333, 78.7692, 10.6667, 29.5385, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Vietnam" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_16puv")
@@ -4332,6 +4493,7 @@ texture = ExtResource("3_31u5u")
 polygon = PackedVector2Array(-136, -136, -96, -136, -88, -144, -56, -144, -48, -128, -32, -112, -8, -120, -40, -96, -56, -72, -48, -48, 16, 24, 32, 56, 32, 104, 0, 136, -16, 136, -16, 160, -40, 176, -56, 168, -48, 152, -56, 136, -48, 120, -32, 120, -32, 104, -8, 88, -8, 24, -16, 16, -16, 8, -88, -64, -80, -72, -80, -88, -88, -96, -104, -96, -120, -104, -120, -120)
 uv = PackedVector2Array(0, 3.2, 30.4762, 3.2, 36.5714, 0, 60.9524, 0, 67.0476, 6.4, 79.2381, 12.8, 97.5238, 9.6, 73.1429, 19.2, 60.9524, 28.8, 67.0476, 38.4, 115.81, 67.2, 128, 80, 128, 99.2, 103.619, 112, 91.4286, 112, 91.4286, 121.6, 73.1429, 128, 60.9524, 124.8, 67.0476, 118.4, 60.9524, 112, 67.0476, 105.6, 79.2381, 105.6, 79.2381, 99.2, 97.5238, 92.8, 97.5238, 67.2, 91.4286, 64, 91.4286, 60.8, 36.5714, 32, 42.6667, 28.8, 42.6667, 22.4, 36.5714, 19.2, 24.381, 19.2, 12.1905, 16, 12.1905, 9.6)
 script = ExtResource("3_b6jsf")
+update_polygon = null
 
 [node name="Laos" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mvpdw")
@@ -4342,6 +4504,7 @@ polygon = PackedVector2Array(-32, -40, -16, -32, -16, -40, -24, -48, -24, -56, -
 uv = PackedVector2Array(12.8, 16, 25.6, 21.3333, 25.6, 16, 19.2, 10.6667, 19.2, 5.33333, 25.6, 0, 38.4, 10.6667, 38.4, 21.3333, 51.2, 26.6667, 64, 26.6667, 70.4, 32, 70.4, 42.6667, 64, 48, 121.6, 96, 121.6, 101.333, 128, 106.667, 128, 117.333, 108.8, 117.333, 102.4, 128, 96, 122.667, 96, 101.333, 76.8, 90.6667, 76.8, 74.6667, 57.6, 58.6667, 44.8, 69.3333, 32, 64, 19.2, 74.6667, 19.2, 48, 0, 32)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Japan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_da5mm")
@@ -4355,6 +4518,7 @@ alignment = 6
 power = 2
 max_power = 6
 is_capital = true
+update_polygon = null
 
 [node name="Kuril Islands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8tn0n")
@@ -4367,6 +4531,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 2
+update_polygon = null
 
 [node name="Kamchatka" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_0tj1d")
@@ -4378,6 +4543,7 @@ uv = PackedVector2Array(16.6957, 26.3529, 11.1304, 22.5882, 5.56522, 15.0588, 5.
 script = ExtResource("3_b6jsf")
 alignment = 29
 max_power = 3
+update_polygon = null
 
 [node name="Chukotka" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8v3gm")
@@ -4390,6 +4556,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Magadan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_110db")
@@ -4402,6 +4569,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Khabarovsk" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_w8tma")
@@ -4413,6 +4581,7 @@ uv = PackedVector2Array(42.6667, 0, 42.6667, 3.2, 24.8889, 3.2, 14.2222, 0, 10.6
 script = ExtResource("3_b6jsf")
 alignment = 29
 max_power = 3
+update_polygon = null
 
 [node name="Amur" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_u28re")
@@ -4425,6 +4594,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Zabaykalsky" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_64n5u")
@@ -4437,6 +4607,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Buryatia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ncjby")
@@ -4448,6 +4619,7 @@ uv = PackedVector2Array(33.6842, 114.526, 26.9474, 101.053, 0, 87.5789, 3.36842,
 script = ExtResource("3_b6jsf")
 alignment = 29
 max_power = 3
+update_polygon = null
 
 [node name="Irkutsk" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_25ny4")
@@ -4459,6 +4631,7 @@ uv = PackedVector2Array(5.33333, 115.2, 0, 106.667, 5.33333, 106.667, 8, 89.6, 1
 script = ExtResource("3_b6jsf")
 alignment = 29
 max_power = 3
+update_polygon = null
 
 [node name="Tuva Altai" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_b0agt")
@@ -4470,6 +4643,7 @@ uv = PackedVector2Array(0, 42.6667, 5.81818, 59.7333, 14.5455, 85.3333, 17.4545,
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 3
+update_polygon = null
 
 [node name="Novosibirsk\'s Surroundings" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_htqwj")
@@ -4481,6 +4655,7 @@ uv = PackedVector2Array(6.09524, 33.6842, 3.04762, 33.6842, 0, 40.4211, 3.04762,
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 4
+update_polygon = null
 
 [node name="Republic of Sakha" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_old3u")
@@ -4493,6 +4668,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Krasnoyarsk" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5fq1d")
@@ -4505,6 +4681,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Khanty-Mansi" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_1a0hk")
@@ -4517,6 +4694,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="South Ural" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_utpd0")
@@ -4528,6 +4706,7 @@ uv = PackedVector2Array(108, 75.6364, 112, 64, 116, 58.1818, 112, 52.3636, 108, 
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 4
+update_polygon = null
 
 [node name="Yamalia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fr2mm")
@@ -4540,6 +4719,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Nenetsia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_g4tys")
@@ -4551,6 +4731,7 @@ uv = PackedVector2Array(0, 36.5714, 3.28205, 64, 9.84615, 82.2857, 6.5641, 91.42
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 3
+update_polygon = null
 
 [node name="Arkhangelsk" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_a3olv")
@@ -4563,6 +4744,7 @@ script = ExtResource("3_b6jsf")
 alignment = 25
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Komi" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mogdi")
@@ -4574,6 +4756,7 @@ uv = PackedVector2Array(21.3333, 40.96, 35.5556, 51.2, 35.5556, 56.32, 3.55556, 
 script = ExtResource("3_b6jsf")
 alignment = 25
 max_power = 3
+update_polygon = null
 
 [node name="Sakhalin" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_e25mm")
@@ -4586,6 +4769,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="East China Sea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_1vmta")
@@ -4597,6 +4781,7 @@ uv = PackedVector2Array(0, 128, 0, 115.2, 16, 115.2, 80, 76.8, 80, 64, 96, 51.2,
 script = ExtResource("3_b6jsf")
 alignment = 1
 max_power = 3
+update_polygon = null
 
 [node name="Northeast China" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iv4fc")
@@ -4608,6 +4793,7 @@ uv = PackedVector2Array(82.8235, 118.4, 71.5294, 121.6, 67.7647, 128, 64, 128, 6
 script = ExtResource("3_b6jsf")
 alignment = 1
 max_power = 4
+update_polygon = null
 
 [node name="Primorsky Krai" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qemwn")
@@ -4620,6 +4806,7 @@ script = ExtResource("3_b6jsf")
 alignment = 29
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="North China" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_v6dy1")
@@ -4630,6 +4817,7 @@ polygon = PackedVector2Array(-272, -40, -248, 0, -224, 0, -224, 24, -200, 40, -1
 uv = PackedVector2Array(0, 72.4528, 7.38462, 84.5283, 14.7692, 84.5283, 14.7692, 91.7736, 22.1538, 96.6038, 27.0769, 101.434, 29.5385, 96.6038, 36.9231, 96.6038, 39.3846, 99.0189, 36.9231, 101.434, 36.9231, 103.849, 41.8462, 108.679, 44.3077, 108.679, 49.2308, 106.264, 49.2308, 99.0189, 51.6923, 96.6038, 54.1538, 99.0189, 54.1538, 103.849, 59.0769, 106.264, 66.4615, 108.679, 66.4615, 103.849, 71.3846, 96.6038, 76.3077, 96.6038, 76.3077, 101.434, 73.8462, 106.264, 78.7692, 108.679, 76.3077, 111.094, 81.2308, 123.17, 81.2308, 128, 88.6154, 125.585, 91.0769, 123.17, 93.5385, 123.17, 98.4615, 120.755, 96, 115.925, 103.385, 118.34, 105.846, 118.34, 103.385, 113.509, 105.846, 108.679, 110.769, 106.264, 115.692, 101.434, 110.769, 99.0189, 110.769, 96.6038, 115.692, 96.6038, 118.154, 94.1887, 120.615, 89.3585, 115.692, 86.9434, 113.231, 84.5283, 113.231, 82.1132, 110.769, 77.283, 115.692, 79.6981, 118.154, 74.8679, 128, 70.0377, 128, 65.2076, 123.077, 60.3774, 120.615, 62.7925, 115.692, 55.5472, 113.231, 53.1321, 118.154, 53.1321, 118.154, 45.8868, 115.692, 45.8868, 110.769, 41.0566, 115.692, 36.2264, 118.154, 36.2264, 118.154, 28.9811, 115.692, 24.1509, 115.692, 19.3208, 113.231, 14.4906, 110.769, 12.0755, 108.308, 14.4906, 103.385, 16.9057, 96, 9.66038, 91.0769, 9.66038, 91.0769, 7.24528, 93.5385, 4.83019, 91.0769, 2.41509, 91.0769, 0, 81.2308, 0, 73.8462, 4.83019, 73.8462, 7.24528, 78.7692, 7.24528, 81.2308, 9.66038, 81.2308, 21.7358, 78.7692, 24.1509, 73.8462, 24.1509, 71.3846, 36.2264, 76.3077, 38.6415, 78.7692, 36.2264, 83.6923, 38.6415, 83.6923, 36.2264, 88.6154, 36.2264, 96, 41.0566, 100.923, 43.4717, 100.923, 45.8868, 88.6154, 45.8868, 83.6923, 48.3019, 83.6923, 50.717, 81.2308, 53.1321, 76.3077, 53.1321, 71.3846, 57.9623, 64, 55.5472, 61.5385, 55.5472, 61.5385, 60.3774, 66.4615, 62.7925, 61.5385, 70.0377, 56.6154, 72.4528, 46.7692, 72.4528, 36.9231, 77.283, 29.5385, 77.283, 12.3077, 72.4528)
 script = ExtResource("3_b6jsf")
 alignment = 1
+update_polygon = null
 
 [node name="East China" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qv77y")
@@ -4642,6 +4830,7 @@ script = ExtResource("3_b6jsf")
 alignment = 1
 max_power = 6
 is_capital = true
+update_polygon = null
 
 [node name="South Central China" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_56lrh")
@@ -4652,6 +4841,7 @@ polygon = PackedVector2Array(-96, 112, -96, 96, -88, 96, -96, 80, -104, 88, -112
 uv = PackedVector2Array(15.5152, 107.163, 15.5152, 101.209, 19.3939, 101.209, 15.5152, 95.2558, 11.6364, 98.2326, 7.75758, 95.2558, 0, 92.2791, 3.87879, 89.3023, 7.75758, 89.3023, 15.5152, 92.2791, 15.5152, 89.3023, 23.2727, 89.3023, 23.2727, 83.3488, 31.0303, 89.3023, 34.9091, 86.3256, 38.7879, 86.3256, 46.5455, 83.3488, 42.6667, 80.3721, 42.6667, 74.4186, 34.9091, 74.4186, 38.7879, 71.4419, 38.7879, 68.4651, 34.9091, 59.5349, 27.1515, 53.5814, 23.2727, 50.6047, 23.2727, 47.6279, 31.0303, 44.6512, 34.9091, 41.6744, 34.9091, 38.6977, 27.1515, 35.7209, 27.1515, 29.7674, 23.2727, 26.7907, 23.2727, 23.814, 34.9091, 23.814, 27.1515, 14.8837, 38.7879, 11.907, 42.6667, 8.93023, 46.5455, 8.93023, 54.303, 5.95349, 50.4242, 0, 62.0606, 2.97674, 65.9394, 2.97674, 73.697, 0, 65.9394, 8.93023, 69.8182, 11.907, 77.5758, 11.907, 85.3333, 17.8605, 81.4545, 20.8372, 77.5758, 17.8605, 73.697, 23.814, 77.5758, 29.7674, 85.3333, 29.7674, 89.2121, 35.7209, 81.4545, 38.6977, 89.2121, 41.6744, 96.9697, 50.6047, 89.2121, 50.6047, 77.5758, 56.5581, 85.3333, 62.5116, 81.4545, 68.4651, 81.4545, 71.4419, 85.3333, 71.4419, 85.3333, 74.4186, 89.2121, 80.3721, 93.0909, 89.3023, 96.9697, 86.3256, 100.848, 86.3256, 100.848, 89.3023, 96.9697, 92.2791, 100.848, 95.2558, 108.606, 92.2791, 112.485, 89.3023, 116.364, 89.3023, 124.121, 92.2791, 128, 95.2558, 124.121, 101.209, 120.242, 101.209, 112.485, 107.163, 104.727, 107.163, 104.727, 110.14, 100.848, 113.116, 93.0909, 116.093, 85.3333, 116.093, 81.4545, 119.07, 69.8182, 119.07, 65.9394, 119.07, 62.0606, 122.047, 65.9394, 128, 62.0606, 128, 58.1818, 125.023, 58.1818, 119.07, 50.4242, 116.093, 46.5455, 116.093, 34.9091, 119.07, 27.1515, 113.116, 23.2727, 107.163)
 script = ExtResource("3_b6jsf")
 alignment = 3
+update_polygon = null
 
 [node name="Southwest China" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rw1u2")
@@ -4664,6 +4854,7 @@ script = ExtResource("3_b6jsf")
 alignment = 3
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Northwest China" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_vocfi")
@@ -4675,6 +4866,7 @@ uv = PackedVector2Array(0, 53.6774, 7.24528, 66.0645, 4.83019, 74.3226, 7.24528,
 script = ExtResource("3_b6jsf")
 alignment = 3
 max_power = 4
+update_polygon = null
 
 [node name="North Korea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ewoel")
@@ -4686,6 +4878,7 @@ uv = PackedVector2Array(0, 68.9231, 34.9091, 78.7692, 46.5455, 98.4615, 46.5455,
 script = ExtResource("3_b6jsf")
 power = 4
 max_power = 4
+update_polygon = null
 
 [node name="South Korea" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_gbp5p")
@@ -4698,6 +4891,7 @@ script = ExtResource("3_b6jsf")
 power = 4
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="French Guiana" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_y3tqh")
@@ -4708,6 +4902,7 @@ polygon = PackedVector2Array(-32, 48, 0, 48, 8, 24, 32, 8, 0, -16, -24, -32, -24
 uv = PackedVector2Array(0, 128, 64, 128, 80, 89.6, 128, 64, 64, 25.6, 16, 0, 16, 25.6, 0, 38.4, 0, 76.8, 32, 89.6, 0, 115.2)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Suriname" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mxdwx")
@@ -4718,6 +4913,7 @@ polygon = PackedVector2Array(-16, 48, 0, 48, 8, 40, 32, 40, 32, 32, 48, 16, 32, 
 uv = PackedVector2Array(34.9091, 128, 58.1818, 128, 69.8182, 116.364, 104.727, 116.364, 104.727, 104.727, 128, 81.4545, 104.727, 69.8182, 104.727, 34.9091, 116.364, 23.2727, 116.364, 0, 34.9091, 0, 11.6364, 34.9091, 0, 46.5455, 0, 69.8182, 23.2727, 81.4545, 23.2727, 93.0909, 34.9091, 104.727)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Venezuela" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2htu2")
@@ -4730,6 +4926,7 @@ script = ExtResource("3_b6jsf")
 alignment = 19
 power = 2
 max_power = 4
+update_polygon = null
 
 [node name="Colombia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_757wc")
@@ -4740,6 +4937,7 @@ polygon = PackedVector2Array(112, 56, 88, 48, 56, 56, 64, 72, 72, 72, 48, 88, 64
 uv = PackedVector2Array(128, 87.2727, 114.759, 84.3636, 97.1034, 87.2727, 101.517, 93.0909, 105.931, 93.0909, 92.6897, 98.9091, 101.517, 104.727, 105.931, 110.545, 101.517, 119.273, 101.517, 128, 92.6897, 119.273, 75.0345, 119.273, 70.6207, 122.182, 39.7241, 98.9091, 30.8966, 98.9091, 26.4828, 96, 17.6552, 96, 0, 90.1818, 0, 84.3636, 8.82759, 78.5455, 13.2414, 78.5455, 17.6552, 72.7273, 17.6552, 43.6364, 13.2414, 40.7273, 22.069, 34.9091, 22.069, 32, 26.4828, 32, 30.8966, 26.1818, 35.3103, 26.1818, 39.7241, 20.3636, 39.7241, 14.5455, 44.1379, 11.6364, 57.3793, 11.6364, 61.7931, 8.72727, 66.2069, 8.72727, 83.8621, 0, 88.2759, 0, 88.2759, 2.90909, 83.8621, 5.81818, 70.6207, 11.6364, 66.2069, 17.4545, 66.2069, 29.0909, 70.6207, 32, 70.6207, 40.7273, 79.4483, 46.5455, 83.8621, 43.6364, 92.6897, 43.6364, 101.517, 46.5455, 105.931, 52.3636, 114.759, 52.3636, 123.586, 49.4545, 128, 52.3636, 123.586, 55.2727, 123.586, 69.8182, 128, 72.7273, 123.586, 75.6364, 123.586, 78.5455, 128, 81.4545)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Ecuador" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_spj3f")
@@ -4750,6 +4948,7 @@ polygon = PackedVector2Array(-40, 64, -8, 88, 0, 48, 24, 32, 40, 32, 64, 0, 64, 
 uv = PackedVector2Array(9.14286, 106.667, 45.7143, 128, 54.8571, 92.4444, 82.2857, 78.2222, 100.571, 78.2222, 128, 49.7778, 128, 21.3333, 109.714, 21.3333, 100.571, 14.2222, 82.2857, 14.2222, 45.7143, 0, 18.2857, 14.2222, 9.14286, 42.6667, 0, 49.7778, 0, 71.1111, 9.14286, 78.2222, 18.2857, 71.1111, 27.4286, 71.1111, 27.4286, 85.3333)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Galapagos" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_srxeh")
@@ -4760,6 +4959,7 @@ polygon = PackedVector2Array(-32, 24, -24, 32, -16, 24, 8, 24, 8, 32, 16, 24, 0,
 uv = PackedVector2Array(0, 96, 21.3333, 128, 42.6667, 96, 106.667, 96, 106.667, 128, 128, 96, 85.3333, 96, 64, 64, 64, 32, 64, 96, 42.6667, 96, 21.3333, 0, 0, 0, 21.3333, 64)
 script = ExtResource("3_b6jsf")
 max_power = 2
+update_polygon = null
 
 [node name="Peru" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xaaym")
@@ -4771,6 +4971,7 @@ uv = PackedVector2Array(7.75758, 29.5385, 0, 32, 3.87879, 36.9231, 3.87879, 44.3
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Bolivia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_urymn")
@@ -4781,6 +4982,7 @@ polygon = PackedVector2Array(-96, -112, -72, -128, -56, -144, -24, -144, -24, -1
 uv = PackedVector2Array(4.12903, 14.2222, 16.5161, 7.11111, 24.7742, 0, 41.2903, 0, 41.2903, 10.6667, 53.6774, 24.8889, 66.0645, 24.8889, 78.4516, 35.5556, 86.7097, 35.5556, 99.0968, 46.2222, 99.0968, 64, 115.613, 64, 119.742, 74.6667, 128, 81.7778, 123.871, 96, 111.484, 92.4444, 94.9677, 92.4444, 86.7097, 96, 82.5806, 103.111, 82.5806, 117.333, 70.1936, 120.889, 66.0645, 124.444, 57.8064, 120.889, 45.4194, 120.889, 37.1613, 128, 33.0323, 128, 20.6452, 106.667, 20.6452, 92.4444, 12.3871, 78.2222, 4.12903, 78.2222, 4.12903, 71.1111, 12.3871, 64, 12.3871, 60.4444, 8.25806, 53.3333, 0, 56.8889, 4.12903, 49.7778, 12.3871, 42.6667, 4.12903, 35.5556, 4.12903, 32, 8.25806, 28.4444, 8.25806, 21.3333, 4.12903, 17.7778)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Paraguay" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ymlss")
@@ -4791,6 +4993,7 @@ polygon = PackedVector2Array(-72, -8, -40, 24, -24, 24, 24, 48, 24, 72, 16, 88, 
 uv = PackedVector2Array(0, 50.087, 25.6, 72.3478, 38.4, 72.3478, 76.8, 89.0435, 76.8, 105.739, 70.4, 116.87, 83.2, 128, 108.8, 128, 128, 111.304, 128, 72.3478, 115.2, 72.3478, 96, 44.5217, 76.8, 44.5217, 70.4, 38.9565, 70.4, 22.2609, 64, 16.6957, 64, 5.56522, 44.8, 0, 19.2, 0, 6.4, 5.56522, 0, 16.6957)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Uruguay" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5o4iq")
@@ -4801,6 +5004,7 @@ polygon = PackedVector2Array(-40, -64, -40, 16, -24, 32, -8, 32, 8, 40, 32, 40, 
 uv = PackedVector2Array(0, 0, 0, 98.4615, 21.3333, 118.154, 42.6667, 118.154, 64, 128, 96, 128, 128, 98.4615, 117.333, 68.9231, 21.3333, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="South Brazil" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iq1yc")
@@ -4812,6 +5016,7 @@ uv = PackedVector2Array(70.4, 128, 76.8, 119.742, 76.8, 115.613, 89.6, 107.355, 
 script = ExtResource("3_b6jsf")
 alignment = 17
 max_power = 4
+update_polygon = null
 
 [node name="Southeast Brazil" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_pbidp")
@@ -4823,6 +5028,7 @@ uv = PackedVector2Array(0, 98.1333, 8.82759, 85.3333, 17.6552, 59.7333, 22.069, 
 script = ExtResource("3_b6jsf")
 alignment = 17
 max_power = 4
+update_polygon = null
 
 [node name="Northeast Brazil" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bgaqc")
@@ -4834,6 +5040,7 @@ uv = PackedVector2Array(31.1351, 104, 27.6757, 90.6667, 27.6757, 82.6667, 24.216
 script = ExtResource("3_b6jsf")
 alignment = 17
 max_power = 4
+update_polygon = null
 
 [node name="Center-West Brazil" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ju0go")
@@ -4846,6 +5053,7 @@ script = ExtResource("3_b6jsf")
 alignment = 17
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="North Brazil" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nb2m7")
@@ -4858,6 +5066,7 @@ script = ExtResource("3_b6jsf")
 alignment = 17
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Nortwest Brazil" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_dk8qs")
@@ -4869,6 +5078,7 @@ uv = PackedVector2Array(105.6, 128, 102.4, 125.585, 96, 125.585, 86.4, 118.34, 7
 script = ExtResource("3_b6jsf")
 alignment = 17
 max_power = 4
+update_polygon = null
 
 [node name="Buenos Aires" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jlhxs")
@@ -4881,6 +5091,7 @@ script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Central Argentina" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8el1p")
@@ -4892,6 +5103,7 @@ uv = PackedVector2Array(114.526, 36.5714, 107.789, 42.6667, 101.053, 36.5714, 80
 script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
+update_polygon = null
 
 [node name="North Greater Argentina" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_344e6")
@@ -4903,6 +5115,7 @@ uv = PackedVector2Array(7.11111, 16, 14.2222, 26.6667, 7.11111, 37.3333, 3.55556
 script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
+update_polygon = null
 
 [node name="Nuevo Cuyo" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fdbby")
@@ -4914,6 +5127,7 @@ uv = PackedVector2Array(128, 113.778, 76.8, 113.778, 76.8, 128, 51.2, 128, 34.13
 script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
+update_polygon = null
 
 [node name="Falklands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5p53o")
@@ -4924,6 +5138,7 @@ polygon = PackedVector2Array(16, 8, 24, 0, 16, -8, -8, -16, -16, -8, -24, 8, -24
 uv = PackedVector2Array(106.667, 96, 128, 64, 106.667, 32, 42.6667, 0, 21.3333, 32, 0, 96, 0, 128, 42.6667, 64, 42.6667, 96, 64, 128, 85.3333, 96)
 script = ExtResource("3_b6jsf")
 max_power = 2
+update_polygon = null
 
 [node name="Sandwich" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_x14o6")
@@ -4934,6 +5149,7 @@ polygon = PackedVector2Array(-32, -8, -24, 0, -16, 0, 8, 16, 16, 16, 16, 8, 8, 0
 uv = PackedVector2Array(0, 0, 21.3333, 42.6667, 42.6667, 42.6667, 106.667, 128, 128, 128, 128, 85.3333, 106.667, 42.6667, 64, 0)
 script = ExtResource("3_b6jsf")
 max_power = 2
+update_polygon = null
 
 [node name="Tierra del Feugo" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_c11pk")
@@ -4944,6 +5160,7 @@ polygon = PackedVector2Array(-40, -24, -16, -48, 0, -24, 24, -8, 40, 0, 64, 0, 5
 uv = PackedVector2Array(35.5556, 42.6667, 56.8889, 0, 71.1111, 42.6667, 92.4444, 71.1111, 106.667, 85.3333, 128, 85.3333, 120.889, 113.778, 99.5556, 128, 85.3333, 113.778, 64, 113.778, 28.4444, 85.3333, 0, 56.8889, 14.2222, 42.6667)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Santa Cruz" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_higfu")
@@ -4955,6 +5172,7 @@ uv = PackedVector2Array(82.2857, 0, 0, 7.11111, 0, 35.5556, 9.14286, 49.7778, 0,
 script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
+update_polygon = null
 
 [node name="Chubut" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_p57of")
@@ -4966,6 +5184,7 @@ uv = PackedVector2Array(94.3158, 117.333, 94.3158, 106.667, 101.053, 85.3333, 10
 script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
+update_polygon = null
 
 [node name="North Chile" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_hb0b6")
@@ -4977,6 +5196,7 @@ uv = PackedVector2Array(25.6, 128, 25.6, 100.571, 38.4, 91.4286, 25.6, 86.8571, 
 script = ExtResource("3_b6jsf")
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Central Chile" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_b8ox8")
@@ -4988,6 +5208,7 @@ uv = PackedVector2Array(71.1111, 0, 14.2222, 0, 0, 8.93023, 14.2222, 14.8837, 14
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="South Chile" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_0noe3")
@@ -4998,6 +5219,7 @@ polygon = PackedVector2Array(-32, -128, -40, -112, -40, -80, -32, -48, -24, -32,
 uv = PackedVector2Array(13.4737, 0, 6.73684, 7.52941, 6.73684, 22.5882, 13.4737, 37.6471, 20.2105, 45.1765, 13.4737, 41.4118, 6.73684, 33.8824, 0, 33.8824, 6.73684, 41.4118, 6.73684, 52.7059, 6.73684, 64, 13.4737, 60.2353, 20.2105, 67.7647, 13.4737, 75.2941, 26.9474, 90.3529, 47.1579, 105.412, 53.8947, 112.941, 67.3684, 112.941, 87.5789, 128, 101.053, 124.235, 121.263, 124.235, 128, 120.471, 107.789, 116.706, 87.5789, 109.176, 80.8421, 101.647, 67.3684, 97.8824, 53.8947, 86.5882, 60.6316, 79.0588, 53.8947, 71.5294, 53.8947, 56.4706, 40.4211, 33.8824, 20.2105, 15.0588)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Hanga Roa" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_pnb2d")
@@ -5008,6 +5230,7 @@ polygon = PackedVector2Array(-48, 32, -48, 40, -40, 40)
 uv = PackedVector2Array(0, 0, 0, 128, 128, 128)
 script = ExtResource("3_b6jsf")
 max_power = 2
+update_polygon = null
 
 [node name="Remaining Patagonica" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_m6ymx")
@@ -5019,6 +5242,7 @@ uv = PackedVector2Array(0, 40.4211, 6.73684, 53.8947, 6.73684, 101.053, 13.4737,
 script = ExtResource("3_b6jsf")
 alignment = 22
 max_power = 3
+update_polygon = null
 
 [node name="Caribbean" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_1jwb0")
@@ -5029,6 +5253,7 @@ polygon = PackedVector2Array(-96, -64, -96, -56, -88, -48, -72, -56, 120, -56, 1
 uv = PackedVector2Array(0, 42.6667, 0, 85.3333, 4.26667, 128, 12.8, 85.3333, 115.2, 85.3333, 123.733, 85.3333, 128, 42.6667, 123.733, 0, 115.2, 0, 110.933, 42.6667, 110.933, 85.3333, 17.0667, 85.3333, 17.0667, 42.6667, 12.8, 0, 4.26667, 0)
 script = ExtResource("3_b6jsf")
 alignment = 19
+update_polygon = null
 
 [node name="Windward Islands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_qtpih")
@@ -5039,6 +5264,7 @@ polygon = PackedVector2Array(8, -56, 24, -64, 48, -40, 48, 40, 40, 40, 48, 32, 4
 uv = PackedVector2Array(0, 9.84615, 51.2, 0, 128, 29.5385, 128, 128, 102.4, 128, 128, 118.154, 102.4, 108.308, 128, 98.4615, 128, 88.6154, 76.8, 78.7692, 102.4, 78.7692, 128, 68.9231, 128, 59.0769, 102.4, 59.0769, 128, 49.2308, 128, 39.3846, 76.8, 29.5385, 0, 29.5385, 102.4, 29.5385, 128, 29.5385, 76.8, 9.84615)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Dominican Republic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tcppa")
@@ -5050,6 +5276,7 @@ polygon = PackedVector2Array(-24, -16, -32, 24, -24, 32, -16, 16, 0, 16, 32, 24,
 uv = PackedVector2Array(14.2222, 0, 0, 106.667, 14.2222, 128, 28.4444, 85.3333, 56.8889, 85.3333, 113.778, 106.667, 128, 64, 99.5556, 21.3333, 71.1111, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Haiti" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3hl3a")
@@ -5060,6 +5287,7 @@ polygon = PackedVector2Array(-32, 8, -16, 24, -8, 16, 16, 24, 24, -16, -8, -24, 
 uv = PackedVector2Array(0, 85.3333, 36.5714, 128, 54.8571, 106.667, 109.714, 128, 128, 21.3333, 54.8571, 0, 73.1429, 42.6667, 54.8571, 64, 73.1429, 85.3333)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Cuba" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_h3xhy")
@@ -5070,6 +5298,7 @@ polygon = PackedVector2Array(-120, 0, -120, -16, -104, -32, -80, -32, -72, -40, 
 uv = PackedVector2Array(0, 64, 0, 38.4, 10.6667, 12.8, 26.6667, 12.8, 32, 0, 37.3333, 0, 42.6667, 12.8, 64, 12.8, 69.3333, 25.6, 80, 25.6, 101.333, 76.8, 106.667, 76.8, 128, 102.4, 122.667, 115.2, 96, 115.2, 90.6667, 128, 80, 128, 90.6667, 115.2, 90.6667, 102.4, 80, 89.6, 74.6667, 76.8, 64, 64, 53.3333, 38.4, 37.3333, 38.4, 37.3333, 25.6, 26.6667, 25.6, 21.3333, 38.4, 16, 38.4)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Bahamas" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_1tiyd")
@@ -5081,6 +5310,7 @@ uv = PackedVector2Array(64, 0, 92, 0, 96, 14.2222, 128, 42.6667, 128, 14.2222, 9
 script = ExtResource("3_b6jsf")
 alignment = 8
 max_power = 2
+update_polygon = null
 
 [node name="Antillas Mayores" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jioay")
@@ -5091,6 +5321,7 @@ polygon = PackedVector2Array(8, 32, -24, -16, -48, -16, -32, -8, -32, 0, -24, -1
 uv = PackedVector2Array(128, 96, 54.8571, 0, 0, 0, 36.5714, 16, 36.5714, 32, 54.8571, 0, 91.4286, 48, 73.1429, 48, 91.4286, 64, 91.4286, 48, 128, 96, 91.4286, 112, 109.714, 128)
 script = ExtResource("3_b6jsf")
 max_power = 2
+update_polygon = null
 
 [node name="Panama" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_63ch7")
@@ -5102,6 +5333,7 @@ uv = PackedVector2Array(109.714, 128, 100.571, 106.667, 100.571, 64, 91.4286, 42
 script = ExtResource("3_b6jsf")
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Costa Rica" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3m7yv")
@@ -5112,6 +5344,7 @@ polygon = PackedVector2Array(-32, -24, -16, -24, -8, -16, 16, -16, 32, 8, 32, 16
 uv = PackedVector2Array(0, 0, 32, 0, 48, 18.2857, 96, 18.2857, 128, 73.1429, 128, 91.4286, 112, 128, 96, 128, 80, 91.4286, 48, 73.1429, 32, 54.8571, 16, 73.1429, 0, 54.8571)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Nicaragua" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jblm7")
@@ -5122,6 +5355,7 @@ polygon = PackedVector2Array(-24, 40, -48, 0, -24, -24, -8, -24, 0, -32, 16, -32
 uv = PackedVector2Array(34.9091, 118.154, 0, 68.9231, 34.9091, 39.3846, 58.1818, 39.3846, 69.8182, 29.5385, 93.0909, 29.5385, 104.727, 0, 128, 19.6923, 116.364, 68.9231, 104.727, 68.9231, 104.727, 128, 69.8182, 128, 58.1818, 118.154, 58.1818, 98.4615, 46.5455, 88.6154, 34.9091, 108.308, 46.5455, 118.154)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Honduras" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_sp3kg")
@@ -5132,6 +5366,7 @@ polygon = PackedVector2Array(-24, 40, -8, 40, 8, 24, 24, 24, 32, 16, 48, 16, 56,
 uv = PackedVector2Array(36.5714, 128, 54.8571, 128, 73.1429, 96, 91.4286, 96, 100.571, 80, 118.857, 80, 128, 32, 118.857, 16, 100.571, 0, 82.2857, 0, 73.1429, 16, 27.4286, 16, 18.2857, 48, 18.2857, 64, 0, 80, 18.2857, 80, 36.5714, 96)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="El Salvador" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jybsl")
@@ -5142,6 +5377,7 @@ polygon = PackedVector2Array(24, 8, 0, 8, -16, 0, -24, -8, -8, -16, 8, -16, 24, 
 uv = PackedVector2Array(128, 128, 64, 128, 21.3333, 85.3333, 0, 42.6667, 42.6667, 0, 85.3333, 0, 128, 42.6667)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Guatemala, Belize" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ni2ev")
@@ -5152,6 +5388,7 @@ polygon = PackedVector2Array(-16, 48, -40, 48, -48, 32, -48, 16, -32, 0, -8, 0, 
 uv = PackedVector2Array(46.5455, 128, 11.6364, 128, 0, 108.308, 0, 88.6154, 23.2727, 68.9231, 58.1818, 68.9231, 46.5455, 49.2308, 34.9091, 39.3846, 58.1818, 19.6923, 69.8182, 29.5385, 93.0909, 29.5385, 128, 0, 128, 39.3846, 104.727, 59.0769, 93.0909, 68.9231, 104.727, 78.7692, 93.0909, 98.4615, 93.0909, 108.308)
 script = ExtResource("3_b6jsf")
 max_power = 4
+update_polygon = null
 
 [node name="Guyana" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_24qay")
@@ -5163,6 +5400,7 @@ uv = PackedVector2Array(0, 51.2, 51.2, 76.8, 51.2, 89.6, 25.6, 96, 25.6, 115.2, 
 script = ExtResource("3_b6jsf")
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Florida" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_1gt6g")
@@ -5175,6 +5413,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 is_capital = true
+update_polygon = null
 
 [node name="Miss Ala Georgia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ekwp7")
@@ -5187,6 +5426,7 @@ uv = PackedVector2Array(44.3077, 128, 19.6923, 128, 24.6154, 106.667, 0, 106.667
 script = ExtResource("3_b6jsf")
 alignment = 21
 max_power = 6
+update_polygon = null
 
 [node name="Calorinia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_i6cc2")
@@ -5199,6 +5439,7 @@ uv = PackedVector2Array(0, 80.8421, 17.4545, 80.8421, 34.9091, 128, 46.5455, 121
 script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
+update_polygon = null
 
 [node name="Tennessee" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rpyrm")
@@ -5211,6 +5452,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Louisiana" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_u7ihx")
@@ -5223,6 +5465,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Texas" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_c0ux1")
@@ -5236,6 +5479,7 @@ alignment = 21
 power = 0
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="West Marylaware" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_1lntp")
@@ -5249,6 +5493,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="North-East Coast of USA" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_b2lhy")
@@ -5261,6 +5506,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 is_capital = true
+update_polygon = null
 
 [node name="New York Jersey" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jdhs3")
@@ -5272,6 +5518,7 @@ uv = PackedVector2Array(0, 60.6316, 64, 60.6316, 78.2222, 67.3684, 78.2222, 74.1
 script = ExtResource("3_b6jsf")
 alignment = 8
 max_power = 4
+update_polygon = null
 
 [node name="Pennsylvania" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wrxtg")
@@ -5285,6 +5532,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Ohio" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_6iylo")
@@ -5297,6 +5545,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Kentucky" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_85stb")
@@ -5309,6 +5558,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Indinoiswa" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_n8mka")
@@ -5321,6 +5571,7 @@ uv = PackedVector2Array(46.08, 72, 35.84, 64, 0, 64, 0, 24, 5.12, 16, 5.12, 0, 6
 script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
+update_polygon = null
 
 [node name="Michigan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_6xiiy")
@@ -5333,6 +5584,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Arkansas" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_px3df")
@@ -5346,6 +5598,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Oklahoma" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_j8esm")
@@ -5357,6 +5610,7 @@ uv = PackedVector2Array(0, 14.2222, 0, 0, 128, 0, 121.6, 14.2222, 108.8, 128, 96
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Missouri" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_cx13i")
@@ -5369,6 +5623,7 @@ script = ExtResource("3_b6jsf")
 alignment = 21
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Nebransas" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_kgv8a")
@@ -5379,6 +5634,7 @@ polygon = PackedVector2Array(-88, 8, -48, 8, -56, 32, -80, 96, 56, 96, 72, 40, 7
 uv = PackedVector2Array(0, 45.1765, 32, 45.1765, 25.6, 67.7647, 6.4, 128, 115.2, 128, 128, 75.2941, 128, 67.7647, 121.6, 52.7059, 121.6, 15.0588, 115.2, 7.52941, 102.4, 7.52941, 96, 0, 19.2, 0)
 script = ExtResource("3_b6jsf")
 power = 0
+update_polygon = null
 
 [node name="Wisconsin" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8iqli")
@@ -5392,6 +5648,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Minnesota" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rdblu")
@@ -5404,6 +5661,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Dakota" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_by8nm")
@@ -5415,6 +5673,7 @@ polygon = PackedVector2Array(-56, -32, -64, -8, -80, 32, 16, 32, 24, 40, 40, 40,
 uv = PackedVector2Array(17.4545, 64, 11.6364, 83.2, 0, 115.2, 69.8182, 115.2, 75.6364, 121.6, 87.2727, 121.6, 93.0909, 128, 98.9091, 121.6, 98.9091, 108.8, 116.364, 64, 128, 0, 40.7273, 0)
 script = ExtResource("3_b6jsf")
 power = 0
+update_polygon = null
 
 [node name="New Mexico" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2tra0")
@@ -5425,6 +5684,7 @@ polygon = PackedVector2Array(-88, 56, -72, 56, -64, 48, 40, 48, 72, -48, 72, -56
 uv = PackedVector2Array(0, 128, 12.8, 128, 19.2, 118.857, 102.4, 118.857, 128, 9.14286, 128, 0, 44.8, 0)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Colorado" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_myaij")
@@ -5436,6 +5696,7 @@ uv = PackedVector2Array(0, 128, 102.4, 128, 121.6, 34.9091, 128, 0, 32, 0)
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Wyoming" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_blcqo")
@@ -5447,6 +5708,7 @@ uv = PackedVector2Array(6.4, 93.0909, 0, 128, 96, 128, 115.2, 58.1818, 128, 0, 3
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Montana" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tekwa")
@@ -5458,6 +5720,7 @@ uv = PackedVector2Array(33.1852, 118.857, 104.296, 118.857, 128, 0, 4.74074, 0, 
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Idaho" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bxfln")
@@ -5469,6 +5732,7 @@ uv = PackedVector2Array(90.3529, 0, 75.2941, 0, 45.1765, 60.9524, 45.1765, 73.14
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Washington" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rljcy")
@@ -5480,6 +5744,7 @@ uv = PackedVector2Array(0, 128, 44.8, 128, 64, 116.364, 102.4, 116.364, 128, 0, 
 script = ExtResource("3_b6jsf")
 alignment = 8
 power = 2
+update_polygon = null
 
 [node name="Utah" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_gupal")
@@ -5491,6 +5756,7 @@ uv = PackedVector2Array(0, 128, 90.3529, 128, 128, 27.4286, 90.3529, 27.4286, 97
 script = ExtResource("3_b6jsf")
 max_power = 3
 is_capital = true
+update_polygon = null
 
 [node name="Oregon" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2rwuy")
@@ -5503,6 +5769,7 @@ script = ExtResource("3_b6jsf")
 alignment = 8
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Nevada" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_v8pcx")
@@ -5514,6 +5781,7 @@ uv = PackedVector2Array(0, 64, 49.7778, 128, 64, 113.778, 71.1111, 113.778, 128,
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Arizona" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rfuqs")
@@ -5525,6 +5793,7 @@ uv = PackedVector2Array(0, 100.571, 49.7778, 128, 78.2222, 128, 128, 0, 42.6667,
 script = ExtResource("3_b6jsf")
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="California" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_hswje")
@@ -5536,6 +5805,7 @@ uv = PackedVector2Array(24, 0, 96, 0, 64, 46.08, 120, 92.16, 128, 107.52, 104, 1
 script = ExtResource("3_b6jsf")
 alignment = 8
 is_capital = true
+update_polygon = null
 
 [node name="Baja California" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_4mxgd")
@@ -5549,6 +5819,7 @@ script = ExtResource("3_b6jsf")
 alignment = 27
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="North Mexico" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rtmvs")
@@ -5562,6 +5833,7 @@ script = ExtResource("3_b6jsf")
 alignment = 27
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Central Mexico" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_6s5lk")
@@ -5573,6 +5845,7 @@ uv = PackedVector2Array(38.9565, 128, 50.087, 118.857, 61.2174, 123.429, 77.913,
 script = ExtResource("3_b6jsf")
 alignment = 27
 is_capital = true
+update_polygon = null
 
 [node name="South Mexico" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_byne4")
@@ -5584,6 +5857,7 @@ uv = PackedVector2Array(0, 82.8235, 32, 105.412, 51.2, 112.941, 70.4, 128, 89.6,
 script = ExtResource("3_b6jsf")
 alignment = 27
 max_power = 4
+update_polygon = null
 
 [node name="East Mexico" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_2r48v")
@@ -5595,6 +5869,7 @@ uv = PackedVector2Array(0, 101.053, 6.73684, 80.8421, 0, 60.6316, 33.6842, 53.89
 script = ExtResource("3_b6jsf")
 alignment = 27
 max_power = 3
+update_polygon = null
 
 [node name="Gulf Of Mexico" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_g1286")
@@ -5606,6 +5881,7 @@ uv = PackedVector2Array(0, 32, 42.6667, 128, 85.3333, 96, 128, 32, 128, 0, 85.33
 script = ExtResource("3_b6jsf")
 alignment = 27
 power = 0
+update_polygon = null
 
 [node name="Newfoundland" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ulngt")
@@ -5618,6 +5894,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Bay of Fundy" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_4k1tt")
@@ -5630,6 +5907,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Labrador" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3i1do")
@@ -5642,6 +5920,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Quebec" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_onowi")
@@ -5653,6 +5932,7 @@ uv = PackedVector2Array(7.24528, 83.4783, 0, 114.087, 2.41509, 122.435, 16.9057,
 script = ExtResource("3_b6jsf")
 alignment = 11
 max_power = 4
+update_polygon = null
 
 [node name="Ontario" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_swkac")
@@ -5666,6 +5946,7 @@ alignment = 11
 power = 3
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Manitoba" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ewc5n")
@@ -5678,6 +5959,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Nunavut" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_vj4g4")
@@ -5690,6 +5972,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="What\'s Baffin" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_811ke")
@@ -5701,6 +5984,7 @@ uv = PackedVector2Array(46.08, 0, 33.28, 4.57143, 20.48, 22.8571, 23.04, 32, 28.
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Remaining Inuit Islands" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_bm3pj")
@@ -5712,6 +5996,7 @@ uv = PackedVector2Array(0, 89.6, 7.64179, 64, 15.2836, 51.2, 24.8358, 51.2, 30.5
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Victoria Banks" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_0sa6j")
@@ -5723,6 +6008,7 @@ uv = PackedVector2Array(0, 54.8571, 3.28205, 73.1429, 6.5641, 73.1429, 9.84615, 
 script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 3
+update_polygon = null
 
 [node name="Ellesmere, Axel Heiberg" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_u0hef")
@@ -5735,6 +6021,7 @@ script = ExtResource("3_b6jsf")
 alignment = 7
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Saskatchewan" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3vkvh")
@@ -5747,6 +6034,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Alberta" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_i4g2q")
@@ -5758,6 +6046,7 @@ uv = PackedVector2Array(45.4194, 0, 128, 0, 57.8064, 128, 24.7742, 128, 20.6452,
 script = ExtResource("3_b6jsf")
 alignment = 11
 max_power = 4
+update_polygon = null
 
 [node name="British Columbia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_62odr")
@@ -5770,6 +6059,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 4
+update_polygon = null
 
 [node name="Yukon" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_4rhdc")
@@ -5783,6 +6073,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Alaska" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_cv0w7")
@@ -5795,6 +6086,7 @@ script = ExtResource("3_b6jsf")
 alignment = 7
 max_power = 4
 is_capital = true
+update_polygon = null
 
 [node name="Canada Northwest Territories 1" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_h5aiq")
@@ -5807,6 +6099,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Canada Northwest Territories 2" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3kmjd")
@@ -5819,6 +6112,7 @@ script = ExtResource("3_b6jsf")
 alignment = 11
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Hawaii" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_yiiwa")
@@ -5829,6 +6123,7 @@ polygon = PackedVector2Array(-32, -16, -16, -16, -8, -8, 8, -8, 8, 0, 32, 0, 24,
 uv = PackedVector2Array(0, 0, 23.2727, 0, 34.9091, 14.2222, 58.1818, 14.2222, 58.1818, 28.4444, 93.0909, 28.4444, 81.4545, 42.6667, 81.4545, 85.3333, 93.0909, 71.1111, 128, 85.3333, 116.364, 113.778, 93.0909, 128, 81.4545, 113.778, 81.4545, 56.8889, 46.5455, 56.8889, 34.9091, 28.4444, 11.6364, 14.2222)
 script = ExtResource("3_b6jsf")
 max_power = 3
+update_polygon = null
 
 [node name="Neutral Antarctic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_gibio")
@@ -5842,6 +6137,7 @@ script = ExtResource("3_b6jsf")
 alignment = 24
 power = 3
 max_power = 3
+update_polygon = null
 
 [node name="Chilean Antarctic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wmwwx")
@@ -5855,6 +6151,7 @@ script = ExtResource("3_b6jsf")
 alignment = 24
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Argentina Antarctic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_886bg")
@@ -5867,6 +6164,7 @@ script = ExtResource("3_b6jsf")
 alignment = 24
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Norway Antarctic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_iguua")
@@ -5879,6 +6177,7 @@ script = ExtResource("3_b6jsf")
 alignment = 24
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Australia Antarctic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_8q3e8")
@@ -5892,6 +6191,7 @@ script = ExtResource("3_b6jsf")
 alignment = 24
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="New Zealand Antarctic" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_l0suu")
@@ -5904,6 +6204,7 @@ script = ExtResource("3_b6jsf")
 alignment = 24
 power = 0
 max_power = 3
+update_polygon = null
 
 [node name="Mountains0" type="Line2D" parent="."]
 position = Vector2(-432, -1088)
