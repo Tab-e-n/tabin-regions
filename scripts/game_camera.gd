@@ -531,9 +531,9 @@ func update_current_action(current_phase : int):
 	if current_phase == RegionControl.PHASE.MOBILIZE:
 		advance_turn_visual(2)
 	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
-		advance_turn_visual(0)
-	else:
 		advance_turn_visual(1)
+	else:
+		advance_turn_visual(0)
 	if PhaseInfo:
 		PhaseInfo.text = PHASE_INFO[current_phase]
 
@@ -634,7 +634,7 @@ func _on_actions_modified(amount : int) -> void:
 	if amount != 0:
 		make_action_changed_particle(amount, region_control.get_current_alignment_color())
 	if region_control.get_action_amount() == 0:
-		advance_turn_visual(0)
+		advance_turn_visual(1)
 
 
 func _on_turn_order_hovered():

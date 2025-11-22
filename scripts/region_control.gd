@@ -527,7 +527,7 @@ func _ready():
 			_remove_alignment(alignment, remove_capitals_with_alignments)
 	
 	if print_more_info:
-		print(align_play_order)
+		print("Play Order ", align_play_order)
 	
 	current_playing_align = align_play_order[0]
 	
@@ -546,18 +546,25 @@ func _ready():
 		for i in range(player_amount):
 			align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER.USER
 	
+	if print_more_info:
+		print("DPs ", align_controlers)
+	
 	Options.timestamp("RegionCotrol ready dp", "RegionControl")
 	
 	# -- ALIANCES --
 	if not ReplayControl.replay_active:
-		if alignment_aliances.size() < align_amount:
-			alignment_aliances.resize(align_amount)
+		if align_amount > alignment_aliances.size():
+			for i in range(align_amount - alignment_aliances.size()):
+				alignment_aliances.append(0)
 		
 		if not use_aliances:
-			_fill_aliances(align_amount, false)
+			_fill_aliances(align_amount)
 		else:
 			if use_autoaliances:
 				_fill_aliances(autoaliances_divisions_amount)
+	
+	if print_more_info:
+		print("Aliances ", alignment_aliances)
 	
 	Options.timestamp("RegionCotrol ready aliances", "RegionControl")
 	
@@ -703,7 +710,6 @@ func _count_up_regions():
 
 
 func _set_capital_distance():
-#	var time_start : int = Time.get_ticks_usec()
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
@@ -713,7 +719,6 @@ func _set_capital_distance():
 		var capital : Region = node as Region
 		if not capital or not capital.is_capital:
 			continue
-#		print(capital.name)
 		capital.distance_from_capital = 0
 		
 		var current_distance : int = 2
@@ -736,7 +741,6 @@ func _set_capital_distance():
 				var region : Region = link.get_other_region(start) as Region
 				if not region or region.distance_from_capital < current_distance:
 					continue
-#				print(region.name)
 				if region.is_capital:
 					region.distance_from_capital = 0
 					
@@ -748,7 +752,6 @@ func _set_capital_distance():
 					
 				elif region.distance_from_capital == current_distance and not visited.contains(region):
 					region.distance_from_capital -= 1
-#	print(Time.get_ticks_usec() - time_start)
 
 
 func _check_capital_distance():
@@ -1257,6 +1260,7 @@ func action_done(region_name : String, amount : int = 1):
 		GameStats.add_to_stat(current_playing_align, stat, amount)
 		for i in range(amount):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
+	
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()
 

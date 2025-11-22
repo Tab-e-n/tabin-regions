@@ -296,7 +296,7 @@ max_player_amount = 5
 use_preset_alignments = true
 preset_alignments = Array[int]([0, 0, 0, 0, 0, 6, 7])
 custom_dp_setup = Array[int]([0, 0, 0, 0, 0, 5, 0])
-alignment_aliances = Array[int]([0, 0, 0, 0, 0, -1, 5])
+alignment_aliances = Array[int]([0, 0, 0, 0, 0, 0, -1, 6])
 complexity = 3
 lore = "The short-sighted tribes of the Volcanic Islands have angered the Gods.
 Soon, they will all die, but instead if escaping they shall spend their

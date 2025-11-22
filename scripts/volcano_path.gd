@@ -12,7 +12,7 @@ var current : int = 0
 
 func show_warnings():
 	for region in pathway:
-		var warning : RegionWarning = region.get_node("VolcanoWarning") as RegionWarning
+		var warning : RegionWarning = region.get_node(Volcano.WARNING_NAME) as RegionWarning
 		if not warning:
 			continue
 		warning.show_self()
@@ -20,7 +20,7 @@ func show_warnings():
 
 func hide_warnings():
 	for region in pathway:
-		var warning : RegionWarning = region.get_node("VolcanoWarning") as RegionWarning
+		var warning : RegionWarning = region.get_node(Volcano.WARNING_NAME) as RegionWarning
 		if not warning:
 			continue
 		warning.hide_self()

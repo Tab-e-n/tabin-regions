@@ -2,6 +2,9 @@ extends Node
 class_name Volcano
 
 
+const WARNING_NAME : String = "VolcanoWarning"
+
+
 @export var residing_region : Region
 @export var dummy_alignment : int
 
@@ -36,6 +39,12 @@ func _ready():
 		queue_free()
 		return
 	
+	region_control.turn_ended.connect(_start_volcano_turn)
+	_deferred_ready.call_deferred()
+	activate_pathways.call_deferred()
+
+
+func _deferred_ready():
 	for node in get_children():
 		if not node is VolcanoPath:
 			continue
@@ -44,22 +53,17 @@ func _ready():
 		for reg_name in path.pathway_strings:
 			var region = region_control.get_region(reg_name)
 			if not region:
+				push_warning("Could not get region ", reg_name)
 				continue
 			path.pathway.append(region)
 			
-			if not region.has_node("VolcanoWarning"):
+			if not region.has_node(WARNING_NAME):
 				var warning : RegionWarning = preload("res://objects/warning.tscn").instantiate() as RegionWarning
 				warning.warning_number = 1
-				warning.name = "VolcanoWarning"
+				warning.name = WARNING_NAME
 				warning.color = region_control.align_color[dummy_alignment]
 				region.add_child(warning)
 	
-	region_control.turn_ended.connect(_start_volcano_turn)
-	call_deferred("activate_pathways")
-	call_deferred("_deferred_ready")
-
-
-func _deferred_ready():
 	dp_control = region_control.dp_control
 	var controler_id = region_control.align_controlers[dummy_alignment - 1]
 	controler = dp_control.controlers[controler_id] as DPDummy
