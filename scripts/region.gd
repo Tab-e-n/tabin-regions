@@ -55,8 +55,6 @@ func _ready():
 	
 	if Engine.is_editor_hint():
 		_recalculate_polygon()
-		if region_control and not region_control.update_textures.is_connected(_on_update_texture):
-			region_control.update_textures.connect(_on_update_texture)
 		return
 	
 	_ready_deferred.call_deferred()
@@ -202,21 +200,8 @@ func set_max_power(new_max : int, reduce_power : bool = true):
 	city.update_region_name()
 
 
-func action_decided():
-	if region_control.current_phase != RegionControl.PHASE.MOBILIZE:
-		if region_control.has_enough_actions():
-			if region_control.alignment_friendly(region_control.current_playing_align, alignment):
-				if reinforce(region_control.current_playing_align):
-					region_control.action_done(name)
-					city_particle(false)
-					return
-			elif alignment_can_attack(region_control.current_playing_align):
-				if incoming_attack(region_control.current_playing_align):
-					region_control.action_done(name)
-					city_particle(false)
-					return
-		region_control.spawn_cross_particle(position)
-	else:
+func action_decided() -> bool:
+	if region_control.current_phase == RegionControl.PHASE.MOBILIZE:
 		if region_control.current_playing_align == alignment:
 			var amount_requested = 1
 			if Input.is_action_pressed("shift") and region_control.is_player_controled:
@@ -225,8 +210,21 @@ func action_decided():
 			if amount_gotten:
 				region_control.action_done(name, amount_gotten)
 				city_particle(true)
-				return
-		region_control.spawn_cross_particle(position)
+				return true
+	else:
+		if region_control.has_enough_actions():
+			if region_control.alignment_friendly(region_control.current_playing_align, alignment):
+				if reinforce(region_control.current_playing_align):
+					region_control.action_done(name)
+					city_particle(false)
+					return true
+			elif alignment_can_attack(region_control.current_playing_align):
+				if incoming_attack(region_control.current_playing_align):
+					region_control.action_done(name)
+					city_particle(false)
+					return true
+	region_control.spawn_cross_particle(position)
+	return false
 
 
 ## Checks if a region of the attackers alignment is connected to the current region.

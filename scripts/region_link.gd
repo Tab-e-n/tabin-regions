@@ -42,6 +42,8 @@ var label_size : Vector2 = LABEL_SIZE_BASE
 var num : int = 0
 var timer : float = 0.0
 
+var first_time_update : bool = true
+
 
 func _ready():
 	if Engine.is_editor_hint():
@@ -49,30 +51,38 @@ func _ready():
 	
 	if not from_path.is_empty():
 		from = get_node(from_path)
-	if from:
-		from.links.append(self)
 	if not to_path.is_empty():
 		to = get_node(to_path)
+	
+	if from:
+		from.links.append(self)
+		if from.kinetic:
+			kinetic = true
 	if to:
 		to.links.append(self)
+		if to.kinetic:
+			kinetic = true
+	
+	var region_control : RegionControl = _get_region_control()
+	
+	if region_control:
+		if region_control.dummy:
+			return
+		width *= region_control.city_size
 	
 	gradient = Gradient.new()
 	gradient.set_offset(1, 0.325)
 	gradient.add_point(0.675, TINT)
 	gradient.add_point(1.0, TINT)
 	
-	update()
-	
-	var region_control : RegionControl = _get_region_control()
-	
-	if region_control:
-		width *= region_control.city_size
-	
 	default_color = Color(0, 0, 0.2)
 	
 	z_index = 10
 	
 	hide_self()
+	
+	Options.timestamp(" -- " + name + " ready", "RegionLinks")
+	
 
 
 func _process(delta):
@@ -100,6 +110,45 @@ func _get_region_control() -> RegionControl:
 	return region_control
 
 
+func _make_label() -> void:
+	label = Label.new()
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	label.z_index = 11
+	label.size = LABEL_SIZE_BASE
+	var region_control : RegionControl = _get_region_control()
+	if region_control:
+		label.scale *= region_control.city_size
+		label_size *= region_control.city_size
+	add_child(label)
+
+
+func _set_cutoff_label(close : Region, far : Region) -> void:
+	if not close or not far:
+		return
+	label.position = far.position * 0.25 + close.position * 0.75 - label_size * 0.5
+	label.text = far.name + " " + label.text
+
+
+func _get_region_name(path : NodePath) -> String:
+	if path.is_empty():
+		return "_"
+	var region : Region = get_node(path) as Region
+	if region:
+		return region.name
+	return "?"
+
+
+func _generate_name() -> void:
+	var to_name : String = _get_region_name(to_path)
+	var from_name : String = _get_region_name(from_path)
+	
+	if to_name < from_name:
+		name = to_name + "-" + from_name
+	else:
+		name = from_name + "-" + to_name
+
+
 func get_other_region(region : Region) -> Region:
 	if disabled:
 		return null
@@ -124,23 +173,8 @@ func set_power_reduction(amount : int):
 	update_label()
 
 
-func update():
-	clear_points()
-	add_point(from.position)
-	add_point(to.position * 0.325 + from.position * 0.675)
-	add_point(to.position * 0.675 + from.position * 0.325)
-	add_point(to.position)
-	
-	update_gradient()
-	update_label()
-	
-	var difference : Vector2 = to.position - from.position
-	var distance : float = pow(difference.x, 2) + pow(difference.y * 1.333, 2)
-	
-	if distance > CUTOFF_DISTANCE:
-		is_cutoff = true
-	else:
-		is_cutoff = false
+func should_have_label() -> bool:
+	return kinetic or is_cutoff or power_reduction > 0
 
 
 func check_and_make_label() -> void:
@@ -148,28 +182,6 @@ func check_and_make_label() -> void:
 		return
 	if should_have_label():
 		_make_label()
-
-
-func _make_label() -> void:
-	label = Label.new()
-	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
-	label.z_index = 11
-	label.size = LABEL_SIZE_BASE
-	var region_control : RegionControl = _get_region_control()
-	if region_control:
-		label.scale *= region_control.city_size
-		label_size *= region_control.city_size
-	add_child(label)
-
-
-func should_have_label() -> bool:
-	return kinetic or is_cutoff or power_reduction > 0
-
-
-func _set_cutoff_label(close : Region, far : Region) -> void:
-	label.position = far.position * 0.25 + close.position * 0.75 - label_size * 0.5
-	label.text = far.name + " " + label.text
 
 
 func update_label():
@@ -189,13 +201,15 @@ func update_label():
 				_set_cutoff_label(from, to)
 			else:
 				_set_cutoff_label(to, from)
-		else:
+		elif from and to:
 			label.position = (to.position + from.position - label_size) * 0.5
 	elif label:
 		label.visible = false
 
 
 func update_gradient():
+	if not from or not to or not gradient:
+		return
 	var edge : Color = TINT
 	if disabled:
 		edge = TINT_DISABLED
@@ -215,6 +229,27 @@ func update_gradient():
 		gradient.set_color(3, to.color * edge)
 
 
+func update():
+	if not from or not to:
+		return
+	clear_points()
+	add_point(from.position)
+	add_point(to.position * 0.325 + from.position * 0.675)
+	add_point(to.position * 0.675 + from.position * 0.325)
+	add_point(to.position)
+	
+	var difference : Vector2 = to.position - from.position
+	var distance : float = pow(difference.x, 2) + pow(difference.y * 1.333, 2)
+	
+	if distance > CUTOFF_DISTANCE:
+		is_cutoff = true
+	else:
+		is_cutoff = false
+	
+	update_gradient()
+	update_label()
+
+
 func hide_self():
 	timer = 0.0
 	visible = false
@@ -224,23 +259,8 @@ func show_self(region : Region = null):
 	timer = SHOW_TIMER_BASE + num * 0.1
 	visible = true
 	from_side = (region == from)
-	update_label()
-
-
-func _get_region_name(path : NodePath) -> String:
-	if path.is_empty():
-		return "_"
-	var region : Region = get_node(path) as Region
-	if region:
-		return region.name
-	return "?"
-
-
-func _generate_name() -> void:
-	var to_name : String = _get_region_name(to_path)
-	var from_name : String = _get_region_name(from_path)
-	
-	if to_name < from_name:
-		name = to_name + "-" + from_name
+	if first_time_update:
+		first_time_update = false
+		update()
 	else:
-		name = from_name + "-" + to_name
+		update_label()

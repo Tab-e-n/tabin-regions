@@ -1,3 +1,4 @@
+@tool
 extends Polygon2D
 ## RegionControl is a class that represents a map.
 class_name RegionControl
@@ -17,8 +18,6 @@ signal turn_phase_changed(phase : PHASE)
 signal round_ended
 ## Emitted after the an alignment ends their turn and no unfriendly alignments towards them are left.
 signal game_ended(winner : int)
-
-signal update_textures
 
 
 enum PHASE {
@@ -248,7 +247,7 @@ const COLOR_TOO_BRIGHT : float = 0.85
 
 @export var update_region_textures : bool = false:
 	set(_update):
-		update_textures.emit()
+		update_textures()
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
 @export var render_mode : RENDER_MODE = RENDER_MODE.DISABLED
 ## The range visible during render modes. Certain render modes use this to figure out how to color the regions.
@@ -268,7 +267,7 @@ const COLOR_TOO_BRIGHT : float = 0.85
 ## This is intended to be used by other scenes, not RegionControl itself.
 @export var dummy : bool = false
 ## A node that will hold all RegionLink.
-@export var region_links : Node
+@export var region_links : Node = null
 ## Holds the links of all regions. When the map is readying, RegionControl will attempt to make every link in this array.
 ## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
 @export var connections : Array = []
@@ -291,6 +290,7 @@ var play_order_i : int = 0
 var align_controlers : Array = []
 var is_player_controled : bool
 
+var regions : Dictionary = {}
 var region_amount : Array[int] = []
 var last_turn_region_amount : Array[int] = []
 var capital_amount : Array[int] = []
@@ -423,10 +423,10 @@ func get_cache(key : String) -> Variant:
 
 
 func _ready():
-	Options.timestamp("RegionControl")
-	
 	if Engine.is_editor_hint():
 		return
+	
+	Options.timestamp("RegionControl")
 	
 	if print_more_info:
 		MapSetup.print_map_data()
@@ -467,6 +467,9 @@ func _ready():
 		_load_cache()
 	
 	Options.timestamp("RegionCotrol ready setup", "RegionControl")
+	
+	_get_all_regions()
+	Options.timestamp("_get_all_regions", "RegionControl")
 	
 	# -- REGION LINKS --
 	if not region_links:
@@ -625,13 +628,40 @@ func _save_replay_data():
 		ReplayControl.replay_removed_alignments = removed_alignments
 
 
-func _create_region_connections():
-	var regions : Dictionary = {}
+func _check_duplicate_connections():
+	var region_map : Dictionary = {}
+	
+	for link in connections:
+		if link[0] == link[1]:
+			push_warning("Connections cannot be connect to themselfs. [", link[0], "]")
+			continue
+		if region_map.has(link[0]):
+			if region_map[link[0]].has(link[1]):
+				push_warning("Connection ", link[0], " - ", link[1], " already exists.")
+			else:
+				region_map[link[0]].append(link[1])
+		else:
+			region_map[link[0]] = [link[1]]
+		if region_map.has(link[1]):
+			if region_map[link[1]].has(link[0]):
+				push_warning("Connection ", link[1], " - ", link[0], " already exists.")
+			else:
+				region_map[link[1]].append(link[0])
+		else:
+			region_map[link[1]] = [link[0]]
+	
+	if print_more_info:
+		print(region_map)
+
+
+func _get_all_regions():
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
 			regions[region.name] = region
-	
+
+
+func _create_region_connections():
 	for connection in connections:
 		var power_reduction = 0
 		if connection.size() >= 3:
@@ -650,7 +680,6 @@ func _create_region_connections():
 		link.from = region_from
 		link.to = region_to
 		link.power_reduction = power_reduction
-		link.kinetic = region_from.kinetic or region_to.kinetic
 		region_links.add_child(link)
 	
 	region_connections_ready.emit()
@@ -686,12 +715,12 @@ func _set_capital_distance():
 		capital.distance_from_capital = 0
 		
 		var current_distance : int = 2
-		var regions : Array[Region] = [capital]
+		var remaining_regions : Array[Region] = [capital]
 		var visited : Set = Set.new()
 		visited.add(capital)
 		var current_start : int = 0
-		while current_start < regions.size():
-			var start : Region = regions[current_start] as Region
+		while current_start < remaining_regions.size():
+			var start : Region = remaining_regions[current_start] as Region
 			current_start += 1
 			if not start:
 				continue
@@ -712,7 +741,7 @@ func _set_capital_distance():
 				elif region.distance_from_capital > current_distance:
 					region.distance_from_capital = current_distance
 					if not visited.contains(region):
-						regions.append(region)
+						remaining_regions.append(region)
 						visited.add(region)
 					
 				elif region.distance_from_capital == current_distance and not visited.contains(region):
@@ -800,32 +829,6 @@ func _fill_aliances(divisions : int, keep_existing : bool = true):
 		current_aliance += 1
 		if current_aliance > divisions:
 			current_aliance = 1
-
-
-func _check_duplicate_connections():
-	var regions : Dictionary = {}
-	
-	for link in connections:
-		if link[0] == link[1]:
-			push_warning("Connections cannot be connect to themselfs. [", link[0], "]")
-			continue
-		if regions.has(link[0]):
-			if regions[link[0]].has(link[1]):
-				push_warning("Connection ", link[0], " - ", link[1], " already exists.")
-			else:
-				regions[link[0]].append(link[1])
-		else:
-			regions[link[0]] = [link[1]]
-		if regions.has(link[1]):
-			if regions[link[1]].has(link[0]):
-				push_warning("Connection ", link[1], " - ", link[0], " already exists.")
-			else:
-				regions[link[1]].append(link[0])
-		else:
-			regions[link[1]] = [link[0]]
-	
-	if print_more_info:
-		print(regions)
 
 
 func _exit_tree():
@@ -964,7 +967,7 @@ func _modify_action_amount(amount : int) -> bool:
 
 ## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
 func get_region(reg_name : String) -> Region:
-	var node : Node = get_node(reg_name)
+	var node : Node = regions[reg_name]
 	if node is Region:
 		return node
 	else:
@@ -1252,3 +1255,10 @@ func action_done(region_name : String, amount : int = 1):
 			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()
+
+
+func update_textures():
+	for node in get_children():
+		var region : Region = node as Region
+		if region:
+			region._on_update_texture()
