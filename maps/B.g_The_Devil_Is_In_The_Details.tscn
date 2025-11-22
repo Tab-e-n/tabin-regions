@@ -2,68 +2,12 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_casom"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_fu633"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_r8ook"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_fv22h"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_nbmvx"]
 [ext_resource type="PackedScene" uid="uid://dikxdeaxwl51g" path="res://objects/text_box.tscn" id="4_48ifu"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_t5w06"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="5_ax01n"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Orchards\", \"Goodie Town\"],
-	[\"Orchards\", \"Free Field\"],
-	[\"Orchards\", \"A Place On Top\"],
-	[\"A Place On Top\", \"Free Field\"],
-	[\"Horned Cap\", \"Broken Man Path\"],
-	[\"Horned Cap\", \"Eye\"],
-	[\"Eye\", \"Broken Man Path\"],
-	[\"Rock Trail\", \"Broken Man Path\"],
-	[\"Orchards\", \"Road Less Traveled\"],
-	[\"Road Less Traveled\", \"Goodie Town\"],
-	[\"Orchards\", \"Haunted Woods\"],
-	[\"Free Field\", \"Haunted Woods\"],
-	[\"Road Less Traveled\", \"Haunted Woods\"],
-	[\"Road Less Traveled\", \"Lake Path\"],
-	[\"Road Less Traveled\", \"Island's Leg\"],
-	[\"Island's Leg\", \"Lake Path\"],
-	[\"Lake Path\", \"Haunted Woods\"],
-	[\"Gray Shore\", \"Gray Arma\"],
-	[\"Eye\", \"Gray Arma\"],
-	[\"Rock Trail\", \"Gray Arma\"],
-	[\"Rock Trail\", \"Down Servant\"],
-	[\"Rock Trail\", \"Eye\"],
-	[\"All Piece\", \"Eye\"],
-	[\"Macita\", \"Gray Arma\"],
-	[\"Macita\", \"All Piece\"],
-	[\"All Piece\", \"Gray Arma\"],
-	[\"Macita\", \"Wheat Field\"],
-	[\"Macita\", \"Free Field\"],
-	[\"A Place On Top\", \"Wheat Field\"],
-	[\"Free Field\", \"Wheat Field\"],
-	[\"Gray Shore\", \"Rock Trail\"],
-	[\"Gray Shore\", \"Purity Lake Cliffside\"],
-	[\"Rock Trail\", \"Purity Lake Cliffside\"],
-	[\"Down Servant\", \"Purity Lake Cliffside\"],
-	[\"Gray Shore\", \"Purity Lake Shore\"],
-	[\"Free Field\", \"Purity Lake Shore\"],
-	[\"Gray Shore\", \"Macita\"],
-	[\"Macita\", \"Purity Lake Shore\"],
-	[\"Haunted Woods\", \"Purity Lake Shore\"],
-	[\"Quartz Rocks\", \"Purity Lake Shore\", 1],
-	[\"Quartz Rocks\", \"Lake Path\", 1],
-	[\"Quartz Rocks\", \"Island's Leg\", 1],
-	[\"Lake Path\", \"Purity Lake Shore\"],
-	[\"Quartz Rocks\", \"Purity Lake Cliffside\", 1],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_um66i"]
 shader = ExtResource("3_nbmvx")
@@ -191,7 +135,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.419608, 0.537255, 0.564706, 1)
 polygon = PackedVector2Array(-576, -328, -424, -408, -208, -440, 240, -424, 464, -368, 608, -208, 600, 16, 488, 232, 224, 328, -128, 336, -424, 216, -616, 48, -664, -128)
 script = ExtResource("1_casom")
@@ -212,9 +156,233 @@ align_names = Array[String](["Neutral", "Honest", "Cheater"])
 main_character = 1
 render_mode = 1
 render_range = 5.0
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Goodie Town-Orchards" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Orchards"
+to_name = &"Goodie Town"
+
+[node name="Free Field-Orchards" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Orchards"
+to_name = &"Free Field"
+
+[node name="A Place On Top-Orchards" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Orchards"
+to_name = &"A Place On Top"
+
+[node name="Free Field-A Place On Top" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"A Place On Top"
+to_name = &"Free Field"
+
+[node name="Horned Cap-Broken Man Path" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Horned Cap"
+to_name = &"Broken Man Path"
+
+[node name="Horned Cap-Eye" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Horned Cap"
+to_name = &"Eye"
+
+[node name="Eye-Broken Man Path" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Eye"
+to_name = &"Broken Man Path"
+
+[node name="Rock Trail-Broken Man Path" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Rock Trail"
+to_name = &"Broken Man Path"
+
+[node name="Road Less Traveled-Orchards" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Orchards"
+to_name = &"Road Less Traveled"
+
+[node name="Goodie Town-Road Less Traveled" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Road Less Traveled"
+to_name = &"Goodie Town"
+
+[node name="Haunted Woods-Orchards" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Orchards"
+to_name = &"Haunted Woods"
+
+[node name="Free Field-Haunted Woods" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Free Field"
+to_name = &"Haunted Woods"
+
+[node name="Road Less Traveled-Haunted Woods" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Road Less Traveled"
+to_name = &"Haunted Woods"
+
+[node name="Lake Path-Road Less Traveled" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Road Less Traveled"
+to_name = &"Lake Path"
+
+[node name="Island\'s Leg-Road Less Traveled" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Road Less Traveled"
+to_name = &"Island\'s Leg"
+
+[node name="Island\'s Leg-Lake Path" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Island\'s Leg"
+to_name = &"Lake Path"
+
+[node name="Lake Path-Haunted Woods" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Lake Path"
+to_name = &"Haunted Woods"
+
+[node name="Gray Shore-Gray Arma" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Gray Shore"
+to_name = &"Gray Arma"
+
+[node name="Gray Arma-Eye" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Eye"
+to_name = &"Gray Arma"
+
+[node name="Rock Trail-Gray Arma" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Rock Trail"
+to_name = &"Gray Arma"
+
+[node name="Down Servant-Rock Trail" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Rock Trail"
+to_name = &"Down Servant"
+
+[node name="Rock Trail-Eye" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Rock Trail"
+to_name = &"Eye"
+
+[node name="All Piece-Eye" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"All Piece"
+to_name = &"Eye"
+
+[node name="Macita-Gray Arma" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Macita"
+to_name = &"Gray Arma"
+
+[node name="All Piece-Macita" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Macita"
+to_name = &"All Piece"
+
+[node name="All Piece-Gray Arma" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"All Piece"
+to_name = &"Gray Arma"
+
+[node name="Macita-Wheat Field" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Macita"
+to_name = &"Wheat Field"
+
+[node name="Macita-Free Field" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Macita"
+to_name = &"Free Field"
+
+[node name="Wheat Field-A Place On Top" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"A Place On Top"
+to_name = &"Wheat Field"
+
+[node name="Free Field-Wheat Field" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Free Field"
+to_name = &"Wheat Field"
+
+[node name="Gray Shore-Rock Trail" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Gray Shore"
+to_name = &"Rock Trail"
+
+[node name="Gray Shore-Purity Lake Cliffside" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Gray Shore"
+to_name = &"Purity Lake Cliffside"
+
+[node name="Rock Trail-Purity Lake Cliffside" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Rock Trail"
+to_name = &"Purity Lake Cliffside"
+
+[node name="Down Servant-Purity Lake Cliffside" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Down Servant"
+to_name = &"Purity Lake Cliffside"
+
+[node name="Gray Shore-Purity Lake Shore" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Gray Shore"
+to_name = &"Purity Lake Shore"
+
+[node name="Free Field-Purity Lake Shore" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Free Field"
+to_name = &"Purity Lake Shore"
+
+[node name="Gray Shore-Macita" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Gray Shore"
+to_name = &"Macita"
+
+[node name="Macita-Purity Lake Shore" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Macita"
+to_name = &"Purity Lake Shore"
+
+[node name="Haunted Woods-Purity Lake Shore" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Haunted Woods"
+to_name = &"Purity Lake Shore"
+
+[node name="Quartz Rocks-Purity Lake Shore" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Quartz Rocks"
+to_name = &"Purity Lake Shore"
+power_reduction = 1
+
+[node name="Quartz Rocks-Lake Path" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Quartz Rocks"
+to_name = &"Lake Path"
+power_reduction = 1
+
+[node name="Island\'s Leg-Quartz Rocks" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Quartz Rocks"
+to_name = &"Island\'s Leg"
+power_reduction = 1
+
+[node name="Lake Path-Purity Lake Shore" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Lake Path"
+to_name = &"Purity Lake Shore"
+
+[node name="Quartz Rocks-Purity Lake Cliffside" type="Line2D" parent="links"]
+script = ExtResource("2_r8ook")
+from_name = &"Quartz Rocks"
+to_name = &"Purity Lake Cliffside"
+power_reduction = 1
 
 [node name="bg" parent="." instance=ExtResource("2_fu633")]
 color = Color(0.294118, 0.392157, 0.415686, 1)

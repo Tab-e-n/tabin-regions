@@ -3,125 +3,11 @@
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_bcjfu"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_1sbqh"]
 [ext_resource type="Script" path="res://scripts/volcano.gd" id="2_h406j"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_xdpg4"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_5gux2"]
 [ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_owuq4"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_ylwec"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_idesc"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Aggregate\", \"Wiggler\"],
-	[\"Squashcake\", \"Wiggler\"],
-	[\"Squashcake\", \"Altercation\"],
-	[\"Squashcake\", \"Peanuts\"],
-	[\"Booties\", \"Wiggler\"],
-	[\"ICan\", \"Wiggler\"],
-	[\"ICan\", \"Adrenalin\"],
-	[\"ICan\", \"Block\"],
-	[\"Audit\", \"Adrenalin\"],
-	[\"Audit\", \"Fish\"],
-	[\"Audit\", \"Actual\"],
-	[\"Booties\", \"Fish\"],
-	[\"Booties\", \"Altercation\"],
-	[\"Peanuts\", \"Altercation\"],
-	[\"Squashcake\", \"Booties\"],
-	[\"Squashcake\", \"Rectaless\"],
-	[\"Bone Zone\", \"Rectaless\"],
-	[\"Bone Zone\", \"Scrobler\"],
-	[\"Rectaless\", \"Scrobler\"],
-	[\"Exing\", \"Scrobler\"],
-	[\"Bone Zone\", \"Cranky\"],
-	[\"Attacking Vertical\", \"Cranky\"],
-	[\"Blue\", \"Cranky\"],
-	[\"Bone Zone\", \"Attacking Vertical\"],
-	[\"Attacking Vertical\", \"Rectaless\"],
-	[\"Paper Plane\", \"Wiggler\"],
-	[\"Paper Plane\", \"ICan\"],
-	[\"Paper Plane\", \"Attacking Vertical\"],
-	[\"Paper Plane\", \"Block\"],
-	[\"Paper Plane\", \"GUN\"],
-	[\"Rectaless\", \"Wiggler\"],
-	[\"Attacking Vertical\", \"Wiggler\"],
-	[\"Aggregate\", \"Adrenalin\"],
-	[\"Rox\", \"Adrenalin\"],
-	[\"Rox\", \"ICan\"],
-	[\"Rox\", \"Beanis\"],
-	[\"Rox\", \"Block\"],
-	[\"GUN\", \"Block\"],
-	[\"Rox\", \"GUN\"],
-	[\"Fat Check\", \"Adrenalin\"],
-	[\"Fat Check\", \"Audit\"],
-	[\"Fat Check\", \"Firewall\"],
-	[\"Profylactic\", \"Firewall\"],
-	[\"Profylactic\", \"Untousan Dola\"],
-	[\"Profylactic\", \"Ignorance\"],
-	[\"Untousan Dola\", \"Firewall\"],
-	[\"Untousan Dola\", \"Tracker\"],
-	[\"Profylactic\", \"Beanis\"],
-	[\"Beanis\", \"Firewall\"],
-	[\"Beanis\", \"Ignorance\"],
-	[\"Fat Check\", \"Actual\"],
-	[\"Sacrebleu\", \"Actual\"],
-	[\"Fat Check\", \"Sacrebleu\"],
-	[\"Beanis\", \"Adrenalin\"],
-	[\"Firewall\", \"Adrenalin\"],
-	[\"Aggregate\", \"Fish\"],
-	[\"Spar\", \"Fish\"],
-	[\"Spar\", \"Booties\"],
-	[\"Spar\", \"Stone Generator\"],
-	[\"Spar\", \"Altercation\"],
-	[\"Spar\", \"Peanuts\"],
-	[\"OS\", \"Fish\"],
-	[\"OS\", \"Audit\"],
-	[\"OS\", \"Cobid\"],
-	[\"OS\", \"Actual\"],
-	[\"OS\", \"Sacrebleu\"],
-	[\"Stone Generator\", \"Fish\"],
-	[\"Cobid\", \"Fish\"],
-	[\"Aggregate\", \"Booties\"],
-	[\"Aggregate\", \"ICan\"],
-	[\"Aggregate\", \"Audit\"],
-	[\"Stone Generator\", \"Cobid\"],
-	[\"Stone Generator\", \"Access Law\"],
-	[\"Knajf\", \"Access Law\"],
-	[\"Cicle\", \"Access Law\"],
-	[\"Stone Generator\", \"Knajf\"],
-	[\"Access Law\", \"Cobid\"],
-	[\"Exing\", \"Fancy Sheen\"],
-	[\"Knajf\", \"Fancy Sheen\"],
-	[\"Exing\", \"Peanuts\"],
-	[\"Peanuts\", \"Fancy Sheen\"],
-	[\"Peanuts\", \"Stone Generator\"],
-	[\"Stone Generator\", \"Fancy Sheen\"],
-	[\"Exing\", \"Rectaless\"],
-	[\"Peanuts\", \"Rectaless\"],
-	[\"Blue\", \"Thrashi\"],
-	[\"Ignorance\", \"Thrashi\"],
-	[\"GUN\", \"Thrashi\"],
-	[\"GUN\", \"Beanis\"],
-	[\"Beanis\", \"Thrashi\"],
-	[\"Blue\", \"GUN\"],
-	[\"Blue\", \"Attacking Vertical\"],
-	[\"GUN\", \"Attacking Vertical\"],
-	[\"Sacrebleu\", \"Metalist\"],
-	[\"Cobid\", \"Metalist\"],
-	[\"Cicle\", \"Metalist\"],
-	[\"Cobid\", \"Cicle\"],
-	[\"Sacrebleu\", \"Tracker\"],
-	[\"Metalist\", \"Tracker\"],
-	[\"Sacrebleu\", \"Firewall\"],
-	[\"Tracker\", \"Firewall\"],
-	[\"Sacrebleu\", \"Cobid\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hjhba"]
 shader = ExtResource("3_5gux2")
@@ -369,7 +255,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.713726, 0.513726, 0.505882, 1)
 polygon = PackedVector2Array(-680, 72, 480, 568, 216, -576)
 script = ExtResource("1_bcjfu")
@@ -379,6 +265,7 @@ max_player_amount = 9
 use_preset_alignments = true
 preset_alignments = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 10])
 custom_dp_setup = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 5])
+alignment_aliances = Array[int]([0, 0, 0, 0, 0, 0, 0, 0, 0, 0, -1])
 complexity = 3
 lore = "A dangerous triangle has entered the arena!
 Watch out for it's lava attack!"
@@ -386,9 +273,519 @@ align_color = Array[Color]([Color(0.419608, 0.254902, 0.25098, 1), Color(0.81568
 align_names = Array[String](["Triple Cano", "Spors", "Cupcakes", "Origami", "Boulder", "Money", "Software", "My Leans", "Skeletons", "Chemicals", "Triangle"])
 city_size = 0.8
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Aggregate-Wiggler" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Aggregate"
+to_name = &"Wiggler"
+
+[node name="Squashcake-Wiggler" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Squashcake"
+to_name = &"Wiggler"
+
+[node name="Altercation-Squashcake" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Squashcake"
+to_name = &"Altercation"
+
+[node name="Peanuts-Squashcake" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Squashcake"
+to_name = &"Peanuts"
+
+[node name="Wiggler-Booties" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Booties"
+to_name = &"Wiggler"
+
+[node name="Wiggler-ICan" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"ICan"
+to_name = &"Wiggler"
+
+[node name="ICan-Adrenalin" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"ICan"
+to_name = &"Adrenalin"
+
+[node name="Block-ICan" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"ICan"
+to_name = &"Block"
+
+[node name="Audit-Adrenalin" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Audit"
+to_name = &"Adrenalin"
+
+[node name="Fish-Audit" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Audit"
+to_name = &"Fish"
+
+[node name="Actual-Audit" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Audit"
+to_name = &"Actual"
+
+[node name="Fish-Booties" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Booties"
+to_name = &"Fish"
+
+[node name="Altercation-Booties" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Booties"
+to_name = &"Altercation"
+
+[node name="Altercation-Peanuts" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Peanuts"
+to_name = &"Altercation"
+
+[node name="Squashcake-Booties" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Squashcake"
+to_name = &"Booties"
+
+[node name="Squashcake-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Squashcake"
+to_name = &"Rectaless"
+
+[node name="Bone Zone-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Bone Zone"
+to_name = &"Rectaless"
+
+[node name="Scrobler-Bone Zone" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Bone Zone"
+to_name = &"Scrobler"
+
+[node name="Scrobler-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rectaless"
+to_name = &"Scrobler"
+
+[node name="Scrobler-Exing" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Exing"
+to_name = &"Scrobler"
+
+[node name="Cranky-Bone Zone" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Bone Zone"
+to_name = &"Cranky"
+
+[node name="Cranky-Attacking Vertical" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Attacking Vertical"
+to_name = &"Cranky"
+
+[node name="Cranky-Blue" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Blue"
+to_name = &"Cranky"
+
+[node name="Attacking Vertical-Bone Zone" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Bone Zone"
+to_name = &"Attacking Vertical"
+
+[node name="Attacking Vertical-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Attacking Vertical"
+to_name = &"Rectaless"
+
+[node name="Wiggler-Paper Plane" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Paper Plane"
+to_name = &"Wiggler"
+
+[node name="ICan-Paper Plane" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Paper Plane"
+to_name = &"ICan"
+
+[node name="Attacking Vertical-Paper Plane" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Paper Plane"
+to_name = &"Attacking Vertical"
+
+[node name="Block-Paper Plane" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Paper Plane"
+to_name = &"Block"
+
+[node name="GUN-Paper Plane" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Paper Plane"
+to_name = &"GUN"
+
+[node name="Wiggler-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rectaless"
+to_name = &"Wiggler"
+
+[node name="Attacking Vertical-Wiggler" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Attacking Vertical"
+to_name = &"Wiggler"
+
+[node name="Aggregate-Adrenalin" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Aggregate"
+to_name = &"Adrenalin"
+
+[node name="Rox-Adrenalin" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rox"
+to_name = &"Adrenalin"
+
+[node name="Rox-ICan" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rox"
+to_name = &"ICan"
+
+[node name="Rox-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rox"
+to_name = &"Beanis"
+
+[node name="Rox-Block" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rox"
+to_name = &"Block"
+
+[node name="GUN-Block" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"GUN"
+to_name = &"Block"
+
+[node name="GUN-Rox" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Rox"
+to_name = &"GUN"
+
+[node name="Fat Check-Adrenalin" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Fat Check"
+to_name = &"Adrenalin"
+
+[node name="Fat Check-Audit" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Fat Check"
+to_name = &"Audit"
+
+[node name="Fat Check-Firewall" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Fat Check"
+to_name = &"Firewall"
+
+[node name="Profylactic-Firewall" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Profylactic"
+to_name = &"Firewall"
+
+[node name="Profylactic-Untousan Dola" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Profylactic"
+to_name = &"Untousan Dola"
+
+[node name="Profylactic-Ignorance" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Profylactic"
+to_name = &"Ignorance"
+
+[node name="Untousan Dola-Firewall" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Untousan Dola"
+to_name = &"Firewall"
+
+[node name="Untousan Dola-Tracker" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Untousan Dola"
+to_name = &"Tracker"
+
+[node name="Profylactic-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Profylactic"
+to_name = &"Beanis"
+
+[node name="Firewall-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Beanis"
+to_name = &"Firewall"
+
+[node name="Ignorance-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Beanis"
+to_name = &"Ignorance"
+
+[node name="Actual-Fat Check" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Fat Check"
+to_name = &"Actual"
+
+[node name="Actual-Sacrebleu" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Sacrebleu"
+to_name = &"Actual"
+
+[node name="Fat Check-Sacrebleu" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Fat Check"
+to_name = &"Sacrebleu"
+
+[node name="Adrenalin-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Beanis"
+to_name = &"Adrenalin"
+
+[node name="Firewall-Adrenalin" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Firewall"
+to_name = &"Adrenalin"
+
+[node name="Fish-Aggregate" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Aggregate"
+to_name = &"Fish"
+
+[node name="Spar-Fish" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Spar"
+to_name = &"Fish"
+
+[node name="Spar-Booties" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Spar"
+to_name = &"Booties"
+
+[node name="Spar-Stone Generator" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Spar"
+to_name = &"Stone Generator"
+
+[node name="Spar-Altercation" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Spar"
+to_name = &"Altercation"
+
+[node name="Spar-Peanuts" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Spar"
+to_name = &"Peanuts"
+
+[node name="OS-Fish" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"OS"
+to_name = &"Fish"
+
+[node name="OS-Audit" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"OS"
+to_name = &"Audit"
+
+[node name="OS-Cobid" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"OS"
+to_name = &"Cobid"
+
+[node name="OS-Actual" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"OS"
+to_name = &"Actual"
+
+[node name="OS-Sacrebleu" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"OS"
+to_name = &"Sacrebleu"
+
+[node name="Stone Generator-Fish" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Stone Generator"
+to_name = &"Fish"
+
+[node name="Fish-Cobid" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Cobid"
+to_name = &"Fish"
+
+[node name="Aggregate-Booties" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Aggregate"
+to_name = &"Booties"
+
+[node name="Aggregate-ICan" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Aggregate"
+to_name = &"ICan"
+
+[node name="Audit-Aggregate" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Aggregate"
+to_name = &"Audit"
+
+[node name="Stone Generator-Cobid" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Stone Generator"
+to_name = &"Cobid"
+
+[node name="Stone Generator-Access Law" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Stone Generator"
+to_name = &"Access Law"
+
+[node name="Access Law-Knajf" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Knajf"
+to_name = &"Access Law"
+
+[node name="Cicle-Access Law" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Cicle"
+to_name = &"Access Law"
+
+[node name="Stone Generator-Knajf" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Stone Generator"
+to_name = &"Knajf"
+
+[node name="Cobid-Access Law" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Access Law"
+to_name = &"Cobid"
+
+[node name="Fancy Sheen-Exing" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Exing"
+to_name = &"Fancy Sheen"
+
+[node name="Fancy Sheen-Knajf" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Knajf"
+to_name = &"Fancy Sheen"
+
+[node name="Peanuts-Exing" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Exing"
+to_name = &"Peanuts"
+
+[node name="Peanuts-Fancy Sheen" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Peanuts"
+to_name = &"Fancy Sheen"
+
+[node name="Stone Generator-Peanuts" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Peanuts"
+to_name = &"Stone Generator"
+
+[node name="Stone Generator-Fancy Sheen" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Stone Generator"
+to_name = &"Fancy Sheen"
+
+[node name="Exing-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Exing"
+to_name = &"Rectaless"
+
+[node name="Peanuts-Rectaless" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Peanuts"
+to_name = &"Rectaless"
+
+[node name="Blue-Thrashi" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Blue"
+to_name = &"Thrashi"
+
+[node name="Ignorance-Thrashi" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Ignorance"
+to_name = &"Thrashi"
+
+[node name="GUN-Thrashi" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"GUN"
+to_name = &"Thrashi"
+
+[node name="GUN-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"GUN"
+to_name = &"Beanis"
+
+[node name="Thrashi-Beanis" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Beanis"
+to_name = &"Thrashi"
+
+[node name="GUN-Blue" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Blue"
+to_name = &"GUN"
+
+[node name="Attacking Vertical-Blue" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Blue"
+to_name = &"Attacking Vertical"
+
+[node name="GUN-Attacking Vertical" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"GUN"
+to_name = &"Attacking Vertical"
+
+[node name="Metalist-Sacrebleu" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Sacrebleu"
+to_name = &"Metalist"
+
+[node name="Metalist-Cobid" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Cobid"
+to_name = &"Metalist"
+
+[node name="Cicle-Metalist" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Cicle"
+to_name = &"Metalist"
+
+[node name="Cicle-Cobid" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Cobid"
+to_name = &"Cicle"
+
+[node name="Sacrebleu-Tracker" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Sacrebleu"
+to_name = &"Tracker"
+
+[node name="Metalist-Tracker" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Metalist"
+to_name = &"Tracker"
+
+[node name="Sacrebleu-Firewall" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Sacrebleu"
+to_name = &"Firewall"
+
+[node name="Firewall-Tracker" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Tracker"
+to_name = &"Firewall"
+
+[node name="Cobid-Sacrebleu" type="Line2D" parent="links"]
+script = ExtResource("2_xdpg4")
+from_name = &"Sacrebleu"
+to_name = &"Cobid"
 
 [node name="Volcano" type="Node" parent="." node_paths=PackedStringArray("residing_region")]
 script = ExtResource("2_h406j")

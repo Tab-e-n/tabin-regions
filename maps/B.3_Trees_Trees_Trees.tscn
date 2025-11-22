@@ -4,6 +4,7 @@
 [ext_resource type="Shader" path="res://scripts/shader_bg_coloring.gdshader" id="1_uete3"]
 [ext_resource type="Texture2D" uid="uid://dle6ea0julea4" path="res://sprites/bg.tres" id="2_h7c3j"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_he663"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="4_ipjr7"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="4_v2svr"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="5_iknln"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="6_yqfju"]
@@ -12,133 +13,6 @@
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_u2424"]
 shader = ExtResource("1_uete3")
 shader_parameter/coloring = Vector4(0.22, 0.36, 0.22, 1)
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Starting Line\", \"Noodle Finish\"],
-	[\"Intro Potato\", \"Noodle Finish\"],
-	[\"Starting Line\", \"Wavy Start\"],
-	[\"Starting Line\", \"Ditch\"],
-	[\"Starting Line\", \"Distraction\"],
-	[\"Distraction\", \"Ditch\"],
-	[\"Starting Line\", \"Intro Potato\"],
-	[\"Starting Line\", \"Slit\"],
-	[\"Distraction\", \"Slit\"],
-	[\"Intro Potato\", \"Wavy Start\"],
-	[\"Oil Spill\", \"Wavy Start\"],
-	[\"Half Circle Trees\", \"Wavy Start\"],
-	[\"Rock\", \"Wavy Start\"],
-	[\"Ditch\", \"Wavy Start\"],
-	[\"Rock\", \"Ditch\"],
-	[\"Half Circle Trees\", \"The 90s\"],
-	[\"Oil Spill\", \"The 90s\"],
-	[\"Stick\", \"The 90s\"],
-	[\"Oil Spill\", \"Stick\"],
-	[\"Oil Spill\", \"Rock\"],
-	[\"Rock\", \"Stick\"],
-	[\"Half Circle Trees\", \"Oil Spill\"],
-	[\"Half Circle Trees\", \"Tree Shortcut\"],
-	[\"Chute\", \"Tree Shortcut\"],
-	[\"Half Circle Trees\", \"Chute\"],
-	[\"U Turn\", \"Tree Shortcut\"],
-	[\"The 90s\", \"Tree Shortcut\"],
-	[\"The 90s\", \"Tri Slip\"],
-	[\"The 90s\", \"Jack O' Bottle\"],
-	[\"Jack O' Bottle\", \"Tri Slip\"],
-	[\"Jack O' Bottle\", \"Stick\"],
-	[\"Moai\", \"Tree Shortcut\"],
-	[\"U Turn\", \"Moai\"],
-	[\"Pipe\", \"Moai\"],
-	[\"U Turn\", \"Chute\"],
-	[\"Crossroad\", \"Tree Shortcut\"],
-	[\"Crossroad\", \"P Wagon\"],
-	[\"P Wagon\", \"Tree Shortcut\"],
-	[\"Crossroad\", \"Moai\"],
-	[\"Crossroad\", \"Pipe\"],
-	[\"Pinnacle\", \"Pipe\"],
-	[\"Pinnacle\", \"Figly Filler\"],
-	[\"Pinnacle\", \"Looper\"],
-	[\"In The Loop\", \"Looper\"],
-	[\"Snail's Paste\", \"Looper\"],
-	[\"Outer Shell\", \"Looper\"],
-	[\"Snail's Paste\", \"Lonesome Tree\"],
-	[\"In The Loop\", \"Snail's Paste\"],
-	[\"Outer Shell\", \"Snail's Paste\"],
-	[\"In The Loop\", \"Vacuum\"],
-	[\"Crossroad\", \"Road Diamond\"],
-	[\"Looper\", \"Road Diamond\"],
-	[\"Crossroad\", \"Blockade\"],
-	[\"Crossroad\", \"Loopdy Funnel\"],
-	[\"Loopdy Funnel\", \"Otherside\"],
-	[\"Loopdy Funnel\", \"Vacuum\"],
-	[\"In The Loop\", \"Loopdy Funnel\"],
-	[\"P Wagon\", \"Loopdy Funnel\"],
-	[\"Crum\", \"Loopdy Funnel\"],
-	[\"P Wagon\", \"Crum\"],
-	[\"P Wagon\", \"Tri Slip\", 1],
-	[\"Crum\", \"Jack O' Bottle\", 1],
-	[\"Crum\", \"Vacuum\"],
-	[\"Lonesome Tree\", \"Vacuum\"],
-	[\"In The Loop\", \"Otherside\"],
-	[\"In The Loop\", \"Lonesome Tree\"],
-	[\"Looper\", \"Blockade\"],
-	[\"Looper\", \"Otherside\"],
-	[\"Otherside\", \"Blockade\", 1],
-	[\"Crossroad\", \"Pinnacle\"],
-	[\"Outer Shell\", \"Pinnacle\"],
-	[\"Blockade\", \"Road Diamond\"],
-	[\"Pinnacle\", \"Road Diamond\"],
-	[\"Drift Prep\", \"Moai\"],
-	[\"Transition\", \"Noodle Finish\"],
-	[\"Closet\", \"Noodle Finish\"],
-	[\"Ooooh\", \"Noodle Finish\"],
-	[\"Cool Aht\", \"Noodle Finish\"],
-	[\"Slit\", \"Noodle Finish\"],
-	[\"Ooooh\", \"Cool Aht\"],
-	[\"Ooooh\", \"Flat Face\"],
-	[\"Thumbs Up\", \"Flat Face\"],
-	[\"Flat Face\", \"Cool Aht\"],
-	[\"Slit\", \"Cool Aht\"],
-	[\"Transition\", \"Closet\"],
-	[\"Transition\", \"Flat Face\"],
-	[\"Weird Fish\", \"Closet\"],
-	[\"Weird Fish\", \"Drift Prep\"],
-	[\"Transition\", \"Weird Fish\"],
-	[\"Transition\", \"Ooooh\"],
-	[\"Transition\", \"Turn Out\"],
-	[\"Drift In\", \"Speed Builder\"],
-	[\"Weird Fish\", \"Turn Out\"],
-	[\"Flat Face\", \"Turn Out\"],
-	[\"Weird Fish\", \"Speed Builder\"],
-	[\"Drift In\", \"Weird Fish\"],
-	[\"Drift In\", \"Drift Prep\"],
-	[\"Drift In\", \"Impale\"],
-	[\"Drift In\", \"Chipper\"],
-	[\"Chipper\", \"Impale\"],
-	[\"Pipe\", \"Drift Prep\"],
-	[\"Pipe\", \"Figly Filler\"],
-	[\"Figly Filler\", \"Drift Prep\"],
-	[\"Figly Filler\", \"Chipper\"],
-	[\"Chipper\", \"Drift Prep\"],
-	[\"Turn Out\", \"Speed Builder\"],
-	[\"Turn Out\", \"That Tree\"],
-	[\"Turn Out\", \"Thumbs Up\"],
-	[\"Thumbs Up\", \"That Tree\"],
-	[\"That Tree\", \"Speed Builder\"],
-	[\"Impale\", \"Speed Builder\"],
-	[\"That Tree\", \"Impale\"],
-]
-
-@export var color : Color = Color(0.27, 0.41, 0.29, 1)
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_65fxu"]
 shader = ExtResource("1_uete3")
@@ -432,7 +306,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 texture_filter = 1
 texture_repeat = 2
 material = SubResource("ShaderMaterial_u2424")
@@ -448,10 +322,572 @@ Gosh, I love stealing from myself! :D"
 align_color = Array[Color]([Color(0.12549, 0.227451, 0.12549, 1), Color(0.866667, 0.219608, 0.219608, 1), Color(0.968627, 0.858824, 0.858824, 1), Color(0.882353, 0.501961, 0.172549, 1), Color(0.196078, 0.180392, 0.180392, 1)])
 align_names = Array[String](["Field", "The Cross", "The Start", "The Speedup", "Road"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
-color = Color(0.270588, 0.411765, 0.290196, 1)
+[node name="links" type="Node" parent="."]
+
+[node name="Starting Line-Noodle Finish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Starting Line"
+to_name = &"Noodle Finish"
+
+[node name="Intro Potato-Noodle Finish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Intro Potato"
+to_name = &"Noodle Finish"
+
+[node name="Starting Line-Wavy Start" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Starting Line"
+to_name = &"Wavy Start"
+
+[node name="Starting Line-Ditch" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Starting Line"
+to_name = &"Ditch"
+
+[node name="Distraction-Starting Line" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Starting Line"
+to_name = &"Distraction"
+
+[node name="Distraction-Ditch" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Distraction"
+to_name = &"Ditch"
+
+[node name="Intro Potato-Starting Line" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Starting Line"
+to_name = &"Intro Potato"
+
+[node name="Starting Line-Slit" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Starting Line"
+to_name = &"Slit"
+
+[node name="Distraction-Slit" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Distraction"
+to_name = &"Slit"
+
+[node name="Intro Potato-Wavy Start" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Intro Potato"
+to_name = &"Wavy Start"
+
+[node name="Oil Spill-Wavy Start" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Oil Spill"
+to_name = &"Wavy Start"
+
+[node name="Wavy Start-Half Circle Trees" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Half Circle Trees"
+to_name = &"Wavy Start"
+
+[node name="Rock-Wavy Start" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Rock"
+to_name = &"Wavy Start"
+
+[node name="Ditch-Wavy Start" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Ditch"
+to_name = &"Wavy Start"
+
+[node name="Rock-Ditch" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Rock"
+to_name = &"Ditch"
+
+[node name="The 90s-Half Circle Trees" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Half Circle Trees"
+to_name = &"The 90s"
+
+[node name="Oil Spill-The 90s" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Oil Spill"
+to_name = &"The 90s"
+
+[node name="Stick-The 90s" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Stick"
+to_name = &"The 90s"
+
+[node name="Oil Spill-Stick" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Oil Spill"
+to_name = &"Stick"
+
+[node name="Oil Spill-Rock" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Oil Spill"
+to_name = &"Rock"
+
+[node name="Rock-Stick" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Rock"
+to_name = &"Stick"
+
+[node name="Oil Spill-Half Circle Trees" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Half Circle Trees"
+to_name = &"Oil Spill"
+
+[node name="Tree Shortcut-Half Circle Trees" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Half Circle Trees"
+to_name = &"Tree Shortcut"
+
+[node name="Tree Shortcut-Chute" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Chute"
+to_name = &"Tree Shortcut"
+
+[node name="Chute-Half Circle Trees" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Half Circle Trees"
+to_name = &"Chute"
+
+[node name="Tree Shortcut-U Turn" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"U Turn"
+to_name = &"Tree Shortcut"
+
+[node name="Tree Shortcut-The 90s" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"The 90s"
+to_name = &"Tree Shortcut"
+
+[node name="Tri Slip-The 90s" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"The 90s"
+to_name = &"Tri Slip"
+
+[node name="Jack O\' Bottle-The 90s" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"The 90s"
+to_name = &"Jack O\' Bottle"
+
+[node name="Jack O\' Bottle-Tri Slip" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Jack O\' Bottle"
+to_name = &"Tri Slip"
+
+[node name="Jack O\' Bottle-Stick" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Jack O\' Bottle"
+to_name = &"Stick"
+
+[node name="Tree Shortcut-Moai" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Moai"
+to_name = &"Tree Shortcut"
+
+[node name="Moai-U Turn" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"U Turn"
+to_name = &"Moai"
+
+[node name="Moai-Pipe" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pipe"
+to_name = &"Moai"
+
+[node name="U Turn-Chute" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"U Turn"
+to_name = &"Chute"
+
+[node name="Tree Shortcut-Crossroad" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Tree Shortcut"
+
+[node name="P Wagon-Crossroad" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"P Wagon"
+
+[node name="Tree Shortcut-P Wagon" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"P Wagon"
+to_name = &"Tree Shortcut"
+
+[node name="Moai-Crossroad" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Moai"
+
+[node name="Crossroad-Pipe" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Pipe"
+
+[node name="Pipe-Pinnacle" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pinnacle"
+to_name = &"Pipe"
+
+[node name="Figly Filler-Pinnacle" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pinnacle"
+to_name = &"Figly Filler"
+
+[node name="Pinnacle-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pinnacle"
+to_name = &"Looper"
+
+[node name="In The Loop-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"In The Loop"
+to_name = &"Looper"
+
+[node name="Snail\'s Paste-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Snail\'s Paste"
+to_name = &"Looper"
+
+[node name="Outer Shell-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Outer Shell"
+to_name = &"Looper"
+
+[node name="Snail\'s Paste-Lonesome Tree" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Snail\'s Paste"
+to_name = &"Lonesome Tree"
+
+[node name="Snail\'s Paste-In The Loop" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"In The Loop"
+to_name = &"Snail\'s Paste"
+
+[node name="Snail\'s Paste-Outer Shell" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Outer Shell"
+to_name = &"Snail\'s Paste"
+
+[node name="In The Loop-Vacuum" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"In The Loop"
+to_name = &"Vacuum"
+
+[node name="Crossroad-Road Diamond" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Road Diamond"
+
+[node name="Road Diamond-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Looper"
+to_name = &"Road Diamond"
+
+[node name="Blockade-Crossroad" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Blockade"
+
+[node name="Crossroad-Loopdy Funnel" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Loopdy Funnel"
+
+[node name="Otherside-Loopdy Funnel" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Loopdy Funnel"
+to_name = &"Otherside"
+
+[node name="Vacuum-Loopdy Funnel" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Loopdy Funnel"
+to_name = &"Vacuum"
+
+[node name="In The Loop-Loopdy Funnel" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"In The Loop"
+to_name = &"Loopdy Funnel"
+
+[node name="P Wagon-Loopdy Funnel" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"P Wagon"
+to_name = &"Loopdy Funnel"
+
+[node name="Crum-Loopdy Funnel" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crum"
+to_name = &"Loopdy Funnel"
+
+[node name="P Wagon-Crum" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"P Wagon"
+to_name = &"Crum"
+
+[node name="P Wagon-Tri Slip" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"P Wagon"
+to_name = &"Tri Slip"
+power_reduction = 1
+
+[node name="Jack O\' Bottle-Crum" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crum"
+to_name = &"Jack O\' Bottle"
+power_reduction = 1
+
+[node name="Vacuum-Crum" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crum"
+to_name = &"Vacuum"
+
+[node name="Lonesome Tree-Vacuum" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Lonesome Tree"
+to_name = &"Vacuum"
+
+[node name="In The Loop-Otherside" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"In The Loop"
+to_name = &"Otherside"
+
+[node name="Lonesome Tree-In The Loop" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"In The Loop"
+to_name = &"Lonesome Tree"
+
+[node name="Blockade-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Looper"
+to_name = &"Blockade"
+
+[node name="Otherside-Looper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Looper"
+to_name = &"Otherside"
+
+[node name="Blockade-Otherside" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Otherside"
+to_name = &"Blockade"
+power_reduction = 1
+
+[node name="Crossroad-Pinnacle" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Crossroad"
+to_name = &"Pinnacle"
+
+[node name="Outer Shell-Pinnacle" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Outer Shell"
+to_name = &"Pinnacle"
+
+[node name="Blockade-Road Diamond" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Blockade"
+to_name = &"Road Diamond"
+
+[node name="Pinnacle-Road Diamond" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pinnacle"
+to_name = &"Road Diamond"
+
+[node name="Drift Prep-Moai" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Drift Prep"
+to_name = &"Moai"
+
+[node name="Transition-Noodle Finish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Transition"
+to_name = &"Noodle Finish"
+
+[node name="Closet-Noodle Finish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Closet"
+to_name = &"Noodle Finish"
+
+[node name="Ooooh-Noodle Finish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Ooooh"
+to_name = &"Noodle Finish"
+
+[node name="Cool Aht-Noodle Finish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Cool Aht"
+to_name = &"Noodle Finish"
+
+[node name="Noodle Finish-Slit" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Slit"
+to_name = &"Noodle Finish"
+
+[node name="Ooooh-Cool Aht" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Ooooh"
+to_name = &"Cool Aht"
+
+[node name="Ooooh-Flat Face" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Ooooh"
+to_name = &"Flat Face"
+
+[node name="Thumbs Up-Flat Face" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Thumbs Up"
+to_name = &"Flat Face"
+
+[node name="Cool Aht-Flat Face" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Flat Face"
+to_name = &"Cool Aht"
+
+[node name="Cool Aht-Slit" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Slit"
+to_name = &"Cool Aht"
+
+[node name="Transition-Closet" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Transition"
+to_name = &"Closet"
+
+[node name="Transition-Flat Face" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Transition"
+to_name = &"Flat Face"
+
+[node name="Weird Fish-Closet" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Weird Fish"
+to_name = &"Closet"
+
+[node name="Drift Prep-Weird Fish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Weird Fish"
+to_name = &"Drift Prep"
+
+[node name="Weird Fish-Transition" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Transition"
+to_name = &"Weird Fish"
+
+[node name="Ooooh-Transition" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Transition"
+to_name = &"Ooooh"
+
+[node name="Transition-Turn Out" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Transition"
+to_name = &"Turn Out"
+
+[node name="Speed Builder-Drift In" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Drift In"
+to_name = &"Speed Builder"
+
+[node name="Weird Fish-Turn Out" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Weird Fish"
+to_name = &"Turn Out"
+
+[node name="Turn Out-Flat Face" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Flat Face"
+to_name = &"Turn Out"
+
+[node name="Speed Builder-Weird Fish" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Weird Fish"
+to_name = &"Speed Builder"
+
+[node name="Weird Fish-Drift In" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Drift In"
+to_name = &"Weird Fish"
+
+[node name="Drift Prep-Drift In" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Drift In"
+to_name = &"Drift Prep"
+
+[node name="Drift In-Impale" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Drift In"
+to_name = &"Impale"
+
+[node name="Drift In-Chipper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Drift In"
+to_name = &"Chipper"
+
+[node name="Chipper-Impale" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Chipper"
+to_name = &"Impale"
+
+[node name="Drift Prep-Pipe" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pipe"
+to_name = &"Drift Prep"
+
+[node name="Figly Filler-Pipe" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Pipe"
+to_name = &"Figly Filler"
+
+[node name="Drift Prep-Figly Filler" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Figly Filler"
+to_name = &"Drift Prep"
+
+[node name="Figly Filler-Chipper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Figly Filler"
+to_name = &"Chipper"
+
+[node name="Drift Prep-Chipper" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Chipper"
+to_name = &"Drift Prep"
+
+[node name="Speed Builder-Turn Out" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Turn Out"
+to_name = &"Speed Builder"
+
+[node name="Turn Out-That Tree" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Turn Out"
+to_name = &"That Tree"
+
+[node name="Thumbs Up-Turn Out" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Turn Out"
+to_name = &"Thumbs Up"
+
+[node name="Thumbs Up-That Tree" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Thumbs Up"
+to_name = &"That Tree"
+
+[node name="Speed Builder-That Tree" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"That Tree"
+to_name = &"Speed Builder"
+
+[node name="Speed Builder-Impale" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"Impale"
+to_name = &"Speed Builder"
+
+[node name="Impale-That Tree" type="Line2D" parent="links"]
+script = ExtResource("4_ipjr7")
+from_name = &"That Tree"
+to_name = &"Impale"
 
 [node name="bg" parent="." instance=ExtResource("2_he663")]
 material = SubResource("ShaderMaterial_65fxu")

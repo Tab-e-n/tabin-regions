@@ -1,84 +1,12 @@
 [gd_scene load_steps=36 format=3 uid="uid://bhkgyidkgganu"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_5o6s4"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_37v8y"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_sjy1d"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="4_furcl"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="5_ytxnb"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="6_scari"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="6_yxn4y"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Undeta\", \"Rebecca\"],
-	[\"Princ Pal\", \"Ploaf\"],
-	[\"Princ Pal\", \"Dosa Lina\", 1],
-	[\"Dosa Lina\", \"Ploaf\"],
-	[\"Bucksthe\", \"Ploaf\", 1],
-	[\"Undeta\", \"Hearsthethief\"],
-	[\"Hearsthethief\", \"Rebecca\"],
-	[\"Hearsthethief\", \"Ghost Toen\"],
-	[\"The Chinken\", \"Ghost Toen\"],
-	[\"Ghost Toen\", \"Rebecca\"],
-	[\"Hearsthethief\", \"The Point\"],
-	[\"Hearsthethief\", \"Kristland\"],
-	[\"Kristland\", \"The Point\"],
-	[\"Hearsthethief\", \"HIJob\"],
-	[\"Undeta\", \"Litmus\"],
-	[\"Toogujt\", \"Litmus\"],
-	[\"Undeta\", \"Ghost Toen\"],
-	[\"Ghost Toen\", \"Litmus\"],
-	[\"Luv & Pash\", \"Moducum\"],
-	[\"Luv & Pash\", \"Town Capinh\"],
-	[\"The Point\", \"Town Capinh\"],
-	[\"Bucksthe\", \"Town Capinh\"],
-	[\"Protectorate\", \"Town Capinh\"],
-	[\"Protectorate\", \"Dosa Lina\"],
-	[\"Dosa Lina\", \"Town Capinh\"],
-	[\"Bucksthe\", \"Kristland\"],
-	[\"Bucksthe\", \"Dosa Lina\"],
-	[\"The Point\", \"HIJob\"],
-	[\"Ghost Toen\", \"HIJob\"],
-	[\"The Chinken\", \"HIJob\"],
-	[\"The Chinken\", \"Toogujt\"],
-	[\"Omegavalley\", \"HIJob\"],
-	[\"The Chinken\", \"Omegavalley\"],
-	[\"The Chinken\", \"Noodles\"],
-	[\"Buckhy\", \"Noodles\"],
-	[\"Toogujt\", \"Noodles\"],
-	[\"YonGurt\", \"Noodles\"],
-	[\"Witsville\", \"Noodles\"],
-	[\"Witsville\", \"Toogujt\"],
-	[\"Witsville\", \"Buckhy\"],
-	[\"Buyus\", \"Omegavalley\"],
-	[\"Buyus\", \"Noodles\"],
-	[\"Buyus\", \"YonGurt\"],
-	[\"Buckhy\", \"YonGurt\"],
-	[\"Boot Island\", \"YonGurt\", 1],
-	[\"Boot Island\", \"Buyus\", 1],
-	[\"Rainfall Cliffs\", \"Boot Island\", 1],
-	[\"Rainfall Cliffs\", \"YonGurt\", 1],
-	[\"Rainfall Cliffs\", \"Buckhy\", 1],
-	[\"Noodles\", \"Omegavalley\"],
-	[\"Luv & Pash\", \"The Point\"],
-	[\"Bucksthe\", \"The Point\"],
-	[\"Oilatum\", \"HIJob\"],
-	[\"Moducum\", \"Crown\", 1],
-	[\"Oilatum\", \"Crown\", 1],
-	[\"Oilatum\", \"Omegavalley\", 1],
-	[\"HIJob\", \"Crown\", 1],
-	[\"The Point\", \"Crown\", 1],
-	[\"Luv & Pash\", \"Crown\", 1],
-	[\"Oilatum\", \"Moducum\", 1],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vqjlm"]
 shader = ExtResource("4_furcl")
@@ -248,7 +176,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.733333, 0.560784, 0.470588, 1)
 polygon = PackedVector2Array(-780, 200, -592, 288, -440, 292, -192, 408, -112, 408, -12, 380, 216, 376, 328, 348, 476, 372, 644, 336, 704, 244, 808, 160, 820, -48, 784, -168, 476, -408, 332, -400, 208, -320, 100, -356, 40, -356, -24, -328, -280, -352, -364, -344, -588, -392, -692, -396, -784, -336, -816, -232, -804, -116, -820, -28, -820, 116)
 script = ExtResource("1_5o6s4")
@@ -259,9 +187,323 @@ lore = "Azgaar fantasy map generator go!"
 align_color = Array[Color]([Color(0.576471, 0.45098, 0.407843, 1), Color(0.713726, 0.341176, 0.47451, 1), Color(0.67451, 0.333333, 0.278431, 1), Color(0.34902, 0.282353, 0.25098, 1), Color(0.701961, 0.482353, 0.188235, 1), Color(0.372549, 0.403922, 0.215686, 1), Color(0.352941, 0.576471, 0.462745, 1)])
 align_names = Array[String](["", "Cap", "Thief", "Oil", "Loaf", "Wit", "Yon"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Rebecca-Undeta" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Undeta"
+to_name = &"Rebecca"
+
+[node name="Ploaf-Princ Pal" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Princ Pal"
+to_name = &"Ploaf"
+
+[node name="Princ Pal-Dosa Lina" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Princ Pal"
+to_name = &"Dosa Lina"
+power_reduction = 1
+
+[node name="Ploaf-Dosa Lina" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Dosa Lina"
+to_name = &"Ploaf"
+
+[node name="Ploaf-Bucksthe" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Bucksthe"
+to_name = &"Ploaf"
+power_reduction = 1
+
+[node name="Undeta-Hearsthethief" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Undeta"
+to_name = &"Hearsthethief"
+
+[node name="Rebecca-Hearsthethief" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Hearsthethief"
+to_name = &"Rebecca"
+
+[node name="Ghost Toen-Hearsthethief" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Hearsthethief"
+to_name = &"Ghost Toen"
+
+[node name="The Chinken-Ghost Toen" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Chinken"
+to_name = &"Ghost Toen"
+
+[node name="Ghost Toen-Rebecca" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Ghost Toen"
+to_name = &"Rebecca"
+
+[node name="Hearsthethief-The Point" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Hearsthethief"
+to_name = &"The Point"
+
+[node name="Kristland-Hearsthethief" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Hearsthethief"
+to_name = &"Kristland"
+
+[node name="Kristland-The Point" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Kristland"
+to_name = &"The Point"
+
+[node name="Hearsthethief-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Hearsthethief"
+to_name = &"HIJob"
+
+[node name="Undeta-Litmus" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Undeta"
+to_name = &"Litmus"
+
+[node name="Toogujt-Litmus" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Toogujt"
+to_name = &"Litmus"
+
+[node name="Ghost Toen-Undeta" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Undeta"
+to_name = &"Ghost Toen"
+
+[node name="Ghost Toen-Litmus" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Ghost Toen"
+to_name = &"Litmus"
+
+[node name="Luv & Pash-Moducum" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Luv & Pash"
+to_name = &"Moducum"
+
+[node name="Town Capinh-Luv & Pash" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Luv & Pash"
+to_name = &"Town Capinh"
+
+[node name="Town Capinh-The Point" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Point"
+to_name = &"Town Capinh"
+
+[node name="Bucksthe-Town Capinh" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Bucksthe"
+to_name = &"Town Capinh"
+
+[node name="Town Capinh-Protectorate" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Protectorate"
+to_name = &"Town Capinh"
+
+[node name="Protectorate-Dosa Lina" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Protectorate"
+to_name = &"Dosa Lina"
+
+[node name="Town Capinh-Dosa Lina" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Dosa Lina"
+to_name = &"Town Capinh"
+
+[node name="Bucksthe-Kristland" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Bucksthe"
+to_name = &"Kristland"
+
+[node name="Bucksthe-Dosa Lina" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Bucksthe"
+to_name = &"Dosa Lina"
+
+[node name="The Point-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Point"
+to_name = &"HIJob"
+
+[node name="Ghost Toen-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Ghost Toen"
+to_name = &"HIJob"
+
+[node name="The Chinken-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Chinken"
+to_name = &"HIJob"
+
+[node name="Toogujt-The Chinken" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Chinken"
+to_name = &"Toogujt"
+
+[node name="Omegavalley-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Omegavalley"
+to_name = &"HIJob"
+
+[node name="The Chinken-Omegavalley" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Chinken"
+to_name = &"Omegavalley"
+
+[node name="The Chinken-Noodles" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Chinken"
+to_name = &"Noodles"
+
+[node name="Noodles-Buckhy" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Buckhy"
+to_name = &"Noodles"
+
+[node name="Toogujt-Noodles" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Toogujt"
+to_name = &"Noodles"
+
+[node name="Noodles-YonGurt" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"YonGurt"
+to_name = &"Noodles"
+
+[node name="Noodles-Witsville" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Witsville"
+to_name = &"Noodles"
+
+[node name="Toogujt-Witsville" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Witsville"
+to_name = &"Toogujt"
+
+[node name="Buckhy-Witsville" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Witsville"
+to_name = &"Buckhy"
+
+[node name="Buyus-Omegavalley" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Buyus"
+to_name = &"Omegavalley"
+
+[node name="Buyus-Noodles" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Buyus"
+to_name = &"Noodles"
+
+[node name="Buyus-YonGurt" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Buyus"
+to_name = &"YonGurt"
+
+[node name="Buckhy-YonGurt" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Buckhy"
+to_name = &"YonGurt"
+
+[node name="Boot Island-YonGurt" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Boot Island"
+to_name = &"YonGurt"
+power_reduction = 1
+
+[node name="Buyus-Boot Island" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Boot Island"
+to_name = &"Buyus"
+power_reduction = 1
+
+[node name="Boot Island-Rainfall Cliffs" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Rainfall Cliffs"
+to_name = &"Boot Island"
+power_reduction = 1
+
+[node name="Rainfall Cliffs-YonGurt" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Rainfall Cliffs"
+to_name = &"YonGurt"
+power_reduction = 1
+
+[node name="Buckhy-Rainfall Cliffs" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Rainfall Cliffs"
+to_name = &"Buckhy"
+power_reduction = 1
+
+[node name="Noodles-Omegavalley" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Noodles"
+to_name = &"Omegavalley"
+
+[node name="Luv & Pash-The Point" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Luv & Pash"
+to_name = &"The Point"
+
+[node name="Bucksthe-The Point" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Bucksthe"
+to_name = &"The Point"
+
+[node name="Oilatum-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Oilatum"
+to_name = &"HIJob"
+
+[node name="Crown-Moducum" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Moducum"
+to_name = &"Crown"
+power_reduction = 1
+
+[node name="Crown-Oilatum" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Oilatum"
+to_name = &"Crown"
+power_reduction = 1
+
+[node name="Oilatum-Omegavalley" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Oilatum"
+to_name = &"Omegavalley"
+power_reduction = 1
+
+[node name="Crown-HIJob" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"HIJob"
+to_name = &"Crown"
+power_reduction = 1
+
+[node name="Crown-The Point" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"The Point"
+to_name = &"Crown"
+power_reduction = 1
+
+[node name="Crown-Luv & Pash" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Luv & Pash"
+to_name = &"Crown"
+power_reduction = 1
+
+[node name="Oilatum-Moducum" type="Line2D" parent="links"]
+script = ExtResource("2_37v8y")
+from_name = &"Oilatum"
+to_name = &"Moducum"
+power_reduction = 1
 
 [node name="bg" parent="." instance=ExtResource("2_sjy1d")]
 color = Color(0.592157, 0.415686, 0.333333, 1)

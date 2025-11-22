@@ -1,66 +1,12 @@
 [gd_scene load_steps=33 format=3 uid="uid://02bnffpw4xmq"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_hywy4"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_iglit"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_lql3s"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_tlyqu"]
 [ext_resource type="StyleBox" uid="uid://dc1w42tfx0dul" path="res://styles/style_label_tutorial.tres" id="2_w6fy5"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_ek2to"]
 [ext_resource type="PackedScene" uid="uid://dikxdeaxwl51g" path="res://objects/text_box.tscn" id="3_thjdb"]
-
-[sub_resource type="GDScript" id="GDScript_ojoeb"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Blupital\", \"Blue Beach\"],
-	[\"Blupital\", \"Bluh Bluh\"],
-	[\"Bluh Bluh\", \"Blue Beach\"],
-	[\"Bluh Bluh\", \"Midland\"],
-	[\"Midland\", \"Blue Beach\"],
-	[\"Bluh Bluh\", \"Mushroom Meadow\"],
-	[\"Greenopolis\", \"Green Grass\"],
-	[\"Greenopolis\", \"Frederic's Land\"],
-	[\"Frederic's Land\", \"Green Grass\"],
-	[\"Frederic's Land\", \"Baffin Coast\"],
-	[\"Lake of Dess\", \"Green Grass\"],
-	[\"Lake of Dess\", \"Mushroom Meadow\"],
-	[\"Mushroom Meadow\", \"Green Grass\"],
-	[\"Lake of Dess\", \"Baffin Coast\"],
-	[\"Lake of Dess\", \"Lamanch Lowlands\"],
-	[\"Lake of Dess\", \"Lahama\"],
-	[\"Lake of Dess\", \"Crampus Country\"],
-	[\"Mushroom Meadow\", \"Crampus Country\"],
-	[\"Mushroom Meadow\", \"Midland\"],
-	[\"Midland\", \"Crampus Country\"],
-	[\"Midland\", \"Last Coast\"],
-	[\"Last Coast\", \"Crampus Country\"],
-	[\"Lahama\", \"Lamanch Lowlands\"],
-	[\"Lamanch Grove\", \"Lamanch Lowlands\"],
-	[\"Lahama\", \"Red Camping\"],
-	[\"Lamanch Grove\", \"Red Camping\"],
-	[\"Lamanch Grove\", \"Last Coast\"],
-	[\"Last Coast\", \"Red Camping\"],
-	[\"Crampus Country\", \"Red Camping\"],
-	[\"Lamanch Lowlands\", \"Baffin Coast\"],
-	[\"Frederic's Land\", \"Lake of Dess\"],
-	[\"Grunchy Grunch\", \"Green Grass\"],
-	[\"Grunchy Grunch\", \"Bluh Bluh\"],
-	[\"Grunchy Grunch\", \"Mushroom Meadow\"],
-	[\"Southern Lamanch\", \"Northern Lamanch\", 1],
-	[\"Lamanch Lowlands\", \"Northern Lamanch\"],
-	[\"Lamanch Grove\", \"Northern Lamanch\"],
-	[\"Lamanch Grove\", \"Red Bay\"],
-	[\"Red Bay\", \"Northern Lamanch\"],
-	[\"Southern Lamanch\", \"Red Bay\"],
-	[\"Southern Lamanch\", \"Redville\"],
-	[\"Red Downtown\", \"Red Bay\"],
-	[\"Red Downtown\", \"Redville\"],
-	[\"Southern Lamanch\", \"Red Downtown\"],
-]
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="GDScript" id="GDScript_sn1dp"]
 script/source = "extends Polygon2D
@@ -217,7 +163,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="- TUTORIAL -" type="Polygon2D"]
+[node name="- TUTORIAL -" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 position = Vector2(0, -1)
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-1024, -448, 1024, -448, 1024, 2368, -1024, 2368)
@@ -238,9 +184,230 @@ align_color = Array[Color]([Color(0.431373, 0.341176, 0.411765, 1), Color(0.1019
 align_names = Array[String](["Neutral", "You", "Friend", "Enemy"])
 main_character = 1
 snap_camera_to_first_align_capital = false
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_ojoeb")
+[node name="links" type="Node" parent="."]
+
+[node name="Blupital-Blue Beach" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Blupital"
+to_name = &"Blue Beach"
+
+[node name="Blupital-Bluh Bluh" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Blupital"
+to_name = &"Bluh Bluh"
+
+[node name="Bluh Bluh-Blue Beach" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Bluh Bluh"
+to_name = &"Blue Beach"
+
+[node name="Bluh Bluh-Midland" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Bluh Bluh"
+to_name = &"Midland"
+
+[node name="Blue Beach-Midland" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Midland"
+to_name = &"Blue Beach"
+
+[node name="Mushroom Meadow-Bluh Bluh" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Bluh Bluh"
+to_name = &"Mushroom Meadow"
+
+[node name="Green Grass-Greenopolis" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Greenopolis"
+to_name = &"Green Grass"
+
+[node name="Frederic\'s Land-Greenopolis" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Greenopolis"
+to_name = &"Frederic\'s Land"
+
+[node name="Frederic\'s Land-Green Grass" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Frederic\'s Land"
+to_name = &"Green Grass"
+
+[node name="Baffin Coast-Frederic\'s Land" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Frederic\'s Land"
+to_name = &"Baffin Coast"
+
+[node name="Lake of Dess-Green Grass" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lake of Dess"
+to_name = &"Green Grass"
+
+[node name="Mushroom Meadow-Lake of Dess" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lake of Dess"
+to_name = &"Mushroom Meadow"
+
+[node name="Mushroom Meadow-Green Grass" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Mushroom Meadow"
+to_name = &"Green Grass"
+
+[node name="Lake of Dess-Baffin Coast" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lake of Dess"
+to_name = &"Baffin Coast"
+
+[node name="Lake of Dess-Lamanch Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lake of Dess"
+to_name = &"Lamanch Lowlands"
+
+[node name="Lahama-Lake of Dess" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lake of Dess"
+to_name = &"Lahama"
+
+[node name="Lake of Dess-Crampus Country" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lake of Dess"
+to_name = &"Crampus Country"
+
+[node name="Mushroom Meadow-Crampus Country" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Mushroom Meadow"
+to_name = &"Crampus Country"
+
+[node name="Mushroom Meadow-Midland" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Mushroom Meadow"
+to_name = &"Midland"
+
+[node name="Crampus Country-Midland" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Midland"
+to_name = &"Crampus Country"
+
+[node name="Last Coast-Midland" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Midland"
+to_name = &"Last Coast"
+
+[node name="Crampus Country-Last Coast" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Last Coast"
+to_name = &"Crampus Country"
+
+[node name="Lahama-Lamanch Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lahama"
+to_name = &"Lamanch Lowlands"
+
+[node name="Lamanch Grove-Lamanch Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Grove"
+to_name = &"Lamanch Lowlands"
+
+[node name="Red Camping-Lahama" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lahama"
+to_name = &"Red Camping"
+
+[node name="Red Camping-Lamanch Grove" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Grove"
+to_name = &"Red Camping"
+
+[node name="Last Coast-Lamanch Grove" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Grove"
+to_name = &"Last Coast"
+
+[node name="Red Camping-Last Coast" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Last Coast"
+to_name = &"Red Camping"
+
+[node name="Red Camping-Crampus Country" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Crampus Country"
+to_name = &"Red Camping"
+
+[node name="Baffin Coast-Lamanch Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Lowlands"
+to_name = &"Baffin Coast"
+
+[node name="Lake of Dess-Frederic\'s Land" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Frederic\'s Land"
+to_name = &"Lake of Dess"
+
+[node name="Grunchy Grunch-Green Grass" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Grunchy Grunch"
+to_name = &"Green Grass"
+
+[node name="Grunchy Grunch-Bluh Bluh" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Grunchy Grunch"
+to_name = &"Bluh Bluh"
+
+[node name="Grunchy Grunch-Mushroom Meadow" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Grunchy Grunch"
+to_name = &"Mushroom Meadow"
+
+[node name="Northern Lamanch-Southern Lamanch" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Southern Lamanch"
+to_name = &"Northern Lamanch"
+power_reduction = 1
+
+[node name="Northern Lamanch-Lamanch Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Lowlands"
+to_name = &"Northern Lamanch"
+
+[node name="Lamanch Grove-Northern Lamanch" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Grove"
+to_name = &"Northern Lamanch"
+
+[node name="Red Bay-Lamanch Grove" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Lamanch Grove"
+to_name = &"Red Bay"
+
+[node name="Red Bay-Northern Lamanch" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Red Bay"
+to_name = &"Northern Lamanch"
+
+[node name="Red Bay-Southern Lamanch" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Southern Lamanch"
+to_name = &"Red Bay"
+
+[node name="Redville-Southern Lamanch" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Southern Lamanch"
+to_name = &"Redville"
+
+[node name="Red Bay-Red Downtown" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Red Downtown"
+to_name = &"Red Bay"
+
+[node name="Redville-Red Downtown" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Red Downtown"
+to_name = &"Redville"
+
+[node name="Southern Lamanch-Red Downtown" type="Line2D" parent="links"]
+script = ExtResource("2_iglit")
+from_name = &"Southern Lamanch"
+to_name = &"Red Downtown"
 
 [node name="spoilerwall" type="Polygon2D" parent="."]
 visible = false

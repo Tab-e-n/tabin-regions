@@ -2,78 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_k6mpi"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_4ouwy"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_if42c"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_nqpph"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_tmliv"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_dvsv0"]
 [ext_resource type="PackedScene" uid="uid://clyxj3ntdq610" path="res://objects/particle_spawner_elec.tscn" id="6_iduh8"]
-
-[sub_resource type="GDScript" id="GDScript_gpgxs"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Four Cachingas\", \"Four Dollar Tip\"],
-	[\"Four Cachingas\", \"Nicotwoine\"],
-	[\"Nicotwoine\", \"Four Dollar Tip\"],
-	[\"Fourless\", \"Four Dollar Tip\"],
-	[\"Fourless\", \"Twoliani\"],
-	[\"Twoliani\", \"Four Dollar Tip\"],
-	[\"Four Cachingas\", \"Wandering Two\"],
-	[\"Twatland\", \"Wandering Two\"],
-	[\"Twatland\", \"Twofold\"],
-	[\"Tworking\", \"Twofold\"],
-	[\"Tworking\", \"Two and Two\"],
-	[\"Two and Two\", \"Twofold\"],
-	[\"Twofold\", \"Wandering Two\"],
-	[\"Twofold\", \"Nicotwoine\"],
-	[\"Nicotwoine\", \"Wandering Two\"],
-	[\"Nicotwoine\", \"Fourless\"],
-	[\"Nicotwoine\", \"Four Loop\"],
-	[\"Twatland\", \"Cake\"],
-	[\"Twatland\", \"Twood\"],
-	[\"Twatland\", \"Diam Fournd\"],
-	[\"Diam Fournd\", \"Twood\"],
-	[\"Bread\", \"Cake\"],
-	[\"Bread\", \"Twood\"],
-	[\"Twood\", \"Cake\"],
-	[\"Twood\", \"L Angle\"],
-	[\"Diam Twond\", \"L Angle\"],
-	[\"Diam Fournd\", \"L Angle\"],
-	[\"Diam Fournd\", \"Diam Twond\"],
-	[\"Red Carpet\", \"L Angle\"],
-	[\"Red Carpet\", \"Donna Hill\"],
-	[\"Red Carpet\", \"Bella Subburb\"],
-	[\"Red Carpet\", \"Zigzag\"],
-	[\"Red Carpet\", \"Diam Twond\"],
-	[\"Diam Twond\", \"Zigzag\"],
-	[\"Zigzag\", \"Bella Subburb\"],
-	[\"Zigzag\", \"Zinger\"],
-	[\"Z\", \"Zinger\"],
-	[\"Zigzag\", \"Tworking\"],
-	[\"Zigzag\", \"Twatland\"],
-	[\"Zigzag\", \"Two and Two\"],
-	[\"Two and Two\", \"Twatland\"],
-	[\"Z\", \"Tworking\"],
-	[\"Tworking\", \"Zinger\"],
-	[\"Two Boys\", \"Zinger\"],
-	[\"Two Boys\", \"Two Girls\"],
-	[\"Two Boys\", \"Z\"],
-	[\"Fouragon\", \"Z\"],
-	[\"Fouragon\", \"Fourller\"],
-	[\"Fourller\", \"Z\"],
-	[\"Fourller\", \"Four Loop\"],
-	[\"Fourless\", \"Four Loop\"],
-	[\"Two Girls\", \"Fouragon\"],
-	[\"Two Girls\", \"Twacko\"],
-	[\"Twacko\", \"Fouragon\"],
-	[\"Z\", \"Two Girls\"],
-	[\"Bella Subburb\", \"Donna Hill\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nvuyg"]
 shader = ExtResource("3_tmliv")
@@ -243,7 +176,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="PowerOfTwo" type="Polygon2D"]
+[node name="PowerOfTwo" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.384314, 0.486275, 0.466667, 1)
 polygon = PackedVector2Array(-592, -208, -464, 24, -16, 112, 16, 352, 392, 536, 472, 456, 432, 120, 840, 80, 848, -120, 592, -280, 440, -264, 440, -472, 208, -752, -16, -704, -160, -464, -368, -360, -544, -304)
 script = ExtResource("1_k6mpi")
@@ -254,9 +187,289 @@ lore = "Two plus two is four, so is two times two.
 This is why all players have two capitals. It makes sence i promise."
 align_color = Array[Color]([Color(0.247059, 0.341176, 0.356863, 1), Color(0.839216, 0.647059, 0.752941, 1), Color(0.701961, 0.839216, 0.682353, 1), Color(0.647059, 0.65098, 0.839216, 1), Color(0.839216, 0.784314, 0.74902, 1)])
 align_names = Array[String](["Neutral Four", "Four Dollars", "Flour", "Foura Donna", "Fourth Guys"])
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_gpgxs")
+[node name="links" type="Node" parent="."]
+
+[node name="Four Cachingas-Four Dollar Tip" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Four Cachingas"
+to_name = &"Four Dollar Tip"
+
+[node name="Four Cachingas-Nicotwoine" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Four Cachingas"
+to_name = &"Nicotwoine"
+
+[node name="Four Dollar Tip-Nicotwoine" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Nicotwoine"
+to_name = &"Four Dollar Tip"
+
+[node name="Fourless-Four Dollar Tip" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fourless"
+to_name = &"Four Dollar Tip"
+
+[node name="Fourless-Twoliani" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fourless"
+to_name = &"Twoliani"
+
+[node name="Four Dollar Tip-Twoliani" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twoliani"
+to_name = &"Four Dollar Tip"
+
+[node name="Four Cachingas-Wandering Two" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Four Cachingas"
+to_name = &"Wandering Two"
+
+[node name="Wandering Two-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twatland"
+to_name = &"Wandering Two"
+
+[node name="Twofold-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twatland"
+to_name = &"Twofold"
+
+[node name="Twofold-Tworking" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Tworking"
+to_name = &"Twofold"
+
+[node name="Tworking-Two and Two" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Tworking"
+to_name = &"Two and Two"
+
+[node name="Twofold-Two and Two" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two and Two"
+to_name = &"Twofold"
+
+[node name="Twofold-Wandering Two" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twofold"
+to_name = &"Wandering Two"
+
+[node name="Twofold-Nicotwoine" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twofold"
+to_name = &"Nicotwoine"
+
+[node name="Wandering Two-Nicotwoine" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Nicotwoine"
+to_name = &"Wandering Two"
+
+[node name="Fourless-Nicotwoine" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Nicotwoine"
+to_name = &"Fourless"
+
+[node name="Four Loop-Nicotwoine" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Nicotwoine"
+to_name = &"Four Loop"
+
+[node name="Cake-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twatland"
+to_name = &"Cake"
+
+[node name="Twood-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twatland"
+to_name = &"Twood"
+
+[node name="Diam Fournd-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twatland"
+to_name = &"Diam Fournd"
+
+[node name="Diam Fournd-Twood" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Diam Fournd"
+to_name = &"Twood"
+
+[node name="Cake-Bread" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Bread"
+to_name = &"Cake"
+
+[node name="Twood-Bread" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Bread"
+to_name = &"Twood"
+
+[node name="Twood-Cake" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twood"
+to_name = &"Cake"
+
+[node name="Twood-L Angle" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twood"
+to_name = &"L Angle"
+
+[node name="Diam Twond-L Angle" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Diam Twond"
+to_name = &"L Angle"
+
+[node name="Diam Fournd-L Angle" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Diam Fournd"
+to_name = &"L Angle"
+
+[node name="Diam Twond-Diam Fournd" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Diam Fournd"
+to_name = &"Diam Twond"
+
+[node name="Red Carpet-L Angle" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Red Carpet"
+to_name = &"L Angle"
+
+[node name="Red Carpet-Donna Hill" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Red Carpet"
+to_name = &"Donna Hill"
+
+[node name="Red Carpet-Bella Subburb" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Red Carpet"
+to_name = &"Bella Subburb"
+
+[node name="Red Carpet-Zigzag" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Red Carpet"
+to_name = &"Zigzag"
+
+[node name="Diam Twond-Red Carpet" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Red Carpet"
+to_name = &"Diam Twond"
+
+[node name="Diam Twond-Zigzag" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Diam Twond"
+to_name = &"Zigzag"
+
+[node name="Zigzag-Bella Subburb" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Zigzag"
+to_name = &"Bella Subburb"
+
+[node name="Zinger-Zigzag" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Zigzag"
+to_name = &"Zinger"
+
+[node name="Zinger-Z" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Z"
+to_name = &"Zinger"
+
+[node name="Tworking-Zigzag" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Zigzag"
+to_name = &"Tworking"
+
+[node name="Zigzag-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Zigzag"
+to_name = &"Twatland"
+
+[node name="Zigzag-Two and Two" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Zigzag"
+to_name = &"Two and Two"
+
+[node name="Two and Two-Twatland" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two and Two"
+to_name = &"Twatland"
+
+[node name="Z-Tworking" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Z"
+to_name = &"Tworking"
+
+[node name="Zinger-Tworking" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Tworking"
+to_name = &"Zinger"
+
+[node name="Zinger-Two Boys" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two Boys"
+to_name = &"Zinger"
+
+[node name="Two Boys-Two Girls" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two Boys"
+to_name = &"Two Girls"
+
+[node name="Z-Two Boys" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two Boys"
+to_name = &"Z"
+
+[node name="Z-Fouragon" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fouragon"
+to_name = &"Z"
+
+[node name="Fourller-Fouragon" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fouragon"
+to_name = &"Fourller"
+
+[node name="Z-Fourller" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fourller"
+to_name = &"Z"
+
+[node name="Fourller-Four Loop" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fourller"
+to_name = &"Four Loop"
+
+[node name="Fourless-Four Loop" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Fourless"
+to_name = &"Four Loop"
+
+[node name="Two Girls-Fouragon" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two Girls"
+to_name = &"Fouragon"
+
+[node name="Twacko-Two Girls" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Two Girls"
+to_name = &"Twacko"
+
+[node name="Twacko-Fouragon" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Twacko"
+to_name = &"Fouragon"
+
+[node name="Z-Two Girls" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Z"
+to_name = &"Two Girls"
+
+[node name="Donna Hill-Bella Subburb" type="Line2D" parent="links"]
+script = ExtResource("2_if42c")
+from_name = &"Bella Subburb"
+to_name = &"Donna Hill"
 
 [node name="bg" parent="." instance=ExtResource("2_4ouwy")]
 position = Vector2(8, 0)

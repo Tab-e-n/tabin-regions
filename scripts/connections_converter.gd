@@ -30,8 +30,8 @@ var converted : int = 0
 			var link : RegionLink = RegionLink.new()
 			add_child(link)
 			link.set_owner(region_control)
-			link.from_path = link.get_path_to(region_from)
-			link.to_path = link.get_path_to(region_to)
+			link.from_name = region_from.name
+			link.to_name = region_to.name
 			link.power_reduction = power_reduction
 			link._generate_name()
 			converted += 1
@@ -43,3 +43,6 @@ var converted : int = 0
 	set(_u):
 		converted = 0
 		print("Reset")
+func _ready():
+	if not Engine.is_editor_hint():
+		push_error("You forgot to detach the connection convertor script!")

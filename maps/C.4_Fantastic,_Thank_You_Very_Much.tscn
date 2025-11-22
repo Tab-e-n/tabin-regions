@@ -3,80 +3,10 @@
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_qwc4r"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_iirrf"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_rt6om"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_vpjj4"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_lcno6"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="3_t7voh"]
 [ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/particle_spawner_star.tscn" id="4_7praj"]
-
-[sub_resource type="GDScript" id="GDScript_hq4v5"]
-script/source = "extends Node
-
-@export var align_color : Array = [
-]
-
-var connections : Array = [
-	[\"Water\", \"Lake\"],
-	[\"Tsuna\", \"Lake\"],
-	[\"Water\", \"Tsuna\"],
-	[\"Wind\", \"Hill\"],
-	[\"Wind\", \"Rain\"],
-	[\"Rain\", \"Tsuna\"],
-	[\"Shore\", \"Tsuna\"],
-	[\"Rain\", \"Shore\"],
-	[\"Rain\", \"Hill\"],
-	[\"Hydro\", \"Lake\"],
-	[\"Tsuna\", \"Hydro\"],
-	[\"Hydro\", \"Shore\"],
-	[\"Laser\", \"Shore\"],
-	[\"Rain\", \"Laser\"],
-	[\"Laser\", \"Hill\"],
-	[\"Water\", \"Smoke\"],
-	[\"Smoke\", \"Lake\"],
-	[\"Smoke\", \"Oil\"],
-	[\"Fish\", \"Lake\"],
-	[\"Smoke\", \"Fish\"],
-	[\"Fish\", \"Oil\"],
-	[\"Thunder\", \"Oil\"],
-	[\"Smoke\", \"Thunder\"],
-	[\"Fire\", \"Thunder\"],
-	[\"Fire\", \"Hell\"],
-	[\"Hell\", \"Thunder\"],
-	[\"Hell\", \"Hydrogen\"],
-	[\"Hydrogen\", \"Thunder\"],
-	[\"Hydrogen\", \"Oil\"],
-	[\"Volcano\", \"Hell\"],
-	[\"Fire\", \"Volcano\"],
-	[\"Magma\", \"Volcano\"],
-	[\"Earth\", \"Magma\"],
-	[\"Earth\", \"Groundma\"],
-	[\"Groundma\", \"Magma\"],
-	[\"Groundma\", \"Metal\"],
-	[\"Metal\", \"Magma\"],
-	[\"Coal\", \"Magma\"],
-	[\"Metal\", \"Coal\"],
-	[\"Coal\", \"Volcano\"],
-	[\"Coal\", \"Ash\"],
-	[\"Ash\", \"Hell\"],
-	[\"Volcano\", \"Ash\"],
-	[\"Earth\", \"Dust\"],
-	[\"Dust\", \"Groundma\"],
-	[\"Dust\", \"Erosion\"],
-	[\"Wind\", \"Erosion\"],
-	[\"Tornado\", \"Erosion\"],
-	[\"Tornado\", \"Hill\"],
-	[\"Erosion\", \"Hill\"],
-	[\"Tornado\", \"Fan\"],
-	[\"Fan\", \"Erosion\"],
-	[\"Dust\", \"Fan\"],
-	[\"Sand\", \"Fan\"],
-	[\"Dust\", \"Sand\"],
-	[\"Groundma\", \"Sand\"],
-]
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-#	get_parent().align_color = align_color.duplicate()
-	queue_free()
-"
 
 [sub_resource type="GDScript" id="GDScript_xu8xq"]
 script/source = "extends Node
@@ -291,7 +221,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="RegionControl" type="Polygon2D"]
+[node name="RegionControl" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(0, 528, -216, 344, -512, 272, -512, 24, -632, -296, -272, -328, -8, -488, 384, -368, 496, -192, 520, 56, 360, 152, 272, 384)
 script = ExtResource("1_qwc4r")
@@ -302,9 +232,289 @@ lore = "Long ago, the four elements of the magic hill lived in peace, that is un
 Every so often, the magic hill gives each element more power to their capital."
 align_names = Array[String](["", "Fire", "Wind", "Water", "Earth"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_hq4v5")
+[node name="links" type="Node" parent="."]
+
+[node name="Water-Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Water"
+to_name = &"Lake"
+
+[node name="Tsuna-Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Tsuna"
+to_name = &"Lake"
+
+[node name="Tsuna-Water" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Water"
+to_name = &"Tsuna"
+
+[node name="Hill-Wind" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Wind"
+to_name = &"Hill"
+
+[node name="Rain-Wind" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Wind"
+to_name = &"Rain"
+
+[node name="Tsuna-Rain" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Rain"
+to_name = &"Tsuna"
+
+[node name="Tsuna-Shore" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Shore"
+to_name = &"Tsuna"
+
+[node name="Shore-Rain" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Rain"
+to_name = &"Shore"
+
+[node name="Hill-Rain" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Rain"
+to_name = &"Hill"
+
+[node name="Hydro-Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Hydro"
+to_name = &"Lake"
+
+[node name="Tsuna-Hydro" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Tsuna"
+to_name = &"Hydro"
+
+[node name="Shore-Hydro" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Hydro"
+to_name = &"Shore"
+
+[node name="Laser-Shore" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Laser"
+to_name = &"Shore"
+
+[node name="Laser-Rain" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Rain"
+to_name = &"Laser"
+
+[node name="Hill-Laser" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Laser"
+to_name = &"Hill"
+
+[node name="Smoke-Water" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Water"
+to_name = &"Smoke"
+
+[node name="Smoke-Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Smoke"
+to_name = &"Lake"
+
+[node name="Smoke-Oil" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Smoke"
+to_name = &"Oil"
+
+[node name="Fish-Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Fish"
+to_name = &"Lake"
+
+[node name="Fish-Smoke" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Smoke"
+to_name = &"Fish"
+
+[node name="Fish-Oil" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Fish"
+to_name = &"Oil"
+
+[node name="Oil-Thunder" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Thunder"
+to_name = &"Oil"
+
+[node name="Smoke-Thunder" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Smoke"
+to_name = &"Thunder"
+
+[node name="Thunder-Fire" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Fire"
+to_name = &"Thunder"
+
+[node name="Hell-Fire" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Fire"
+to_name = &"Hell"
+
+[node name="Thunder-Hell" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Hell"
+to_name = &"Thunder"
+
+[node name="Hell-Hydrogen" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Hell"
+to_name = &"Hydrogen"
+
+[node name="Thunder-Hydrogen" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Hydrogen"
+to_name = &"Thunder"
+
+[node name="Oil-Hydrogen" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Hydrogen"
+to_name = &"Oil"
+
+[node name="Volcano-Hell" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Volcano"
+to_name = &"Hell"
+
+[node name="Volcano-Fire" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Fire"
+to_name = &"Volcano"
+
+[node name="Volcano-Magma" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Magma"
+to_name = &"Volcano"
+
+[node name="Earth-Magma" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Earth"
+to_name = &"Magma"
+
+[node name="Groundma-Earth" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Earth"
+to_name = &"Groundma"
+
+[node name="Groundma-Magma" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Groundma"
+to_name = &"Magma"
+
+[node name="Groundma-Metal" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Groundma"
+to_name = &"Metal"
+
+[node name="Metal-Magma" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Metal"
+to_name = &"Magma"
+
+[node name="Coal-Magma" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Coal"
+to_name = &"Magma"
+
+[node name="Coal-Metal" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Metal"
+to_name = &"Coal"
+
+[node name="Volcano-Coal" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Coal"
+to_name = &"Volcano"
+
+[node name="Coal-Ash" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Coal"
+to_name = &"Ash"
+
+[node name="Hell-Ash" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Ash"
+to_name = &"Hell"
+
+[node name="Volcano-Ash" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Volcano"
+to_name = &"Ash"
+
+[node name="Earth-Dust" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Earth"
+to_name = &"Dust"
+
+[node name="Groundma-Dust" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Dust"
+to_name = &"Groundma"
+
+[node name="Erosion-Dust" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Dust"
+to_name = &"Erosion"
+
+[node name="Erosion-Wind" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Wind"
+to_name = &"Erosion"
+
+[node name="Erosion-Tornado" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Tornado"
+to_name = &"Erosion"
+
+[node name="Hill-Tornado" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Tornado"
+to_name = &"Hill"
+
+[node name="Hill-Erosion" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Erosion"
+to_name = &"Hill"
+
+[node name="Tornado-Fan" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Tornado"
+to_name = &"Fan"
+
+[node name="Erosion-Fan" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Fan"
+to_name = &"Erosion"
+
+[node name="Dust-Fan" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Dust"
+to_name = &"Fan"
+
+[node name="Sand-Fan" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Sand"
+to_name = &"Fan"
+
+[node name="Sand-Dust" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Dust"
+to_name = &"Sand"
+
+[node name="Sand-Groundma" type="Line2D" parent="links"]
+script = ExtResource("2_vpjj4")
+from_name = &"Groundma"
+to_name = &"Sand"
 
 [node name="Magic Hill Mechanic" type="Node" parent="."]
 script = SubResource("GDScript_xu8xq")

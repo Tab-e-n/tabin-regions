@@ -1,81 +1,11 @@
 [gd_scene load_steps=36 format=3 uid="uid://drd1r6hb7tyga"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_rob5p"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_ja0yg"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_pdqb2"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_urcg5"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_ehuad"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_36nly"]
-
-[sub_resource type="GDScript" id="GDScript_su0wr"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Sandwich\", \"Tart\"],
-	[\"Sandwich\", \"Khilimsel\"],
-	[\"Sandwich\", \"Calispecs\"],
-	[\"Sandwich\", \"Dinjospecs\"],
-	[\"Sandwich\", \"Yummers\"],
-	[\"Cuisine\", \"Yummers\"],
-	[\"Cuisine\", \"Bish\"],
-	[\"Cuisine\", \"Faucet\"],
-	[\"Cuisine\", \"Djoumm\"],
-	[\"Djoumm\", \"Faucet\"],
-	[\"Heritcomess\", \"Bish\"],
-	[\"Heritcomess\", \"Djoumm\"],
-	[\"Heritcomess\", \"Spaikd Boot\"],
-	[\"Lass\", \"Spaikd Boot\"],
-	[\"Spaikd Boot\", \"Djoumm\", 1],
-	[\"Djoumm\", \"Bish\"],
-	[\"Djoumm\", \"Eye Of The Cliffs\", 1],
-	[\"Spaikd Boot\", \"Eye Of The Cliffs\", 1],
-	[\"Lass\", \"Eye Of The Cliffs\", 1],
-	[\"Heritcomess\", \"Herit Landing\"],
-	[\"Heritcomess\", \"Lass\"],
-	[\"Lass\", \"Herit Landing\"],
-	[\"Yummers\", \"Dinjospecs\"],
-	[\"Yummers\", \"Eatus\"],
-	[\"Yummers\", \"Faucet\"],
-	[\"Faucet\", \"Eatus\"],
-	[\"Faucet\", \"Eye Of The Cliffs\", 1],
-	[\"Eye Of The Cliffs\", \"Eatus\", 1],
-	[\"Eatus\", \"Dinjospecs\"],
-	[\"Khilimsel\", \"Tart\"],
-	[\"Khilimsel\", \"Seaside Bridge\"],
-	[\"Fraants\", \"Seaside Bridge\"],
-	[\"Riwerla\", \"Seaside Bridge\"],
-	[\"Riwerla\", \"Calispecs\"],
-	[\"Riwerla\", \"Fraants\"],
-	[\"Fraants\", \"Calispecs\"],
-	[\"Hifoucas Lowlands\", \"Calispecs\", 1],
-	[\"Hifoucas Lowlands\", \"Dinjospecs\", 1],
-	[\"Hifoucas Lowlands\", \"Hifoucas\"],
-	[\"Hifoucas Lowlands\", \"Forgor\"],
-	[\"Hifoucas Lowlands\", \"Eatus\", 1],
-	[\"Eatus\", \"Forgor\", 1],
-	[\"Eatus\", \"Duckless\"],
-	[\"Lil Cap\", \"Duckless\"],
-	[\"Lil Cap\", \"Crystal Salt Cove\"],
-	[\"Lass\", \"Crystal Salt Cove\", 1],
-	[\"Lil Cap\", \"Eye Of The Cliffs\"],
-	[\"Eye Of The Cliffs\", \"Duckless\"],
-	[\"Eye Of The Cliffs\", \"Crystal Salt Cove\"],
-	[\"Duckless\", \"Forgor\", 1],
-	[\"Duckless\", \"Loveless Port\"],
-	[\"Loveless Port\", \"Forgor\"],
-	[\"Hifoucas Lowlands\", \"Hilly Beach\"],
-	[\"Hilly Beach\", \"Hifoucas\", 1],
-	[\"Forgor\", \"Hifoucas\", 1],
-	[\"Loveless Port\", \"Hifoucas\"],
-	[\"Loufoucas\", \"Hifoucas\", 1],
-	[\"Hilly Beach\", \"Loufoucas\"],
-	[\"Hilly Beach\", \"Calispecs\", 1],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="Curve" id="Curve_ttth8"]
 _data = [Vector2(0, 0.772727), 0.0, 0.0, 0, 0, Vector2(0.163366, 0.6), 0.0, 0.0, 0, 0, Vector2(0.326733, 0.490909), 0.0, 0.0, 0, 0, Vector2(0.5, 0.545455), 0.0, 0.0, 0, 0, Vector2(0.737624, 0.436364), 0.0, 0.0, 0, 0, Vector2(0.960396, 0.163636), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -249,7 +179,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="RegionControl" type="Polygon2D"]
+[node name="RegionControl" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.513726, 0.4, 0.333333, 1)
 polygon = PackedVector2Array(136, -568, 176, -432, 224, -360, 240, -312, 272, -288, 312, -336, 344, -336, 392, -296, 360, -208, 424, -160, 424, -112, 416, -72, 488, -72, 496, -40, 480, 24, 448, 24, 432, 64, 392, 88, 400, 152, 296, 200, 232, 168, 192, 104, 136, 120, 96, 104, 72, 168, 0, 152, -40, 176, -24, 224, -48, 264, -120, 248, -288, 240, -344, 192, -432, 136, -448, 168, -520, 192, -608, 152, -632, 96, -608, 32, -568, 24, -504, -48, -568, -104, -552, -208, -424, -256, -376, -288, -304, -256, -208, -360, -240, -400, -224, -432, -176, -464, -152, -448, -104, -472, -64, -432, -32, -472, -32, -528, 24, -576)
 script = ExtResource("1_rob5p")
@@ -269,9 +199,320 @@ align_color = Array[Color]([Color(0.4, 0.313726, 0.266667, 1), Color(0.929412, 0
 align_names = Array[String](["", "Sand Witch", "Foucas", "Herit"])
 main_character = 1
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_su0wr")
+[node name="links" type="Node" parent="."]
+
+[node name="Sandwich-Tart" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Sandwich"
+to_name = &"Tart"
+
+[node name="Sandwich-Khilimsel" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Sandwich"
+to_name = &"Khilimsel"
+
+[node name="Sandwich-Calispecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Sandwich"
+to_name = &"Calispecs"
+
+[node name="Sandwich-Dinjospecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Sandwich"
+to_name = &"Dinjospecs"
+
+[node name="Sandwich-Yummers" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Sandwich"
+to_name = &"Yummers"
+
+[node name="Yummers-Cuisine" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Cuisine"
+to_name = &"Yummers"
+
+[node name="Bish-Cuisine" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Cuisine"
+to_name = &"Bish"
+
+[node name="Cuisine-Faucet" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Cuisine"
+to_name = &"Faucet"
+
+[node name="Djoumm-Cuisine" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Cuisine"
+to_name = &"Djoumm"
+
+[node name="Djoumm-Faucet" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Djoumm"
+to_name = &"Faucet"
+
+[node name="Bish-Heritcomess" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Heritcomess"
+to_name = &"Bish"
+
+[node name="Heritcomess-Djoumm" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Heritcomess"
+to_name = &"Djoumm"
+
+[node name="Heritcomess-Spaikd Boot" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Heritcomess"
+to_name = &"Spaikd Boot"
+
+[node name="Lass-Spaikd Boot" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lass"
+to_name = &"Spaikd Boot"
+
+[node name="Djoumm-Spaikd Boot" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Spaikd Boot"
+to_name = &"Djoumm"
+power_reduction = 1
+
+[node name="Bish-Djoumm" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Djoumm"
+to_name = &"Bish"
+
+[node name="Eye Of The Cliffs-Djoumm" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Djoumm"
+to_name = &"Eye Of The Cliffs"
+power_reduction = 1
+
+[node name="Eye Of The Cliffs-Spaikd Boot" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Spaikd Boot"
+to_name = &"Eye Of The Cliffs"
+power_reduction = 1
+
+[node name="Eye Of The Cliffs-Lass" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lass"
+to_name = &"Eye Of The Cliffs"
+power_reduction = 1
+
+[node name="Heritcomess-Herit Landing" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Heritcomess"
+to_name = &"Herit Landing"
+
+[node name="Lass-Heritcomess" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Heritcomess"
+to_name = &"Lass"
+
+[node name="Lass-Herit Landing" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lass"
+to_name = &"Herit Landing"
+
+[node name="Yummers-Dinjospecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Yummers"
+to_name = &"Dinjospecs"
+
+[node name="Eatus-Yummers" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Yummers"
+to_name = &"Eatus"
+
+[node name="Yummers-Faucet" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Yummers"
+to_name = &"Faucet"
+
+[node name="Eatus-Faucet" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Faucet"
+to_name = &"Eatus"
+
+[node name="Eye Of The Cliffs-Faucet" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Faucet"
+to_name = &"Eye Of The Cliffs"
+power_reduction = 1
+
+[node name="Eye Of The Cliffs-Eatus" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Eye Of The Cliffs"
+to_name = &"Eatus"
+power_reduction = 1
+
+[node name="Eatus-Dinjospecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Eatus"
+to_name = &"Dinjospecs"
+
+[node name="Khilimsel-Tart" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Khilimsel"
+to_name = &"Tart"
+
+[node name="Seaside Bridge-Khilimsel" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Khilimsel"
+to_name = &"Seaside Bridge"
+
+[node name="Seaside Bridge-Fraants" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Fraants"
+to_name = &"Seaside Bridge"
+
+[node name="Seaside Bridge-Riwerla" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Riwerla"
+to_name = &"Seaside Bridge"
+
+[node name="Riwerla-Calispecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Riwerla"
+to_name = &"Calispecs"
+
+[node name="Riwerla-Fraants" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Riwerla"
+to_name = &"Fraants"
+
+[node name="Fraants-Calispecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Fraants"
+to_name = &"Calispecs"
+
+[node name="Hifoucas Lowlands-Calispecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hifoucas Lowlands"
+to_name = &"Calispecs"
+power_reduction = 1
+
+[node name="Hifoucas Lowlands-Dinjospecs" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hifoucas Lowlands"
+to_name = &"Dinjospecs"
+power_reduction = 1
+
+[node name="Hifoucas-Hifoucas Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hifoucas Lowlands"
+to_name = &"Hifoucas"
+
+[node name="Hifoucas Lowlands-Forgor" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hifoucas Lowlands"
+to_name = &"Forgor"
+
+[node name="Eatus-Hifoucas Lowlands" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hifoucas Lowlands"
+to_name = &"Eatus"
+power_reduction = 1
+
+[node name="Eatus-Forgor" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Eatus"
+to_name = &"Forgor"
+power_reduction = 1
+
+[node name="Eatus-Duckless" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Eatus"
+to_name = &"Duckless"
+
+[node name="Duckless-Lil Cap" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lil Cap"
+to_name = &"Duckless"
+
+[node name="Crystal Salt Cove-Lil Cap" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lil Cap"
+to_name = &"Crystal Salt Cove"
+
+[node name="Crystal Salt Cove-Lass" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lass"
+to_name = &"Crystal Salt Cove"
+power_reduction = 1
+
+[node name="Eye Of The Cliffs-Lil Cap" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Lil Cap"
+to_name = &"Eye Of The Cliffs"
+
+[node name="Eye Of The Cliffs-Duckless" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Eye Of The Cliffs"
+to_name = &"Duckless"
+
+[node name="Eye Of The Cliffs-Crystal Salt Cove" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Eye Of The Cliffs"
+to_name = &"Crystal Salt Cove"
+
+[node name="Duckless-Forgor" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Duckless"
+to_name = &"Forgor"
+power_reduction = 1
+
+[node name="Duckless-Loveless Port" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Duckless"
+to_name = &"Loveless Port"
+
+[node name="Forgor-Loveless Port" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Loveless Port"
+to_name = &"Forgor"
+
+[node name="Hifoucas Lowlands-Hilly Beach" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hifoucas Lowlands"
+to_name = &"Hilly Beach"
+
+[node name="Hifoucas-Hilly Beach" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hilly Beach"
+to_name = &"Hifoucas"
+power_reduction = 1
+
+[node name="Hifoucas-Forgor" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Forgor"
+to_name = &"Hifoucas"
+power_reduction = 1
+
+[node name="Hifoucas-Loveless Port" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Loveless Port"
+to_name = &"Hifoucas"
+
+[node name="Hifoucas-Loufoucas" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Loufoucas"
+to_name = &"Hifoucas"
+power_reduction = 1
+
+[node name="Loufoucas-Hilly Beach" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hilly Beach"
+to_name = &"Loufoucas"
+
+[node name="Calispecs-Hilly Beach" type="Line2D" parent="links"]
+script = ExtResource("2_ja0yg")
+from_name = &"Hilly Beach"
+to_name = &"Calispecs"
+power_reduction = 1
 
 [node name="river1" type="Line2D" parent="."]
 points = PackedVector2Array(448, -96, 400, -64, 368, -56, 336, -40, 312, -8, 288, 0, 280, -8, 280, -24, 280, -48, 264, -64, 248, -72, 216, -56, 208, -64, 200, -80, 184, -112, 160, -112, 136, -112, 112, -128, 104, -152, 112, -168, 120, -176, 120, -192, 112, -208, 96, -216, 72, -208)

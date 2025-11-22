@@ -1,125 +1,12 @@
 [gd_scene load_steps=57 format=3 uid="uid://chqdc40q6ra8x"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_kjk1u"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_7bhcr"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_es3bb"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_0ijy6"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_x52ax"]
 [ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/particle_spawner_star.tscn" id="4_mmi0s"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_v0dpb"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Big Slot Left\", \"Big Slot Center Left\"],
-	[\"Big Slot Center\", \"Big Slot Center Left\"],
-	[\"Big Slot Center\", \"Big Slot Center Right\"],
-	[\"Big Slot Right\", \"Big Slot Center Right\"],
-	[\"Big Slot Left\", \"Big Slot Board\"],
-	[\"Big Slot Left\", \"Bump\"],
-	[\"Bump\", \"Big Slot Board\"],
-	[\"Charlie\", \"Big Slot Board\"],
-	[\"Bump\", \"Big Slot Name\"],
-	[\"Bump\", \"Bigotop\"],
-	[\"Spooky Wire\", \"Bigotop\"],
-	[\"Mini Slots\", \"Bigotop\", 1],
-	[\"Mini Base\", \"Bigotop\", 1],
-	[\"Mini Base\", \"Bump\", 1],
-	[\"Carpet\", \"Bump\", 1],
-	[\"Scratches\", \"Bump\", 1],
-	[\"Scratches\", \"Big Slot Board\", 1],
-	[\"Bigotop\", \"Big Slot Name\"],
-	[\"Bigotop\", \"Bsot Toilet\"],
-	[\"Big Dust\", \"Bsot Toilet\"],
-	[\"Big Dust\", \"Panel De BigBig\"],
-	[\"Panel De BigBig\", \"Bsot Toilet\"],
-	[\"Bsot Toilet\", \"Big Slot Name\"],
-	[\"Bsot Toilet\", \"Blog Sit\"],
-	[\"Big Dust\", \"Blog Sit\"],
-	[\"Antenna\", \"Blog Sit\"],
-	[\"Antenna\", \"Big Side\"],
-	[\"Antenna\", \"Big Dust\"],
-	[\"Big Side\", \"Blog Sit\"],
-	[\"Blog Sit\", \"Big Slot Name\"],
-	[\"Big Slot Right\", \"Big Slot Buro\"],
-	[\"Safety Hazard Board\", \"Big Slot Buro\"],
-	[\"Big Slot Right\", \"BS\"],
-	[\"Big Slot Name\", \"BS\"],
-	[\"Blog Sit\", \"BS\"],
-	[\"Big Side\", \"BS\"],
-	[\"Big Side\", \"Silly Lights\"],
-	[\"Silly Lights\", \"BS\"],
-	[\"BS\", \"Big Slot Buro\"],
-	[\"Big Slot Button\", \"Big Slot Board\"],
-	[\"Big Slot Corner\", \"Big Slot Board\"],
-	[\"Big Slot Corner\", \"Spilled Beer\"],
-	[\"Big Slot Button\", \"Big Slot Buro\"],
-	[\"Big Slot Kick Range\", \"Big Slot Buro\"],
-	[\"Big Slot Kick Range\", \"Big Trip Corner\"],
-	[\"Safety Hazard Board\", \"Big Trip Corner\"],
-	[\"Safety Hazard Board\", \"Silly Lights\"],
-	[\"Power Cord\", \"Big Trip Corner\"],
-	[\"Power Cord\", \"Janitor Stuff\"],
-	[\"Power Cord\", \"Safety Hazard Board\"],
-	[\"Safety Hazard Board\", \"Janitor Stuff\"],
-	[\"Big Trip Corner\", \"Big Slot Buro\"],
-	[\"Big Slot Button\", \"Big Slot Kick Range\"],
-	[\"Coin Slot\", \"Big Slot Kick Range\"],
-	[\"Big Slot Button\", \"Big Chair\"],
-	[\"Big Slot Button\", \"Coin Slot\"],
-	[\"Coin Slot\", \"Big Chair\"],
-	[\"Big Chair\", \"Big Slot Kick Range\"],
-	[\"Big Chair\", \"Big Slot Corner\"],
-	[\"Tabled\", \"Poker Deck\"],
-	[\"Table End\", \"Poker Deck\"],
-	[\"Table End\", \"Tablos\"],
-	[\"Table End\", \"Funky Chair\"],
-	[\"Table End\", \"Copychair\"],
-	[\"Copychair\", \"Funky Chair\"],
-	[\"Funky Chair\", \"Tablos\"],
-	[\"Funky Chair\", \"That Chair\"],
-	[\"That Chair\", \"Tablos\"],
-	[\"That Chair\", \"Table Legs\"],
-	[\"Tablos\", \"Poker Deck\"],
-	[\"Tablos\", \"Table Start\"],
-	[\"Carpet\", \"Table Start\"],
-	[\"Carpet\", \"Scratches\"],
-	[\"Scratches\", \"Table Start\"],
-	[\"Table Legs\", \"Table Start\"],
-	[\"Table Start\", \"Poker Deck\"],
-	[\"Tabled\", \"Table End\"],
-	[\"Tabled\", \"Chipchair\"],
-	[\"Tabled\", \"Loser Chair\"],
-	[\"Tabled\", \"Charlie\"],
-	[\"Scratches\", \"Charlie\"],
-	[\"Chipchair\", \"Table End\"],
-	[\"Tabled\", \"Table Start\"],
-	[\"Charlie\", \"Table Start\"],
-	[\"Charlie\", \"Loser Chair\"],
-	[\"Chipchair\", \"Loser Chair\"],
-	[\"Chipchair\", \"Spilled Beer\"],
-	[\"Spilled Beer\", \"Loser Chair\"],
-	[\"Rim Roulette\", \"Roulette\"],
-	[\"Rim Roulette\", \"Carpet\"],
-	[\"Roulette\", \"Chip Table Part\"],
-	[\"Rim Roulette\", \"Table Legs\"],
-	[\"Mini Base\", \"Mini Slots\"],
-	[\"Mini Base\", \"Carpet\"],
-	[\"Mini Top\", \"Mini Slots\"],
-	[\"Mini Top\", \"Spooky Wire\"],
-	[\"Panel De BigBig\", \"Spooky Wire\"],
-	[\"Spooky Wire\", \"Mini Slots\"],
-	[\"Table Legs\", \"Chip Table Part\"],
-	[\"Table Legs\", \"Carpet\"],
-	[\"Chip Table Part\", \"Rim Roulette\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_re0ht"]
 shader = ExtResource("3_x52ax")
@@ -415,7 +302,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="Casino" type="Polygon2D"]
+[node name="Casino" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.34902, 0.262745, 0.407843, 1)
 polygon = PackedVector2Array(-560, -192, -760, 264, -656, 432, 152, 448, 648, 264, 704, 32, 504, -368, -152, -376, -304, -200)
 script = ExtResource("1_kjk1u")
@@ -428,9 +315,520 @@ align_names = Array[String](["Casino", "Alcohol", "Roulette", "Small Slots", "En
 color_bg_according_to_alignment = false
 city_size = 0.8
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Big Slot Center Left-Big Slot Left" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Left"
+to_name = &"Big Slot Center Left"
+
+[node name="Big Slot Center Left-Big Slot Center" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Center"
+to_name = &"Big Slot Center Left"
+
+[node name="Big Slot Center-Big Slot Center Right" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Center"
+to_name = &"Big Slot Center Right"
+
+[node name="Big Slot Center Right-Big Slot Right" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Right"
+to_name = &"Big Slot Center Right"
+
+[node name="Big Slot Board-Big Slot Left" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Left"
+to_name = &"Big Slot Board"
+
+[node name="Bump-Big Slot Left" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Left"
+to_name = &"Bump"
+
+[node name="Big Slot Board-Bump" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bump"
+to_name = &"Big Slot Board"
+
+[node name="Charlie-Big Slot Board" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Charlie"
+to_name = &"Big Slot Board"
+
+[node name="Bump-Big Slot Name" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bump"
+to_name = &"Big Slot Name"
+
+[node name="Bigotop-Bump" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bump"
+to_name = &"Bigotop"
+
+[node name="Spooky Wire-Bigotop" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Spooky Wire"
+to_name = &"Bigotop"
+
+[node name="Mini Slots-Bigotop" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Slots"
+to_name = &"Bigotop"
+power_reduction = 1
+
+[node name="Mini Base-Bigotop" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Base"
+to_name = &"Bigotop"
+power_reduction = 1
+
+[node name="Mini Base-Bump" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Base"
+to_name = &"Bump"
+power_reduction = 1
+
+[node name="Carpet-Bump" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Carpet"
+to_name = &"Bump"
+power_reduction = 1
+
+[node name="Scratches-Bump" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Scratches"
+to_name = &"Bump"
+power_reduction = 1
+
+[node name="Scratches-Big Slot Board" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Scratches"
+to_name = &"Big Slot Board"
+power_reduction = 1
+
+[node name="Bigotop-Big Slot Name" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bigotop"
+to_name = &"Big Slot Name"
+
+[node name="Bsot Toilet-Bigotop" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bigotop"
+to_name = &"Bsot Toilet"
+
+[node name="Bsot Toilet-Big Dust" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Dust"
+to_name = &"Bsot Toilet"
+
+[node name="Panel De BigBig-Big Dust" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Dust"
+to_name = &"Panel De BigBig"
+
+[node name="Bsot Toilet-Panel De BigBig" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Panel De BigBig"
+to_name = &"Bsot Toilet"
+
+[node name="Bsot Toilet-Big Slot Name" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bsot Toilet"
+to_name = &"Big Slot Name"
+
+[node name="Bsot Toilet-Blog Sit" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Bsot Toilet"
+to_name = &"Blog Sit"
+
+[node name="Blog Sit-Big Dust" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Dust"
+to_name = &"Blog Sit"
+
+[node name="Blog Sit-Antenna" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Antenna"
+to_name = &"Blog Sit"
+
+[node name="Big Side-Antenna" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Antenna"
+to_name = &"Big Side"
+
+[node name="Big Dust-Antenna" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Antenna"
+to_name = &"Big Dust"
+
+[node name="Blog Sit-Big Side" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Side"
+to_name = &"Blog Sit"
+
+[node name="Blog Sit-Big Slot Name" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Blog Sit"
+to_name = &"Big Slot Name"
+
+[node name="Big Slot Right-Big Slot Buro" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Right"
+to_name = &"Big Slot Buro"
+
+[node name="Safety Hazard Board-Big Slot Buro" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Safety Hazard Board"
+to_name = &"Big Slot Buro"
+
+[node name="Big Slot Right-BS" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Right"
+to_name = &"BS"
+
+[node name="Big Slot Name-BS" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Name"
+to_name = &"BS"
+
+[node name="Blog Sit-BS" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Blog Sit"
+to_name = &"BS"
+
+[node name="Big Side-BS" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Side"
+to_name = &"BS"
+
+[node name="Big Side-Silly Lights" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Side"
+to_name = &"Silly Lights"
+
+[node name="Silly Lights-BS" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Silly Lights"
+to_name = &"BS"
+
+[node name="BS-Big Slot Buro" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"BS"
+to_name = &"Big Slot Buro"
+
+[node name="Big Slot Board-Big Slot Button" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Button"
+to_name = &"Big Slot Board"
+
+[node name="Big Slot Corner-Big Slot Board" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Corner"
+to_name = &"Big Slot Board"
+
+[node name="Big Slot Corner-Spilled Beer" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Corner"
+to_name = &"Spilled Beer"
+
+[node name="Big Slot Button-Big Slot Buro" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Button"
+to_name = &"Big Slot Buro"
+
+[node name="Big Slot Kick Range-Big Slot Buro" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Kick Range"
+to_name = &"Big Slot Buro"
+
+[node name="Big Slot Kick Range-Big Trip Corner" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Kick Range"
+to_name = &"Big Trip Corner"
+
+[node name="Big Trip Corner-Safety Hazard Board" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Safety Hazard Board"
+to_name = &"Big Trip Corner"
+
+[node name="Safety Hazard Board-Silly Lights" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Safety Hazard Board"
+to_name = &"Silly Lights"
+
+[node name="Big Trip Corner-Power Cord" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Power Cord"
+to_name = &"Big Trip Corner"
+
+[node name="Power Cord-Janitor Stuff" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Power Cord"
+to_name = &"Janitor Stuff"
+
+[node name="Safety Hazard Board-Power Cord" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Power Cord"
+to_name = &"Safety Hazard Board"
+
+[node name="Safety Hazard Board-Janitor Stuff" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Safety Hazard Board"
+to_name = &"Janitor Stuff"
+
+[node name="Big Trip Corner-Big Slot Buro" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Trip Corner"
+to_name = &"Big Slot Buro"
+
+[node name="Big Slot Kick Range-Big Slot Button" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Button"
+to_name = &"Big Slot Kick Range"
+
+[node name="Coin Slot-Big Slot Kick Range" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Coin Slot"
+to_name = &"Big Slot Kick Range"
+
+[node name="Big Chair-Big Slot Button" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Button"
+to_name = &"Big Chair"
+
+[node name="Coin Slot-Big Slot Button" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Slot Button"
+to_name = &"Coin Slot"
+
+[node name="Big Chair-Coin Slot" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Coin Slot"
+to_name = &"Big Chair"
+
+[node name="Big Chair-Big Slot Kick Range" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Chair"
+to_name = &"Big Slot Kick Range"
+
+[node name="Big Slot Corner-Big Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Big Chair"
+to_name = &"Big Slot Corner"
+
+[node name="Tabled-Poker Deck" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tabled"
+to_name = &"Poker Deck"
+
+[node name="Poker Deck-Table End" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table End"
+to_name = &"Poker Deck"
+
+[node name="Tablos-Table End" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table End"
+to_name = &"Tablos"
+
+[node name="Table End-Funky Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table End"
+to_name = &"Funky Chair"
+
+[node name="Copychair-Table End" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table End"
+to_name = &"Copychair"
+
+[node name="Copychair-Funky Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Copychair"
+to_name = &"Funky Chair"
+
+[node name="Tablos-Funky Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Funky Chair"
+to_name = &"Tablos"
+
+[node name="That Chair-Funky Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Funky Chair"
+to_name = &"That Chair"
+
+[node name="Tablos-That Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"That Chair"
+to_name = &"Tablos"
+
+[node name="That Chair-Table Legs" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"That Chair"
+to_name = &"Table Legs"
+
+[node name="Tablos-Poker Deck" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tablos"
+to_name = &"Poker Deck"
+
+[node name="Tablos-Table Start" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tablos"
+to_name = &"Table Start"
+
+[node name="Carpet-Table Start" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Carpet"
+to_name = &"Table Start"
+
+[node name="Carpet-Scratches" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Carpet"
+to_name = &"Scratches"
+
+[node name="Scratches-Table Start" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Scratches"
+to_name = &"Table Start"
+
+[node name="Table Start-Table Legs" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table Legs"
+to_name = &"Table Start"
+
+[node name="Poker Deck-Table Start" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table Start"
+to_name = &"Poker Deck"
+
+[node name="Tabled-Table End" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tabled"
+to_name = &"Table End"
+
+[node name="Tabled-Chipchair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tabled"
+to_name = &"Chipchair"
+
+[node name="Tabled-Loser Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tabled"
+to_name = &"Loser Chair"
+
+[node name="Charlie-Tabled" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tabled"
+to_name = &"Charlie"
+
+[node name="Charlie-Scratches" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Scratches"
+to_name = &"Charlie"
+
+[node name="Table End-Chipchair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Chipchair"
+to_name = &"Table End"
+
+[node name="Tabled-Table Start" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Tabled"
+to_name = &"Table Start"
+
+[node name="Charlie-Table Start" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Charlie"
+to_name = &"Table Start"
+
+[node name="Charlie-Loser Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Charlie"
+to_name = &"Loser Chair"
+
+[node name="Loser Chair-Chipchair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Chipchair"
+to_name = &"Loser Chair"
+
+[node name="Spilled Beer-Chipchair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Chipchair"
+to_name = &"Spilled Beer"
+
+[node name="Spilled Beer-Loser Chair" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Spilled Beer"
+to_name = &"Loser Chair"
+
+[node name="Rim Roulette-Roulette" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Rim Roulette"
+to_name = &"Roulette"
+
+[node name="Rim Roulette-Carpet" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Rim Roulette"
+to_name = &"Carpet"
+
+[node name="Roulette-Chip Table Part" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Roulette"
+to_name = &"Chip Table Part"
+
+[node name="Rim Roulette-Table Legs" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Rim Roulette"
+to_name = &"Table Legs"
+
+[node name="Mini Base-Mini Slots" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Base"
+to_name = &"Mini Slots"
+
+[node name="Mini Base-Carpet" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Base"
+to_name = &"Carpet"
+
+[node name="Mini Slots-Mini Top" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Top"
+to_name = &"Mini Slots"
+
+[node name="Spooky Wire-Mini Top" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Mini Top"
+to_name = &"Spooky Wire"
+
+[node name="Panel De BigBig-Spooky Wire" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Panel De BigBig"
+to_name = &"Spooky Wire"
+
+[node name="Spooky Wire-Mini Slots" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Spooky Wire"
+to_name = &"Mini Slots"
+
+[node name="Chip Table Part-Table Legs" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table Legs"
+to_name = &"Chip Table Part"
+
+[node name="Carpet-Table Legs" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Table Legs"
+to_name = &"Carpet"
+
+[node name="Rim Roulette-Chip Table Part" type="Line2D" parent="links"]
+script = ExtResource("2_7bhcr")
+from_name = &"Chip Table Part"
+to_name = &"Rim Roulette"
 
 [node name="bg" parent="." instance=ExtResource("2_es3bb")]
 color = Color(0.278431, 0.2, 0.301961, 1)

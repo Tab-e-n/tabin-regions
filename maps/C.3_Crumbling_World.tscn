@@ -1,151 +1,17 @@
-[gd_scene load_steps=73 format=3 uid="uid://dsbsm47pt1d5y"]
+[gd_scene load_steps=74 format=3 uid="uid://dsbsm47pt1d5y"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_vngco"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_1nk1w"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_arjpy"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_xp21o"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_xlbv6"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_5cnvc"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_u0egn"]
 
-[sub_resource type="GDScript" id="GDScript_1kfg4"]
+[sub_resource type="GDScript" id="GDScript_svoow"]
 script/source = "extends Node
 
-var region_control : RegionControl
-
-var connections : Array = [
-	[\"Spicc\", \"Kansas\"],
-	[\"Spicc\", \"Flr\"],
-	[\"Spicc\", \"Dongo Water\"],
-	[\"Spicc\", \"Smidgen\"],
-	[\"Dong Isle\", \"Dongo Water\"],
-	[\"Flr\", \"Kansas\"],
-	[\"Krona\", \"Kansas\"],
-	[\"Krona\", \"Cranberries\"],
-	[\"Cranberries\", \"Kansas\"],
-	[\"Krona\", \"South Dambodill\"],
-	[\"Flr\", \"South Dambodill\"],
-	[\"Krona\", \"Claws\"],
-	[\"Last Hold\", \"Claws\"],
-	[\"Last Hold\", \"Cranberries\"],
-	[\"Last Hold\", \"Berry Gardens\"],
-	[\"Berry Gardens\", \"Cranberries\"],
-	[\"Berry Gardens\", \"Land of Light\"],
-	[\"Berry Gardens\", \"Dolfes\"],
-	[\"Enca\", \"Golfers\"],
-	[\"Berry Gardens\", \"Enca\"],
-	[\"Golfers\", \"Dolfes\"],
-	[\"Golfers\", \"Spikes by the Ocean\", 1],
-	[\"Great Yu\", \"Spikes by the Ocean\"],
-	[\"Dolfes\", \"Land of Light\", 1],
-	[\"Land of Light\", \"Cranberries\"],
-	[\"Crang\", \"Cranberries\"],
-	[\"Land of Light\", \"Land of Dark\"],
-	[\"Crang\", \"Land of Dark\"],
-	[\"Crang\", \"Bongo Water\"],
-	[\"Bong Isle\", \"Bongo Water\"],
-	[\"Bong Isle\", \"Dongo Water\"],
-	[\"Smidgen\", \"Dongo Water\"],
-	[\"Dong Isle\", \"Bongo Water\"],
-	[\"Bong Isle\", \"Dong Isle\"],
-	[\"Land of Light\", \"Crang\"],
-	[\"Land of Light\", \"Spikes by the Ocean\"],
-	[\"Krona\", \"Last Hold\"],
-	[\"Flatvla\", \"Last Hold\"],
-	[\"Flatvla\", \"Camberon\"],
-	[\"Camberon\", \"Last Hold\"],
-	[\"Ero Plateau\", \"Last Hold\"],
-	[\"Camberon\", \"Ero Plateau\"],
-	[\"Camberon\", \"Cremicon\"],
-	[\"Camberon\", \"Lakebeach\"],
-	[\"Lakebeach\", \"Cremicon\"],
-	[\"Crancan\", \"Cremicon\"],
-	[\"Crancan\", \"Ero Plateau\"],
-	[\"Ero Plateau\", \"Cremicon\"],
-	[\"Jebroni\", \"Cremicon\"],
-	[\"Jebroni\", \"Grugrugr\"],
-	[\"Jebroni\", \"Jebro Egg\"],
-	[\"Jebro Egg\", \"Grugrugr\"],
-	[\"Jebroni\", \"Lakebeach\"],
-	[\"South Dambodill\", \"Kansas\"],
-	[\"South Dambodill\", \"Dambodill Highlands\"],
-	[\"South Dambodill\", \"Overhedge\", 1],
-	[\"Overhedge\", \"Dambodill Highlands\", 1],
-	[\"Overhedge\", \"Bleche Bridge\"],
-	[\"Overhedge\", \"Grunchy Coast\"],
-	[\"South Dambodill\", \"Lake Dambodill\"],
-	[\"Lake Dambodill\", \"Dambodill Highlands\"],
-	[\"Lake Dambodill\", \"Flatvla\"],
-	[\"Flatvla\", \"Dambodill Highlands\"],
-	[\"Flatvla\", \"Bleche Bridge\"],
-	[\"Flatvla\", \"Dinsta Lower\"],
-	[\"Flatvla\", \"Lakebeach\"],
-	[\"Dinsta Lower\", \"Bleche Bridge\"],
-	[\"Dinsta Lower\", \"Dinsta Upper\"],
-	[\"Dinsta Lower\", \"Beachlake\"],
-	[\"Beachlake\", \"Dinsta Upper\"],
-	[\"Grugrugr\", \"Dinsta Upper\"],
-	[\"Grugrugr\", \"Beachlake\"],
-	[\"Bleche\", \"Bleche Bridge\"],
-	[\"Bleche\", \"Grunchy Coast\"],
-	[\"Grunchy Coast\", \"Bleche Bridge\"],
-	[\"Lake Dambodill\", \"Claws\"],
-	[\"Raltan Lows\", \"Raltan Highs\", 1],
-	[\"Raltan Lows\", \"Crumble Valley\", 1],
-	[\"Crumble Valley\", \"Raltan Highs\", 1],
-	[\"Crumble Valley\", \"Ghandala\"],
-	[\"Crumble Valley\", \"Left Rashin\"],
-	[\"Right Rashin\", \"Left Rashin\"],
-	[\"Crumble Valley\", \"Right Rashin\"],
-	[\"Little Riddle\", \"Ghandala\"],
-	[\"Left Rashin\", \"Ghandala\"],
-	[\"Little Riddle\", \"Crumble Valley\"],
-	[\"Great Yu\", \"Ghandala\"],
-	[\"Bluarc\", \"Ghandala\"],
-	[\"Bluarc\", \"Little Riddle\"],
-	[\"Bluarc\", \"Outer Lands\"],
-	[\"Bluarc\", \"Hop Port\"],
-	[\"Hop Port\", \"Outer Lands\"],
-	[\"Gnawfus\", \"Raltan Highs\"],
-	[\"Gnawfus\", \"Bungeron\"],
-	[\"Bungeron\", \"Raltan Highs\"],
-	[\"Bungeron\", \"Campytopia\"],
-	[\"Bungeron\", \"Hyperspace Portal\"],
-	[\"Hyperspace 1\", \"Hyperspace Portal\"],
-	[\"Hyperspace 1\", \"Outer Lands\"],
-	[\"Hyperspace 2\", \"Hyperspace Portal\"],
-	[\"Hyperspace 2\", \"Outer Lands\"],
-	[\"Hyperspace 2\", \"Hyperspace 1\"],
-	[\"Campytopia\", \"Raltan Highs\"],
-	[\"Raltan Lows\", \"Last Hold\"],
-	[\"Great Yu\", \"Last Hold\"],
-	[\"Cherry Groves\", \"Last Hold\"],
-	[\"Grandfa\", \"Last Hold\"],
-	[\"Great Yu\", \"Cherry Groves\"],
-	[\"Great Yu\", \"Left Rashin\"],
-	[\"Grandfa\", \"Cherry Groves\"],
-	[\"Grandfa\", \"Right Rashin\"],
-	[\"Right Rashin\", \"Cherry Groves\"],
-	[\"Great Yu\", \"Enca\"],
-	[\"Great Yu\", \"Right Rashin\"],
-	[\"Raltan Lows\", \"Ero Plateau\"],
-	[\"Raltan Lows\", \"Campytopia\"],
-	[\"Raltan Lows\", \"Grandfa\"],
-	[\"Campytopia\", \"Crancan\"],
-	[\"Raltan Lows\", \"Crancan\"],
-]
-
-func _ready():
-	region_control = get_parent()
-	region_control.connections = connections.duplicate()
-	if region_control.dummy:
-		queue_free()
-		return
-#	call_deferred(\"set_corruption_aliance\")
-#
-#
-#func set_corruption_aliance():
-#	region_control.alignment_aliances[4] = -1
-
+@onready var region_control : RegionControl = get_parent()
 
 func _process(_delta):
 	if region_control.current_playing_align == 4:
@@ -163,7 +29,6 @@ func _process(_delta):
 			region_control.get_node(\"Corruption7\").change_alignment(4)
 		if region_control.region_amount[3] <= region_control.capital_amount[3]:
 			region_control.game_control.dp_control.CALL_forfeit = true
-	
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j5f8c"]
@@ -556,7 +421,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="Crumbling World" type="Polygon2D"]
+[node name="Crumbling World" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.298039, 0.231373, 0.270588, 1)
 polygon = PackedVector2Array(-592, -688, 256, -800, 864, -440, 944, 88, 360, 800, -152, 928, -560, 600, -784, 8)
 script = ExtResource("1_vngco")
@@ -575,9 +440,614 @@ align_color = Array[Color]([Color(0.435294, 0.364706, 0.403922, 1), Color(0.9294
 align_names = Array[String](["", "Spicy Guys", "Jeb & Ron", "Blue People", "Corruption"])
 color_bg_according_to_alignment = false
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_1kfg4")
+[node name="links" type="Node" parent="."]
+
+[node name="Kansas-Spicc" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Spicc"
+to_name = &"Kansas"
+
+[node name="Flr-Spicc" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Spicc"
+to_name = &"Flr"
+
+[node name="Dongo Water-Spicc" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Spicc"
+to_name = &"Dongo Water"
+
+[node name="Smidgen-Spicc" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Spicc"
+to_name = &"Smidgen"
+
+[node name="Dongo Water-Dong Isle" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Dong Isle"
+to_name = &"Dongo Water"
+
+[node name="Kansas-Flr" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flr"
+to_name = &"Kansas"
+
+[node name="Kansas-Krona" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Krona"
+to_name = &"Kansas"
+
+[node name="Krona-Cranberries" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Krona"
+to_name = &"Cranberries"
+
+[node name="Kansas-Cranberries" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Cranberries"
+to_name = &"Kansas"
+
+[node name="South Dambodill-Krona" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Krona"
+to_name = &"South Dambodill"
+
+[node name="South Dambodill-Flr" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flr"
+to_name = &"South Dambodill"
+
+[node name="Krona-Claws" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Krona"
+to_name = &"Claws"
+
+[node name="Last Hold-Claws" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Last Hold"
+to_name = &"Claws"
+
+[node name="Last Hold-Cranberries" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Last Hold"
+to_name = &"Cranberries"
+
+[node name="Last Hold-Berry Gardens" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Last Hold"
+to_name = &"Berry Gardens"
+
+[node name="Berry Gardens-Cranberries" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Berry Gardens"
+to_name = &"Cranberries"
+
+[node name="Land of Light-Berry Gardens" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Berry Gardens"
+to_name = &"Land of Light"
+
+[node name="Dolfes-Berry Gardens" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Berry Gardens"
+to_name = &"Dolfes"
+
+[node name="Enca-Golfers" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Enca"
+to_name = &"Golfers"
+
+[node name="Enca-Berry Gardens" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Berry Gardens"
+to_name = &"Enca"
+
+[node name="Dolfes-Golfers" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Golfers"
+to_name = &"Dolfes"
+
+[node name="Golfers-Spikes by the Ocean" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Golfers"
+to_name = &"Spikes by the Ocean"
+power_reduction = 1
+
+[node name="Great Yu-Spikes by the Ocean" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Spikes by the Ocean"
+
+[node name="Dolfes-Land of Light" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Dolfes"
+to_name = &"Land of Light"
+power_reduction = 1
+
+[node name="Land of Light-Cranberries" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Land of Light"
+to_name = &"Cranberries"
+
+[node name="Cranberries-Crang" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crang"
+to_name = &"Cranberries"
+
+[node name="Land of Light-Land of Dark" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Land of Light"
+to_name = &"Land of Dark"
+
+[node name="Land of Dark-Crang" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crang"
+to_name = &"Land of Dark"
+
+[node name="Bongo Water-Crang" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crang"
+to_name = &"Bongo Water"
+
+[node name="Bong Isle-Bongo Water" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bong Isle"
+to_name = &"Bongo Water"
+
+[node name="Bong Isle-Dongo Water" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bong Isle"
+to_name = &"Dongo Water"
+
+[node name="Dongo Water-Smidgen" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Smidgen"
+to_name = &"Dongo Water"
+
+[node name="Bongo Water-Dong Isle" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Dong Isle"
+to_name = &"Bongo Water"
+
+[node name="Bong Isle-Dong Isle" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bong Isle"
+to_name = &"Dong Isle"
+
+[node name="Land of Light-Crang" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Land of Light"
+to_name = &"Crang"
+
+[node name="Land of Light-Spikes by the Ocean" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Land of Light"
+to_name = &"Spikes by the Ocean"
+
+[node name="Last Hold-Krona" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Krona"
+to_name = &"Last Hold"
+
+[node name="Last Hold-Flatvla" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flatvla"
+to_name = &"Last Hold"
+
+[node name="Flatvla-Camberon" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flatvla"
+to_name = &"Camberon"
+
+[node name="Last Hold-Camberon" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Camberon"
+to_name = &"Last Hold"
+
+[node name="Last Hold-Ero Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Ero Plateau"
+to_name = &"Last Hold"
+
+[node name="Ero Plateau-Camberon" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Camberon"
+to_name = &"Ero Plateau"
+
+[node name="Cremicon-Camberon" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Camberon"
+to_name = &"Cremicon"
+
+[node name="Lakebeach-Camberon" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Camberon"
+to_name = &"Lakebeach"
+
+[node name="Cremicon-Lakebeach" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Lakebeach"
+to_name = &"Cremicon"
+
+[node name="Cremicon-Crancan" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crancan"
+to_name = &"Cremicon"
+
+[node name="Ero Plateau-Crancan" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crancan"
+to_name = &"Ero Plateau"
+
+[node name="Cremicon-Ero Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Ero Plateau"
+to_name = &"Cremicon"
+
+[node name="Cremicon-Jebroni" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Jebroni"
+to_name = &"Cremicon"
+
+[node name="Grugrugr-Jebroni" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Jebroni"
+to_name = &"Grugrugr"
+
+[node name="Jebro Egg-Jebroni" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Jebroni"
+to_name = &"Jebro Egg"
+
+[node name="Jebro Egg-Grugrugr" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Jebro Egg"
+to_name = &"Grugrugr"
+
+[node name="Lakebeach-Jebroni" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Jebroni"
+to_name = &"Lakebeach"
+
+[node name="Kansas-South Dambodill" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"South Dambodill"
+to_name = &"Kansas"
+
+[node name="Dambodill Highlands-South Dambodill" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"South Dambodill"
+to_name = &"Dambodill Highlands"
+
+[node name="South Dambodill-Overhedge" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"South Dambodill"
+to_name = &"Overhedge"
+power_reduction = 1
+
+[node name="Dambodill Highlands-Overhedge" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Overhedge"
+to_name = &"Dambodill Highlands"
+power_reduction = 1
+
+[node name="Bleche Bridge-Overhedge" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Overhedge"
+to_name = &"Bleche Bridge"
+
+[node name="Grunchy Coast-Overhedge" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Overhedge"
+to_name = &"Grunchy Coast"
+
+[node name="Lake Dambodill-South Dambodill" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"South Dambodill"
+to_name = &"Lake Dambodill"
+
+[node name="Dambodill Highlands-Lake Dambodill" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Lake Dambodill"
+to_name = &"Dambodill Highlands"
+
+[node name="Lake Dambodill-Flatvla" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Lake Dambodill"
+to_name = &"Flatvla"
+
+[node name="Dambodill Highlands-Flatvla" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flatvla"
+to_name = &"Dambodill Highlands"
+
+[node name="Bleche Bridge-Flatvla" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flatvla"
+to_name = &"Bleche Bridge"
+
+[node name="Flatvla-Dinsta Lower" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flatvla"
+to_name = &"Dinsta Lower"
+
+[node name="Flatvla-Lakebeach" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Flatvla"
+to_name = &"Lakebeach"
+
+[node name="Bleche Bridge-Dinsta Lower" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Dinsta Lower"
+to_name = &"Bleche Bridge"
+
+[node name="Dinsta Upper-Dinsta Lower" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Dinsta Lower"
+to_name = &"Dinsta Upper"
+
+[node name="Beachlake-Dinsta Lower" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Dinsta Lower"
+to_name = &"Beachlake"
+
+[node name="Beachlake-Dinsta Upper" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Beachlake"
+to_name = &"Dinsta Upper"
+
+[node name="Dinsta Upper-Grugrugr" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Grugrugr"
+to_name = &"Dinsta Upper"
+
+[node name="Beachlake-Grugrugr" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Grugrugr"
+to_name = &"Beachlake"
+
+[node name="Bleche-Bleche Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bleche"
+to_name = &"Bleche Bridge"
+
+[node name="Grunchy Coast-Bleche" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bleche"
+to_name = &"Grunchy Coast"
+
+[node name="Grunchy Coast-Bleche Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Grunchy Coast"
+to_name = &"Bleche Bridge"
+
+[node name="Lake Dambodill-Claws" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Lake Dambodill"
+to_name = &"Claws"
+
+[node name="Raltan Highs-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Raltan Highs"
+power_reduction = 1
+
+[node name="Crumble Valley-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Crumble Valley"
+power_reduction = 1
+
+[node name="Raltan Highs-Crumble Valley" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crumble Valley"
+to_name = &"Raltan Highs"
+power_reduction = 1
+
+[node name="Crumble Valley-Ghandala" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crumble Valley"
+to_name = &"Ghandala"
+
+[node name="Crumble Valley-Left Rashin" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crumble Valley"
+to_name = &"Left Rashin"
+
+[node name="Right Rashin-Left Rashin" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Right Rashin"
+to_name = &"Left Rashin"
+
+[node name="Right Rashin-Crumble Valley" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Crumble Valley"
+to_name = &"Right Rashin"
+
+[node name="Little Riddle-Ghandala" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Little Riddle"
+to_name = &"Ghandala"
+
+[node name="Ghandala-Left Rashin" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Left Rashin"
+to_name = &"Ghandala"
+
+[node name="Little Riddle-Crumble Valley" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Little Riddle"
+to_name = &"Crumble Valley"
+
+[node name="Great Yu-Ghandala" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Ghandala"
+
+[node name="Bluarc-Ghandala" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bluarc"
+to_name = &"Ghandala"
+
+[node name="Little Riddle-Bluarc" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bluarc"
+to_name = &"Little Riddle"
+
+[node name="Outer Lands-Bluarc" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bluarc"
+to_name = &"Outer Lands"
+
+[node name="Bluarc-Hop Port" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bluarc"
+to_name = &"Hop Port"
+
+[node name="Outer Lands-Hop Port" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Hop Port"
+to_name = &"Outer Lands"
+
+[node name="Raltan Highs-Gnawfus" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Gnawfus"
+to_name = &"Raltan Highs"
+
+[node name="Bungeron-Gnawfus" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Gnawfus"
+to_name = &"Bungeron"
+
+[node name="Bungeron-Raltan Highs" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bungeron"
+to_name = &"Raltan Highs"
+
+[node name="Campytopia-Bungeron" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bungeron"
+to_name = &"Campytopia"
+
+[node name="Bungeron-Hyperspace Portal" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Bungeron"
+to_name = &"Hyperspace Portal"
+
+[node name="Hyperspace Portal-Hyperspace 1" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Hyperspace 1"
+to_name = &"Hyperspace Portal"
+
+[node name="Outer Lands-Hyperspace 1" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Hyperspace 1"
+to_name = &"Outer Lands"
+
+[node name="Hyperspace 2-Hyperspace Portal" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Hyperspace 2"
+to_name = &"Hyperspace Portal"
+
+[node name="Hyperspace 2-Outer Lands" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Hyperspace 2"
+to_name = &"Outer Lands"
+
+[node name="Hyperspace 2-Hyperspace 1" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Hyperspace 2"
+to_name = &"Hyperspace 1"
+
+[node name="Campytopia-Raltan Highs" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Campytopia"
+to_name = &"Raltan Highs"
+
+[node name="Last Hold-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Last Hold"
+
+[node name="Great Yu-Last Hold" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Last Hold"
+
+[node name="Last Hold-Cherry Groves" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Cherry Groves"
+to_name = &"Last Hold"
+
+[node name="Grandfa-Last Hold" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Grandfa"
+to_name = &"Last Hold"
+
+[node name="Great Yu-Cherry Groves" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Cherry Groves"
+
+[node name="Great Yu-Left Rashin" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Left Rashin"
+
+[node name="Grandfa-Cherry Groves" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Grandfa"
+to_name = &"Cherry Groves"
+
+[node name="Grandfa-Right Rashin" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Grandfa"
+to_name = &"Right Rashin"
+
+[node name="Right Rashin-Cherry Groves" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Right Rashin"
+to_name = &"Cherry Groves"
+
+[node name="Enca-Great Yu" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Enca"
+
+[node name="Great Yu-Right Rashin" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Great Yu"
+to_name = &"Right Rashin"
+
+[node name="Ero Plateau-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Ero Plateau"
+
+[node name="Campytopia-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Campytopia"
+
+[node name="Grandfa-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Grandfa"
+
+[node name="Campytopia-Crancan" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Campytopia"
+to_name = &"Crancan"
+
+[node name="Crancan-Raltan Lows" type="Line2D" parent="links"]
+script = ExtResource("2_1nk1w")
+from_name = &"Raltan Lows"
+to_name = &"Crancan"
+
+[node name="corruption" type="Node" parent="."]
+script = SubResource("GDScript_svoow")
 
 [node name="bg" parent="." instance=ExtResource("2_xp21o")]
 position = Vector2(-8, 8)

@@ -2,56 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_k072d"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_gefn1"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_o7h0u"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_xu4he"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_742cs"]
 [ext_resource type="PackedScene" uid="uid://clyxj3ntdq610" path="res://objects/particle_spawner_elec.tscn" id="5_8ifk1"]
-
-[sub_resource type="GDScript" id="GDScript_fdk3o"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Centar\", \"Salamander\"],
-	[\"Mouse Valley\", \"Salamander\"],
-	[\"Centar\", \"Bitley\"],
-	[\"Bitley\", \"Salamander\"],
-	[\"Keyz\", \"Salamander\"],
-	[\"Bitley\", \"Cosmic Grounds\"],
-	[\"Blue Cube\", \"Salamander\"],
-	[\"Blue Cube\", \"Cosmic Grounds\"],
-	[\"Blue Cube\", \"Keyz\"],
-	[\"Cosmic Grounds\", \"Salamander\"],
-	[\"Centar\", \"Gru\"],
-	[\"Centar\", \"Ok\"],
-	[\"Sightseeing Banks\", \"Gru\"],
-	[\"Sightseeing Banks\", \"Ok\"],
-	[\"Mouse Valley\", \"Ok\"],
-	[\"Yellow Cube\", \"Ok\"],
-	[\"Mouse Valley\", \"Yellow Cube\"],
-	[\"Mouse Valley\", \"Keyz\"],
-	[\"Mouse Valley\", \"Mark's Bonus\"],
-	[\"Mark's Bonus\", \"Yellow Cube\"],
-	[\"Mark's Bonus\", \"Keyz\"],
-	[\"Ok\", \"Gru\"],
-	[\"Slop Land\", \"Gru\"],
-	[\"Centar\", \"Slop Land\"],
-	[\"Red Cube\", \"Gru\"],
-	[\"Red Cube\", \"Mine\"],
-	[\"Red Cube\", \"Sightseeing Banks\"],
-	[\"Mine\", \"Gru\"],
-	[\"Mine\", \"Crankuc\"],
-	[\"Mine\", \"Slop Land\"],
-	[\"Slop Land\", \"Crankuc\"],
-	[\"Slop Land\", \"Green Cube\"],
-	[\"Slop Land\", \"Bitley\"],
-	[\"Green Cube\", \"Crankuc\"],
-	[\"Green Cube\", \"Bitley\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvoby"]
 shader = ExtResource("2_xu4he")
@@ -155,7 +109,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="tetramap" type="Polygon2D"]
+[node name="tetramap" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(512, -416, 512, -512, 416, -608, -96, -608, -352, -352, -512, -352, -608, -256, -608, 64, -320, 352, -320, 608, -224, 704, 192, 704, 576, 320, 672, 320, 768, 224, 768, -160)
 script = ExtResource("1_k072d")
@@ -167,9 +121,184 @@ lore = "Everythings comes back to cubes. Everything is cubes.
 Ignore that cities are still circles."
 hide_turn_order = true
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_fdk3o")
+[node name="links" type="Node" parent="."]
+
+[node name="Salamander-Centar" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Centar"
+to_name = &"Salamander"
+
+[node name="Mouse Valley-Salamander" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mouse Valley"
+to_name = &"Salamander"
+
+[node name="Bitley-Centar" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Centar"
+to_name = &"Bitley"
+
+[node name="Salamander-Bitley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Bitley"
+to_name = &"Salamander"
+
+[node name="Keyz-Salamander" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Keyz"
+to_name = &"Salamander"
+
+[node name="Cosmic Grounds-Bitley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Bitley"
+to_name = &"Cosmic Grounds"
+
+[node name="Salamander-Blue Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Blue Cube"
+to_name = &"Salamander"
+
+[node name="Cosmic Grounds-Blue Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Blue Cube"
+to_name = &"Cosmic Grounds"
+
+[node name="Keyz-Blue Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Blue Cube"
+to_name = &"Keyz"
+
+[node name="Salamander-Cosmic Grounds" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Cosmic Grounds"
+to_name = &"Salamander"
+
+[node name="Centar-Gru" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Centar"
+to_name = &"Gru"
+
+[node name="Ok-Centar" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Centar"
+to_name = &"Ok"
+
+[node name="Sightseeing Banks-Gru" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Sightseeing Banks"
+to_name = &"Gru"
+
+[node name="Ok-Sightseeing Banks" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Sightseeing Banks"
+to_name = &"Ok"
+
+[node name="Ok-Mouse Valley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mouse Valley"
+to_name = &"Ok"
+
+[node name="Ok-Yellow Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Yellow Cube"
+to_name = &"Ok"
+
+[node name="Mouse Valley-Yellow Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mouse Valley"
+to_name = &"Yellow Cube"
+
+[node name="Keyz-Mouse Valley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mouse Valley"
+to_name = &"Keyz"
+
+[node name="Mark\'s Bonus-Mouse Valley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mouse Valley"
+to_name = &"Mark\'s Bonus"
+
+[node name="Mark\'s Bonus-Yellow Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mark\'s Bonus"
+to_name = &"Yellow Cube"
+
+[node name="Mark\'s Bonus-Keyz" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mark\'s Bonus"
+to_name = &"Keyz"
+
+[node name="Ok-Gru" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Ok"
+to_name = &"Gru"
+
+[node name="Slop Land-Gru" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Slop Land"
+to_name = &"Gru"
+
+[node name="Slop Land-Centar" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Centar"
+to_name = &"Slop Land"
+
+[node name="Red Cube-Gru" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Red Cube"
+to_name = &"Gru"
+
+[node name="Mine-Red Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Red Cube"
+to_name = &"Mine"
+
+[node name="Sightseeing Banks-Red Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Red Cube"
+to_name = &"Sightseeing Banks"
+
+[node name="Mine-Gru" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mine"
+to_name = &"Gru"
+
+[node name="Crankuc-Mine" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mine"
+to_name = &"Crankuc"
+
+[node name="Slop Land-Mine" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Mine"
+to_name = &"Slop Land"
+
+[node name="Crankuc-Slop Land" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Slop Land"
+to_name = &"Crankuc"
+
+[node name="Slop Land-Green Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Slop Land"
+to_name = &"Green Cube"
+
+[node name="Slop Land-Bitley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Slop Land"
+to_name = &"Bitley"
+
+[node name="Crankuc-Green Cube" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Green Cube"
+to_name = &"Crankuc"
+
+[node name="Green Cube-Bitley" type="Line2D" parent="links"]
+script = ExtResource("2_o7h0u")
+from_name = &"Green Cube"
+to_name = &"Bitley"
 
 [node name="Centar" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_uvoby")

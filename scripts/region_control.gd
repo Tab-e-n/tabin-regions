@@ -495,7 +495,6 @@ func _ready():
 	Options.timestamp("_set_capital_distance", "RegionControl")
 	
 	# -- TURN ORDER --
-	var player_alignments : Array[int] = []
 	if not ReplayControl.replay_active:
 		var alignments : Array[int] = []
 		for i in range(1, align_amount):
@@ -520,7 +519,6 @@ func _ready():
 			else:
 				alignments = []
 			_randomly_fill_play_order(player_allowed)
-			player_alignments = player_allowed.duplicate()
 		
 		_randomly_fill_play_order(alignments)
 	else:
@@ -545,12 +543,8 @@ func _ready():
 			if i < custom_dp_setup.size():
 				if custom_dp_setup[i] != 0:
 					align_controlers[i] = custom_dp_setup[i]
-		if player_alignments.is_empty():
-			for i in range(player_amount):
-				align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER.USER
-		else:
-			for alignment in player_alignments:
-				align_controlers[alignment - 1] = DPControl.CONTROLER.USER
+		for i in range(player_amount):
+			align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER.USER
 	
 	Options.timestamp("RegionCotrol ready dp", "RegionControl")
 	

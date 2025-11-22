@@ -1,6 +1,7 @@
 [gd_scene load_steps=81 format=3 uid="uid://dktvwaulmmgha"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_qtfnq"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_4yooj"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_cdpmi"]
 [ext_resource type="Texture2D" uid="uid://dhrc3btey56el" path="res://sprites/exchange.png" id="3_l1uw2"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="4_574qb"]
@@ -9,208 +10,6 @@
 [ext_resource type="Script" path="res://scripts/region.gd" id="6_kp56k"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="7_dfrok"]
 [ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/particle_spawner_star.tscn" id="8_gmxs5"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Laser Puzzle\", \"Crosswater\"],
-	[\"Gun Dam\", \"Crosswater\"],
-	[\"Gun Dam\", \"C Block\"],
-	[\"T Block\", \"C Block\"],
-	[\"Laser Puzzle\", \"Squeeze Tight\"],
-	[\"Gun Dam\", \"Squeeze Tight\"],
-	[\"Squeeze Tight\", \"Crosswater\"],
-	[\"Laser Puzzle\", \"Bonus Rooms\"],
-	[\"Turn\", \"Crosswater\"],
-	[\"Turn\", \"Pit Stop\", 1],
-	[\"Turn\", \"Key Room\", 1],
-	[\"Sludge Shoot\", \"Key Room\"],
-	[\"Unextraordinary\", \"Key Room\"],
-	[\"Pit Stop\", \"Key Room\", 1],
-	[\"Hookrior\", \"Key Room\"],
-	[\"Porter Steps\", \"Key Room\"],
-	[\"Porter Steps\", \"Drag of a Corridor\"],
-	[\"Porter Steps\", \"Hookrior\", 1],
-	[\"Porter Show\", \"Drag of a Corridor\"],
-	[\"Porter Show\", \"Hookrior\"],
-	[\"Unextraordinary\", \"Pit Stop\"],
-	[\"Unextraordinary\", \"Wrench Sig\"],
-	[\"Ziggurt\", \"Pit Stop\"],
-	[\"Unextraordinary\", \"Hookrior\"],
-	[\"Wrench Sig\", \"Hookrior\"],
-	[\"Unextraordinary\", \"Ziggurt\"],
-	[\"Plus Pit Bottom Side\", \"Crosswater\"],
-	[\"Plus Pit Bottom Side\", \"Ziggurt\"],
-	[\"Plus Pit Bottom Side\", \"That Place I Been To\"],
-	[\"Yikes\", \"That Place I Been To\"],
-	[\"Plus Pit Top Side\", \"That Place I Been To\"],
-	[\"Plus Pit Top Side\", \"T Block\"],
-	[\"Spiral Noodle\", \"T Block\"],
-	[\"Spiral Noodle\", \"Yikes\"],
-	[\"Plus Pit Top Side\", \"Crosswater\"],
-	[\"C Block\", \"Crosswater\"],
-	[\"Plus Pit Top Side\", \"C Block\"],
-	[\"Plus Pit Bottom Side\", \"Plus Pit Top Side\"],
-	[\"Spiral Noodle\", \"Plus Pit Top Side\"],
-	[\"Plus Pit Bottom Side\", \"Pit Stop\"],
-	[\"Turn\", \"Bonus Rooms\"],
-	[\"Sludge Shoot\", \"Bonus Rooms\", 1],
-	[\"Turn\", \"Sludge Shoot\", 1],
-	[\"Porter Steps\", \"Sludge Shoot\"],
-	[\"Porter Steps\", \"Porter Show\"],
-	[\"Wrench Sig\", \"Porter Show\"],
-	[\"Wrench Sig\", \"Show Image\"],
-	[\"Sewer\", \"Porter Show\"],
-	[\"Sewer\", \"Wrench Sig\"],
-	[\"Sewer\", \"Half Moon Flat Stop\"],
-	[\"Sewer\", \"Show Image\"],
-	[\"Show Image\", \"Half Moon Flat Stop\"],
-	[\"Soft Fuzzy Corridor\", \"Starter\"],
-	[\"Soft Fuzzy Corridor\", \"Cave Lake\"],
-	[\"Ziggurt\", \"Starter\"],
-	[\"Ziggurt\", \"Wrench Sig\"],
-	[\"That Place I Been To\", \"Starter\"],
-	[\"Mushroom Underhill\", \"Starter\"],
-	[\"Ziggurt\", \"That Place I Been To\"],
-	[\"Mushroom Underhill\", \"That Place I Been To\"],
-	[\"Mushroom Underhill\", \"Yikes\"],
-	[\"Spiral Noodle\", \"That Place I Been To\"],
-	[\"Soft Fuzzy Corridor\", \"Key Storage\"],
-	[\"Soft Fuzzy Corridor\", \"Scrunched\"],
-	[\"Doin It Sideways\", \"Key Storage\", 1],
-	[\"Doin It Sideways\", \"Mushroom Underhill\"],
-	[\"Doin It Sideways\", \"Yikes\"],
-	[\"Mushroom Underhill\", \"Key Storage\", 1],
-	[\"Key Storage\", \"Starter\"],
-	[\"Cave Lake\", \"Starter\"],
-	[\"Cave Lake\", \"Wrench Sig\"],
-	[\"Wrench Sig\", \"Starter\"],
-	[\"Cave Lake\", \"Scrunched\"],
-	[\"Cave Lake\", \"Half Moon Flat Stop\"],
-	[\"Cave Lake\", \"Show Image\"],
-	[\"Half Moon Flat Stop\", \"Scrunched\"],
-	
-	[\"Puzzle Chamber\", \"Wall Of Forest\"],
-	[\"Puzzle Chamber\", \"No Change\"],
-	[\"Puzzle Chamber\", \"Thats Rich\"],
-	[\"Thats Rich\", \"No Change\"],
-	[\"No Change\", \"Wall Of Forest\"],
-	[\"Puzzle Chamber\", \"Riven\"],
-	[\"Puzzle Chamber\", \"Water Shoots\"],
-	[\"Mud Angles\", \"Water Shoots\"],
-	[\"Thats Rich\", \"Water Shoots\"],
-	[\"Mud Angles\", \"Thats Rich\"],
-	[\"Swooper\", \"Water Shoots\"],
-	[\"Water Shoots\", \"Riven\"],
-	[\"Water Shoots\", \"Blue Steps\"],
-	[\"Puzzle Chamber\", \"Analilis\"],
-	[\"Diss Miss\", \"Analilis\", 1],
-	[\"Analilis\", \"Riven\"],
-	[\"Pathways\", \"Riven\"],
-	[\"Pathways\", \"Swooper\"],
-	[\"Blue Steps\", \"Swooper\"],
-	[\"Blue Steps\", \"Aarroe\"],
-	[\"Aarroe\", \"Swooper\"],
-	[\"Swooper\", \"Riven\"],
-	[\"Diss Miss\", \"Riven\", 1],
-	[\"Diss Miss\", \"Pathways\", 1],
-	[\"Diss Miss\", \"River Start\"],
-	[\"Pathways\", \"River Start\"],
-	[\"Pathways\", \"Coppry\"],
-	[\"Pathways\", \"Aarroe\"],
-	[\"Aarroe\", \"Coppry\"],
-	[\"Diss Miss\", \"Hole In Most\"],
-	[\"Diss Miss\", \"Korner Keep\"],
-	[\"Korner Keep\", \"Hole In Most\"],
-	[\"Hole In Most\", \"River Start\"],
-	[\"Ashy Entrance\", \"Wall Of Forest\"],
-	[\"Ashy Entrance\", \"Korner Keep\"],
-	[\"Ashy Entrance\", \"Analilis\"],
-	[\"Ashy Entrance\", \"Diss Miss\", 1],
-	[\"Analilis\", \"Wall Of Forest\"],
-	[\"Blocked Box\", \"Wall Of Forest\", 1],
-	[\"Blocked Box\", \"Unblocked Box\"],
-	[\"Fallen Pillar\", \"Unblocked Box\"],
-	[\"Blockus Shuffles\", \"Unblocked Box\"],
-	[\"Blockus Shuffles\", \"Thats Rich\"],
-	[\"Bitter House\", \"Unblocked Box\"],
-	[\"Rizzor's Edge\", \"Unblocked Box\"],
-	[\"Bitter House\", \"Rizzor's Edge\"],
-	[\"No Change\", \"Unblocked Box\", 1],
-	[\"Fallen Pillar\", \"Dead Bush\"],
-	[\"Fallen Pillar\", \"Rizzor's Edge\"],
-	[\"Fallen Pillar\", \"Blockus Shuffles\"],
-	[\"No Change\", \"Blockus Shuffles\"],
-	[\"Blockus Shuffles\", \"Dead Bush\"],
-	[\"Fallen Pillar\", \"Narrowing\"],
-	[\"The Exit\", \"Dead Bush\"],
-	[\"Narrowing\", \"Dead Bush\"],
-	[\"Narrowing\", \"Toxic Sludge\"],
-	[\"Fake Exit\", \"Toxic Sludge\", 1],
-	[\"Epopsikon\", \"Toxic Sludge\", 1],
-	[\"Trick Square\", \"Toxic Sludge\", 1],
-	[\"Fake Exit\", \"Blockus Shuffles\", 1],
-	[\"Fake Exit\", \"Mud Angles\"],
-	[\"Fake Exit\", \"Epopsikon\"],
-	[\"Epopsikon\", \"Mud Angles\"],
-	[\"Epopsikon\", \"Trick Square\"],
-	[\"Fake Exit\", \"Thats Rich\"],
-	[\"Toxic Sludge\", \"Dead Bush\"],
-	[\"The Exit\", \"Narrowing\"],
-	[\"The Exit\", \"Toxic Sludge\"],
-	[\"Unblocked Box\", \"Wall Of Forest\", 1],
-	[\"Goup Island\", \"Goup Lake Left\"],
-	[\"The Long Snail\", \"Goup Lake Left\"],
-	[\"The Long Snail\", \"Epopsikon\"],
-	[\"The Long Snail\", \"Trick Square\"],
-	[\"Epopsikon\", \"Goup Lake Left\"],
-	[\"Goup Island\", \"Goup Lake Right\"],
-	[\"Mud Angles\", \"Goup Lake Left\"],
-	[\"Mud Angles\", \"Goup Lake Right\"],
-	[\"Goup Lake Right\", \"Goup Lake Left\"],
-	[\"Goup Lake Right\", \"Blue Steps\"],
-	
-	[\"Gun Dam\", \"The Long Snail\"],
-	[\"Squeeze Tight\", \"The Long Snail\"],
-	[\"Goup Lake Left\", \"C Block\"],
-	[\"Goup Lake Right\", \"C Block\"],
-	[\"T Block\", \"Goup Lake Right\"],
-	[\"Goup Lake Right\", \"Spiral Noodle\"],
-	[\"Blue Steps\", \"Spiral Noodle\"],
-	[\"Aarroe\", \"Spiral Noodle\"],
-	[\"Aarroe\", \"Yikes\"],
-	[\"Coppry\", \"Yikes\"],
-	[\"Coppry\", \"Doin It Sideways\"],
-	[\"River Start\", \"Key Storage\"],
-	[\"Pathways\", \"Key Storage\"],
-	[\"Soft Fuzzy Corridor\", \"Hole In Most\"],
-	[\"Scrunched\", \"Hole In Most\"],
-	[\"Half Moon Flat Stop\", \"Hole In Most\"],
-	[\"Scrunched\", \"Korner Keep\"],
-	[\"Half Moon Flat Stop\", \"Korner Keep\"],
-	[\"Sewer\", \"Korner Keep\"],
-	[\"Sewer\", \"Ashy Entrance\"],
-	[\"Sewer\", \"Wall Of Forest\"],
-	[\"Porter Show\", \"Blocked Box\"],
-	[\"Drag of a Corridor\", \"Blocked Box\"],
-	[\"Drag of a Corridor\", \"Unblocked Box\"],
-	[\"Drag of a Corridor\", \"Bitter House\"],
-	[\"Porter Steps\", \"Rizzor's Edge\"],
-	[\"Sludge Shoot\", \"Rizzor's Edge\"],
-	[\"Sludge Shoot\", \"Fallen Pillar\"],
-	[\"Bonus Rooms\", \"Narrowing\"],
-	[\"Trick Square\", \"Laser Puzzle\"],
-	[\"Laser Puzzle\", \"Toxic Sludge\"],
-	[\"Squeeze Tight\", \"Toxic Sludge\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="GDScript" id="GDScript_sgqnx"]
 script/source = "extends Node
@@ -752,7 +551,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.72549, 0.533333, 0.466667, 1)
 polygon = PackedVector2Array(-1016, -728, 1024, -752, 1056, 784, -1112, 792)
 script = ExtResource("1_qtfnq")
@@ -765,9 +564,963 @@ align_color = Array[Color]([Color(0.576471, 0.427451, 0.376471, 1), Color(0.8039
 align_names = Array[String](["Flip Dungeon", "Crosswater", "Wrenches", "Keys", "Teleporters", "Spirals", "Snails", "Leavers", "Of Us", "Rich", "Korner"])
 color_bg_according_to_alignment = false
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Crosswater-Laser Puzzle" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Laser Puzzle"
+to_name = &"Crosswater"
+
+[node name="Crosswater-Gun Dam" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Gun Dam"
+to_name = &"Crosswater"
+
+[node name="C Block-Gun Dam" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Gun Dam"
+to_name = &"C Block"
+
+[node name="C Block-T Block" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"T Block"
+to_name = &"C Block"
+
+[node name="Laser Puzzle-Squeeze Tight" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Laser Puzzle"
+to_name = &"Squeeze Tight"
+
+[node name="Squeeze Tight-Gun Dam" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Gun Dam"
+to_name = &"Squeeze Tight"
+
+[node name="Crosswater-Squeeze Tight" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Squeeze Tight"
+to_name = &"Crosswater"
+
+[node name="Laser Puzzle-Bonus Rooms" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Laser Puzzle"
+to_name = &"Bonus Rooms"
+
+[node name="Turn-Crosswater" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Turn"
+to_name = &"Crosswater"
+
+[node name="Turn-Pit Stop" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Turn"
+to_name = &"Pit Stop"
+power_reduction = 1
+
+[node name="Turn-Key Room" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Turn"
+to_name = &"Key Room"
+power_reduction = 1
+
+[node name="Sludge Shoot-Key Room" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sludge Shoot"
+to_name = &"Key Room"
+
+[node name="Unextraordinary-Key Room" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Unextraordinary"
+to_name = &"Key Room"
+
+[node name="Pit Stop-Key Room" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pit Stop"
+to_name = &"Key Room"
+power_reduction = 1
+
+[node name="Hookrior-Key Room" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Hookrior"
+to_name = &"Key Room"
+
+[node name="Porter Steps-Key Room" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Steps"
+to_name = &"Key Room"
+
+[node name="Porter Steps-Drag of a Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Steps"
+to_name = &"Drag of a Corridor"
+
+[node name="Porter Steps-Hookrior" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Steps"
+to_name = &"Hookrior"
+power_reduction = 1
+
+[node name="Porter Show-Drag of a Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Show"
+to_name = &"Drag of a Corridor"
+
+[node name="Porter Show-Hookrior" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Show"
+to_name = &"Hookrior"
+
+[node name="Pit Stop-Unextraordinary" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Unextraordinary"
+to_name = &"Pit Stop"
+
+[node name="Wrench Sig-Unextraordinary" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Unextraordinary"
+to_name = &"Wrench Sig"
+
+[node name="Pit Stop-Ziggurt" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ziggurt"
+to_name = &"Pit Stop"
+
+[node name="Unextraordinary-Hookrior" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Unextraordinary"
+to_name = &"Hookrior"
+
+[node name="Wrench Sig-Hookrior" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Wrench Sig"
+to_name = &"Hookrior"
+
+[node name="Unextraordinary-Ziggurt" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Unextraordinary"
+to_name = &"Ziggurt"
+
+[node name="Plus Pit Bottom Side-Crosswater" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Bottom Side"
+to_name = &"Crosswater"
+
+[node name="Plus Pit Bottom Side-Ziggurt" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Bottom Side"
+to_name = &"Ziggurt"
+
+[node name="Plus Pit Bottom Side-That Place I Been To" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Bottom Side"
+to_name = &"That Place I Been To"
+
+[node name="Yikes-That Place I Been To" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Yikes"
+to_name = &"That Place I Been To"
+
+[node name="Plus Pit Top Side-That Place I Been To" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Top Side"
+to_name = &"That Place I Been To"
+
+[node name="Plus Pit Top Side-T Block" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Top Side"
+to_name = &"T Block"
+
+[node name="T Block-Spiral Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Spiral Noodle"
+to_name = &"T Block"
+
+[node name="Spiral Noodle-Yikes" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Spiral Noodle"
+to_name = &"Yikes"
+
+[node name="Crosswater-Plus Pit Top Side" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Top Side"
+to_name = &"Crosswater"
+
+[node name="Crosswater-C Block" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"C Block"
+to_name = &"Crosswater"
+
+[node name="C Block-Plus Pit Top Side" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Top Side"
+to_name = &"C Block"
+
+[node name="Plus Pit Bottom Side-Plus Pit Top Side" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Bottom Side"
+to_name = &"Plus Pit Top Side"
+
+[node name="Plus Pit Top Side-Spiral Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Spiral Noodle"
+to_name = &"Plus Pit Top Side"
+
+[node name="Pit Stop-Plus Pit Bottom Side" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Plus Pit Bottom Side"
+to_name = &"Pit Stop"
+
+[node name="Turn-Bonus Rooms" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Turn"
+to_name = &"Bonus Rooms"
+
+[node name="Sludge Shoot-Bonus Rooms" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sludge Shoot"
+to_name = &"Bonus Rooms"
+power_reduction = 1
+
+[node name="Turn-Sludge Shoot" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Turn"
+to_name = &"Sludge Shoot"
+power_reduction = 1
+
+[node name="Porter Steps-Sludge Shoot" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Steps"
+to_name = &"Sludge Shoot"
+
+[node name="Porter Steps-Porter Show" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Steps"
+to_name = &"Porter Show"
+
+[node name="Porter Show-Wrench Sig" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Wrench Sig"
+to_name = &"Porter Show"
+
+[node name="Wrench Sig-Show Image" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Wrench Sig"
+to_name = &"Show Image"
+
+[node name="Porter Show-Sewer" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Porter Show"
+
+[node name="Sewer-Wrench Sig" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Wrench Sig"
+
+[node name="Sewer-Half Moon Flat Stop" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Half Moon Flat Stop"
+
+[node name="Sewer-Show Image" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Show Image"
+
+[node name="Half Moon Flat Stop-Show Image" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Show Image"
+to_name = &"Half Moon Flat Stop"
+
+[node name="Starter-Soft Fuzzy Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Soft Fuzzy Corridor"
+to_name = &"Starter"
+
+[node name="Cave Lake-Soft Fuzzy Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Soft Fuzzy Corridor"
+to_name = &"Cave Lake"
+
+[node name="Starter-Ziggurt" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ziggurt"
+to_name = &"Starter"
+
+[node name="Wrench Sig-Ziggurt" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ziggurt"
+to_name = &"Wrench Sig"
+
+[node name="Starter-That Place I Been To" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"That Place I Been To"
+to_name = &"Starter"
+
+[node name="Starter-Mushroom Underhill" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mushroom Underhill"
+to_name = &"Starter"
+
+[node name="That Place I Been To-Ziggurt" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ziggurt"
+to_name = &"That Place I Been To"
+
+[node name="Mushroom Underhill-That Place I Been To" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mushroom Underhill"
+to_name = &"That Place I Been To"
+
+[node name="Yikes-Mushroom Underhill" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mushroom Underhill"
+to_name = &"Yikes"
+
+[node name="Spiral Noodle-That Place I Been To" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Spiral Noodle"
+to_name = &"That Place I Been To"
+
+[node name="Key Storage-Soft Fuzzy Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Soft Fuzzy Corridor"
+to_name = &"Key Storage"
+
+[node name="Scrunched-Soft Fuzzy Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Soft Fuzzy Corridor"
+to_name = &"Scrunched"
+
+[node name="Key Storage-Doin It Sideways" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Doin It Sideways"
+to_name = &"Key Storage"
+power_reduction = 1
+
+[node name="Doin It Sideways-Mushroom Underhill" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Doin It Sideways"
+to_name = &"Mushroom Underhill"
+
+[node name="Doin It Sideways-Yikes" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Doin It Sideways"
+to_name = &"Yikes"
+
+[node name="Key Storage-Mushroom Underhill" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mushroom Underhill"
+to_name = &"Key Storage"
+power_reduction = 1
+
+[node name="Starter-Key Storage" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Key Storage"
+to_name = &"Starter"
+
+[node name="Cave Lake-Starter" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Cave Lake"
+to_name = &"Starter"
+
+[node name="Cave Lake-Wrench Sig" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Cave Lake"
+to_name = &"Wrench Sig"
+
+[node name="Wrench Sig-Starter" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Wrench Sig"
+to_name = &"Starter"
+
+[node name="Cave Lake-Scrunched" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Cave Lake"
+to_name = &"Scrunched"
+
+[node name="Cave Lake-Half Moon Flat Stop" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Cave Lake"
+to_name = &"Half Moon Flat Stop"
+
+[node name="Cave Lake-Show Image" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Cave Lake"
+to_name = &"Show Image"
+
+[node name="Scrunched-Half Moon Flat Stop" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Half Moon Flat Stop"
+to_name = &"Scrunched"
+
+[node name="Puzzle Chamber-Wall Of Forest" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Puzzle Chamber"
+to_name = &"Wall Of Forest"
+
+[node name="Puzzle Chamber-No Change" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Puzzle Chamber"
+to_name = &"No Change"
+
+[node name="Puzzle Chamber-Thats Rich" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Puzzle Chamber"
+to_name = &"Thats Rich"
+
+[node name="Thats Rich-No Change" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Thats Rich"
+to_name = &"No Change"
+
+[node name="Wall Of Forest-No Change" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"No Change"
+to_name = &"Wall Of Forest"
+
+[node name="Riven-Puzzle Chamber" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Puzzle Chamber"
+to_name = &"Riven"
+
+[node name="Puzzle Chamber-Water Shoots" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Puzzle Chamber"
+to_name = &"Water Shoots"
+
+[node name="Water Shoots-Mud Angles" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mud Angles"
+to_name = &"Water Shoots"
+
+[node name="Water Shoots-Thats Rich" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Thats Rich"
+to_name = &"Water Shoots"
+
+[node name="Mud Angles-Thats Rich" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mud Angles"
+to_name = &"Thats Rich"
+
+[node name="Swooper-Water Shoots" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Swooper"
+to_name = &"Water Shoots"
+
+[node name="Riven-Water Shoots" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Water Shoots"
+to_name = &"Riven"
+
+[node name="Water Shoots-Blue Steps" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Water Shoots"
+to_name = &"Blue Steps"
+
+[node name="Analilis-Puzzle Chamber" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Puzzle Chamber"
+to_name = &"Analilis"
+
+[node name="Analilis-Diss Miss" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Diss Miss"
+to_name = &"Analilis"
+power_reduction = 1
+
+[node name="Analilis-Riven" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Analilis"
+to_name = &"Riven"
+
+[node name="Riven-Pathways" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pathways"
+to_name = &"Riven"
+
+[node name="Swooper-Pathways" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pathways"
+to_name = &"Swooper"
+
+[node name="Swooper-Blue Steps" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blue Steps"
+to_name = &"Swooper"
+
+[node name="Aarroe-Blue Steps" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blue Steps"
+to_name = &"Aarroe"
+
+[node name="Swooper-Aarroe" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Aarroe"
+to_name = &"Swooper"
+
+[node name="Swooper-Riven" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Swooper"
+to_name = &"Riven"
+
+[node name="Diss Miss-Riven" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Diss Miss"
+to_name = &"Riven"
+power_reduction = 1
+
+[node name="Diss Miss-Pathways" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Diss Miss"
+to_name = &"Pathways"
+power_reduction = 1
+
+[node name="Diss Miss-River Start" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Diss Miss"
+to_name = &"River Start"
+
+[node name="River Start-Pathways" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pathways"
+to_name = &"River Start"
+
+[node name="Pathways-Coppry" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pathways"
+to_name = &"Coppry"
+
+[node name="Pathways-Aarroe" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pathways"
+to_name = &"Aarroe"
+
+[node name="Aarroe-Coppry" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Aarroe"
+to_name = &"Coppry"
+
+[node name="Diss Miss-Hole In Most" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Diss Miss"
+to_name = &"Hole In Most"
+
+[node name="Diss Miss-Korner Keep" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Diss Miss"
+to_name = &"Korner Keep"
+
+[node name="Hole In Most-Korner Keep" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Korner Keep"
+to_name = &"Hole In Most"
+
+[node name="Hole In Most-River Start" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Hole In Most"
+to_name = &"River Start"
+
+[node name="Ashy Entrance-Wall Of Forest" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ashy Entrance"
+to_name = &"Wall Of Forest"
+
+[node name="Ashy Entrance-Korner Keep" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ashy Entrance"
+to_name = &"Korner Keep"
+
+[node name="Analilis-Ashy Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ashy Entrance"
+to_name = &"Analilis"
+
+[node name="Ashy Entrance-Diss Miss" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Ashy Entrance"
+to_name = &"Diss Miss"
+power_reduction = 1
+
+[node name="Analilis-Wall Of Forest" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Analilis"
+to_name = &"Wall Of Forest"
+
+[node name="Wall Of Forest-Blocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blocked Box"
+to_name = &"Wall Of Forest"
+power_reduction = 1
+
+[node name="Unblocked Box-Blocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blocked Box"
+to_name = &"Unblocked Box"
+
+[node name="Fallen Pillar-Unblocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fallen Pillar"
+to_name = &"Unblocked Box"
+
+[node name="Blockus Shuffles-Unblocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blockus Shuffles"
+to_name = &"Unblocked Box"
+
+[node name="Blockus Shuffles-Thats Rich" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blockus Shuffles"
+to_name = &"Thats Rich"
+
+[node name="Bitter House-Unblocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Bitter House"
+to_name = &"Unblocked Box"
+
+[node name="Rizzor\'s Edge-Unblocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Rizzor\'s Edge"
+to_name = &"Unblocked Box"
+
+[node name="Rizzor\'s Edge-Bitter House" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Bitter House"
+to_name = &"Rizzor\'s Edge"
+
+[node name="Unblocked Box-No Change" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"No Change"
+to_name = &"Unblocked Box"
+power_reduction = 1
+
+[node name="Fallen Pillar-Dead Bush" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fallen Pillar"
+to_name = &"Dead Bush"
+
+[node name="Rizzor\'s Edge-Fallen Pillar" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fallen Pillar"
+to_name = &"Rizzor\'s Edge"
+
+[node name="Blockus Shuffles-Fallen Pillar" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fallen Pillar"
+to_name = &"Blockus Shuffles"
+
+[node name="Blockus Shuffles-No Change" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"No Change"
+to_name = &"Blockus Shuffles"
+
+[node name="Blockus Shuffles-Dead Bush" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blockus Shuffles"
+to_name = &"Dead Bush"
+
+[node name="Fallen Pillar-Narrowing" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fallen Pillar"
+to_name = &"Narrowing"
+
+[node name="The Exit-Dead Bush" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"The Exit"
+to_name = &"Dead Bush"
+
+[node name="Dead Bush-Narrowing" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Narrowing"
+to_name = &"Dead Bush"
+
+[node name="Toxic Sludge-Narrowing" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Narrowing"
+to_name = &"Toxic Sludge"
+
+[node name="Fake Exit-Toxic Sludge" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fake Exit"
+to_name = &"Toxic Sludge"
+power_reduction = 1
+
+[node name="Toxic Sludge-Epopsikon" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Epopsikon"
+to_name = &"Toxic Sludge"
+power_reduction = 1
+
+[node name="Toxic Sludge-Trick Square" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Trick Square"
+to_name = &"Toxic Sludge"
+power_reduction = 1
+
+[node name="Fake Exit-Blockus Shuffles" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fake Exit"
+to_name = &"Blockus Shuffles"
+power_reduction = 1
+
+[node name="Fake Exit-Mud Angles" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fake Exit"
+to_name = &"Mud Angles"
+
+[node name="Fake Exit-Epopsikon" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fake Exit"
+to_name = &"Epopsikon"
+
+[node name="Epopsikon-Mud Angles" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Epopsikon"
+to_name = &"Mud Angles"
+
+[node name="Epopsikon-Trick Square" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Epopsikon"
+to_name = &"Trick Square"
+
+[node name="Fake Exit-Thats Rich" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Fake Exit"
+to_name = &"Thats Rich"
+
+[node name="Toxic Sludge-Dead Bush" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Toxic Sludge"
+to_name = &"Dead Bush"
+
+[node name="The Exit-Narrowing" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"The Exit"
+to_name = &"Narrowing"
+
+[node name="The Exit-Toxic Sludge" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"The Exit"
+to_name = &"Toxic Sludge"
+
+[node name="Unblocked Box-Wall Of Forest" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Unblocked Box"
+to_name = &"Wall Of Forest"
+power_reduction = 1
+
+[node name="Goup Island-Goup Lake Left" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Island"
+to_name = &"Goup Lake Left"
+
+[node name="Goup Lake Left-The Long Snail" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"The Long Snail"
+to_name = &"Goup Lake Left"
+
+[node name="Epopsikon-The Long Snail" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"The Long Snail"
+to_name = &"Epopsikon"
+
+[node name="Trick Square-The Long Snail" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"The Long Snail"
+to_name = &"Trick Square"
+
+[node name="Epopsikon-Goup Lake Left" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Epopsikon"
+to_name = &"Goup Lake Left"
+
+[node name="Goup Island-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Island"
+to_name = &"Goup Lake Right"
+
+[node name="Goup Lake Left-Mud Angles" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mud Angles"
+to_name = &"Goup Lake Left"
+
+[node name="Mud Angles-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Mud Angles"
+to_name = &"Goup Lake Right"
+
+[node name="Goup Lake Left-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Lake Right"
+to_name = &"Goup Lake Left"
+
+[node name="Blue Steps-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Lake Right"
+to_name = &"Blue Steps"
+
+[node name="Gun Dam-The Long Snail" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Gun Dam"
+to_name = &"The Long Snail"
+
+[node name="Squeeze Tight-The Long Snail" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Squeeze Tight"
+to_name = &"The Long Snail"
+
+[node name="Goup Lake Left-C Block" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Lake Left"
+to_name = &"C Block"
+
+[node name="C Block-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Lake Right"
+to_name = &"C Block"
+
+[node name="T Block-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"T Block"
+to_name = &"Goup Lake Right"
+
+[node name="Spiral Noodle-Goup Lake Right" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Goup Lake Right"
+to_name = &"Spiral Noodle"
+
+[node name="Spiral Noodle-Blue Steps" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Blue Steps"
+to_name = &"Spiral Noodle"
+
+[node name="Spiral Noodle-Aarroe" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Aarroe"
+to_name = &"Spiral Noodle"
+
+[node name="Yikes-Aarroe" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Aarroe"
+to_name = &"Yikes"
+
+[node name="Yikes-Coppry" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Coppry"
+to_name = &"Yikes"
+
+[node name="Doin It Sideways-Coppry" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Coppry"
+to_name = &"Doin It Sideways"
+
+[node name="Key Storage-River Start" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"River Start"
+to_name = &"Key Storage"
+
+[node name="Key Storage-Pathways" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Pathways"
+to_name = &"Key Storage"
+
+[node name="Hole In Most-Soft Fuzzy Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Soft Fuzzy Corridor"
+to_name = &"Hole In Most"
+
+[node name="Hole In Most-Scrunched" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Scrunched"
+to_name = &"Hole In Most"
+
+[node name="Hole In Most-Half Moon Flat Stop" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Half Moon Flat Stop"
+to_name = &"Hole In Most"
+
+[node name="Scrunched-Korner Keep" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Scrunched"
+to_name = &"Korner Keep"
+
+[node name="Half Moon Flat Stop-Korner Keep" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Half Moon Flat Stop"
+to_name = &"Korner Keep"
+
+[node name="Sewer-Korner Keep" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Korner Keep"
+
+[node name="Ashy Entrance-Sewer" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Ashy Entrance"
+
+[node name="Sewer-Wall Of Forest" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sewer"
+to_name = &"Wall Of Forest"
+
+[node name="Porter Show-Blocked Box" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Show"
+to_name = &"Blocked Box"
+
+[node name="Blocked Box-Drag of a Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Drag of a Corridor"
+to_name = &"Blocked Box"
+
+[node name="Unblocked Box-Drag of a Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Drag of a Corridor"
+to_name = &"Unblocked Box"
+
+[node name="Bitter House-Drag of a Corridor" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Drag of a Corridor"
+to_name = &"Bitter House"
+
+[node name="Rizzor\'s Edge-Porter Steps" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Porter Steps"
+to_name = &"Rizzor\'s Edge"
+
+[node name="Rizzor\'s Edge-Sludge Shoot" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sludge Shoot"
+to_name = &"Rizzor\'s Edge"
+
+[node name="Fallen Pillar-Sludge Shoot" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Sludge Shoot"
+to_name = &"Fallen Pillar"
+
+[node name="Narrowing-Bonus Rooms" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Bonus Rooms"
+to_name = &"Narrowing"
+
+[node name="Trick Square-Laser Puzzle" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Trick Square"
+to_name = &"Laser Puzzle"
+
+[node name="Toxic Sludge-Laser Puzzle" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Laser Puzzle"
+to_name = &"Toxic Sludge"
+
+[node name="Toxic Sludge-Squeeze Tight" type="Line2D" parent="links"]
+script = ExtResource("2_4yooj")
+from_name = &"Squeeze Tight"
+to_name = &"Toxic Sludge"
 
 [node name="bg" parent="." instance=ExtResource("2_cdpmi")]
 color = Color(0.568627, 0.407843, 0.356863, 1)

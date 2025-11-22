@@ -1,57 +1,12 @@
 [gd_scene load_steps=26 format=3 uid="uid://dqebjllyfg8lj"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_eipre"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_6sw3n"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_ispv8"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_nmcrs"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_obvay"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_4cclr"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_dq7yi"]
-
-[sub_resource type="GDScript" id="GDScript_iphdy"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Cellar\", \"Act Right\"],
-	[\"Cellar\", \"Clutterfunk\"],
-	[\"Abstract\", \"Clutterfunk\"],
-	[\"Abstract\", \"Crawling\"],
-	[\"Cellar\", \"Afterblaze\"],
-	[\"Cellar\", \"Tassel Town\"],
-	[\"Cellar\", \"Eek!\"],
-	[\"Eek!\", \"Tassel Town\"],
-	[\"Nichibotsu\", \"Tassel Town\"],
-	[\"Tassel Town\", \"Afterblaze\"],
-	[\"Afterblaze\", \"Clutterfunk\"],
-	[\"Afterblaze\", \"Prison Island\"],
-	[\"Clutterfunk\", \"Act Right\"],
-	[\"Crawling\", \"Act Right\"],
-	[\"Abstract\", \"Act Right\"],
-	[\"Abstract\", \"Prison Island\"],
-	[\"Abstract\", \"No Hook\"],
-	[\"Crawling\", \"Dark Beach\"],
-	[\"Crawling\", \"Rally Remix\"],
-	[\"Crawling\", \"No Hook\"],
-	[\"No Hook\", \"Rally Remix\"],
-	[\"Rally Remix\", \"Dark Beach\"],
-	[\"Cellar\", \"Sand Canyon\"],
-	[\"Giftig\", \"Sand Canyon\"],
-	[\"Giftig\", \"Handagote\"],
-	[\"Stilton\", \"Handagote\"],
-	[\"Stilton\", \"BBF\"],
-	[\"Handagote\", \"Sand Canyon\"],
-	[\"Handagote\", \"Nichibotsu\"],
-	[\"Handagote\", \"BBF\"],
-	[\"BBF\", \"Nichibotsu\"],
-	[\"Eek!\", \"Nichibotsu\"],
-	[\"Nichibotsu\", \"Sand Canyon\"],
-	[\"Eek!\", \"Sand Canyon\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qvp02"]
 shader = ExtResource("3_obvay")
@@ -161,7 +116,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="cumbersome" type="Polygon2D"]
+[node name="cumbersome" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.615686, 0.52549, 0.6, 1)
 polygon = PackedVector2Array(448, 56, 424, -144, 328, -248, 176, -312, 32, -320, -72, -256, -112, -104, -264, -128, -440, -96, -480, 40, -424, 216, -256, 352, -24, 416, 224, 440, 384, 480, 408, 328)
 script = ExtResource("1_eipre")
@@ -172,9 +127,179 @@ lore = "A map comprised of the first songs that came to my mind,
 or rather the first songs i saw in my playlist."
 align_color = Array[Color]([Color(0.462745, 0.32549, 0.439216, 1), Color(0.866667, 0.309804, 0.588235, 1), Color(0.537255, 0.152941, 0.658824, 1)])
 hide_turn_order = true
+region_links = NodePath("links")
 
-[node name="setter" type="Node" parent="."]
-script = SubResource("GDScript_iphdy")
+[node name="links" type="Node" parent="."]
+
+[node name="Act Right-Cellar" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Cellar"
+to_name = &"Act Right"
+
+[node name="Clutterfunk-Cellar" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Cellar"
+to_name = &"Clutterfunk"
+
+[node name="Abstract-Clutterfunk" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Abstract"
+to_name = &"Clutterfunk"
+
+[node name="Crawling-Abstract" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Abstract"
+to_name = &"Crawling"
+
+[node name="Cellar-Afterblaze" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Cellar"
+to_name = &"Afterblaze"
+
+[node name="Tassel Town-Cellar" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Cellar"
+to_name = &"Tassel Town"
+
+[node name="Eek!-Cellar" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Cellar"
+to_name = &"Eek!"
+
+[node name="Tassel Town-Eek!" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Eek!"
+to_name = &"Tassel Town"
+
+[node name="Tassel Town-Nichibotsu" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Nichibotsu"
+to_name = &"Tassel Town"
+
+[node name="Tassel Town-Afterblaze" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Tassel Town"
+to_name = &"Afterblaze"
+
+[node name="Clutterfunk-Afterblaze" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Afterblaze"
+to_name = &"Clutterfunk"
+
+[node name="Prison Island-Afterblaze" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Afterblaze"
+to_name = &"Prison Island"
+
+[node name="Act Right-Clutterfunk" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Clutterfunk"
+to_name = &"Act Right"
+
+[node name="Act Right-Crawling" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Crawling"
+to_name = &"Act Right"
+
+[node name="Act Right-Abstract" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Abstract"
+to_name = &"Act Right"
+
+[node name="Abstract-Prison Island" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Abstract"
+to_name = &"Prison Island"
+
+[node name="No Hook-Abstract" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Abstract"
+to_name = &"No Hook"
+
+[node name="Crawling-Dark Beach" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Crawling"
+to_name = &"Dark Beach"
+
+[node name="Crawling-Rally Remix" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Crawling"
+to_name = &"Rally Remix"
+
+[node name="No Hook-Crawling" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Crawling"
+to_name = &"No Hook"
+
+[node name="No Hook-Rally Remix" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"No Hook"
+to_name = &"Rally Remix"
+
+[node name="Rally Remix-Dark Beach" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Rally Remix"
+to_name = &"Dark Beach"
+
+[node name="Cellar-Sand Canyon" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Cellar"
+to_name = &"Sand Canyon"
+
+[node name="Giftig-Sand Canyon" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Giftig"
+to_name = &"Sand Canyon"
+
+[node name="Handagote-Giftig" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Giftig"
+to_name = &"Handagote"
+
+[node name="Handagote-Stilton" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Stilton"
+to_name = &"Handagote"
+
+[node name="BBF-Stilton" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Stilton"
+to_name = &"BBF"
+
+[node name="Handagote-Sand Canyon" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Handagote"
+to_name = &"Sand Canyon"
+
+[node name="Handagote-Nichibotsu" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Handagote"
+to_name = &"Nichibotsu"
+
+[node name="BBF-Handagote" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Handagote"
+to_name = &"BBF"
+
+[node name="BBF-Nichibotsu" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"BBF"
+to_name = &"Nichibotsu"
+
+[node name="Eek!-Nichibotsu" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Eek!"
+to_name = &"Nichibotsu"
+
+[node name="Sand Canyon-Nichibotsu" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Nichibotsu"
+to_name = &"Sand Canyon"
+
+[node name="Eek!-Sand Canyon" type="Line2D" parent="links"]
+script = ExtResource("2_6sw3n")
+from_name = &"Eek!"
+to_name = &"Sand Canyon"
 
 [node name="bg" parent="." instance=ExtResource("2_ispv8")]
 position = Vector2(0, -8)

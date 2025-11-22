@@ -1,107 +1,12 @@
 [gd_scene load_steps=48 format=3 uid="uid://03dtr6sjdp7c"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_ftrmb"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_f46vk"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_grkru"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_33jrj"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_1i7l7"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_kqyr5"]
 [ext_resource type="PackedScene" uid="uid://b08758y8g0dsv" path="res://objects/particle_spawner_spiral.tscn" id="6_dyrx8"]
-
-[sub_resource type="GDScript" id="GDScript_ajqca"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Heart Of The Honeycom\", \"Center Left Comb\"],
-	[\"Heart Of The Honeycom\", \"Center Right Comb\"],
-	[\"Heart Of The Honeycom\", \"Center Bottom Comb\"],
-	[\"Left Line\", \"Center Left Comb\"],
-	[\"Right Line\", \"Center Right Comb\"],
-	[\"Bottom Line\", \"Center Bottom Comb\"],
-	[\"Maggot Comb\", \"Maggot Left\"],
-	[\"Maggot Comb\", \"Maggot Right\"],
-	[\"Maggot Left\", \"Maggot Right\"],
-	[\"Wasp Comb\", \"Wasp Left\"],
-	[\"Wasp Comb\", \"Wasp Right\"],
-	[\"Wasp Left\", \"Wasp Right\"],
-	[\"Stinkbug Comb\", \"Stinkbug Left\"],
-	[\"Stinkbug Comb\", \"Stinkbug Right\"],
-	[\"Stinkbug Left\", \"Stinkbug Right\"],
-	[\"Termite Comb\", \"Termite Left\"],
-	[\"Termite Comb\", \"Termite Right\"],
-	[\"Termite Left\", \"Termite Right\"],
-	[\"Ant Comb\", \"Ant Left\"],
-	[\"Ant Comb\", \"Ant Right\"],
-	[\"Ant Left\", \"Ant Right\"],
-	[\"Beetle Comb\", \"Beetle Left\"],
-	[\"Beetle Comb\", \"Beetle Right\"],
-	[\"Beetle Left\", \"Beetle Right\"],
-	[\"Beetle Maggots\", \"Beetle Left\"],
-	[\"Beetle Maggots\", \"Maggot Right\"],
-	[\"Maggot Wasps\", \"Maggot Left\"],
-	[\"Maggot Wasps\", \"Wasp Right\"],
-	[\"Wasp Stinkbugs\", \"Wasp Left\"],
-	[\"Wasp Stinkbugs\", \"Stinkbug Right\"],
-	[\"Stinkbug Termites\", \"Stinkbug Left\"],
-	[\"Stinkbug Termites\", \"Termite Right\"],
-	[\"Termite Ants\", \"Termite Left\"],
-	[\"Termite Ants\", \"Ant Right\"],
-	[\"Ant Beetles\", \"Ant Left\"],
-	[\"Ant Beetles\", \"Beetle Right\"],
-	[\"Beetle Maggots\", \"Top Wall\"],
-	[\"Top Wall\", \"Beetle Left\"],
-	[\"Top Wall\", \"Maggot Right\"],
-	[\"Wasp Stinkbugs\", \"Right Wall\"],
-	[\"Right Wall\", \"Wasp Left\"],
-	[\"Right Wall\", \"Stinkbug Right\"],
-	[\"Termite Ants\", \"Left Wall\"],
-	[\"Left Wall\", \"Termite Left\"],
-	[\"Left Wall\", \"Ant Right\"],
-	[\"Maggot Wasps\", \"Right Line\"],
-	[\"Right Line\", \"Maggot Left\"],
-	[\"Right Line\", \"Wasp Right\"],
-	[\"Stinkbug Termites\", \"Bottom Line\"],
-	[\"Bottom Line\", \"Stinkbug Left\"],
-	[\"Bottom Line\", \"Termite Right\"],
-	[\"Ant Beetles\", \"Left Line\"],
-	[\"Left Line\", \"Ant Left\"],
-	[\"Left Line\", \"Beetle Right\"],
-	[\"Center Maggots\", \"Maggot Left\"],
-	[\"Center Maggots\", \"Maggot Right\"],
-	[\"Center Wasps\", \"Wasp Left\"],
-	[\"Center Wasps\", \"Wasp Right\"],
-	[\"Center Stinkbugs\", \"Stinkbug Left\"],
-	[\"Center Stinkbugs\", \"Stinkbug Right\"],
-	[\"Center Termites\", \"Termite Left\"],
-	[\"Center Termites\", \"Termite Right\"],
-	[\"Center Ants\", \"Ant Left\"],
-	[\"Center Ants\", \"Ant Right\"],
-	[\"Center Beetles\", \"Beetle Left\"],
-	[\"Center Beetles\", \"Beetle Right\"],
-	[\"Center Maggots\", \"Center Right Comb\"],
-	[\"Right Line\", \"Center Maggots\"],
-	[\"Center Wasps\", \"Center Right Comb\"],
-	[\"Right Line\", \"Center Wasps\"],
-	[\"Center Stinkbugs\", \"Center Bottom Comb\"],
-	[\"Bottom Line\", \"Center Stinkbugs\"],
-	[\"Center Termites\", \"Center Bottom Comb\"],
-	[\"Bottom Line\", \"Center Termites\"],
-	[\"Center Ants\", \"Center Left Comb\"],
-	[\"Left Line\", \"Center Ants\"],
-	[\"Center Beetles\", \"Center Left Comb\"],
-	[\"Left Line\", \"Center Beetles\"],
-	[\"Top Wall\", \"Center Beetles\"],
-	[\"Top Wall\", \"Center Maggots\"],
-	[\"Right Wall\", \"Center Wasps\"],
-	[\"Right Wall\", \"Center Stinkbugs\"],
-	[\"Left Wall\", \"Center Termites\"],
-	[\"Left Wall\", \"Center Ants\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k57xu"]
 shader = ExtResource("3_33jrj")
@@ -343,7 +248,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="HoneycombMadness" type="Polygon2D"]
+[node name="HoneycombMadness" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.878431, 0.772549, 0.537255, 1)
 polygon = PackedVector2Array(-320, 640, 320, 640, 704, 0, 320, -640, -320, -640, -704, 0)
 script = ExtResource("1_ftrmb")
@@ -356,9 +261,429 @@ the greatest amongst them."
 align_color = Array[Color]([Color(0.733333, 0.631373, 0.454902, 1), Color(0.647059, 0.509804, 0.376471, 1), Color(0.815686, 0.623529, 0.0823529, 1), Color(0.843137, 0.878431, 0.419608, 1), Color(0.682353, 0.356863, 0.0823529, 1), Color(0.403922, 0.227451, 0.168627, 1), Color(0.929412, 0.654902, 0.356863, 1)])
 align_names = Array[String](["Honeycomb", "Merry Maggots", "Wasps of Wrath", "Stinkbugs", "Terminates", "AstronAnts", "Baddest Beetles"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_ajqca")
+[node name="links" type="Node" parent="."]
+
+[node name="Center Left Comb-Heart Of The Honeycom" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Heart Of The Honeycom"
+to_name = &"Center Left Comb"
+
+[node name="Heart Of The Honeycom-Center Right Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Heart Of The Honeycom"
+to_name = &"Center Right Comb"
+
+[node name="Center Bottom Comb-Heart Of The Honeycom" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Heart Of The Honeycom"
+to_name = &"Center Bottom Comb"
+
+[node name="Center Left Comb-Left Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Line"
+to_name = &"Center Left Comb"
+
+[node name="Right Line-Center Right Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Line"
+to_name = &"Center Right Comb"
+
+[node name="Center Bottom Comb-Bottom Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Bottom Line"
+to_name = &"Center Bottom Comb"
+
+[node name="Maggot Comb-Maggot Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Maggot Comb"
+to_name = &"Maggot Left"
+
+[node name="Maggot Comb-Maggot Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Maggot Comb"
+to_name = &"Maggot Right"
+
+[node name="Maggot Left-Maggot Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Maggot Left"
+to_name = &"Maggot Right"
+
+[node name="Wasp Left-Wasp Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Wasp Comb"
+to_name = &"Wasp Left"
+
+[node name="Wasp Right-Wasp Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Wasp Comb"
+to_name = &"Wasp Right"
+
+[node name="Wasp Left-Wasp Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Wasp Left"
+to_name = &"Wasp Right"
+
+[node name="Stinkbug Left-Stinkbug Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Stinkbug Comb"
+to_name = &"Stinkbug Left"
+
+[node name="Stinkbug Right-Stinkbug Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Stinkbug Comb"
+to_name = &"Stinkbug Right"
+
+[node name="Stinkbug Left-Stinkbug Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Stinkbug Left"
+to_name = &"Stinkbug Right"
+
+[node name="Termite Left-Termite Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Termite Comb"
+to_name = &"Termite Left"
+
+[node name="Termite Right-Termite Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Termite Comb"
+to_name = &"Termite Right"
+
+[node name="Termite Right-Termite Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Termite Left"
+to_name = &"Termite Right"
+
+[node name="Ant Left-Ant Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Ant Comb"
+to_name = &"Ant Left"
+
+[node name="Ant Right-Ant Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Ant Comb"
+to_name = &"Ant Right"
+
+[node name="Ant Left-Ant Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Ant Left"
+to_name = &"Ant Right"
+
+[node name="Beetle Left-Beetle Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Beetle Comb"
+to_name = &"Beetle Left"
+
+[node name="Beetle Right-Beetle Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Beetle Comb"
+to_name = &"Beetle Right"
+
+[node name="Beetle Left-Beetle Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Beetle Left"
+to_name = &"Beetle Right"
+
+[node name="Beetle Maggots-Beetle Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Beetle Maggots"
+to_name = &"Beetle Left"
+
+[node name="Beetle Maggots-Maggot Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Beetle Maggots"
+to_name = &"Maggot Right"
+
+[node name="Maggot Wasps-Maggot Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Maggot Wasps"
+to_name = &"Maggot Left"
+
+[node name="Wasp Right-Maggot Wasps" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Maggot Wasps"
+to_name = &"Wasp Right"
+
+[node name="Wasp Left-Wasp Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Wasp Stinkbugs"
+to_name = &"Wasp Left"
+
+[node name="Stinkbug Right-Wasp Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Wasp Stinkbugs"
+to_name = &"Stinkbug Right"
+
+[node name="Stinkbug Left-Stinkbug Termites" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Stinkbug Termites"
+to_name = &"Stinkbug Left"
+
+[node name="Termite Right-Stinkbug Termites" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Stinkbug Termites"
+to_name = &"Termite Right"
+
+[node name="Termite Ants-Termite Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Termite Ants"
+to_name = &"Termite Left"
+
+[node name="Termite Ants-Ant Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Termite Ants"
+to_name = &"Ant Right"
+
+[node name="Ant Left-Ant Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Ant Beetles"
+to_name = &"Ant Left"
+
+[node name="Beetle Right-Ant Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Ant Beetles"
+to_name = &"Beetle Right"
+
+[node name="Beetle Maggots-Top Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Beetle Maggots"
+to_name = &"Top Wall"
+
+[node name="Beetle Left-Top Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Top Wall"
+to_name = &"Beetle Left"
+
+[node name="Maggot Right-Top Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Top Wall"
+to_name = &"Maggot Right"
+
+[node name="Wasp Stinkbugs-Right Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Wasp Stinkbugs"
+to_name = &"Right Wall"
+
+[node name="Wasp Left-Right Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Wall"
+to_name = &"Wasp Left"
+
+[node name="Stinkbug Right-Right Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Wall"
+to_name = &"Stinkbug Right"
+
+[node name="Termite Ants-Left Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Termite Ants"
+to_name = &"Left Wall"
+
+[node name="Termite Left-Left Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Wall"
+to_name = &"Termite Left"
+
+[node name="Ant Right-Left Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Wall"
+to_name = &"Ant Right"
+
+[node name="Maggot Wasps-Right Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Maggot Wasps"
+to_name = &"Right Line"
+
+[node name="Right Line-Maggot Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Line"
+to_name = &"Maggot Left"
+
+[node name="Wasp Right-Right Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Line"
+to_name = &"Wasp Right"
+
+[node name="Stinkbug Termites-Bottom Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Stinkbug Termites"
+to_name = &"Bottom Line"
+
+[node name="Stinkbug Left-Bottom Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Bottom Line"
+to_name = &"Stinkbug Left"
+
+[node name="Termite Right-Bottom Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Bottom Line"
+to_name = &"Termite Right"
+
+[node name="Left Line-Ant Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Ant Beetles"
+to_name = &"Left Line"
+
+[node name="Left Line-Ant Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Line"
+to_name = &"Ant Left"
+
+[node name="Left Line-Beetle Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Line"
+to_name = &"Beetle Right"
+
+[node name="Center Maggots-Maggot Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Maggots"
+to_name = &"Maggot Left"
+
+[node name="Center Maggots-Maggot Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Maggots"
+to_name = &"Maggot Right"
+
+[node name="Wasp Left-Center Wasps" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Wasps"
+to_name = &"Wasp Left"
+
+[node name="Wasp Right-Center Wasps" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Wasps"
+to_name = &"Wasp Right"
+
+[node name="Stinkbug Left-Center Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Stinkbugs"
+to_name = &"Stinkbug Left"
+
+[node name="Stinkbug Right-Center Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Stinkbugs"
+to_name = &"Stinkbug Right"
+
+[node name="Center Termites-Termite Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Termites"
+to_name = &"Termite Left"
+
+[node name="Center Termites-Termite Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Termites"
+to_name = &"Termite Right"
+
+[node name="Center Ants-Ant Left" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Ants"
+to_name = &"Ant Left"
+
+[node name="Center Ants-Ant Right" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Ants"
+to_name = &"Ant Right"
+
+[node name="Beetle Left-Center Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Beetles"
+to_name = &"Beetle Left"
+
+[node name="Beetle Right-Center Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Beetles"
+to_name = &"Beetle Right"
+
+[node name="Center Maggots-Center Right Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Maggots"
+to_name = &"Center Right Comb"
+
+[node name="Center Maggots-Right Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Line"
+to_name = &"Center Maggots"
+
+[node name="Center Wasps-Center Right Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Wasps"
+to_name = &"Center Right Comb"
+
+[node name="Right Line-Center Wasps" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Line"
+to_name = &"Center Wasps"
+
+[node name="Center Bottom Comb-Center Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Stinkbugs"
+to_name = &"Center Bottom Comb"
+
+[node name="Bottom Line-Center Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Bottom Line"
+to_name = &"Center Stinkbugs"
+
+[node name="Center Termites-Center Bottom Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Termites"
+to_name = &"Center Bottom Comb"
+
+[node name="Center Termites-Bottom Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Bottom Line"
+to_name = &"Center Termites"
+
+[node name="Center Ants-Center Left Comb" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Ants"
+to_name = &"Center Left Comb"
+
+[node name="Center Ants-Left Line" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Line"
+to_name = &"Center Ants"
+
+[node name="Center Left Comb-Center Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Center Beetles"
+to_name = &"Center Left Comb"
+
+[node name="Left Line-Center Beetles" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Line"
+to_name = &"Center Beetles"
+
+[node name="Center Beetles-Top Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Top Wall"
+to_name = &"Center Beetles"
+
+[node name="Center Maggots-Top Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Top Wall"
+to_name = &"Center Maggots"
+
+[node name="Center Wasps-Right Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Wall"
+to_name = &"Center Wasps"
+
+[node name="Right Wall-Center Stinkbugs" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Right Wall"
+to_name = &"Center Stinkbugs"
+
+[node name="Center Termites-Left Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Wall"
+to_name = &"Center Termites"
+
+[node name="Center Ants-Left Wall" type="Line2D" parent="links"]
+script = ExtResource("2_f46vk")
+from_name = &"Left Wall"
+to_name = &"Center Ants"
 
 [node name="bg" parent="." instance=ExtResource("2_grkru")]
 color = Color(0.729412, 0.611765, 0.403922, 1)

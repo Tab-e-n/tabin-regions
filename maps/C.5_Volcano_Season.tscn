@@ -2,142 +2,13 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_bj04g"]
 [ext_resource type="Script" path="res://scripts/volcano.gd" id="2_6dpgy"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_r5t6v"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_v7h8x"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_42p2u"]
 [ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_xo7gg"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_lxeuq"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_oj0wk"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_ib1ao"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-#	[\"Grand Volcano\", \"Coastal Spill\"],
-#	[\"Grand Volcano\", \"Flatline\"],
-#	[\"Grand Volcano\", \"Vulcanic Duo\"],
-#	[\"Grand Volcano\", \"Sometimes Lake\"],
-#	[\"Grand Volcano\", \"Doser\"],
-#	[\"Grand Volcano\", \"Twide\"],
-	[\"Heart\", \"Flatline\"],
-	[\"Vulcanic Duo\", \"Flatline\"],
-	[\"Vulcanic Duo\", \"Slotin\"],
-	[\"Dog Land\", \"Slotin\"],
-	[\"Vulcanic Duo\", \"The Grip\"],
-	[\"Thumbs\", \"The Grip\"],
-	[\"Thumbs\", \"Dog Land\"],
-	[\"Thumbs\", \"Relation\"],
-	[\"Relation\", \"Dog Land\"],
-	[\"Dog Land\", \"The Grip\"],
-	[\"Torna\", \"The Grip\"],
-	[\"Spouse\", \"The Grip\"],
-	[\"Thumbs\", \"Torna\"],
-	[\"Spouse\", \"Torna\"],
-	[\"The Grip\", \"Slotin\"],
-	[\"Vulcanic Duo\", \"Sometimes Lake\"],
-	[\"Spouse\", \"Sometimes Lake\"],
-	[\"Flatlands\", \"Sometimes Lake\"],
-	[\"Flatlands\", \"Spouse\"],
-	[\"Valley Of Death\", \"Sometimes Lake\"],
-	[\"Doser\", \"Sometimes Lake\"],
-	[\"Doser\", \"Twide\"],
-	[\"Long Way Home\", \"Twide\"],
-	[\"Doser\", \"Safe Space\"],
-	[\"Volcanic Hangout\", \"Safe Space\"],
-	[\"Volcanic Hangout\", \"The Other Way\"],
-	[\"The Other Way\", \"Safe Space\"],
-	[\"Antlers\", \"Safe Space\"],
-	[\"The Other Way\", \"Antlers\"],
-	[\"Volcanic Hangout\", \"Long Way Home\"],
-	[\"Volcanic Hangout\", \"Rad Fill\"],
-	[\"Rad Fill\", \"Long Way Home\"],
-	[\"Long Way Home\", \"Safe Space\"],
-	[\"Volcanic Hangout\", \"Lost Tribe\"],
-	[\"Rad Fill\", \"Lost Tribe\"],
-	[\"The Other Way\", \"Lost Tribe\"],
-	[\"The Other Way\", \"Sleeper Isle\"],
-	[\"Antlers\", \"Sleeper Isle\"],
-	[\"Valley Of Death\", \"Sleeper Isle\"],
-	[\"Safe Space\", \"Twide\"],
-	[\"Valley Of Death\", \"Doser\"],
-	[\"Antlers\", \"Doser\"],
-	[\"Valley Of Death\", \"Antlers\"],
-	[\"Flatlands\", \"Valley Of Death\"],
-	[\"Flatlands\", \"Torna\"],
-	[\"Vulcanic Duo\", \"Ialredynow\"],
-	[\"Ialredynow\", \"Slotin\"],
-	[\"Esigo\", \"Slotin\"],
-	[\"Esigo\", \"Be Square\"],
-	[\"Thingamabob\", \"Be Square\"],
-	[\"Thingamabob\", \"Pearl Coast\"],
-	[\"Deep Dip\", \"Be Square\"],
-	[\"Mean Zone\", \"Slotin\"],
-	[\"Mean Zone\", \"Dog Land\"],
-	[\"Be Square\", \"Slotin\"],
-	[\"Mean Zone\", \"Be Square\"],
-	[\"Mean Zone\", \"Svetlina\"],
-	[\"Mean Zone\", \"Relation\"],
-	[\"Relation\", \"Svetlina\"],
-	[\"Mean Zone\", \"Deep Dip\"],
-	[\"Thingamabob\", \"Deep Dip\"],
-	[\"Deep Dip\", \"Svetlina\"],
-	[\"Dev Island\", \"Svetlina\"],
-	[\"Deep Dip\", \"Dev Island\"],
-	[\"Staff Beach\", \"Flatline\"],
-	[\"Ialredynow\", \"Flatline\"],
-	[\"Staff Beach\", \"Ialredynow\"],
-	[\"Esigo\", \"Ialredynow\"],
-	[\"Staff Beach\", \"Maydi\"],
-	[\"Staff Beach\", \"Esigo\"],
-	[\"Thingamabob\", \"Esigo\"],
-	[\"Staff Beach\", \"Thingamabob\"],
-	[\"Dev Island\", \"Thingamabob\"],
-	[\"Staff Beach\", \"Sudden Turn\"],
-	[\"Staff Beach\", \"Pearl Coast\"],
-	[\"Sudden Turn\", \"Pearl Coast\"],
-	[\"Sudden Turn\", \"Maydi\"],
-	[\"Flatline\", \"Coastal Spill\"],
-	[\"Indent Beach\", \"Coastal Spill\"],
-	[\"Indent Beach\", \"Tarro\"],
-	[\"Heart\", \"Coastal Spill\"],
-	[\"Twide\", \"Coastal Spill\"],
-	[\"Indent Beach\", \"Crescent Island\"],
-	[\"Tarro\", \"Crescent Island\"],
-	[\"Indent Beach\", \"Presto\"],
-	[\"SnakeScape\", \"Presto\"],
-	[\"SnakeScape\", \"Tarro\"],
-	[\"Heart\", \"Crescent Island\"],
-	[\"Maydi\", \"Crescent Island\"],
-	[\"Heart\", \"Maydi\"],
-	[\"Chunker\", \"Cat Slope\"],
-	[\"Cubical Downhill\", \"Cat Slope\"],
-	[\"Chunker\", \"Cubical Downhill\"],
-	[\"Stoney Shore\", \"Cubical Downhill\"],
-	[\"Chunker\", \"Stoney Shore\"],
-	[\"Long Way Home\", \"Cat Slope\", 1],
-	[\"Long Way Home\", \"Cubical Downhill\", 1],
-	[\"Rad Fill\", \"Cubical Downhill\", 1],
-	[\"Rad Fill\", \"Stoney Shore\", 1],
-	[\"Presto\", \"Stoney Shore\", 1],
-	[\"Twide\", \"Cat Slope\", 1],
-	[\"Indent Beach\", \"Cat Slope\", 1],
-	[\"Indent Beach\", \"SnakeScape\"],
-	[\"Coastal Spill\", \"Cat Slope\", 1],
-	[\"Indent Beach\", \"Chunker\", 1],
-	[\"Presto\", \"Chunker\", 1],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	call_deferred(\"_deferred_ready\")
-	
-func _deferred_ready():
-	if not get_parent().dummy:
-		get_parent().alignment_aliances[7] = 0
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iu402"]
 shader = ExtResource("3_42p2u")
@@ -415,7 +286,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="natural" type="Polygon2D"]
+[node name="natural" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.356863, 0.501961, 0.745098, 1)
 polygon = PackedVector2Array(-664, 792, 248, 928, 752, 752, 1024, 328, 920, -160, 592, -480, 32, -664, -552, -584, -888, -80, -960, 400)
 script = ExtResource("1_bj04g")
@@ -425,6 +296,7 @@ max_player_amount = 5
 use_preset_alignments = true
 preset_alignments = Array[int]([0, 0, 0, 0, 0, 6, 7])
 custom_dp_setup = Array[int]([0, 0, 0, 0, 0, 5, 0])
+alignment_aliances = Array[int]([0, 0, 0, 0, 0, -1, 5])
 complexity = 3
 lore = "The short-sighted tribes of the Volcanic Islands have angered the Gods.
 Soon, they will all die, but instead if escaping they shall spend their
@@ -435,9 +307,549 @@ align_names = Array[String](["Volcano Islands", "Svetlina", "Presto", "Esigo", "
 color_bg_according_to_alignment = false
 snap_camera_to_first_align_capital = false
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Flatline-Heart" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Heart"
+to_name = &"Flatline"
+
+[node name="Vulcanic Duo-Flatline" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Vulcanic Duo"
+to_name = &"Flatline"
+
+[node name="Slotin-Vulcanic Duo" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Vulcanic Duo"
+to_name = &"Slotin"
+
+[node name="Dog Land-Slotin" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Dog Land"
+to_name = &"Slotin"
+
+[node name="The Grip-Vulcanic Duo" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Vulcanic Duo"
+to_name = &"The Grip"
+
+[node name="Thumbs-The Grip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thumbs"
+to_name = &"The Grip"
+
+[node name="Dog Land-Thumbs" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thumbs"
+to_name = &"Dog Land"
+
+[node name="Relation-Thumbs" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thumbs"
+to_name = &"Relation"
+
+[node name="Dog Land-Relation" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Relation"
+to_name = &"Dog Land"
+
+[node name="Dog Land-The Grip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Dog Land"
+to_name = &"The Grip"
+
+[node name="Torna-The Grip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Torna"
+to_name = &"The Grip"
+
+[node name="Spouse-The Grip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Spouse"
+to_name = &"The Grip"
+
+[node name="Thumbs-Torna" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thumbs"
+to_name = &"Torna"
+
+[node name="Torna-Spouse" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Spouse"
+to_name = &"Torna"
+
+[node name="Slotin-The Grip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"The Grip"
+to_name = &"Slotin"
+
+[node name="Sometimes Lake-Vulcanic Duo" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Vulcanic Duo"
+to_name = &"Sometimes Lake"
+
+[node name="Sometimes Lake-Spouse" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Spouse"
+to_name = &"Sometimes Lake"
+
+[node name="Sometimes Lake-Flatlands" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Flatlands"
+to_name = &"Sometimes Lake"
+
+[node name="Flatlands-Spouse" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Flatlands"
+to_name = &"Spouse"
+
+[node name="Sometimes Lake-Valley Of Death" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Valley Of Death"
+to_name = &"Sometimes Lake"
+
+[node name="Sometimes Lake-Doser" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Doser"
+to_name = &"Sometimes Lake"
+
+[node name="Doser-Twide" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Doser"
+to_name = &"Twide"
+
+[node name="Twide-Long Way Home" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Long Way Home"
+to_name = &"Twide"
+
+[node name="Safe Space-Doser" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Doser"
+to_name = &"Safe Space"
+
+[node name="Safe Space-Volcanic Hangout" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Volcanic Hangout"
+to_name = &"Safe Space"
+
+[node name="Volcanic Hangout-The Other Way" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Volcanic Hangout"
+to_name = &"The Other Way"
+
+[node name="Safe Space-The Other Way" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"The Other Way"
+to_name = &"Safe Space"
+
+[node name="Safe Space-Antlers" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Antlers"
+to_name = &"Safe Space"
+
+[node name="Antlers-The Other Way" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"The Other Way"
+to_name = &"Antlers"
+
+[node name="Volcanic Hangout-Long Way Home" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Volcanic Hangout"
+to_name = &"Long Way Home"
+
+[node name="Volcanic Hangout-Rad Fill" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Volcanic Hangout"
+to_name = &"Rad Fill"
+
+[node name="Long Way Home-Rad Fill" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Rad Fill"
+to_name = &"Long Way Home"
+
+[node name="Safe Space-Long Way Home" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Long Way Home"
+to_name = &"Safe Space"
+
+[node name="Volcanic Hangout-Lost Tribe" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Volcanic Hangout"
+to_name = &"Lost Tribe"
+
+[node name="Lost Tribe-Rad Fill" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Rad Fill"
+to_name = &"Lost Tribe"
+
+[node name="The Other Way-Lost Tribe" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"The Other Way"
+to_name = &"Lost Tribe"
+
+[node name="Sleeper Isle-The Other Way" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"The Other Way"
+to_name = &"Sleeper Isle"
+
+[node name="Antlers-Sleeper Isle" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Antlers"
+to_name = &"Sleeper Isle"
+
+[node name="Valley Of Death-Sleeper Isle" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Valley Of Death"
+to_name = &"Sleeper Isle"
+
+[node name="Safe Space-Twide" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Safe Space"
+to_name = &"Twide"
+
+[node name="Valley Of Death-Doser" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Valley Of Death"
+to_name = &"Doser"
+
+[node name="Antlers-Doser" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Antlers"
+to_name = &"Doser"
+
+[node name="Antlers-Valley Of Death" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Valley Of Death"
+to_name = &"Antlers"
+
+[node name="Valley Of Death-Flatlands" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Flatlands"
+to_name = &"Valley Of Death"
+
+[node name="Torna-Flatlands" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Flatlands"
+to_name = &"Torna"
+
+[node name="Vulcanic Duo-Ialredynow" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Vulcanic Duo"
+to_name = &"Ialredynow"
+
+[node name="Slotin-Ialredynow" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Ialredynow"
+to_name = &"Slotin"
+
+[node name="Slotin-Esigo" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Esigo"
+to_name = &"Slotin"
+
+[node name="Be Square-Esigo" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Esigo"
+to_name = &"Be Square"
+
+[node name="Be Square-Thingamabob" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thingamabob"
+to_name = &"Be Square"
+
+[node name="Pearl Coast-Thingamabob" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thingamabob"
+to_name = &"Pearl Coast"
+
+[node name="Be Square-Deep Dip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Deep Dip"
+to_name = &"Be Square"
+
+[node name="Slotin-Mean Zone" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Mean Zone"
+to_name = &"Slotin"
+
+[node name="Dog Land-Mean Zone" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Mean Zone"
+to_name = &"Dog Land"
+
+[node name="Be Square-Slotin" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Be Square"
+to_name = &"Slotin"
+
+[node name="Be Square-Mean Zone" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Mean Zone"
+to_name = &"Be Square"
+
+[node name="Svetlina-Mean Zone" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Mean Zone"
+to_name = &"Svetlina"
+
+[node name="Relation-Mean Zone" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Mean Zone"
+to_name = &"Relation"
+
+[node name="Relation-Svetlina" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Relation"
+to_name = &"Svetlina"
+
+[node name="Deep Dip-Mean Zone" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Mean Zone"
+to_name = &"Deep Dip"
+
+[node name="Thingamabob-Deep Dip" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thingamabob"
+to_name = &"Deep Dip"
+
+[node name="Deep Dip-Svetlina" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Deep Dip"
+to_name = &"Svetlina"
+
+[node name="Dev Island-Svetlina" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Dev Island"
+to_name = &"Svetlina"
+
+[node name="Deep Dip-Dev Island" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Deep Dip"
+to_name = &"Dev Island"
+
+[node name="Flatline-Staff Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Flatline"
+
+[node name="Flatline-Ialredynow" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Ialredynow"
+to_name = &"Flatline"
+
+[node name="Staff Beach-Ialredynow" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Ialredynow"
+
+[node name="Esigo-Ialredynow" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Esigo"
+to_name = &"Ialredynow"
+
+[node name="Maydi-Staff Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Maydi"
+
+[node name="Esigo-Staff Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Esigo"
+
+[node name="Thingamabob-Esigo" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Thingamabob"
+to_name = &"Esigo"
+
+[node name="Thingamabob-Staff Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Thingamabob"
+
+[node name="Thingamabob-Dev Island" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Dev Island"
+to_name = &"Thingamabob"
+
+[node name="Sudden Turn-Staff Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Sudden Turn"
+
+[node name="Pearl Coast-Staff Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Staff Beach"
+to_name = &"Pearl Coast"
+
+[node name="Pearl Coast-Sudden Turn" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Sudden Turn"
+to_name = &"Pearl Coast"
+
+[node name="Sudden Turn-Maydi" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Sudden Turn"
+to_name = &"Maydi"
+
+[node name="Coastal Spill-Flatline" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Flatline"
+to_name = &"Coastal Spill"
+
+[node name="Coastal Spill-Indent Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"Coastal Spill"
+
+[node name="Tarro-Indent Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"Tarro"
+
+[node name="Coastal Spill-Heart" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Heart"
+to_name = &"Coastal Spill"
+
+[node name="Coastal Spill-Twide" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Twide"
+to_name = &"Coastal Spill"
+
+[node name="Indent Beach-Crescent Island" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"Crescent Island"
+
+[node name="Tarro-Crescent Island" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Tarro"
+to_name = &"Crescent Island"
+
+[node name="Indent Beach-Presto" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"Presto"
+
+[node name="SnakeScape-Presto" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"SnakeScape"
+to_name = &"Presto"
+
+[node name="SnakeScape-Tarro" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"SnakeScape"
+to_name = &"Tarro"
+
+[node name="Crescent Island-Heart" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Heart"
+to_name = &"Crescent Island"
+
+[node name="Maydi-Crescent Island" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Maydi"
+to_name = &"Crescent Island"
+
+[node name="Maydi-Heart" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Heart"
+to_name = &"Maydi"
+
+[node name="Chunker-Cat Slope" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Chunker"
+to_name = &"Cat Slope"
+
+[node name="Cubical Downhill-Cat Slope" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Cubical Downhill"
+to_name = &"Cat Slope"
+
+[node name="Cubical Downhill-Chunker" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Chunker"
+to_name = &"Cubical Downhill"
+
+[node name="Stoney Shore-Cubical Downhill" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Stoney Shore"
+to_name = &"Cubical Downhill"
+
+[node name="Stoney Shore-Chunker" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Chunker"
+to_name = &"Stoney Shore"
+
+[node name="Long Way Home-Cat Slope" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Long Way Home"
+to_name = &"Cat Slope"
+power_reduction = 1
+
+[node name="Cubical Downhill-Long Way Home" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Long Way Home"
+to_name = &"Cubical Downhill"
+power_reduction = 1
+
+[node name="Cubical Downhill-Rad Fill" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Rad Fill"
+to_name = &"Cubical Downhill"
+power_reduction = 1
+
+[node name="Stoney Shore-Rad Fill" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Rad Fill"
+to_name = &"Stoney Shore"
+power_reduction = 1
+
+[node name="Stoney Shore-Presto" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Presto"
+to_name = &"Stoney Shore"
+power_reduction = 1
+
+[node name="Twide-Cat Slope" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Twide"
+to_name = &"Cat Slope"
+power_reduction = 1
+
+[node name="Indent Beach-Cat Slope" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"Cat Slope"
+power_reduction = 1
+
+[node name="SnakeScape-Indent Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"SnakeScape"
+
+[node name="Coastal Spill-Cat Slope" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Coastal Spill"
+to_name = &"Cat Slope"
+power_reduction = 1
+
+[node name="Chunker-Indent Beach" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Indent Beach"
+to_name = &"Chunker"
+power_reduction = 1
+
+[node name="Chunker-Presto" type="Line2D" parent="links"]
+script = ExtResource("2_r5t6v")
+from_name = &"Presto"
+to_name = &"Chunker"
+power_reduction = 1
 
 [node name="Volcano" type="Node" parent="." node_paths=PackedStringArray("residing_region")]
 script = ExtResource("2_6dpgy")

@@ -2,48 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_p6ocx"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_btpod"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_dqqgq"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_wejfr"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="3_85qsw"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_v2anp"]
-
-[sub_resource type="GDScript" id="GDScript_jdhk0"]
-script/source = "extends Node
-
-@export var align_color : Array = [
-]
-
-var connections : Array = [
-	[\"Shmooven\", \"Occ\"],
-	[\"Modd\", \"Occ\"],
-	[\"Shmooven\", \"Codd\"],
-	[\"Modd\", \"Codd\"],
-	[\"Shodd\", \"Occ\"],
-	[\"Modd\", \"Shodd\"],
-	[\"Shmooven\", \"Bodd\"],
-	[\"Bodd\", \"Codd\"],
-	[\"Odd\", \"Codd\"],
-	[\"Bodd\", \"Odd\"],
-	[\"Bodd\", \"Beven\"],
-	[\"Shmooven\", \"Beven\"],
-	[\"Shmooven\", \"Ceven\"],
-	[\"Shmooven\", \"Pleven\"],
-	[\"Spieven\", \"Ceven\"],
-	[\"Meven\", \"Ceven\"],
-	[\"Spieven\", \"Meven\"],
-	[\"Meven\", \"Pleven\"],
-	[\"Beven\", \"Pleven\"],
-	[\"Even\", \"Pleven\"],
-	[\"Beven\", \"Even\"],
-]
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	#get_parent().align_color = align_color.duplicate()
-	queue_free()
-
-func _process(_delta):
-	pass
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wa8sq"]
 shader = ExtResource("2_wejfr")
@@ -129,7 +91,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="duel" type="Polygon2D"]
+[node name="duel" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-8, 296, 288, 192, 360, 56, 344, -160, 152, -288, -128, -312, -368, -280, -392, -16, -272, 184)
 script = ExtResource("1_p6ocx")
@@ -141,9 +103,114 @@ Who will win this battle?"
 align_names = Array[String](["", "Odd", "Even"])
 hide_turn_order = true
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_jdhk0")
+[node name="links" type="Node" parent="."]
+
+[node name="Occ-Shmooven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shmooven"
+to_name = &"Occ"
+
+[node name="Occ-Modd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Modd"
+to_name = &"Occ"
+
+[node name="Codd-Shmooven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shmooven"
+to_name = &"Codd"
+
+[node name="Codd-Modd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Modd"
+to_name = &"Codd"
+
+[node name="Occ-Shodd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shodd"
+to_name = &"Occ"
+
+[node name="Modd-Shodd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Modd"
+to_name = &"Shodd"
+
+[node name="Bodd-Shmooven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shmooven"
+to_name = &"Bodd"
+
+[node name="Bodd-Codd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Bodd"
+to_name = &"Codd"
+
+[node name="Codd-Odd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Odd"
+to_name = &"Codd"
+
+[node name="Bodd-Odd" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Bodd"
+to_name = &"Odd"
+
+[node name="Bodd-Beven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Bodd"
+to_name = &"Beven"
+
+[node name="Beven-Shmooven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shmooven"
+to_name = &"Beven"
+
+[node name="Ceven-Shmooven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shmooven"
+to_name = &"Ceven"
+
+[node name="Shmooven-Pleven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Shmooven"
+to_name = &"Pleven"
+
+[node name="Ceven-Spieven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Spieven"
+to_name = &"Ceven"
+
+[node name="Meven-Ceven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Meven"
+to_name = &"Ceven"
+
+[node name="Meven-Spieven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Spieven"
+to_name = &"Meven"
+
+[node name="Meven-Pleven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Meven"
+to_name = &"Pleven"
+
+[node name="Beven-Pleven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Beven"
+to_name = &"Pleven"
+
+[node name="Even-Pleven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Even"
+to_name = &"Pleven"
+
+[node name="Even-Beven" type="Line2D" parent="links"]
+script = ExtResource("2_dqqgq")
+from_name = &"Beven"
+to_name = &"Even"
 
 [node name="Odd" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wa8sq")

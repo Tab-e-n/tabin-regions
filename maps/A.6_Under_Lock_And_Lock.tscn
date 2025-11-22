@@ -2,84 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_slecj"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_ov01q"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_v6bnm"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_cnpms"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_6leky"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_bcj2m"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="6_8co7j"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Lockness\", \"Luck\"],
-	[\"Lockness\", \"L0C4\"],
-	[\"Lockness\", \"Lockomotive\"],
-	[\"L0C4\", \"Luck\"],
-	[\"Lockness\", \"Flock of Lirds\"],
-	[\"Flock of Lirds\", \"Luck\"],
-	[\"Scroll Lock\", \"Luck\"],
-	[\"Flock of Lirds\", \"Scroll Lock\"],
-	[\"Locky\", \"Luck\"],
-	[\"Locky\", \"Lock On\"],
-	[\"Locky\", \"Lockman\"],
-	[\"Lockman\", \"Lock On\"],
-	[\"Lock On\", \"Luck\"],
-	[\"Locky\", \"Scroll Lock\"],
-	[\"Rock\", \"Glock\"],
-	[\"Rock\", \"Break a Lock\"],
-	[\"ILock\", \"Glock\"],
-	[\"Break a Lock\", \"Glock\"],
-	[\"ILock\", \"Break a Lock\"],
-	[\"ILock\", \"Locklessness\"],
-	[\"ILock\", \"Lockle\"],
-	[\"Lockle\", \"Locklessness\"],
-	[\"L\", \"Locklessness\"],
-	[\"Rock\", \"Lockaby\"],
-	[\"Lock-a-like\", \"Lockaby\"],
-	[\"Lock-a-like\", \"Lockjaw\"],
-	[\"Break a Lock\", \"Lockaby\"],
-	[\"Break a Lock\", \"Lockjaw\"],
-	[\"Break a Lock\", \"Lockle\"],
-	[\"Lockjaw\", \"Lockaby\"],
-	[\"Lockjaw\", \"Kcol\"],
-	[\"Lock Warm\", \"Kcol\"],
-	[\"Lockster\", \"Kcol\"],
-	[\"Lock Warm\", \"Plucks\"],
-	[\"Lockster\", \"Plucks\"],
-	[\"Lock Warm\", \"Lockster\"],
-	[\"Lockomotive\", \"Plucks\"],
-	[\"L0C4\", \"Plucks\"],
-	[\"L0C4\", \"Lockomotive\"],
-	[\"Lock-a-like\", \"Log\"],
-	[\"Kcol\", \"Log\"],
-	[\"Lock-a-like\", \"Kcol\"],
-	[\"Lock-a-like\", \"Lockman\"],
-	[\"Lock On\", \"Log\"],
-	[\"Lockman\", \"Log\"],
-	[\"Lockster\", \"Log\"],
-	[\"Clock\", \"Lockery\"],
-	[\"L\", \"Lockery\"],
-	[\"L\", \"Lockle\"],
-	[\"Locklessness\", \"Lockery\"],
-	[\"Clock\", \"Take a Lock\"],
-	[\"Locknut\", \"Take a Lock\"],
-	[\"Clock\", \"L\"],
-	[\"Lady Lock\", \"Take a Lock\"],
-	[\"Lady Lock\", \"Lockomotive\"],
-	[\"Lady Lock\", \"Locknut\"],
-	[\"Lady Lock\", \"Lock Warm\"],
-	[\"Lady Lock\", \"Plucks\"],
-	[\"Lock Warm\", \"Locknut\"],
-	[\"L\", \"Take a Lock\"],
-	[\"L\", \"Locknut\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xnxyd"]
 shader = ExtResource("3_cnpms")
@@ -255,7 +182,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.666667, 0.435294, 0.462745, 1)
 polygon = PackedVector2Array(-528, -448, -592, -16, -568, 376, -408, 608, 0, 656, 432, 560, 576, 296, 592, -96, 536, -448, 360, -736, -16, -840, -352, -760)
 script = ExtResource("1_slecj")
@@ -266,9 +193,314 @@ lore = "Lock all your opponents up!"
 align_color = Array[Color]([Color(0.419608, 0.282353, 0.313726, 1), Color(0.717647, 0.176471, 0.219608, 1), Color(0.768627, 0.301961, 0.113725, 1), Color(0.752941, 0.470588, 0.156863, 1), Color(0.745098, 0.113725, 0.368627, 1), Color(0.584314, 0.156863, 0.631373, 1), Color(0.607843, 0.345098, 0.286275, 1)])
 align_names = Array[String](["Lock", "Monster", "Creature", "Gal", "Song", "Scam", "Artillery"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Lockness-Luck" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockness"
+to_name = &"Luck"
+
+[node name="Lockness-L0C4" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockness"
+to_name = &"L0C4"
+
+[node name="Lockness-Lockomotive" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockness"
+to_name = &"Lockomotive"
+
+[node name="Luck-L0C4" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L0C4"
+to_name = &"Luck"
+
+[node name="Lockness-Flock of Lirds" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockness"
+to_name = &"Flock of Lirds"
+
+[node name="Luck-Flock of Lirds" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Flock of Lirds"
+to_name = &"Luck"
+
+[node name="Scroll Lock-Luck" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Scroll Lock"
+to_name = &"Luck"
+
+[node name="Scroll Lock-Flock of Lirds" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Flock of Lirds"
+to_name = &"Scroll Lock"
+
+[node name="Luck-Locky" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Locky"
+to_name = &"Luck"
+
+[node name="Lock On-Locky" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Locky"
+to_name = &"Lock On"
+
+[node name="Lockman-Locky" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Locky"
+to_name = &"Lockman"
+
+[node name="Lockman-Lock On" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockman"
+to_name = &"Lock On"
+
+[node name="Lock On-Luck" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock On"
+to_name = &"Luck"
+
+[node name="Scroll Lock-Locky" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Locky"
+to_name = &"Scroll Lock"
+
+[node name="Glock-Rock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Rock"
+to_name = &"Glock"
+
+[node name="Rock-Break a Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Rock"
+to_name = &"Break a Lock"
+
+[node name="Glock-ILock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"ILock"
+to_name = &"Glock"
+
+[node name="Glock-Break a Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Break a Lock"
+to_name = &"Glock"
+
+[node name="Break a Lock-ILock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"ILock"
+to_name = &"Break a Lock"
+
+[node name="Locklessness-ILock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"ILock"
+to_name = &"Locklessness"
+
+[node name="Lockle-ILock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"ILock"
+to_name = &"Lockle"
+
+[node name="Locklessness-Lockle" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockle"
+to_name = &"Locklessness"
+
+[node name="L-Locklessness" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L"
+to_name = &"Locklessness"
+
+[node name="Lockaby-Rock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Rock"
+to_name = &"Lockaby"
+
+[node name="Lockaby-Lock-a-like" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock-a-like"
+to_name = &"Lockaby"
+
+[node name="Lock-a-like-Lockjaw" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock-a-like"
+to_name = &"Lockjaw"
+
+[node name="Lockaby-Break a Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Break a Lock"
+to_name = &"Lockaby"
+
+[node name="Lockjaw-Break a Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Break a Lock"
+to_name = &"Lockjaw"
+
+[node name="Break a Lock-Lockle" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Break a Lock"
+to_name = &"Lockle"
+
+[node name="Lockaby-Lockjaw" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockjaw"
+to_name = &"Lockaby"
+
+[node name="Lockjaw-Kcol" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockjaw"
+to_name = &"Kcol"
+
+[node name="Lock Warm-Kcol" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock Warm"
+to_name = &"Kcol"
+
+[node name="Lockster-Kcol" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockster"
+to_name = &"Kcol"
+
+[node name="Lock Warm-Plucks" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock Warm"
+to_name = &"Plucks"
+
+[node name="Plucks-Lockster" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockster"
+to_name = &"Plucks"
+
+[node name="Lock Warm-Lockster" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock Warm"
+to_name = &"Lockster"
+
+[node name="Plucks-Lockomotive" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockomotive"
+to_name = &"Plucks"
+
+[node name="Plucks-L0C4" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L0C4"
+to_name = &"Plucks"
+
+[node name="Lockomotive-L0C4" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L0C4"
+to_name = &"Lockomotive"
+
+[node name="Lock-a-like-Log" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock-a-like"
+to_name = &"Log"
+
+[node name="Log-Kcol" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Kcol"
+to_name = &"Log"
+
+[node name="Lock-a-like-Kcol" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock-a-like"
+to_name = &"Kcol"
+
+[node name="Lockman-Lock-a-like" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock-a-like"
+to_name = &"Lockman"
+
+[node name="Log-Lock On" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock On"
+to_name = &"Log"
+
+[node name="Lockman-Log" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockman"
+to_name = &"Log"
+
+[node name="Log-Lockster" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lockster"
+to_name = &"Log"
+
+[node name="Lockery-Clock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Clock"
+to_name = &"Lockery"
+
+[node name="Lockery-L" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L"
+to_name = &"Lockery"
+
+[node name="L-Lockle" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L"
+to_name = &"Lockle"
+
+[node name="Lockery-Locklessness" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Locklessness"
+to_name = &"Lockery"
+
+[node name="Take a Lock-Clock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Clock"
+to_name = &"Take a Lock"
+
+[node name="Locknut-Take a Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Locknut"
+to_name = &"Take a Lock"
+
+[node name="L-Clock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Clock"
+to_name = &"L"
+
+[node name="Take a Lock-Lady Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lady Lock"
+to_name = &"Take a Lock"
+
+[node name="Lockomotive-Lady Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lady Lock"
+to_name = &"Lockomotive"
+
+[node name="Locknut-Lady Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lady Lock"
+to_name = &"Locknut"
+
+[node name="Lock Warm-Lady Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lady Lock"
+to_name = &"Lock Warm"
+
+[node name="Plucks-Lady Lock" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lady Lock"
+to_name = &"Plucks"
+
+[node name="Lock Warm-Locknut" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"Lock Warm"
+to_name = &"Locknut"
+
+[node name="Take a Lock-L" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L"
+to_name = &"Take a Lock"
+
+[node name="Locknut-L" type="Line2D" parent="links"]
+script = ExtResource("2_v6bnm")
+from_name = &"L"
+to_name = &"Locknut"
 
 [node name="bg" parent="." instance=ExtResource("2_ov01q")]
 color = Color(0.498039, 0.313726, 0.337255, 1)

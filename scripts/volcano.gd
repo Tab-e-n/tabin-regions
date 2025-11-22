@@ -71,7 +71,6 @@ func _deferred_ready():
 	controler.thinking_normal.connect(_think_normal)
 	controler.thinking_bonus.connect(_think_bonus)
 	controler.thinking_mobilize.connect(_think_mobilize)
-	region_control.alignment_aliances[dummy_alignment] = -1
 
 
 func _think_normal():

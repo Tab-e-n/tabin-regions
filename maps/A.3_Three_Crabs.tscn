@@ -2,98 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_pkf2y"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_227at"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_p8yjm"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_0snln"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_1pq1w"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="3_d0dqj"]
-
-[sub_resource type="GDScript" id="GDScript_uxvrr"]
-script/source = "extends Node
-
-
-var connections : Array = [
-	[\"Crack Valley\", \"Cracked Island Beach\"],
-	[\"Crack Valley\", \"Searing Hills\"],
-	[\"Portal Outskirts\", \"Searing Hills\"],
-	[\"Crack Valley\", \"Portal\"],
-	[\"Crack Valley\", \"Other Beach\"],
-	[\"Crack Valley\", \"Cramas\"],
-	[\"Fishing Beach\", \"Cramas\"],
-	[\"Fishing Beach\", \"Searing Grove\"],
-	[\"Fisherland\", \"Searing Grove\"],
-	[\"Fisherland\", \"Fish Trail\"],
-	[\"Rasmas\", \"Fish Trail\"],
-	[\"Trailside\", \"Fish Trail\"],
-	[\"Fisherland\", \"Rocky Coast\"],
-	[\"Rasmas\", \"Rocky Coast\"],
-	[\"Rasmas\", \"Grunch\"],
-	[\"Rasmas\", \"Serpants Eye\"],
-	[\"Serpants Eye\", \"Grunch\"],
-	[\"Gimehed\", \"Grunch\"],
-	[\"Gimehed\", \"Serpants Eye\"],
-	[\"Rasmas\", \"Trailside\"],
-	[\"Serpants Eye\", \"Trailside\"],
-	[\"Rocky Coast\", \"Fish Trail\"],
-	[\"Searing Grove\", \"Cramas\"],
-	[\"Cramas\", \"Other Beach\"],
-	[\"Portal\", \"Cracked Island Beach\"],
-	[\"Portal\", \"Portal Outskirts\"],
-	[\"Little Capricus\", \"Portal Outskirts\"],
-	[\"Little Capricus\", \"West Great Plateau\"],
-	[\"Credit\", \"Portal Outskirts\"],
-	[\"Credit\", \"Leaving Region\"],
-	[\"Credit\", \"River Hills\"],
-	[\"Village Port\", \"River Hills\"],
-	[\"Village Market\", \"River Hills\"],
-	[\"Village Port\", \"Village Center\"],
-	[\"Village Port\", \"Village Market\"],
-	[\"Village Market\", \"Village Center\"],
-	[\"Village Port\", \"Village Entrance\"],
-	[\"Village Entrance\", \"Village Center\"],
-	[\"River Hills\", \"Leaving Region\"],
-	[\"Turnaround\", \"Leaving Region\"],
-	[\"Little Capricus\", \"Leaving Region\"],
-	[\"Turnaround\", \"Stationary\"],
-	[\"West Great Plateau\", \"Stationary\"],
-	[\"North Great Plateau\", \"Stationary\"],
-	[\"West Great Plateau\", \"North Great Plateau\"],
-	[\"West Great Plateau\", \"Hole\"],
-	[\"West Great Plateau\", \"Center Great Plateau\"],
-	[\"West Great Plateau\", \"South Great Plateau\"],
-	[\"West Great Plateau\", \"Little Plateau\"],
-	[\"Little Plateau\", \"South Great Plateau\"],
-	[\"South Great Plateau\", \"Center Great Plateau\"],
-	[\"South Great Plateau\", \"Serpants Eye\"],
-	[\"Serpants Eye\", \"Center Great Plateau\"],
-	[\"Gimehed\", \"Center Great Plateau\"],
-	[\"South Great Plateau\", \"Fish Trail\"],
-	[\"Trailside\", \"South Great Plateau\"],
-	[\"Center Great Plateau\", \"North Great Plateau\"],
-	[\"Turnaround\", \"Hole\"],
-	[\"Little Capricus\", \"Hole\"],
-	[\"Little Capricus\", \"Little Plateau\"],
-	[\"Hole\", \"Stationary\"],
-	[\"Portal Outskirts\", \"Cracked Island Beach\"],
-	[\"Portal\", \"Searing Hills\"],
-	[\"Searing Grove\", \"Searing Hills\"],
-	[\"South Great Plateau\", \"Searing Hills\"],
-	[\"Trias\", \"Crop Hills\"],
-	[\"Left Side of the Road\", \"Crop Hills\"],
-	[\"Right Side of the Road\", \"Crop Hills\"],
-	[\"Left Side of the Road\", \"Right Side of the Road\"],
-	[\"Left Side of the Road\", \"Ruins\"],
-	[\"Left Side of the Road\", \"Village Port\"],
-	[\"Village Port\", \"Ruins\"],
-	[\"Village Entrance\", \"Ruins\"],
-	[\"Ruins\", \"Right Side of the Road\"],
-	[\"Trias\", \"Stationary\"],
-	[\"Portal\", \"Giant Enemy Crab\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3lky0"]
 shader = ExtResource("2_227at")
@@ -363,7 +275,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="Triple Trouble" type="Polygon2D"]
+[node name="Triple Trouble" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-456, -232, -224, -424, 88, -448, 296, -368, 520, -176, 504, 128, 432, 328, 240, 456, -8, 480, -296, 400, -472, 304, -536, 96)
 script = ExtResource("1_pkf2y")
@@ -378,9 +290,389 @@ align_names = Array[String](["", "Cramas", "Trias", "Rasmas"])
 city_size = 0.8
 hide_turn_order = true
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_uxvrr")
+[node name="links" type="Node" parent="."]
+
+[node name="Cracked Island Beach-Crack Valley" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Crack Valley"
+to_name = &"Cracked Island Beach"
+
+[node name="Crack Valley-Searing Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Crack Valley"
+to_name = &"Searing Hills"
+
+[node name="Searing Hills-Portal Outskirts" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Portal Outskirts"
+to_name = &"Searing Hills"
+
+[node name="Portal-Crack Valley" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Crack Valley"
+to_name = &"Portal"
+
+[node name="Other Beach-Crack Valley" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Crack Valley"
+to_name = &"Other Beach"
+
+[node name="Cramas-Crack Valley" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Crack Valley"
+to_name = &"Cramas"
+
+[node name="Cramas-Fishing Beach" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Fishing Beach"
+to_name = &"Cramas"
+
+[node name="Searing Grove-Fishing Beach" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Fishing Beach"
+to_name = &"Searing Grove"
+
+[node name="Searing Grove-Fisherland" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Fisherland"
+to_name = &"Searing Grove"
+
+[node name="Fish Trail-Fisherland" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Fisherland"
+to_name = &"Fish Trail"
+
+[node name="Rasmas-Fish Trail" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Rasmas"
+to_name = &"Fish Trail"
+
+[node name="Trailside-Fish Trail" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Trailside"
+to_name = &"Fish Trail"
+
+[node name="Rocky Coast-Fisherland" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Fisherland"
+to_name = &"Rocky Coast"
+
+[node name="Rocky Coast-Rasmas" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Rasmas"
+to_name = &"Rocky Coast"
+
+[node name="Rasmas-Grunch" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Rasmas"
+to_name = &"Grunch"
+
+[node name="Serpants Eye-Rasmas" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Rasmas"
+to_name = &"Serpants Eye"
+
+[node name="Serpants Eye-Grunch" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Serpants Eye"
+to_name = &"Grunch"
+
+[node name="Gimehed-Grunch" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Gimehed"
+to_name = &"Grunch"
+
+[node name="Serpants Eye-Gimehed" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Gimehed"
+to_name = &"Serpants Eye"
+
+[node name="Trailside-Rasmas" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Rasmas"
+to_name = &"Trailside"
+
+[node name="Serpants Eye-Trailside" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Serpants Eye"
+to_name = &"Trailside"
+
+[node name="Rocky Coast-Fish Trail" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Rocky Coast"
+to_name = &"Fish Trail"
+
+[node name="Cramas-Searing Grove" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Searing Grove"
+to_name = &"Cramas"
+
+[node name="Other Beach-Cramas" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Cramas"
+to_name = &"Other Beach"
+
+[node name="Portal-Cracked Island Beach" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Portal"
+to_name = &"Cracked Island Beach"
+
+[node name="Portal-Portal Outskirts" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Portal"
+to_name = &"Portal Outskirts"
+
+[node name="Little Capricus-Portal Outskirts" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Little Capricus"
+to_name = &"Portal Outskirts"
+
+[node name="Little Capricus-West Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Little Capricus"
+to_name = &"West Great Plateau"
+
+[node name="Portal Outskirts-Credit" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Credit"
+to_name = &"Portal Outskirts"
+
+[node name="Leaving Region-Credit" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Credit"
+to_name = &"Leaving Region"
+
+[node name="River Hills-Credit" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Credit"
+to_name = &"River Hills"
+
+[node name="Village Port-River Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Port"
+to_name = &"River Hills"
+
+[node name="Village Market-River Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Market"
+to_name = &"River Hills"
+
+[node name="Village Port-Village Center" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Port"
+to_name = &"Village Center"
+
+[node name="Village Market-Village Port" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Port"
+to_name = &"Village Market"
+
+[node name="Village Market-Village Center" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Market"
+to_name = &"Village Center"
+
+[node name="Village Port-Village Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Port"
+to_name = &"Village Entrance"
+
+[node name="Village Center-Village Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Entrance"
+to_name = &"Village Center"
+
+[node name="River Hills-Leaving Region" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"River Hills"
+to_name = &"Leaving Region"
+
+[node name="Turnaround-Leaving Region" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Turnaround"
+to_name = &"Leaving Region"
+
+[node name="Little Capricus-Leaving Region" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Little Capricus"
+to_name = &"Leaving Region"
+
+[node name="Turnaround-Stationary" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Turnaround"
+to_name = &"Stationary"
+
+[node name="Stationary-West Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"West Great Plateau"
+to_name = &"Stationary"
+
+[node name="Stationary-North Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"North Great Plateau"
+to_name = &"Stationary"
+
+[node name="West Great Plateau-North Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"West Great Plateau"
+to_name = &"North Great Plateau"
+
+[node name="West Great Plateau-Hole" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"West Great Plateau"
+to_name = &"Hole"
+
+[node name="West Great Plateau-Center Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"West Great Plateau"
+to_name = &"Center Great Plateau"
+
+[node name="West Great Plateau-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"West Great Plateau"
+to_name = &"South Great Plateau"
+
+[node name="West Great Plateau-Little Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"West Great Plateau"
+to_name = &"Little Plateau"
+
+[node name="Little Plateau-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Little Plateau"
+to_name = &"South Great Plateau"
+
+[node name="Center Great Plateau-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"South Great Plateau"
+to_name = &"Center Great Plateau"
+
+[node name="Serpants Eye-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"South Great Plateau"
+to_name = &"Serpants Eye"
+
+[node name="Serpants Eye-Center Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Serpants Eye"
+to_name = &"Center Great Plateau"
+
+[node name="Gimehed-Center Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Gimehed"
+to_name = &"Center Great Plateau"
+
+[node name="Fish Trail-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"South Great Plateau"
+to_name = &"Fish Trail"
+
+[node name="Trailside-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Trailside"
+to_name = &"South Great Plateau"
+
+[node name="Center Great Plateau-North Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Center Great Plateau"
+to_name = &"North Great Plateau"
+
+[node name="Turnaround-Hole" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Turnaround"
+to_name = &"Hole"
+
+[node name="Little Capricus-Hole" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Little Capricus"
+to_name = &"Hole"
+
+[node name="Little Capricus-Little Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Little Capricus"
+to_name = &"Little Plateau"
+
+[node name="Stationary-Hole" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Hole"
+to_name = &"Stationary"
+
+[node name="Cracked Island Beach-Portal Outskirts" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Portal Outskirts"
+to_name = &"Cracked Island Beach"
+
+[node name="Portal-Searing Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Portal"
+to_name = &"Searing Hills"
+
+[node name="Searing Grove-Searing Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Searing Grove"
+to_name = &"Searing Hills"
+
+[node name="Searing Hills-South Great Plateau" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"South Great Plateau"
+to_name = &"Searing Hills"
+
+[node name="Trias-Crop Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Trias"
+to_name = &"Crop Hills"
+
+[node name="Left Side of the Road-Crop Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Left Side of the Road"
+to_name = &"Crop Hills"
+
+[node name="Right Side of the Road-Crop Hills" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Right Side of the Road"
+to_name = &"Crop Hills"
+
+[node name="Left Side of the Road-Right Side of the Road" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Left Side of the Road"
+to_name = &"Right Side of the Road"
+
+[node name="Ruins-Left Side of the Road" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Left Side of the Road"
+to_name = &"Ruins"
+
+[node name="Left Side of the Road-Village Port" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Left Side of the Road"
+to_name = &"Village Port"
+
+[node name="Ruins-Village Port" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Port"
+to_name = &"Ruins"
+
+[node name="Ruins-Village Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Village Entrance"
+to_name = &"Ruins"
+
+[node name="Ruins-Right Side of the Road" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Ruins"
+to_name = &"Right Side of the Road"
+
+[node name="Stationary-Trias" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Trias"
+to_name = &"Stationary"
+
+[node name="Portal-Giant Enemy Crab" type="Line2D" parent="links"]
+script = ExtResource("2_p8yjm")
+from_name = &"Portal"
+to_name = &"Giant Enemy Crab"
 
 [node name="Giant Enemy Crab" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3lky0")

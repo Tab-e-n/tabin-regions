@@ -2,58 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_vx6je"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_8omyv"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_vnwbq"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_ysip3"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="3_dgdji"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_ipppv"]
-
-[sub_resource type="GDScript" id="GDScript_ah2jb"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Pawter\", \"Berdia\"],
-	[\"Pawter\", \"Hook Hilltop\"],
-	[\"Fisval\", \"Hook Hilltop\"],
-	[\"Berdia\", \"Berdia Mudlands\"],
-	[\"Fisval\", \"Berdia Mudlands\"],
-	[\"Thea Landing\", \"Hook Hilltop\", 1],
-	[\"Thea Landing\", \"Theathrapol\"],
-	[\"Thea Lake\", \"Theathrapol\"],
-	[\"Fallen Edge\", \"Theathrapol\"],
-	[\"Thea Lake\", \"Fallen Edge\"],
-	[\"Thea Landing\", \"Fallen Edge\"],
-	[\"Headen Valley\", \"Fallen Edge\"],
-	[\"Headen Valley\", \"Headen\"],
-	[\"Fallen Edge\", \"Headen\"],
-	[\"Thea Lake\", \"Headen\"],
-	[\"Headen\", \"Headehanden\", 1],
-	[\"Berdia Battlegrounds\", \"Berdia Mudlands\"],
-	[\"Berdia\", \"Berdia Battlegrounds\"],
-	[\"Brudin\", \"Berdia Battlegrounds\"],
-	[\"Berdia\", \"Brudin\"],
-	[\"O'Bru Tish\", \"Brudin\"],
-	[\"O'Bru Tish\", \"Akutan\"],
-	[\"Akutan\", \"Berdia Battlegrounds\"],
-	[\"Brudin\", \"Akutan\"],
-	[\"Akutan\", \"Berdia Mudlands\"],
-	[\"Haan\", \"Brudin\"],
-	[\"Berdia\", \"Haan\"],
-	[\"Cajk\", \"Haan\"],
-	[\"Berdia\", \"Cajk\"],
-	[\"Pawter\", \"Cajk\"],
-	[\"Headehanden\", \"Lesser Headehanden\", 1],
-	[\"Okraden\", \"Lesser Headehanden\"],
-	[\"Okraden\", \"Passageless Peace\"],
-	[\"Passageless Peace\", \"Haan\", 2],
-	[\"Cajk\", \"Passageless Peace\", 2],
-	[\"Okraden\", \"Rhoadannil\"],
-	[\"Rhoadannil\", \"Passageless Peace\"],
-	[\"Rhoadannil\", \"Rhoa Isle\"],
-]
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a7tdt"]
 shader = ExtResource("2_ysip3")
@@ -193,7 +145,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="RegionControl" type="Polygon2D"]
+[node name="RegionControl" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-640, -64, -568, 112, -408, 216, -360, 328, -128, 432, 80, 496, 288, 488, 416, 384, 392, 248, 408, 168, 576, 56, 592, -96, 520, -192, 336, -272, 176, -376, -56, -312, -240, -344, -392, -400, -528, -336, -640, -208)
 script = ExtResource("1_vx6je")
@@ -211,9 +163,204 @@ lore = "Can you beat your enemy when you are at a disadvantage?"
 align_names = Array[String](["", "Calm Denizens", "Conspirators"])
 main_character = 1
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_ah2jb")
+[node name="links" type="Node" parent="."]
+
+[node name="Pawter-Berdia" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Pawter"
+to_name = &"Berdia"
+
+[node name="Hook Hilltop-Pawter" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Pawter"
+to_name = &"Hook Hilltop"
+
+[node name="Fisval-Hook Hilltop" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Fisval"
+to_name = &"Hook Hilltop"
+
+[node name="Berdia Mudlands-Berdia" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Berdia"
+to_name = &"Berdia Mudlands"
+
+[node name="Fisval-Berdia Mudlands" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Fisval"
+to_name = &"Berdia Mudlands"
+
+[node name="Hook Hilltop-Thea Landing" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Thea Landing"
+to_name = &"Hook Hilltop"
+power_reduction = 1
+
+[node name="Thea Landing-Theathrapol" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Thea Landing"
+to_name = &"Theathrapol"
+
+[node name="Theathrapol-Thea Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Thea Lake"
+to_name = &"Theathrapol"
+
+[node name="Theathrapol-Fallen Edge" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Fallen Edge"
+to_name = &"Theathrapol"
+
+[node name="Thea Lake-Fallen Edge" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Thea Lake"
+to_name = &"Fallen Edge"
+
+[node name="Thea Landing-Fallen Edge" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Thea Landing"
+to_name = &"Fallen Edge"
+
+[node name="Fallen Edge-Headen Valley" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Headen Valley"
+to_name = &"Fallen Edge"
+
+[node name="Headen-Headen Valley" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Headen Valley"
+to_name = &"Headen"
+
+[node name="Headen-Fallen Edge" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Fallen Edge"
+to_name = &"Headen"
+
+[node name="Headen-Thea Lake" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Thea Lake"
+to_name = &"Headen"
+
+[node name="Headen-Headehanden" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Headen"
+to_name = &"Headehanden"
+power_reduction = 1
+
+[node name="Berdia Mudlands-Berdia Battlegrounds" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Berdia Battlegrounds"
+to_name = &"Berdia Mudlands"
+
+[node name="Berdia-Berdia Battlegrounds" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Berdia"
+to_name = &"Berdia Battlegrounds"
+
+[node name="Brudin-Berdia Battlegrounds" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Brudin"
+to_name = &"Berdia Battlegrounds"
+
+[node name="Brudin-Berdia" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Berdia"
+to_name = &"Brudin"
+
+[node name="O\'Bru Tish-Brudin" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"O\'Bru Tish"
+to_name = &"Brudin"
+
+[node name="O\'Bru Tish-Akutan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"O\'Bru Tish"
+to_name = &"Akutan"
+
+[node name="Berdia Battlegrounds-Akutan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Akutan"
+to_name = &"Berdia Battlegrounds"
+
+[node name="Brudin-Akutan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Brudin"
+to_name = &"Akutan"
+
+[node name="Berdia Mudlands-Akutan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Akutan"
+to_name = &"Berdia Mudlands"
+
+[node name="Brudin-Haan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Haan"
+to_name = &"Brudin"
+
+[node name="Berdia-Haan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Berdia"
+to_name = &"Haan"
+
+[node name="Cajk-Haan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Cajk"
+to_name = &"Haan"
+
+[node name="Berdia-Cajk" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Berdia"
+to_name = &"Cajk"
+
+[node name="Pawter-Cajk" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Pawter"
+to_name = &"Cajk"
+
+[node name="Headehanden-Lesser Headehanden" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Headehanden"
+to_name = &"Lesser Headehanden"
+power_reduction = 1
+
+[node name="Okraden-Lesser Headehanden" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Okraden"
+to_name = &"Lesser Headehanden"
+
+[node name="Okraden-Passageless Peace" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Okraden"
+to_name = &"Passageless Peace"
+
+[node name="Passageless Peace-Haan" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Passageless Peace"
+to_name = &"Haan"
+power_reduction = 2
+
+[node name="Passageless Peace-Cajk" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Cajk"
+to_name = &"Passageless Peace"
+power_reduction = 2
+
+[node name="Okraden-Rhoadannil" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Okraden"
+to_name = &"Rhoadannil"
+
+[node name="Passageless Peace-Rhoadannil" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Rhoadannil"
+to_name = &"Passageless Peace"
+
+[node name="Rhoadannil-Rhoa Isle" type="Line2D" parent="links"]
+script = ExtResource("2_vnwbq")
+from_name = &"Rhoadannil"
+to_name = &"Rhoa Isle"
 
 [node name="Pawter" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_a7tdt")

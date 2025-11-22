@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_x2221"]
 [ext_resource type="Script" path="res://scripts/volcano.gd" id="2_80qnr"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_apjgv"]
 [ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_jh77j"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="4_nnhca"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="5_vg1se"]
@@ -9,69 +10,6 @@
 [ext_resource type="Script" path="res://scripts/region.gd" id="7_xuuy6"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="8_e3o4j"]
 [ext_resource type="PackedScene" uid="uid://bpg1qqih5uvvn" path="res://objects/particle_spawner_thunder_cloud.tscn" id="10_t58dp"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Starless Night\", \"Beginnings\"],
-	[\"Distraction\", \"Beginnings\"],
-	[\"Starless Night\", \"Distraction\"],
-	[\"Free Bee\", \"Beginnings\"],
-	[\"Braindown\", \"Beginnings\"],
-	[\"Free Bee\", \"Braindown\"],
-	[\"Thata Town\", \"Braindown\"],
-	[\"Thata Town\", \"Spilfer\"],
-	[\"Spilfer\", \"Braindown\"],
-	[\"Thata Town\", \"Distraction\"],
-	[\"Distraction\", \"Braindown\"],
-	[\"Free Bee\", \"Shack\"],
-	[\"Free Bee\", \"Astro\", 1],
-	[\"Barirer\", \"Shack\"],
-	[\"Barirer\", \"Begiah\"],
-	[\"Begiah\", \"Shack\"],
-	[\"Begiah\", \"Otharder\"],
-	[\"Free Bee\", \"Barirer\"],
-	[\"Otharder\", \"Barirer\"],
-	[\"Triada\", \"Barirer\", 1],
-	[\"Triada\", \"Astro\"],
-	[\"Refraction\", \"Astro\"],
-	[\"Refraction\", \"Ori's Conto\"],
-	[\"The Catch\", \"Ori's Conto\"],
-	[\"Ori's Conto\", \"Astro\"],
-	[\"Triada\", \"Refraction\"],
-	[\"Hello Tower\", \"Refraction\"],
-	[\"Triada\", \"Otharder\"],
-	[\"Astro\", \"Barirer\", 1],
-	[\"Shack\", \"Beginnings\"],
-	[\"Streak\", \"Blue Space\"],
-	[\"Streak\", \"Dumb Lake\"],
-	[\"Scrunkler\", \"Hills of the Damned\"],
-	[\"Dumb Lake\", \"Hills of the Damned\"],
-	[\"Streak\", \"Hills of the Damned\"],
-	[\"Scrunkler\", \"Thata Town 2\"],
-	[\"Scrunkler\", \"Backside\"],
-	[\"Backside\", \"Thata Town 2\"],
-	[\"Backside\", \"Edge\"],
-	[\"Hills of the Damned\", \"Blue Space\"],
-	[\"Hills of the Damned\", \"Thata Town 2\"],
-	[\"Edge\", \"Thata Town 2\"],
-	[\"Dumb Lake\", \"Thata Town 2\"],
-	[\"Streak\", \"Cracks\"],
-	[\"Dumb Lake\", \"Cracks\"],
-	[\"Dumb Lake\", \"The Catch\"],
-	[\"Hello Tower\", \"The Catch\"],
-	[\"Dumb Lake\", \"Edge\"],
-	[\"Ori's Conto\", \"Cracks\"],
-	[\"The Catch\", \"Cracks\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gelkj"]
 shader = ExtResource("5_vg1se")
@@ -235,7 +173,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.223529, 0.133333, 0.109804, 1)
 polygon = PackedVector2Array(-320, 840, -504, 664, -544, 416, -432, 232, -568, 112, -560, -88, -392, -312, -128, -344, 216, -224, 352, 0, 272, 192, 280, 416, 80, 568, -40, 816)
 script = ExtResource("1_x2221")
@@ -249,6 +187,7 @@ use_preset_alignments = true
 preset_alignments = Array[int]([1, 2, 3])
 default_digital_player = 2
 custom_dp_setup = Array[int]([0, 2, 5])
+alignment_aliances = Array[int]([0, 0, 0, -1])
 tag = 1
 complexity = 4
 lore = "Your local island volcano is erupting!
@@ -260,9 +199,262 @@ color_bg_according_to_alignment = false
 city_size = 0.75
 render_mode = 1
 render_range = 10.0
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Beginnings-Starless Night" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Starless Night"
+to_name = &"Beginnings"
+
+[node name="Beginnings-Distraction" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Distraction"
+to_name = &"Beginnings"
+
+[node name="Distraction-Starless Night" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Starless Night"
+to_name = &"Distraction"
+
+[node name="Beginnings-Free Bee" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Free Bee"
+to_name = &"Beginnings"
+
+[node name="Beginnings-Braindown" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Braindown"
+to_name = &"Beginnings"
+
+[node name="Braindown-Free Bee" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Free Bee"
+to_name = &"Braindown"
+
+[node name="Braindown-Thata Town" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Thata Town"
+to_name = &"Braindown"
+
+[node name="Spilfer-Thata Town" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Thata Town"
+to_name = &"Spilfer"
+
+[node name="Spilfer-Braindown" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Spilfer"
+to_name = &"Braindown"
+
+[node name="Distraction-Thata Town" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Thata Town"
+to_name = &"Distraction"
+
+[node name="Distraction-Braindown" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Distraction"
+to_name = &"Braindown"
+
+[node name="Shack-Free Bee" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Free Bee"
+to_name = &"Shack"
+
+[node name="Astro-Free Bee" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Free Bee"
+to_name = &"Astro"
+power_reduction = 1
+
+[node name="Shack-Barirer" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Barirer"
+to_name = &"Shack"
+
+[node name="Begiah-Barirer" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Barirer"
+to_name = &"Begiah"
+
+[node name="Begiah-Shack" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Begiah"
+to_name = &"Shack"
+
+[node name="Otharder-Begiah" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Begiah"
+to_name = &"Otharder"
+
+[node name="Barirer-Free Bee" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Free Bee"
+to_name = &"Barirer"
+
+[node name="Otharder-Barirer" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Otharder"
+to_name = &"Barirer"
+
+[node name="Triada-Barirer" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Triada"
+to_name = &"Barirer"
+power_reduction = 1
+
+[node name="Astro-Triada" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Triada"
+to_name = &"Astro"
+
+[node name="Astro-Refraction" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Refraction"
+to_name = &"Astro"
+
+[node name="Ori\'s Conto-Refraction" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Refraction"
+to_name = &"Ori\'s Conto"
+
+[node name="Ori\'s Conto-The Catch" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"The Catch"
+to_name = &"Ori\'s Conto"
+
+[node name="Astro-Ori\'s Conto" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Ori\'s Conto"
+to_name = &"Astro"
+
+[node name="Triada-Refraction" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Triada"
+to_name = &"Refraction"
+
+[node name="Hello Tower-Refraction" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Hello Tower"
+to_name = &"Refraction"
+
+[node name="Otharder-Triada" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Triada"
+to_name = &"Otharder"
+
+[node name="Astro-Barirer" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Astro"
+to_name = &"Barirer"
+power_reduction = 1
+
+[node name="Beginnings-Shack" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Shack"
+to_name = &"Beginnings"
+
+[node name="Streak-Blue Space" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Streak"
+to_name = &"Blue Space"
+
+[node name="Streak-Dumb Lake" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Streak"
+to_name = &"Dumb Lake"
+
+[node name="Scrunkler-Hills of the Damned" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Scrunkler"
+to_name = &"Hills of the Damned"
+
+[node name="Dumb Lake-Hills of the Damned" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Dumb Lake"
+to_name = &"Hills of the Damned"
+
+[node name="Streak-Hills of the Damned" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Streak"
+to_name = &"Hills of the Damned"
+
+[node name="Scrunkler-Thata Town 2" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Scrunkler"
+to_name = &"Thata Town 2"
+
+[node name="Backside-Scrunkler" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Scrunkler"
+to_name = &"Backside"
+
+[node name="Backside-Thata Town 2" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Backside"
+to_name = &"Thata Town 2"
+
+[node name="Backside-Edge" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Backside"
+to_name = &"Edge"
+
+[node name="Hills of the Damned-Blue Space" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Hills of the Damned"
+to_name = &"Blue Space"
+
+[node name="Hills of the Damned-Thata Town 2" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Hills of the Damned"
+to_name = &"Thata Town 2"
+
+[node name="Edge-Thata Town 2" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Edge"
+to_name = &"Thata Town 2"
+
+[node name="Dumb Lake-Thata Town 2" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Dumb Lake"
+to_name = &"Thata Town 2"
+
+[node name="Streak-Cracks" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Streak"
+to_name = &"Cracks"
+
+[node name="Dumb Lake-Cracks" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Dumb Lake"
+to_name = &"Cracks"
+
+[node name="Dumb Lake-The Catch" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Dumb Lake"
+to_name = &"The Catch"
+
+[node name="Hello Tower-The Catch" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Hello Tower"
+to_name = &"The Catch"
+
+[node name="Dumb Lake-Edge" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Dumb Lake"
+to_name = &"Edge"
+
+[node name="Ori\'s Conto-Cracks" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"Ori\'s Conto"
+to_name = &"Cracks"
+
+[node name="Cracks-The Catch" type="Line2D" parent="links"]
+script = ExtResource("2_apjgv")
+from_name = &"The Catch"
+to_name = &"Cracks"
 
 [node name="Volcano" type="Node" parent="." node_paths=PackedStringArray("residing_region")]
 script = ExtResource("2_80qnr")

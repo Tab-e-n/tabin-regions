@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_uesdv"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_8417d"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_icm7t"]
 [ext_resource type="Script" path="res://scripts/group_animator.gd" id="3_30dxk"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_sjke4"]
 [ext_resource type="Shader" path="res://scripts/shader_circle.gdshader" id="4_4ujl1"]
@@ -9,107 +10,6 @@
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_lrdcx"]
 [ext_resource type="Texture2D" uid="uid://dle6ea0julea4" path="res://sprites/bg.tres" id="6_unaru"]
 [ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/particle_spawner_star.tscn" id="9_yt4ke"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"BS 2002 a\", \"BS 2002 b\", 1],
-	[\"BS 2002 a\", \"Distant Comet\", 1],
-	[\"Distant Comet\", \"BS 2002 b\", 1],
-	[\"Asparagus\", \"BS 2002 b\", 1],
-	[\"Asparagus\", \"Mobius\", 1],
-	[\"BS 2002 e\", \"Mobius\", 1],
-	[\"BS 2002 a\", \"BS 2002 d\", 1],
-	[\"Bridge Comet\", \"BS 2002 d\", 1],
-	[\"BS 2002 a\", \"BS 6413 6 d\", 1],
-	[\"Bridge Comet\", \"BS 6413 6 d\", 1],
-	[\"BS 6413 6 d\", \"BS 2002 d\", 1],
-	[\"BS 6413 6 d\", \"Distant Comet\", 1],
-	[\"BS 2002 a\", \"Asparagus\", 1],
-	[\"Asparagus\", \"BS 2002 d\", 1],
-	[\"Asparagus\", \"BS 2002 e\", 1],
-	[\"BS 2002 e\", \"BS 2002 d\", 1],
-	[\"S Station Alpha\", \"AUR 65536 a\", 1],
-	[\"AUR 65536 d\", \"AUR 65536 a\", 1],
-	[\"AUR 65536 c\", \"AUR 65536 a\", 1],
-	[\"AUR 65536 d\", \"AUR 65536 c\", 1],
-	[\"AUR 65536 b\", \"AUR 65536 c\", 1],
-	[\"AUR 65536 d\", \"AUR 65536 b\", 1],
-	[\"S Station Alpha\", \"AUR 65536 b\", 1],
-	[\"Azzy\", \"AUR 65536 b\", 1],
-	[\"S Station Alpha\", \"AUR 65536 d\", 1],
-	[\"Blue Planet\", \"Nova Kun\"],
-	[\"Blue Planet\", \"Mobius\", 1],
-	[\"Mobius\", \"Nova Kun\", 1],
-	[\"Blue Planet\", \"9Sol 500 c\", 1],
-	[\"Bridge Comet\", \"9Sol 500 c\", 2],
-	[\"BS 2002 e\", \"9Sol 500 c\", 1],
-	[\"Blue Planet\", \"BS 2002 e\", 1],
-	[\"9Sol 500 b\", \"Nova Kun\", 1],
-	[\"9Sol 500 b\", \"NGL 333 a\", 1],
-	[\"NGL 333 d\", \"NGL 333 a\", 1],
-	[\"NGL 333 d\", \"NGL 333 e\", 1],
-	[\"NGL 333 e\", \"NGL 333 a\", 1],
-	[\"9Sol 500 b\", \"9Sol 500 c\", 1],
-	[\"9Sol 500 b\", \"NGL 333 e\", 1],
-	[\"Coaster\", \"9Sol 500 c\", 1],
-	[\"Coaster\", \"Swish\", 1],
-	[\"9Sol 500 b\", \"Coaster\", 1],
-	[\"9Sol 500 b\", \"Dead Comet\", 2],
-	[\"Coaster\", \"Dead Comet\", 2],
-	[\"Coaster\", \"NGL 333 a\", 1],
-	[\"Swish\", \"NGL 333 a\", 1],
-	[\"Dead Comet\", \"9Sol 500 c\", 2],
-	[\"Dead Comet\", \"BS 2002 d\", 2],
-	[\"BS 2002 d\", \"9Sol 500 c\", 1],
-	[\"T Bone\", \"GLXTRKR 225 c\", 1],
-	[\"T Bone\", \"GLXTRKR 225 a\", 1],
-	[\"GLXTRKR 225 a\", \"GLXTRKR 225 c\", 1],
-	[\"Burned Out\", \"GLXTRKR 225 c\", 2],
-	[\"T Bone\", \"GLXTRKR 225 d\", 2],
-	[\"T Bone\", \"GLXTRKR 225 e\", 2],
-	[\"GLXTRKR 225 e\", \"GLXTRKR 225 d\", 1],
-	[\"Bridge Comet\", \"GLXTRKR 225 d\", 1],
-	[\"GLXTRKR 225 d\", \"GLXTRKR 225 c\", 2],
-	[\"GLXTRKR 225 d\", \"BS 6413 6 a\", 1],
-	[\"GLXTRKR 225 d\", \"Burned Out\", 1],
-	[\"GLXTRKR 225 d\", \"Rats\", 1],
-	[\"Burned Out\", \"Rats\", 1],
-	[\"Distant Comet\", \"Rats\", 1],
-	[\"Rats\", \"BS 6413 6 a\", 1],
-	[\"Rats\", \"Eye Aye Ayea\", 1],
-	[\"Distant Comet\", \"Eye Aye Ayea\", 1],
-	[\"BS 2002 b\", \"Eye Aye Ayea\", 1],
-	[\"BS 2002 a\", \"Eye Aye Ayea\", 1],
-	[\"BS 2002 b\", \"BS 6413 6 d\", 1],
-	[\"Eye Aye Ayea\", \"BS 6413 6 a\", 1],
-	[\"Eye Aye Ayea\", \"BS 6413 6 d\", 1],
-	[\"BS 6413 6 d\", \"BS 6413 6 a\", 1],
-	[\"Burned Out\", \"BS 6413 6 a\", 1],
-	[\"Bridge Comet\", \"BS 6413 6 a\", 1],
-	[\"GLXTRKR 225 a\", \"AUR 65536 d\", 2],
-	[\"GLXTRKR 225 a\", \"GLXTRKR 225 e\", 2],
-	[\"Bridge Comet\", \"GLXTRKR 225 e\", 2],
-	[\"T Bone\", \"AUR 65536 d\", 2],
-	[\"T Bone\", \"Bridge Comet\", 2],
-	[\"GLXTRKR 225 e\", \"AUR 65536 d\", 1],
-	[\"GLXTRKR 225 e\", \"AUR 65536 a\", 1],
-	[\"GLXTRKR 225 e\", \"S Station Alpha\", 1],
-	[\"Azzy\", \"S Station Alpha\", 1],
-	[\"Azzy\", \"Swish\", 1],
-	[\"Azzy\", \"NGL 333 d\", 1],
-	[\"NGL 333 d\", \"Swish\", 1],
-	[\"Swish\", \"S Station Alpha\", 1],
-	[\"Dead Comet\", \"S Station Alpha\", 2],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="GDScript" id="GDScript_63lwb"]
 script/source = "extends Node
@@ -399,7 +299,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.0745098, 0.0392157, 0.0941176, 1)
 polygon = PackedVector2Array(-1376, 8, -980, 936, 8, 1328, 1000, 972, 1380, -4, 1044, -1012, -8, -1372, -1012, -992)
 script = ExtResource("1_uesdv")
@@ -413,9 +313,536 @@ color_bg_according_to_alignment = false
 city_size = 0.35
 snap_camera_to_first_align_capital = false
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="BS 2002 a-BS 2002 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 a"
+to_name = &"BS 2002 b"
+power_reduction = 1
+
+[node name="BS 2002 a-Distant Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 a"
+to_name = &"Distant Comet"
+power_reduction = 1
+
+[node name="BS 2002 b-Distant Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Distant Comet"
+to_name = &"BS 2002 b"
+power_reduction = 1
+
+[node name="BS 2002 b-Asparagus" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Asparagus"
+to_name = &"BS 2002 b"
+power_reduction = 1
+
+[node name="Mobius-Asparagus" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Asparagus"
+to_name = &"Mobius"
+power_reduction = 1
+
+[node name="Mobius-BS 2002 e" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 e"
+to_name = &"Mobius"
+power_reduction = 1
+
+[node name="BS 2002 a-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 a"
+to_name = &"BS 2002 d"
+power_reduction = 1
+
+[node name="Bridge Comet-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Bridge Comet"
+to_name = &"BS 2002 d"
+power_reduction = 1
+
+[node name="BS 6413 6 d-BS 2002 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 a"
+to_name = &"BS 6413 6 d"
+power_reduction = 1
+
+[node name="BS 6413 6 d-Bridge Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Bridge Comet"
+to_name = &"BS 6413 6 d"
+power_reduction = 1
+
+[node name="BS 6413 6 d-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 6413 6 d"
+to_name = &"BS 2002 d"
+power_reduction = 1
+
+[node name="BS 6413 6 d-Distant Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 6413 6 d"
+to_name = &"Distant Comet"
+power_reduction = 1
+
+[node name="BS 2002 a-Asparagus" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 a"
+to_name = &"Asparagus"
+power_reduction = 1
+
+[node name="Asparagus-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Asparagus"
+to_name = &"BS 2002 d"
+power_reduction = 1
+
+[node name="BS 2002 e-Asparagus" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Asparagus"
+to_name = &"BS 2002 e"
+power_reduction = 1
+
+[node name="BS 2002 e-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 e"
+to_name = &"BS 2002 d"
+power_reduction = 1
+
+[node name="AUR 65536 a-S Station Alpha" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"S Station Alpha"
+to_name = &"AUR 65536 a"
+power_reduction = 1
+
+[node name="AUR 65536 d-AUR 65536 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"AUR 65536 d"
+to_name = &"AUR 65536 a"
+power_reduction = 1
+
+[node name="AUR 65536 a-AUR 65536 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"AUR 65536 c"
+to_name = &"AUR 65536 a"
+power_reduction = 1
+
+[node name="AUR 65536 d-AUR 65536 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"AUR 65536 d"
+to_name = &"AUR 65536 c"
+power_reduction = 1
+
+[node name="AUR 65536 c-AUR 65536 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"AUR 65536 b"
+to_name = &"AUR 65536 c"
+power_reduction = 1
+
+[node name="AUR 65536 d-AUR 65536 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"AUR 65536 d"
+to_name = &"AUR 65536 b"
+power_reduction = 1
+
+[node name="S Station Alpha-AUR 65536 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"S Station Alpha"
+to_name = &"AUR 65536 b"
+power_reduction = 1
+
+[node name="Azzy-AUR 65536 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Azzy"
+to_name = &"AUR 65536 b"
+power_reduction = 1
+
+[node name="AUR 65536 d-S Station Alpha" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"S Station Alpha"
+to_name = &"AUR 65536 d"
+power_reduction = 1
+
+[node name="Nova Kun-Blue Planet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Blue Planet"
+to_name = &"Nova Kun"
+
+[node name="Mobius-Blue Planet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Blue Planet"
+to_name = &"Mobius"
+power_reduction = 1
+
+[node name="Nova Kun-Mobius" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Mobius"
+to_name = &"Nova Kun"
+power_reduction = 1
+
+[node name="Blue Planet-9Sol 500 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Blue Planet"
+to_name = &"9Sol 500 c"
+power_reduction = 1
+
+[node name="Bridge Comet-9Sol 500 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Bridge Comet"
+to_name = &"9Sol 500 c"
+power_reduction = 2
+
+[node name="BS 2002 e-9Sol 500 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 e"
+to_name = &"9Sol 500 c"
+power_reduction = 1
+
+[node name="BS 2002 e-Blue Planet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Blue Planet"
+to_name = &"BS 2002 e"
+power_reduction = 1
+
+[node name="Nova Kun-9Sol 500 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"9Sol 500 b"
+to_name = &"Nova Kun"
+power_reduction = 1
+
+[node name="NGL 333 a-9Sol 500 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"9Sol 500 b"
+to_name = &"NGL 333 a"
+power_reduction = 1
+
+[node name="NGL 333 a-NGL 333 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"NGL 333 d"
+to_name = &"NGL 333 a"
+power_reduction = 1
+
+[node name="NGL 333 e-NGL 333 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"NGL 333 d"
+to_name = &"NGL 333 e"
+power_reduction = 1
+
+[node name="NGL 333 a-NGL 333 e" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"NGL 333 e"
+to_name = &"NGL 333 a"
+power_reduction = 1
+
+[node name="9Sol 500 b-9Sol 500 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"9Sol 500 b"
+to_name = &"9Sol 500 c"
+power_reduction = 1
+
+[node name="NGL 333 e-9Sol 500 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"9Sol 500 b"
+to_name = &"NGL 333 e"
+power_reduction = 1
+
+[node name="Coaster-9Sol 500 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Coaster"
+to_name = &"9Sol 500 c"
+power_reduction = 1
+
+[node name="Coaster-Swish" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Coaster"
+to_name = &"Swish"
+power_reduction = 1
+
+[node name="Coaster-9Sol 500 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"9Sol 500 b"
+to_name = &"Coaster"
+power_reduction = 1
+
+[node name="9Sol 500 b-Dead Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"9Sol 500 b"
+to_name = &"Dead Comet"
+power_reduction = 2
+
+[node name="Coaster-Dead Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Coaster"
+to_name = &"Dead Comet"
+power_reduction = 2
+
+[node name="NGL 333 a-Coaster" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Coaster"
+to_name = &"NGL 333 a"
+power_reduction = 1
+
+[node name="NGL 333 a-Swish" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Swish"
+to_name = &"NGL 333 a"
+power_reduction = 1
+
+[node name="9Sol 500 c-Dead Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Dead Comet"
+to_name = &"9Sol 500 c"
+power_reduction = 2
+
+[node name="Dead Comet-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Dead Comet"
+to_name = &"BS 2002 d"
+power_reduction = 2
+
+[node name="9Sol 500 c-BS 2002 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 d"
+to_name = &"9Sol 500 c"
+power_reduction = 1
+
+[node name="GLXTRKR 225 c-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"T Bone"
+to_name = &"GLXTRKR 225 c"
+power_reduction = 1
+
+[node name="GLXTRKR 225 a-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"T Bone"
+to_name = &"GLXTRKR 225 a"
+power_reduction = 1
+
+[node name="GLXTRKR 225 a-GLXTRKR 225 c" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 a"
+to_name = &"GLXTRKR 225 c"
+power_reduction = 1
+
+[node name="GLXTRKR 225 c-Burned Out" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Burned Out"
+to_name = &"GLXTRKR 225 c"
+power_reduction = 2
+
+[node name="T Bone-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"T Bone"
+to_name = &"GLXTRKR 225 d"
+power_reduction = 2
+
+[node name="GLXTRKR 225 e-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"T Bone"
+to_name = &"GLXTRKR 225 e"
+power_reduction = 2
+
+[node name="GLXTRKR 225 e-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 e"
+to_name = &"GLXTRKR 225 d"
+power_reduction = 1
+
+[node name="Bridge Comet-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Bridge Comet"
+to_name = &"GLXTRKR 225 d"
+power_reduction = 1
+
+[node name="GLXTRKR 225 c-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 d"
+to_name = &"GLXTRKR 225 c"
+power_reduction = 2
+
+[node name="BS 6413 6 a-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 d"
+to_name = &"BS 6413 6 a"
+power_reduction = 1
+
+[node name="Burned Out-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 d"
+to_name = &"Burned Out"
+power_reduction = 1
+
+[node name="Rats-GLXTRKR 225 d" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 d"
+to_name = &"Rats"
+power_reduction = 1
+
+[node name="Rats-Burned Out" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Burned Out"
+to_name = &"Rats"
+power_reduction = 1
+
+[node name="Rats-Distant Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Distant Comet"
+to_name = &"Rats"
+power_reduction = 1
+
+[node name="Rats-BS 6413 6 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Rats"
+to_name = &"BS 6413 6 a"
+power_reduction = 1
+
+[node name="Rats-Eye Aye Ayea" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Rats"
+to_name = &"Eye Aye Ayea"
+power_reduction = 1
+
+[node name="Distant Comet-Eye Aye Ayea" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Distant Comet"
+to_name = &"Eye Aye Ayea"
+power_reduction = 1
+
+[node name="BS 2002 b-Eye Aye Ayea" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 b"
+to_name = &"Eye Aye Ayea"
+power_reduction = 1
+
+[node name="BS 2002 a-Eye Aye Ayea" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 a"
+to_name = &"Eye Aye Ayea"
+power_reduction = 1
+
+[node name="BS 6413 6 d-BS 2002 b" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 2002 b"
+to_name = &"BS 6413 6 d"
+power_reduction = 1
+
+[node name="BS 6413 6 a-Eye Aye Ayea" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Eye Aye Ayea"
+to_name = &"BS 6413 6 a"
+power_reduction = 1
+
+[node name="BS 6413 6 d-Eye Aye Ayea" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Eye Aye Ayea"
+to_name = &"BS 6413 6 d"
+power_reduction = 1
+
+[node name="BS 6413 6 d-BS 6413 6 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"BS 6413 6 d"
+to_name = &"BS 6413 6 a"
+power_reduction = 1
+
+[node name="BS 6413 6 a-Burned Out" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Burned Out"
+to_name = &"BS 6413 6 a"
+power_reduction = 1
+
+[node name="BS 6413 6 a-Bridge Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Bridge Comet"
+to_name = &"BS 6413 6 a"
+power_reduction = 1
+
+[node name="AUR 65536 d-GLXTRKR 225 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 a"
+to_name = &"AUR 65536 d"
+power_reduction = 2
+
+[node name="GLXTRKR 225 e-GLXTRKR 225 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 a"
+to_name = &"GLXTRKR 225 e"
+power_reduction = 2
+
+[node name="GLXTRKR 225 e-Bridge Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Bridge Comet"
+to_name = &"GLXTRKR 225 e"
+power_reduction = 2
+
+[node name="AUR 65536 d-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"T Bone"
+to_name = &"AUR 65536 d"
+power_reduction = 2
+
+[node name="Bridge Comet-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"T Bone"
+to_name = &"Bridge Comet"
+power_reduction = 2
+
+[node name="AUR 65536 d-GLXTRKR 225 e" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 e"
+to_name = &"AUR 65536 d"
+power_reduction = 1
+
+[node name="GLXTRKR 225 e-AUR 65536 a" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 e"
+to_name = &"AUR 65536 a"
+power_reduction = 1
+
+[node name="GLXTRKR 225 e-S Station Alpha" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"GLXTRKR 225 e"
+to_name = &"S Station Alpha"
+power_reduction = 1
+
+[node name="S Station Alpha-Azzy" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Azzy"
+to_name = &"S Station Alpha"
+power_reduction = 1
+
+[node name="Swish-Azzy" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Azzy"
+to_name = &"Swish"
+power_reduction = 1
+
+[node name="NGL 333 d-Azzy" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Azzy"
+to_name = &"NGL 333 d"
+power_reduction = 1
+
+[node name="NGL 333 d-Swish" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"NGL 333 d"
+to_name = &"Swish"
+power_reduction = 1
+
+[node name="S Station Alpha-Swish" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Swish"
+to_name = &"S Station Alpha"
+power_reduction = 1
+
+[node name="S Station Alpha-Dead Comet" type="Line2D" parent="links"]
+script = ExtResource("2_icm7t")
+from_name = &"Dead Comet"
+to_name = &"S Station Alpha"
+power_reduction = 2
 
 [node name="bg" parent="." instance=ExtResource("2_8417d")]
 color = Color(0.00784314, 0.00392157, 0.0117647, 1)

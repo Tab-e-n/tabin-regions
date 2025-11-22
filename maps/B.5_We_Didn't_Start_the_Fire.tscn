@@ -1,69 +1,12 @@
 [gd_scene load_steps=39 format=3 uid="uid://o6yvmjiqoc22"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_0s651"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_7gepg"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_38p5v"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_s3qok"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_n6qu1"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_0bs21"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_s807r"]
-
-[sub_resource type="GDScript" id="GDScript_y0ddu"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Madrid\", \"Lisboa\"],
-	[\"Cadiz\", \"Lisboa\"],
-	[\"Madrid\", \"Cadiz\"],
-	[\"Madrid\", \"Barcelona\"],
-	[\"Pamplona\", \"Barcelona\"],
-	[\"Madrid\", \"Pamplona\"],
-	[\"Ship\", \"Cadiz\"],
-	[\"Ship\", \"Barcelona\"],
-	[\"Ship\", \"Palermo\"],
-	[\"Ship\", \"Roma\"],
-	[\"Roma\", \"Palermo\"],
-	[\"Roma\", \"Brindisi\"],
-	[\"Brindisi\", \"Palermo\"],
-	[\"Roma\", \"Venezia\"],
-	[\"Roma\", \"Marseille\"],
-	[\"Paris\", \"Marseille\"],
-	[\"Marseille\", \"Barcelona\"],
-	[\"Pamplona\", \"Marseille\"],
-	[\"Ship\", \"Marseille\"],
-	[\"Pamplona\", \"Paris\"],
-	[\"Brest\", \"Paris\"],
-	[\"Pamplona\", \"Brest\"],
-	[\"Dieppe\", \"Paris\"],
-	[\"Brest\", \"Dieppe\"],
-	[\"London\", \"Dieppe\"],
-	[\"Cargoship\", \"Lisboa\"],
-	[\"Cargoship\", \"Brest\"],
-	[\"Pamplona\", \"Cargoship\"],
-	[\"London\", \"Edinburgh\"],
-	[\"London\", \"Dublin\"],
-	[\"Dublin\", \"Edinburgh\"],
-	[\"Dublin\", \"Cargoship\"],
-	[\"London\", \"Amsterdam\"],
-	[\"Bruxelles\", \"Amsterdam\"],
-	[\"Dieppe\", \"Bruxelles\"],
-	[\"Bruxelles\", \"Paris\"],
-	[\"Berlin\", \"Danzig\"],
-	[\"Berlin\", \"Essen\"],
-	[\"Essen\", \"Amsterdam\"],
-	[\"Frankfurt\", \"Essen\"],
-	[\"Danzig\", \"Essen\"],
-	[\"Berlin\", \"Frankfurt\"],
-	[\"Paris\", \"Frankfurt\"],
-	[\"Bruxelles\", \"Frankfurt\"],
-	[\"Munchen\", \"Frankfurt\"],
-	[\"Munchen\", \"Venezia\"],
-	[\"Munchen\", \"Berlin\"],
-]
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_koeyu"]
 shader = ExtResource("3_n6qu1")
@@ -251,7 +194,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="RegionControl" type="Polygon2D"]
+[node name="RegionControl" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.545098, 0.494118, 0.509804, 1)
 polygon = PackedVector2Array(-384, -384, 384, -384, 384, 384, -384, 384)
 script = ExtResource("1_0s651")
@@ -263,9 +206,244 @@ Only the bright regions can be attacked."
 align_color = Array[Color]([Color(0.482353, 0.431373, 0.447059, 1), Color(0.984314, 0.803922, 0.666667, 1), Color(0.352941, 0.709804, 0.435294, 1), Color(0.309804, 0.615686, 0.666667, 1), Color(0.803922, 0.890196, 0.552941, 1), Color(0.729412, 0.537255, 0.768627, 1), Color(0.231373, 0.203922, 0.211765, 1)])
 align_names = Array[String](["Set Dressing", "Britain+", "France", "Spaintugal", "Italy", "Germany"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_y0ddu")
+[node name="links" type="Node" parent="."]
+
+[node name="Lisboa-Madrid" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Madrid"
+to_name = &"Lisboa"
+
+[node name="Cadiz-Lisboa" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Cadiz"
+to_name = &"Lisboa"
+
+[node name="Cadiz-Madrid" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Madrid"
+to_name = &"Cadiz"
+
+[node name="Barcelona-Madrid" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Madrid"
+to_name = &"Barcelona"
+
+[node name="Barcelona-Pamplona" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Pamplona"
+to_name = &"Barcelona"
+
+[node name="Pamplona-Madrid" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Madrid"
+to_name = &"Pamplona"
+
+[node name="Cadiz-Ship" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Ship"
+to_name = &"Cadiz"
+
+[node name="Barcelona-Ship" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Ship"
+to_name = &"Barcelona"
+
+[node name="Palermo-Ship" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Ship"
+to_name = &"Palermo"
+
+[node name="Roma-Ship" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Ship"
+to_name = &"Roma"
+
+[node name="Roma-Palermo" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Roma"
+to_name = &"Palermo"
+
+[node name="Brindisi-Roma" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Roma"
+to_name = &"Brindisi"
+
+[node name="Brindisi-Palermo" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Brindisi"
+to_name = &"Palermo"
+
+[node name="Roma-Venezia" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Roma"
+to_name = &"Venezia"
+
+[node name="Roma-Marseille" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Roma"
+to_name = &"Marseille"
+
+[node name="Paris-Marseille" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Paris"
+to_name = &"Marseille"
+
+[node name="Barcelona-Marseille" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Marseille"
+to_name = &"Barcelona"
+
+[node name="Marseille-Pamplona" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Pamplona"
+to_name = &"Marseille"
+
+[node name="Marseille-Ship" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Ship"
+to_name = &"Marseille"
+
+[node name="Paris-Pamplona" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Pamplona"
+to_name = &"Paris"
+
+[node name="Brest-Paris" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Brest"
+to_name = &"Paris"
+
+[node name="Brest-Pamplona" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Pamplona"
+to_name = &"Brest"
+
+[node name="Paris-Dieppe" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Dieppe"
+to_name = &"Paris"
+
+[node name="Brest-Dieppe" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Brest"
+to_name = &"Dieppe"
+
+[node name="London-Dieppe" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"London"
+to_name = &"Dieppe"
+
+[node name="Cargoship-Lisboa" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Cargoship"
+to_name = &"Lisboa"
+
+[node name="Brest-Cargoship" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Cargoship"
+to_name = &"Brest"
+
+[node name="Cargoship-Pamplona" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Pamplona"
+to_name = &"Cargoship"
+
+[node name="Edinburgh-London" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"London"
+to_name = &"Edinburgh"
+
+[node name="London-Dublin" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"London"
+to_name = &"Dublin"
+
+[node name="Edinburgh-Dublin" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Dublin"
+to_name = &"Edinburgh"
+
+[node name="Cargoship-Dublin" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Dublin"
+to_name = &"Cargoship"
+
+[node name="London-Amsterdam" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"London"
+to_name = &"Amsterdam"
+
+[node name="Amsterdam-Bruxelles" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Bruxelles"
+to_name = &"Amsterdam"
+
+[node name="Dieppe-Bruxelles" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Dieppe"
+to_name = &"Bruxelles"
+
+[node name="Paris-Bruxelles" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Bruxelles"
+to_name = &"Paris"
+
+[node name="Berlin-Danzig" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Berlin"
+to_name = &"Danzig"
+
+[node name="Essen-Berlin" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Berlin"
+to_name = &"Essen"
+
+[node name="Essen-Amsterdam" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Essen"
+to_name = &"Amsterdam"
+
+[node name="Frankfurt-Essen" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Frankfurt"
+to_name = &"Essen"
+
+[node name="Essen-Danzig" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Danzig"
+to_name = &"Essen"
+
+[node name="Frankfurt-Berlin" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Berlin"
+to_name = &"Frankfurt"
+
+[node name="Paris-Frankfurt" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Paris"
+to_name = &"Frankfurt"
+
+[node name="Frankfurt-Bruxelles" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Bruxelles"
+to_name = &"Frankfurt"
+
+[node name="Munchen-Frankfurt" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Munchen"
+to_name = &"Frankfurt"
+
+[node name="Munchen-Venezia" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Munchen"
+to_name = &"Venezia"
+
+[node name="Munchen-Berlin" type="Line2D" parent="links"]
+script = ExtResource("2_7gepg")
+from_name = &"Munchen"
+to_name = &"Berlin"
 
 [node name="bg" parent="." instance=ExtResource("2_s3qok")]
 color = Color(0.384314, 0.341176, 0.356863, 1)

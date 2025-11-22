@@ -1,48 +1,11 @@
 [gd_scene load_steps=19 format=3 uid="uid://cnxb64453xeqg"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_utrxi"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_2s3ru"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_7855c"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_brfcj"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_kce7p"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_qh411"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-#	Basic Connections are defined as such:
-#	[\"Region 1\", \"Region 2\"],
-#	Connections that are harder to traverse are defined as such:
-#	[\"Hilly Region 1\", \"Hilly Region 2\", 1],
-	[\"Line\", \"Dot\"],
-	[\"Line\", \"Gigas\"],
-	[\"Gigas\", \"Dot\"],
-	[\"Gigas\", \"Swordsman\"],
-	[\"Swordsman\", \"Dot\"],
-	[\"Gigas\", \"Estro\"],
-	[\"Flywrench\", \"Estro\"],
-	[\"Flywrench\", \"D\"],
-	[\"D\", \"Estro\"],
-	[\"D\", \"Swordsman\"],
-	[\"Swordsman\", \"Estro\"],
-	[\"Oh\", \"Dot\"],
-	[\"Line\", \"Oh\"],
-	[\"Line\", \"Underline\"],
-	[\"Underline\", \"Oh\"],
-	[\"Arch\", \"Oh\"],
-	[\"Arch\", \"Underline\"],
-	[\"Arch\", \"Spiral\"],
-	[\"Spiral\", \"Underline\"],
-	[\"Arch\", \"Snake\"],
-	[\"Spiral\", \"Snake\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iig23"]
 shader = ExtResource("3_brfcj")
@@ -116,7 +79,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="title" type="Polygon2D"]
+[node name="title" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.623529, 0.623529, 0.698039, 1)
 polygon = PackedVector2Array(-424, 80, -288, 136, -144, 120, 176, 152, 312, 216, 456, 176, 520, 40, 488, -96, 400, -160, 224, -152, 8, -200, -120, -288, -240, -288, -392, -208, -424, -104)
 script = ExtResource("1_utrxi")
@@ -127,9 +90,114 @@ lore = "Woa! That's the title of the game!"
 city_size = 0.75
 hide_turn_order = true
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Dot-Line" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Line"
+to_name = &"Dot"
+
+[node name="Gigas-Line" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Line"
+to_name = &"Gigas"
+
+[node name="Gigas-Dot" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Gigas"
+to_name = &"Dot"
+
+[node name="Gigas-Swordsman" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Gigas"
+to_name = &"Swordsman"
+
+[node name="Dot-Swordsman" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Swordsman"
+to_name = &"Dot"
+
+[node name="Gigas-Estro" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Gigas"
+to_name = &"Estro"
+
+[node name="Estro-Flywrench" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Flywrench"
+to_name = &"Estro"
+
+[node name="D-Flywrench" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Flywrench"
+to_name = &"D"
+
+[node name="D-Estro" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"D"
+to_name = &"Estro"
+
+[node name="D-Swordsman" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"D"
+to_name = &"Swordsman"
+
+[node name="Estro-Swordsman" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Swordsman"
+to_name = &"Estro"
+
+[node name="Dot-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Oh"
+to_name = &"Dot"
+
+[node name="Oh-Line" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Line"
+to_name = &"Oh"
+
+[node name="Underline-Line" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Line"
+to_name = &"Underline"
+
+[node name="Underline-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Underline"
+to_name = &"Oh"
+
+[node name="Oh-Arch" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Arch"
+to_name = &"Oh"
+
+[node name="Underline-Arch" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Arch"
+to_name = &"Underline"
+
+[node name="Spiral-Arch" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Arch"
+to_name = &"Spiral"
+
+[node name="Spiral-Underline" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Spiral"
+to_name = &"Underline"
+
+[node name="Snake-Arch" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Arch"
+to_name = &"Snake"
+
+[node name="Snake-Spiral" type="Line2D" parent="links"]
+script = ExtResource("2_2s3ru")
+from_name = &"Spiral"
+to_name = &"Snake"
 
 [node name="bg" parent="." instance=ExtResource("2_7855c")]
 color = Color(0.435294, 0.435294, 0.517647, 1)

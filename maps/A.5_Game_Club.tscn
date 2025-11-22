@@ -1,62 +1,11 @@
 [gd_scene load_steps=32 format=3 uid="uid://cprunapeqpcg0"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_pniaq"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_a6tix"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_axyu7"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="4_g4rga"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="5_nbo8u"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="6_4210l"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Secopup\", \"Weird Fruit Place\"],
-	[\"Secopup\", \"Hound's Face\"],
-	[\"Secopup\", \"Pine Fan\"],
-	[\"Hound's Face\", \"Roblos Obli\"],
-	[\"Hound's Face\", \"Pestered Beach\"],
-	[\"Hound's Face\", \"Hamwith\"],
-	[\"Weird Fruit Place\", \"Three Balls\"],
-	[\"Weird Fruit Place\", \"Shell of an Island\"],
-	[\"Weird Fruit Place\", \"Frontwinds\"],
-	[\"Shell of an Island\", \"Three Balls\"],
-	[\"Pine Fan\", \"Big Puck\"],
-	[\"Pine Fan\", \"Friga\"],
-	[\"Big Puck\", \"Love Tropics\"],
-	[\"Big Puck\", \"Hamwith\"],
-	[\"Friga\", \"Gaslight Isle\"],
-	[\"Hamwith\", \"Uncannon\"],
-	[\"Hamwith\", \"Cannon Valley\"],
-	[\"Cannon Valley\", \"Bean Bag\"],
-	[\"Cannon Valley\", \"Trash Machine\"],
-	[\"Trash Machine\", \"Love Tropics\"],
-	[\"Love Tropics\", \"Gaslight Isle\"],
-	[\"Love Tropics\", \"Love-a-Love\"],
-	[\"Gaslight Isle\", \"Love-a-Love\"],
-	[\"Bean Bag\", \"Uncannon\"],
-	[\"Bean Bag\", \"Splat Lands\"],
-	[\"Splat Lands\", \"Uncannon\"],
-	[\"Splat Lands\", \"Obsidian Shore\"],
-	[\"Pestered Beach\", \"Uncannon\"],
-	[\"Pestered Beach\", \"Obsidian Shore\"],
-	[\"Pestered Beach\", \"Roblos Obli\"],
-	[\"Obsidian Shore\", \"Roblos Obli\"],
-	[\"Roblos Obli\", \"Shank\"],
-	[\"Frontwinds\", \"Shank\"],
-	[\"Shank\", \"Littleside\"],
-	[\"Cracked Earth\", \"Littleside\"],
-	[\"Cracked Earth\", \"Frontwinds\"],
-	[\"Cracked Earth\", \"Three Balls\"],
-	[\"Fiction Island\", \"Friga\"],
-	[\"Fiction Island\", \"Shell of an Island\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gad5n"]
 shader = ExtResource("4_g4rga")
@@ -208,7 +157,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="template" type="Polygon2D"]
+[node name="template" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.882353, 0.796078, 0.72549, 1)
 polygon = PackedVector2Array(-512, 16, -504, 184, -320, 296, -216, 432, 0, 504, 280, 504, 496, 424, 528, 272, 560, 184, 672, 64, 704, -80, 632, -248, 512, -392, 344, -400, 184, -384, 8, -432, -176, -440, -288, -360, -440, -224, -504, -72)
 script = ExtResource("1_pniaq")
@@ -222,9 +171,204 @@ align_names = Array[String](["Archipelago", "Splats", "Lovers", "Pups", "Boaters
 color_bg_according_to_alignment = false
 command_callout_color = Color(0, 0, 0, 1)
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Weird Fruit Place-Secopup" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Secopup"
+to_name = &"Weird Fruit Place"
+
+[node name="Secopup-Hound\'s Face" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Secopup"
+to_name = &"Hound\'s Face"
+
+[node name="Secopup-Pine Fan" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Secopup"
+to_name = &"Pine Fan"
+
+[node name="Hound\'s Face-Roblos Obli" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Hound\'s Face"
+to_name = &"Roblos Obli"
+
+[node name="Hound\'s Face-Pestered Beach" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Hound\'s Face"
+to_name = &"Pestered Beach"
+
+[node name="Hound\'s Face-Hamwith" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Hound\'s Face"
+to_name = &"Hamwith"
+
+[node name="Weird Fruit Place-Three Balls" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Weird Fruit Place"
+to_name = &"Three Balls"
+
+[node name="Weird Fruit Place-Shell of an Island" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Weird Fruit Place"
+to_name = &"Shell of an Island"
+
+[node name="Weird Fruit Place-Frontwinds" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Weird Fruit Place"
+to_name = &"Frontwinds"
+
+[node name="Shell of an Island-Three Balls" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Shell of an Island"
+to_name = &"Three Balls"
+
+[node name="Pine Fan-Big Puck" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Pine Fan"
+to_name = &"Big Puck"
+
+[node name="Pine Fan-Friga" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Pine Fan"
+to_name = &"Friga"
+
+[node name="Big Puck-Love Tropics" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Big Puck"
+to_name = &"Love Tropics"
+
+[node name="Big Puck-Hamwith" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Big Puck"
+to_name = &"Hamwith"
+
+[node name="Gaslight Isle-Friga" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Friga"
+to_name = &"Gaslight Isle"
+
+[node name="Hamwith-Uncannon" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Hamwith"
+to_name = &"Uncannon"
+
+[node name="Cannon Valley-Hamwith" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Hamwith"
+to_name = &"Cannon Valley"
+
+[node name="Bean Bag-Cannon Valley" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Cannon Valley"
+to_name = &"Bean Bag"
+
+[node name="Cannon Valley-Trash Machine" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Cannon Valley"
+to_name = &"Trash Machine"
+
+[node name="Trash Machine-Love Tropics" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Trash Machine"
+to_name = &"Love Tropics"
+
+[node name="Gaslight Isle-Love Tropics" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Love Tropics"
+to_name = &"Gaslight Isle"
+
+[node name="Love-a-Love-Love Tropics" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Love Tropics"
+to_name = &"Love-a-Love"
+
+[node name="Gaslight Isle-Love-a-Love" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Gaslight Isle"
+to_name = &"Love-a-Love"
+
+[node name="Bean Bag-Uncannon" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Bean Bag"
+to_name = &"Uncannon"
+
+[node name="Splat Lands-Bean Bag" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Bean Bag"
+to_name = &"Splat Lands"
+
+[node name="Splat Lands-Uncannon" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Splat Lands"
+to_name = &"Uncannon"
+
+[node name="Splat Lands-Obsidian Shore" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Splat Lands"
+to_name = &"Obsidian Shore"
+
+[node name="Pestered Beach-Uncannon" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Pestered Beach"
+to_name = &"Uncannon"
+
+[node name="Obsidian Shore-Pestered Beach" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Pestered Beach"
+to_name = &"Obsidian Shore"
+
+[node name="Pestered Beach-Roblos Obli" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Pestered Beach"
+to_name = &"Roblos Obli"
+
+[node name="Obsidian Shore-Roblos Obli" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Obsidian Shore"
+to_name = &"Roblos Obli"
+
+[node name="Roblos Obli-Shank" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Roblos Obli"
+to_name = &"Shank"
+
+[node name="Frontwinds-Shank" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Frontwinds"
+to_name = &"Shank"
+
+[node name="Littleside-Shank" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Shank"
+to_name = &"Littleside"
+
+[node name="Littleside-Cracked Earth" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Cracked Earth"
+to_name = &"Littleside"
+
+[node name="Frontwinds-Cracked Earth" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Cracked Earth"
+to_name = &"Frontwinds"
+
+[node name="Cracked Earth-Three Balls" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Cracked Earth"
+to_name = &"Three Balls"
+
+[node name="Fiction Island-Friga" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Fiction Island"
+to_name = &"Friga"
+
+[node name="Fiction Island-Shell of an Island" type="Line2D" parent="links"]
+script = ExtResource("2_a6tix")
+from_name = &"Fiction Island"
+to_name = &"Shell of an Island"
 
 [node name="bg" parent="." instance=ExtResource("2_axyu7")]
 color = Color(0.823529, 0.701961, 0.643137, 1)

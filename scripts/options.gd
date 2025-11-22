@@ -3,7 +3,7 @@ extends Node
 
 const SAVEFILE : String = "user://OPTIONS.json"
 
-const TIMESTAMPS_ACTIVE : bool = true
+const TIMESTAMPS_ACTIVE : bool = false
 # 0 Will let through anything
 const TIMESTAMP_THRESHOLD : float = 0.001
 

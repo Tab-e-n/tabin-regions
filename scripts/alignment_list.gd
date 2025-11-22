@@ -117,8 +117,9 @@ func get_leader(alignment : int) -> Sprite2D:
 
 func remove_leader(alignment : int):
 	var leader : Sprite2D = get_leader(alignment)
-	remove_child(leader)
-	leader.queue_free()
+	if leader:
+		remove_child(leader)
+		leader.queue_free()
 
 
 func select_leader(alignment : int):

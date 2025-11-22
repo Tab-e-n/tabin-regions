@@ -604,7 +604,7 @@ Hold ctrl to move the camera slower.
 
 GAMEPLAY
 Ctrl + Space  -  Next turn phase
-Ctrl + Alt + Space  -  End turn
+Ctrl + Shift + Space  -  End turn
 Ctrl + Alt + \"-\"  -  Forfeit
 Ctrl + E  -  Highlight your mobilizable cities
 Ctrl + Shift + E  -  Highlight enemy mobilizable cities

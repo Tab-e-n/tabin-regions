@@ -1,195 +1,12 @@
 [gd_scene load_steps=81 format=3 uid="uid://0g4urrneakd7"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_dvj8c"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_cym3f"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_nxpt1"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_28xrj"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_d0fh2"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_5vtou"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_5y4qr"]
-
-[sub_resource type="GDScript" id="GDScript_ykiaq"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Desert Bus\", \"Halfway There\"],
-	[\"Desert Bus\", \"Brum\"],
-	[\"Desert Bus\", \"Cracked\"],
-	[\"Desert Bus\", \"Cronket\"],
-	[\"Desert Bus\", \"Walls\"],
-	[\"Desert Bus\", \"Shosh\"],
-	[\"Shosh\", \"Walls\"],
-	[\"Shosh\", \"Amalgam\"],
-	[\"Amalgam\", \"Walls\"],
-	[\"Amalgam\", \"Goru\"],
-	[\"Amalgam\", \"Moai\"],
-	[\"Mike Muted\", \"Moai\"],
-	[\"Nothing\", \"Moai\"],
-	[\"Nothing\", \"Gum\"],
-	[\"Gum\", \"Moai\"],
-	[\"Mike Muted\", \"Nothing\"],
-	[\"Amalgam\", \"Ahya\"],
-	[\"Boot\", \"Ahya\"],
-	[\"Boot\", \"Muhaha\"],
-	[\"Boot\", \"Preston\"],
-	[\"Preston\", \"Muhaha\"],
-	[\"Preston\", \"Honour Land\"],
-	[\"Preston\", \"Gum\"],
-	[\"Gum\", \"Honour Land\"],
-	[\"Honour Land\", \"Muhaha\"],
-	[\"Ahya\", \"Moai\"],
-	[\"Ahya\", \"Preston\"],
-	[\"Preston\", \"Moai\"],
-	[\"Moai\", \"Goru\"],
-	[\"Goru\", \"Walls\"],
-	[\"Cronket\", \"Cracked\"],
-	[\"Tri\", \"Brum\"],
-	[\"Tri\", \"Laughter Curve\"],
-	[\"Tri\", \"Dummies Dream\"],
-	[\"Dummies Dream\", \"Laughter Curve\"],
-	[\"T Bone\", \"Laughter Curve\"],
-	[\"T Bone\", \"Chomper\"],
-	[\"T Bone\", \"Desert Riverside\"],
-	[\"Desert Riverside\", \"Chomper\"],
-	[\"Eyeles\", \"Chomper\"],
-	[\"Desert Riverside\", \"Eyeles\"],
-	[\"Chomper\", \"Laughter Curve\"],
-	[\"Dummies Dream\", \"Vowels\"],
-	[\"Dummies Dream\", \"T Bone\"],
-	[\"T Bone\", \"Vowels\"],
-	[\"Tri\", \"Filler\"],
-	[\"Brum\", \"Halfway There\"],
-	[\"Vreomvreom\", \"Halfway There\"],
-	[\"Brum\", \"Vreomvreom\"],
-	[\"Brum\", \"Filler\"],
-	[\"Filler\", \"Vreomvreom\"],
-	[\"Filler\", \"Nuckle\"],
-	[\"Filler\", \"Dummies Dream\"],
-	[\"Dummies Dream\", \"Nuckle\"],
-	[\"Nuckle\", \"Vreomvreom\"],
-	[\"Nuckle\", \"Vowels\"],
-	[\"Bean Burrito\", \"Halfway There\"],
-	[\"Bean Burrito\", \"Nuckle\"],
-	[\"Pan Left\", \"Halfway There\"],
-	[\"Pan Left\", \"Cracked\"],
-	[\"Pan Left\", \"Sponge\"],
-	[\"Cronket\", \"Sponge\"],
-	[\"Cronket\", \"Smonk\"],
-	[\"Cronket\", \"Walls\"],
-	[\"Walls\", \"Smonk\"],
-	[\"Walls\", \"Get Fish\"],
-	[\"Get Fish\", \"Smonk\"],
-	[\"Smonk\", \"Sponge\"],
-	[\"Sponge\", \"Cracked\"],
-	[\"Cracked\", \"Halfway There\"],
-	[\"Pan Left\", \"Danger Noodle\"],
-	[\"Sponge\", \"Danger Noodle\"],
-	[\"Metal Cap\", \"Danger Noodle\"],
-	[\"Metal Cap\", \"Smonk\"],
-	[\"Metal Cap\", \"Get Fish\"],
-	[\"Metal Cap\", \"Beacon\"],
-	[\"Beacon\", \"Get Fish\"],
-	[\"Beacon\", \"Goru\"],
-	[\"Beacon\", \"Mike Muted\"],
-	[\"Mike Muted\", \"Goru\"],
-	[\"Goru\", \"Get Fish\"],
-	[\"Smonk\", \"Danger Noodle\"],
-	[\"Bean Burrito\", \"Pan Left\"],
-	[\"Bean Burrito\", \"Vreomvreom\"],
-	[\"Bean Burrito\", \"Vowels\"],
-	[\"Bean Burrito\", \"Biobox\"],
-	[\"Biobox\", \"Vowels\"],
-	[\"Biobox\", \"Cubuisness\"],
-	[\"Cubuisness\", \"Vowels\"],
-	[\"Cubuisness\", \"Desert Riverside\"],
-	[\"Cubuisness\", \"Riverstart\"],
-	[\"Eyeles\", \"Riverstart\"],
-	[\"Ajar\", \"Riverstart\"],
-	[\"Ajar\", \"Bomba\"],
-	[\"Bomba\", \"Riverstart\"],
-	[\"Eyeles\", \"Ajar\"],
-	[\"Cubuisness\", \"Carter Age\"],
-	[\"Devious Eat\", \"Carter Age\"],
-	[\"Carter Age\", \"Riverstart\"],
-	[\"Carter Age\", \"Koppa\"],
-	[\"Koppa\", \"Riverstart\"],
-	[\"Riverstart\", \"Desert Riverside\"],
-	[\"Desert Riverside\", \"Vowels\"],
-	[\"Triest\", \"Cap Town\"],
-	[\"Triest\", \"The Fog\"],
-	[\"Pointer\", \"The Fog\"],
-	[\"Triest\", \"Pointer\"],
-	[\"The Fog\", \"Cap Town\"],
-	[\"The Fog\", \"Third Finger\"],
-	[\"The Fog\", \"Hammer\"],
-	[\"Candy\", \"Hammer\"],
-	[\"Candy\", \"Tenta\"],
-	[\"Hahnze\", \"Tenta\"],
-	[\"Hahnze\", \"Shak\"],
-	[\"Shak\", \"Tenta\"],
-	[\"Shak\", \"Muhaha\"],
-	[\"Muhaha\", \"Tenta\"],
-	[\"Candy\", \"Hahnze\"],
-	[\"Boot\", \"Tenta\"],
-	[\"Pointer\", \"Hammer\"],
-	[\"Pointer\", \"K\"],
-	[\"Pointer\", \"Taxir\"],
-	[\"Taxir\", \"K\"],
-	[\"Taxir\", \"Harmonic\"],
-	[\"Harmonic\", \"K\"],
-	[\"Harmonic\", \"Shak\"],
-	[\"Harmonic\", \"Honour Land\"],
-	[\"Honour Land\", \"Shak\"],
-	[\"Shak\", \"K\"],
-	[\"K\", \"Hammer\"],
-	[\"K\", \"Hahnze\"],
-	[\"Hahnze\", \"Hammer\"],
-	[\"Hammer\", \"Third Finger\"],
-	[\"Third Finger\", \"Cap Town\"],
-	[\"Endville\", \"Yap\"],
-	[\"Guygo\", \"Yap\"],
-	[\"Wow West\", \"Yap\"],
-	[\"Endville\", \"Wow West\"],
-	[\"Endville\", \"Gustav\"],
-	[\"Gustav\", \"Wow West\"],
-	[\"Gustav\", \"Scicle\"],
-	[\"Capper\", \"Scicle\"],
-	[\"Capper\", \"Clam\"],
-	[\"Capper\", \"Imma Ues Gun\"],
-	[\"Imma Ues Gun\", \"Clam\"],
-	[\"Note\", \"Clam\"],
-	[\"Imma Ues Gun\", \"Note\"],
-	[\"Devious Eat\", \"Clam\"],
-	[\"Devious Eat\", \"Butcher\"],
-	[\"Devious Eat\", \"Koppa\"],
-	[\"Koppa\", \"Butcher\"],
-	[\"Koppa\", \"Northern Steps\"],
-	[\"Koppa\", \"Bomba\"],
-	[\"Bomba\", \"Northern Steps\"],
-	[\"Northern Steps\", \"Butcher\"],
-	[\"Butcher\", \"Clam\"],
-	[\"Scicle\", \"Wow West\"],
-	[\"Scicle\", \"Guygo\"],
-	[\"Imma Ues Gun\", \"Guygo\"],
-	[\"Train\", \"Guygo\"],
-	[\"Train\", \"Bowl\"],
-	[\"Train\", \"Glug\"],
-	[\"Note\", \"Glug\"],
-	[\"Note\", \"Northern Steps\"],
-	[\"Northern Steps\", \"Glug\"],
-	[\"Note\", \"Butcher\"],
-	[\"Train\", \"Note\"],
-	[\"Glug\", \"Bowl\"],
-	[\"Bowl\", \"Guygo\"],
-	[\"Imma Ues Gun\", \"Train\"],
-	[\"Scicle\", \"Imma Ues Gun\"],
-	[\"Guygo\", \"Wow West\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4aobd"]
 shader = ExtResource("3_28xrj")
@@ -629,7 +446,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="LongCon" type="Polygon2D"]
+[node name="LongCon" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-576, -768, -768, -768, -768, -576, -528, -504, -256, -360, -144, -160, -272, 32, -304, 360, -264, 464, -24, 624, 200, 736, 488, 784, 768, 776, 768, 576, 440, 496, 168, 376, 152, 184, 256, -88, 304, -344, -56, -696, -264, -736)
 script = ExtResource("1_dvj8c")
@@ -640,9 +457,869 @@ lore = "Are we there yet?
 Patience is required for victory."
 align_names = Array[String](["", "BOT", "TOPPOM"])
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_ykiaq")
+[node name="links" type="Node" parent="."]
+
+[node name="Desert Bus-Halfway There" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Bus"
+to_name = &"Halfway There"
+
+[node name="Desert Bus-Brum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Bus"
+to_name = &"Brum"
+
+[node name="Desert Bus-Cracked" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Bus"
+to_name = &"Cracked"
+
+[node name="Desert Bus-Cronket" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Bus"
+to_name = &"Cronket"
+
+[node name="Desert Bus-Walls" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Bus"
+to_name = &"Walls"
+
+[node name="Desert Bus-Shosh" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Bus"
+to_name = &"Shosh"
+
+[node name="Walls-Shosh" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Shosh"
+to_name = &"Walls"
+
+[node name="Shosh-Amalgam" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Shosh"
+to_name = &"Amalgam"
+
+[node name="Walls-Amalgam" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Amalgam"
+to_name = &"Walls"
+
+[node name="Goru-Amalgam" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Amalgam"
+to_name = &"Goru"
+
+[node name="Moai-Amalgam" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Amalgam"
+to_name = &"Moai"
+
+[node name="Moai-Mike Muted" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Mike Muted"
+to_name = &"Moai"
+
+[node name="Nothing-Moai" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Nothing"
+to_name = &"Moai"
+
+[node name="Nothing-Gum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Nothing"
+to_name = &"Gum"
+
+[node name="Moai-Gum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Gum"
+to_name = &"Moai"
+
+[node name="Nothing-Mike Muted" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Mike Muted"
+to_name = &"Nothing"
+
+[node name="Ahya-Amalgam" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Amalgam"
+to_name = &"Ahya"
+
+[node name="Boot-Ahya" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Boot"
+to_name = &"Ahya"
+
+[node name="Muhaha-Boot" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Boot"
+to_name = &"Muhaha"
+
+[node name="Preston-Boot" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Boot"
+to_name = &"Preston"
+
+[node name="Muhaha-Preston" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Preston"
+to_name = &"Muhaha"
+
+[node name="Preston-Honour Land" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Preston"
+to_name = &"Honour Land"
+
+[node name="Preston-Gum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Preston"
+to_name = &"Gum"
+
+[node name="Honour Land-Gum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Gum"
+to_name = &"Honour Land"
+
+[node name="Muhaha-Honour Land" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Honour Land"
+to_name = &"Muhaha"
+
+[node name="Moai-Ahya" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Ahya"
+to_name = &"Moai"
+
+[node name="Preston-Ahya" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Ahya"
+to_name = &"Preston"
+
+[node name="Moai-Preston" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Preston"
+to_name = &"Moai"
+
+[node name="Moai-Goru" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Moai"
+to_name = &"Goru"
+
+[node name="Goru-Walls" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Goru"
+to_name = &"Walls"
+
+[node name="Cracked-Cronket" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cronket"
+to_name = &"Cracked"
+
+[node name="Tri-Brum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Tri"
+to_name = &"Brum"
+
+[node name="Tri-Laughter Curve" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Tri"
+to_name = &"Laughter Curve"
+
+[node name="Dummies Dream-Tri" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Tri"
+to_name = &"Dummies Dream"
+
+[node name="Dummies Dream-Laughter Curve" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Dummies Dream"
+to_name = &"Laughter Curve"
+
+[node name="Laughter Curve-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"T Bone"
+to_name = &"Laughter Curve"
+
+[node name="Chomper-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"T Bone"
+to_name = &"Chomper"
+
+[node name="T Bone-Desert Riverside" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"T Bone"
+to_name = &"Desert Riverside"
+
+[node name="Chomper-Desert Riverside" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Riverside"
+to_name = &"Chomper"
+
+[node name="Eyeles-Chomper" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Eyeles"
+to_name = &"Chomper"
+
+[node name="Eyeles-Desert Riverside" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Riverside"
+to_name = &"Eyeles"
+
+[node name="Chomper-Laughter Curve" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Chomper"
+to_name = &"Laughter Curve"
+
+[node name="Dummies Dream-Vowels" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Dummies Dream"
+to_name = &"Vowels"
+
+[node name="Dummies Dream-T Bone" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Dummies Dream"
+to_name = &"T Bone"
+
+[node name="T Bone-Vowels" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"T Bone"
+to_name = &"Vowels"
+
+[node name="Filler-Tri" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Tri"
+to_name = &"Filler"
+
+[node name="Halfway There-Brum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Brum"
+to_name = &"Halfway There"
+
+[node name="Vreomvreom-Halfway There" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Vreomvreom"
+to_name = &"Halfway There"
+
+[node name="Vreomvreom-Brum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Brum"
+to_name = &"Vreomvreom"
+
+[node name="Filler-Brum" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Brum"
+to_name = &"Filler"
+
+[node name="Filler-Vreomvreom" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Filler"
+to_name = &"Vreomvreom"
+
+[node name="Filler-Nuckle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Filler"
+to_name = &"Nuckle"
+
+[node name="Filler-Dummies Dream" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Filler"
+to_name = &"Dummies Dream"
+
+[node name="Dummies Dream-Nuckle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Dummies Dream"
+to_name = &"Nuckle"
+
+[node name="Nuckle-Vreomvreom" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Nuckle"
+to_name = &"Vreomvreom"
+
+[node name="Nuckle-Vowels" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Nuckle"
+to_name = &"Vowels"
+
+[node name="Bean Burrito-Halfway There" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bean Burrito"
+to_name = &"Halfway There"
+
+[node name="Bean Burrito-Nuckle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bean Burrito"
+to_name = &"Nuckle"
+
+[node name="Pan Left-Halfway There" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pan Left"
+to_name = &"Halfway There"
+
+[node name="Pan Left-Cracked" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pan Left"
+to_name = &"Cracked"
+
+[node name="Sponge-Pan Left" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pan Left"
+to_name = &"Sponge"
+
+[node name="Sponge-Cronket" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cronket"
+to_name = &"Sponge"
+
+[node name="Smonk-Cronket" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cronket"
+to_name = &"Smonk"
+
+[node name="Walls-Cronket" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cronket"
+to_name = &"Walls"
+
+[node name="Smonk-Walls" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Walls"
+to_name = &"Smonk"
+
+[node name="Walls-Get Fish" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Walls"
+to_name = &"Get Fish"
+
+[node name="Smonk-Get Fish" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Get Fish"
+to_name = &"Smonk"
+
+[node name="Smonk-Sponge" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Smonk"
+to_name = &"Sponge"
+
+[node name="Sponge-Cracked" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Sponge"
+to_name = &"Cracked"
+
+[node name="Halfway There-Cracked" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cracked"
+to_name = &"Halfway There"
+
+[node name="Pan Left-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pan Left"
+to_name = &"Danger Noodle"
+
+[node name="Sponge-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Sponge"
+to_name = &"Danger Noodle"
+
+[node name="Metal Cap-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Metal Cap"
+to_name = &"Danger Noodle"
+
+[node name="Smonk-Metal Cap" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Metal Cap"
+to_name = &"Smonk"
+
+[node name="Metal Cap-Get Fish" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Metal Cap"
+to_name = &"Get Fish"
+
+[node name="Beacon-Metal Cap" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Metal Cap"
+to_name = &"Beacon"
+
+[node name="Beacon-Get Fish" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Beacon"
+to_name = &"Get Fish"
+
+[node name="Beacon-Goru" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Beacon"
+to_name = &"Goru"
+
+[node name="Beacon-Mike Muted" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Beacon"
+to_name = &"Mike Muted"
+
+[node name="Goru-Mike Muted" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Mike Muted"
+to_name = &"Goru"
+
+[node name="Goru-Get Fish" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Goru"
+to_name = &"Get Fish"
+
+[node name="Smonk-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Smonk"
+to_name = &"Danger Noodle"
+
+[node name="Bean Burrito-Pan Left" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bean Burrito"
+to_name = &"Pan Left"
+
+[node name="Bean Burrito-Vreomvreom" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bean Burrito"
+to_name = &"Vreomvreom"
+
+[node name="Bean Burrito-Vowels" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bean Burrito"
+to_name = &"Vowels"
+
+[node name="Bean Burrito-Biobox" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bean Burrito"
+to_name = &"Biobox"
+
+[node name="Biobox-Vowels" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Biobox"
+to_name = &"Vowels"
+
+[node name="Biobox-Cubuisness" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Biobox"
+to_name = &"Cubuisness"
+
+[node name="Vowels-Cubuisness" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cubuisness"
+to_name = &"Vowels"
+
+[node name="Cubuisness-Desert Riverside" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cubuisness"
+to_name = &"Desert Riverside"
+
+[node name="Cubuisness-Riverstart" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cubuisness"
+to_name = &"Riverstart"
+
+[node name="Eyeles-Riverstart" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Eyeles"
+to_name = &"Riverstart"
+
+[node name="Riverstart-Ajar" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Ajar"
+to_name = &"Riverstart"
+
+[node name="Bomba-Ajar" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Ajar"
+to_name = &"Bomba"
+
+[node name="Bomba-Riverstart" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bomba"
+to_name = &"Riverstart"
+
+[node name="Eyeles-Ajar" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Eyeles"
+to_name = &"Ajar"
+
+[node name="Cubuisness-Carter Age" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Cubuisness"
+to_name = &"Carter Age"
+
+[node name="Devious Eat-Carter Age" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Devious Eat"
+to_name = &"Carter Age"
+
+[node name="Riverstart-Carter Age" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Carter Age"
+to_name = &"Riverstart"
+
+[node name="Koppa-Carter Age" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Carter Age"
+to_name = &"Koppa"
+
+[node name="Koppa-Riverstart" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Koppa"
+to_name = &"Riverstart"
+
+[node name="Riverstart-Desert Riverside" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Riverstart"
+to_name = &"Desert Riverside"
+
+[node name="Vowels-Desert Riverside" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Desert Riverside"
+to_name = &"Vowels"
+
+[node name="Cap Town-Triest" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Triest"
+to_name = &"Cap Town"
+
+[node name="Triest-The Fog" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Triest"
+to_name = &"The Fog"
+
+[node name="Pointer-The Fog" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pointer"
+to_name = &"The Fog"
+
+[node name="Pointer-Triest" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Triest"
+to_name = &"Pointer"
+
+[node name="Cap Town-The Fog" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"The Fog"
+to_name = &"Cap Town"
+
+[node name="Third Finger-The Fog" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"The Fog"
+to_name = &"Third Finger"
+
+[node name="Hammer-The Fog" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"The Fog"
+to_name = &"Hammer"
+
+[node name="Hammer-Candy" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Candy"
+to_name = &"Hammer"
+
+[node name="Tenta-Candy" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Candy"
+to_name = &"Tenta"
+
+[node name="Tenta-Hahnze" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Hahnze"
+to_name = &"Tenta"
+
+[node name="Hahnze-Shak" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Hahnze"
+to_name = &"Shak"
+
+[node name="Tenta-Shak" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Shak"
+to_name = &"Tenta"
+
+[node name="Muhaha-Shak" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Shak"
+to_name = &"Muhaha"
+
+[node name="Muhaha-Tenta" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Muhaha"
+to_name = &"Tenta"
+
+[node name="Candy-Hahnze" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Candy"
+to_name = &"Hahnze"
+
+[node name="Boot-Tenta" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Boot"
+to_name = &"Tenta"
+
+[node name="Hammer-Pointer" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pointer"
+to_name = &"Hammer"
+
+[node name="Pointer-K" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pointer"
+to_name = &"K"
+
+[node name="Pointer-Taxir" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Pointer"
+to_name = &"Taxir"
+
+[node name="Taxir-K" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Taxir"
+to_name = &"K"
+
+[node name="Taxir-Harmonic" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Taxir"
+to_name = &"Harmonic"
+
+[node name="K-Harmonic" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Harmonic"
+to_name = &"K"
+
+[node name="Shak-Harmonic" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Harmonic"
+to_name = &"Shak"
+
+[node name="Honour Land-Harmonic" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Harmonic"
+to_name = &"Honour Land"
+
+[node name="Shak-Honour Land" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Honour Land"
+to_name = &"Shak"
+
+[node name="Shak-K" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Shak"
+to_name = &"K"
+
+[node name="Hammer-K" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"K"
+to_name = &"Hammer"
+
+[node name="Hahnze-K" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"K"
+to_name = &"Hahnze"
+
+[node name="Hammer-Hahnze" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Hahnze"
+to_name = &"Hammer"
+
+[node name="Hammer-Third Finger" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Hammer"
+to_name = &"Third Finger"
+
+[node name="Third Finger-Cap Town" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Third Finger"
+to_name = &"Cap Town"
+
+[node name="Endville-Yap" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Endville"
+to_name = &"Yap"
+
+[node name="Guygo-Yap" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Guygo"
+to_name = &"Yap"
+
+[node name="Wow West-Yap" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Wow West"
+to_name = &"Yap"
+
+[node name="Endville-Wow West" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Endville"
+to_name = &"Wow West"
+
+[node name="Endville-Gustav" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Endville"
+to_name = &"Gustav"
+
+[node name="Wow West-Gustav" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Gustav"
+to_name = &"Wow West"
+
+[node name="Gustav-Scicle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Gustav"
+to_name = &"Scicle"
+
+[node name="Capper-Scicle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Capper"
+to_name = &"Scicle"
+
+[node name="Clam-Capper" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Capper"
+to_name = &"Clam"
+
+[node name="Imma Ues Gun-Capper" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Capper"
+to_name = &"Imma Ues Gun"
+
+[node name="Imma Ues Gun-Clam" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Imma Ues Gun"
+to_name = &"Clam"
+
+[node name="Clam-Note" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Note"
+to_name = &"Clam"
+
+[node name="Imma Ues Gun-Note" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Imma Ues Gun"
+to_name = &"Note"
+
+[node name="Clam-Devious Eat" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Devious Eat"
+to_name = &"Clam"
+
+[node name="Devious Eat-Butcher" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Devious Eat"
+to_name = &"Butcher"
+
+[node name="Koppa-Devious Eat" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Devious Eat"
+to_name = &"Koppa"
+
+[node name="Koppa-Butcher" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Koppa"
+to_name = &"Butcher"
+
+[node name="Northern Steps-Koppa" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Koppa"
+to_name = &"Northern Steps"
+
+[node name="Bomba-Koppa" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Koppa"
+to_name = &"Bomba"
+
+[node name="Bomba-Northern Steps" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bomba"
+to_name = &"Northern Steps"
+
+[node name="Northern Steps-Butcher" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Northern Steps"
+to_name = &"Butcher"
+
+[node name="Clam-Butcher" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Butcher"
+to_name = &"Clam"
+
+[node name="Wow West-Scicle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Scicle"
+to_name = &"Wow West"
+
+[node name="Guygo-Scicle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Scicle"
+to_name = &"Guygo"
+
+[node name="Guygo-Imma Ues Gun" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Imma Ues Gun"
+to_name = &"Guygo"
+
+[node name="Guygo-Train" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Train"
+to_name = &"Guygo"
+
+[node name="Train-Bowl" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Train"
+to_name = &"Bowl"
+
+[node name="Train-Glug" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Train"
+to_name = &"Glug"
+
+[node name="Glug-Note" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Note"
+to_name = &"Glug"
+
+[node name="Northern Steps-Note" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Note"
+to_name = &"Northern Steps"
+
+[node name="Northern Steps-Glug" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Northern Steps"
+to_name = &"Glug"
+
+[node name="Note-Butcher" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Note"
+to_name = &"Butcher"
+
+[node name="Train-Note" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Train"
+to_name = &"Note"
+
+[node name="Glug-Bowl" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Glug"
+to_name = &"Bowl"
+
+[node name="Guygo-Bowl" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Bowl"
+to_name = &"Guygo"
+
+[node name="Imma Ues Gun-Train" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Imma Ues Gun"
+to_name = &"Train"
+
+[node name="Imma Ues Gun-Scicle" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Scicle"
+to_name = &"Imma Ues Gun"
+
+[node name="Guygo-Wow West" type="Line2D" parent="links"]
+script = ExtResource("2_cym3f")
+from_name = &"Guygo"
+to_name = &"Wow West"
 
 [node name="bg" parent="." instance=ExtResource("2_nxpt1")]
 position = Vector2(8, 0)

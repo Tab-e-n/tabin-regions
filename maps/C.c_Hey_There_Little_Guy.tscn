@@ -1,283 +1,12 @@
 [gd_scene load_steps=114 format=3 uid="uid://c867tjlpvvn3q"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_mn54j"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_0yvdf"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_r36m6"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_17g78"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_403l7"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_m3so1"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_upv8d"]
-
-[sub_resource type="GDScript" id="GDScript_6hb3u"]
-script/source = "extends Node
-
-
-var connections : Array = [
-	[\"Courtyard\", \"Big Guy Headquarters\"],
-	[\"View Path\", \"Big Guy Headquarters\"],
-	[\"Honk Fallout Zone\", \"Big Guy Headquarters\"],
-	[\"Little Big Hill\", \"Big Guy Headquarters\", 1],
-	[\"Courtyard\", \"Weird Barn\"],
-	[\"Courtyard\", \"View Path\"],
-	[\"Courtyard\", \"Training Ground\"],
-	[\"Courtyard\", \"Staggered Path\"],
-	[\"Sleigh Crash Site\", \"Staggered Path\"],
-	[\"Sister Path\", \"View Path\"],
-	[\"Sister Path\", \"Grass Cut\"],
-	[\"Sister Path\", \"Hotdog Path\"],
-	[\"Sister Path\", \"Benches\"],
-	[\"Grass Cut\", \"View Path\"],
-	[\"Grass Cut\", \"Butterfly Field\"],
-	[\"Sleigh Crash Site\", \"Butterfly Field\"],
-	[\"Butterfly Field\", \"View Path\"],
-	[\"Honk Fallout Zone\", \"View Path\"],
-	[\"Sister Path\", \"Honk Fallout Zone\"],
-	[\"Sister Path\", \"Big Sister Home\"],
-	[\"Hotdog Path\", \"Big Sister Home\"],
-	[\"Hotdog Path\", \"Nettles\"],
-	[\"Nettles\", \"Big Sister Home\"],
-	[\"Sister Path\", \"Dog Shed\"],
-	[\"Dog Shed\", \"Big Sister Home\"],
-	[\"Dog Shed\", \"Honker Central\"],
-	[\"Dog Shed\", \"Honk Fallout Zone\"],
-	[\"Honk Fallout Zone\", \"Honker Central\"],
-	[\"View Path\", \"Staggered Path\"],
-	[\"Beans\", \"Staggered Path\"],
-	[\"Staggered Path\", \"Training Ground\"],
-	[\"Training Ground\", \"Weird Barn\"],
-	[\"Training Ground\", \"Little Big Hill\", 1],
-	[\"Little Big Hill\", \"Weird Barn\", 1],
-	[\"Training Ground\", \"Vineyard\"],
-	[\"Staggered Path\", \"Vineyard\"],
-	[\"Staggered Path\", \"Center Square\"],
-	[\"Taki Uphill\", \"Center Square\"],
-	[\"Taki Uphill\", \"Center Grass\"],
-	[\"Center Grass\", \"Center Square\"],
-	[\"T Juction\", \"Center Square\"],
-	[\"Telephone Box\", \"Center Square\"],
-	[\"Telephone Box\", \"Wow\"],
-	[\"Telephone Box\", \"Bullet\"],
-	[\"Bullet\", \"Wow\"],
-	[\"T Juction\", \"Telephone Box\"],
-	[\"T Juction\", \"Center Grass\"],
-	[\"T Juction\", \"Pothole\"],
-	[\"T Juction\", \"Finland\"],
-	[\"Finland\", \"Pothole\"],
-	[\"Center Square\", \"Vineyard\"],
-	[\"Vinehaus\", \"Vineyard\"],
-	[\"Vinehaus\", \"Vinley Center\"],
-	[\"Vinehaus\", \"Triangle Backyard\"],
-	[\"Vinehaus\", \"Little Big Hill\"],
-	[\"Little Big Hill\", \"Triangle Backyard\"],
-	[\"Triangle Backyard\", \"Vinley Center\"],
-	[\"Triangle Backyard\", \"Hangout Spot\"],
-	[\"Triangle Backyard\", \"Fisherman's Land\"],
-	[\"Cornfield\", \"Fisherman's Land\", 1],
-	[\"Fisherman's Land\", \"Hangout Spot\"],
-	[\"Hangout Spot\", \"Vinley Center\"],
-	[\"Vinley Center\", \"Vineyard\"],
-	[\"Vinley Center\", \"Pathway Ditch\"],
-	[\"Vinley Center\", \"Vinley Curve\"],
-	[\"Bullet\", \"Vinley Curve\"],
-	[\"Bullet\", \"Oklahoma\"],
-	[\"Oklahoma\", \"Vinley Curve\"],
-	[\"Vinley Curve\", \"Pathway Ditch\"],
-	[\"Pathway Ditch\", \"Vineyard\"],
-	[\"Little Big Hill\", \"Vineyard\"],
-	[\"Vinley Center\", \"Vinley Bridge\"],
-	[\"Oklahoma\", \"Vinley Bridge\"],
-	[\"Vinley Curve\", \"Vinley Bridge\"],
-	[\"Vinley Curve\", \"Center Square\"],
-	[\"Lil Frontyard\", \"Vinley Bridge\"],
-	[\"Lil Frontyard\", \"Boat Spot\"],
-	[\"Boat Spot\", \"Vinley Bridge\"],
-	[\"Lil Frontyard\", \"Lil Cottage\"],
-	[\"Lil Frontyard\", \"Corn Backdoor\"],
-	[\"Corn Backdoor\", \"Lil Cottage\"],
-	[\"Lil Frontyard\", \"Lil Backline\"],
-	[\"Corn Fence\", \"Lil Backline\"],
-	[\"Lil Backline\", \"Lil Cottage\"],
-	[\"Corn Fence\", \"Lil Cottage\"],
-	[\"Lil Frontyard\", \"Benched Path\"],
-	[\"Lil Frontyard\", \"Kite Field\"],
-	[\"Lil Frontyard\", \"Danger Noodle\"],
-	[\"Danger Noodle\", \"Kite Field\"],
-	[\"Kite Field\", \"Benched Path\"],
-	[\"Lil Backline\", \"Benched Path\"],
-	[\"U Turn\", \"Benched Path\"],
-	[\"Row of Roses\", \"Benched Path\"],
-	[\"U Turn\", \"Row of Roses\"],
-	[\"U Turn\", \"Middle Ground\"],
-	[\"U Turn\", \"Sharpies\"],
-	[\"U Turn\", \"Unofficial Path\"],
-	[\"U Turn\", \"Empty Pots\"],
-	[\"Mini's Puddle\", \"Empty Pots\"],
-	[\"Empty Pots\", \"Unofficial Path\"],
-	[\"Land Pickles\", \"Unofficial Path\"],
-	[\"Land Pickles\", \"Old Shed\"],
-	[\"Land Pickles\", \"Row of Roses\"],
-	[\"Row of Roses\", \"Old Shed\"],
-	[\"Shed Leftovers\", \"Old Shed\"],
-	[\"Shed Leftovers\", \"Hawk Rock\"],
-	[\"Hawk Rock\", \"Old Shed\"],
-	[\"Shed Leftovers\", \"Danger Noodle\"],
-	[\"Row of Roses\", \"Shed Leftovers\"],
-	[\"Kite Field\", \"Shed Leftovers\"],
-	[\"Row of Roses\", \"Kite Field\"],
-	[\"U Turn\", \"Land Pickles\"],
-	[\"Rocky Patch\", \"Unofficial Path\"],
-	[\"Rocky Patch\", \"Land Pickles\"],
-	[\"Rocky Patch\", \"Bush Barrier\"],
-	[\"Rocky Patch\", \"Planks\"],
-	[\"Planks\", \"Bush Barrier\"],
-	[\"Rocky Patch\", \"Fineas and Fern\"],
-	[\"Fineas and Fern\", \"Bush Barrier\"],
-	[\"Rocky Patch\", \"Hawk Rock\"],
-	[\"Hawk Rock\", \"Land Pickles\"],
-	[\"Tiny's Treehouse\", \"Unofficial Path\"],
-	[\"Tiny's Treehouse\", \"Planks\"],
-	[\"Planks\", \"Unofficial Path\"],
-	[\"Tree Ladder\", \"Unofficial Path\"],
-	[\"Tiny's Treehouse\", \"Tree Ladder\"],
-	[\"Tiny's Treehouse\", \"Bugnana\"],
-	[\"A Longer But Harder Path\", \"Bugnana\"],
-	[\"A Longer But Harder Path\", \"Big Puddle\"],
-	[\"Mini's Puddle\", \"Big Puddle\"],
-	[\"Shipish\", \"Bugnana\"],
-	[\"A Longer But Harder Path\", \"Shipish\"],
-	[\"A Longer But Harder Path\", \"Mini's Backyard\"],
-	[\"Big Puddle\", \"Mini's Backyard\"],
-	[\"Mini's Puddle\", \"Mini's Backyard\"],
-	[\"Tiny's Treehouse\", \"Quick Tree Exit\"],
-	[\"Quick Tree Exit\", \"Bugnana\"],
-	[\"Bugnana\", \"Tree Ladder\"],
-	[\"Shipish\", \"Tree Ladder\"],
-	[\"Shipish\", \"Big Puddle\"],
-	[\"Shipish\", \"Empty Pots\"],
-	[\"Big Puddle\", \"Empty Pots\"],
-	[\"Empty Pots\", \"Tree Ladder\"],
-	[\"Middle Ground\", \"Benched Path\"],
-	[\"Middle Ground\", \"Broken Fence\"],
-	[\"Broken Fence\", \"Benched Path\"],
-	[\"Middle Ground\", \"Path Away\"],
-	[\"Middle Ground\", \"Sharpies\"],
-	[\"Mini's Puddle\", \"Sharpies\"],
-	[\"Sharpies\", \"Path Away\"],
-	[\"Mini's Cabin\", \"Path Away\"],
-	[\"Mini's Cabin\", \"Mini's Backyard\"],
-	[\"Mini's Cabin\", \"Sharpies\"],
-	[\"Sharpies\", \"Mini's Backyard\"],
-	[\"More Cornfield\", \"Path Away\"],
-	[\"Broken Fence\", \"Path Away\"],
-	[\"More Cornfield\", \"Broken Fence\"],
-	[\"Lil Frontyard\", \"Vinley Center\", 1],
-	[\"Weird Barn\", \"Big Guy Headquarters\"],
-	[\"Hangout Spot\", \"Rickety Bridge\"],
-	[\"Hangout Spot\", \"Corn Backdoor\", 1],
-	[\"Corn Backdoor\", \"Rickety Bridge\"],
-	[\"Corn Backdoor\", \"Cornfield\"],
-	[\"Corn Backdoor\", \"Corn Fence\"],
-	[\"Broken Fence\", \"Corn Fence\"],
-	[\"Cornfield\", \"Rickety Bridge\"],
-	[\"Cornfield\", \"More Cornfield\"],
-	[\"Cornfield\", \"Corn Fence\"],
-	[\"Corn Fence\", \"More Cornfield\"],
-	[\"Fisherman's Land\", \"Rickety Bridge\"],
-	[\"Rock Bridge\", \"Fort Pathway\"],
-	[\"Fineas and Fern\", \"Fort Pathway\"],
-	[\"Rock Bridge\", \"Forest Entrance\"],
-	[\"Fallen Tree\", \"Forest Entrance\"],
-	[\"Fallen Tree\", \"Finland\"],
-	[\"Triangle Shore\", \"Finland\"],
-	[\"Triangle Shore\", \"Wow\"],
-	[\"Oklahoma\", \"Wow\"],
-	[\"Oklahoma\", \"Boat Spot\", 1],
-	[\"Boat Spot\", \"Wow\", 1],
-	[\"Fallen Tree\", \"Pothole\"],
-	[\"Uproot\", \"Pothole\"],
-	[\"Fallen Tree\", \"Uproot\"],
-	[\"Rock Bridge\", \"Kiddie Shore\"],
-	[\"Fallen Tree\", \"Kiddie Shore\"],
-	[\"Kiddie Shore\", \"Forest Entrance\"],
-	[\"Rocky Patch\", \"Fort Pathway\"],
-	[\"Rocky Patch\", \"Fort Moat\"],
-	[\"Boat Spot\", \"Fort Moat\"],
-	[\"Boat Spot\", \"Danger Noodle\"],
-	[\"Boat Spot\", \"Pkili\"],
-	[\"Pkili\", \"Danger Noodle\"],
-	[\"Fort Moat\", \"Fort Pathway\"],
-	[\"Fort Moat\", \"Pkili\"],
-	[\"Fort Moat\", \"Hawk Rock\"],
-	[\"Hawk Rock\", \"Pkili\"],
-	[\"Cliff\", \"Tiny's House\"],
-	[\"Cliff\", \"Campfire\", 1],
-	[\"Cliff\", \"Game Space Tip\", 1],
-	[\"Cliff\", \"Benches\", 1],
-	[\"Game Space Tip\", \"Campfire\"],
-	[\"Game Space Tip\", \"Extra Wood\"],
-	[\"Extra Wood\", \"Campfire\"],
-	[\"Hotdog Path\", \"Campfire\"],
-	[\"Hotdog Path\", \"Benches\"],
-	[\"Benches\", \"Campfire\"],
-	[\"Hotdog Path\", \"Extra Wood\"],
-	[\"Cliff\", \"Sleighway\"],
-	[\"Benches\", \"Sleighway\"],
-	[\"Butterfly Field\", \"Sleighway\"],
-	[\"Benches\", \"Butterfly Field\"],
-	[\"Sleighway\", \"Tiny's House\"],
-	[\"Cliff\", \"Clifford\"],
-	[\"Clifford\", \"Tiny's House\"],
-	[\"Tiny's Porch\", \"Tiny's House\"],
-	[\"Tiny's Porch\", \"Sleighway\"],
-	[\"Tiny's Porch\", \"Beans\"],
-	[\"Beans\", \"Sleighway\"],
-	[\"Beans\", \"Sleigh Crash Site\"],
-	[\"Sleigh Crash Site\", \"Sleighway\"],
-	[\"Clifford\", \"Tiny's Porch\"],
-	[\"Taki Uphill\", \"Tiny's Porch\"],
-	[\"Taki Uphill\", \"Star Zone\", 1],
-	[\"Star Zone\", \"Tiny's Porch\", 1],
-	[\"Taki Uphill\", \"Beans\"],
-	[\"Clifford\", \"Spooky Cave\", 1],
-	[\"Tiny's Porch\", \"Spooky Cave\", 1],
-	[\"Medium's Manor\", \"Red Carpet\"],
-	[\"Medium's Manor\", \"Mid Gard(en)\"],
-	[\"Uproot\", \"Mid Gard(en)\"],
-	[\"Uproot\", \"Thank\"],
-	[\"Thank\", \"Mid Gard(en)\"],
-	[\"Mid Gard(en)\", \"Red Carpet\"],
-	[\"Medium's Manor\", \"Mid Playground\"],
-	[\"Spooky Cave\", \"Mid Playground\"],
-	[\"Spooky Cave\", \"Star Zone\"],
-	[\"Center Grass\", \"Star Zone\"],
-	[\"Mid Playground\", \"Red Carpet\"],
-	[\"Star Zone\", \"Red Carpet\"],
-	[\"Mid Playground\", \"Star Zone\"],
-	[\"T Juction\", \"Red Carpet\"],
-	[\"T Juction\", \"Thank\"],
-	[\"T Juction\", \"Wow\"],
-	[\"Thank\", \"Red Carpet\"],
-	[\"Big's OP Fort\", \"Fort Pathway\", 1],
-	[\"Big's OP Fort\", \"Fort Moat\", 1],
-	[\"Big's OP Fort\", \"Triangle Shore\", 1],
-	[\"T Juction\", \"Triangle Shore\"],
-	[\"Fort Moat\", \"Triangle Shore\", 1],
-	[\"Big's OP Fort\", \"Kiddie Shore\", 1],
-	[\"Big's OP Fort\", \"Rock Bridge\", 1],
-	[\"Big's OP Fort\", \"Fallen Tree\", 1],
-	[\"???\", \"?\"],
-	[\"Wet Region\", \"?\"],
-	[\"Bush Barrier\", \"?\"],
-	[\"Wet Region\", \"Quick Tree Exit\"],
-	[\"Quick Tree Exit\", \"?\"],
-	[\"Quick Tree Exit\", \"Planks\"],
-	[\"Planks\", \"?\"],
-	[\"Wet Region\", \"Bugnana\"],
-]
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-"
 
 [sub_resource type="Curve" id="Curve_86o68"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(0.9, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -920,7 +649,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="Allies" type="Polygon2D"]
+[node name="Allies" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.368627, 0.423529, 0.607843, 1)
 polygon = PackedVector2Array(56, -240, -160, -264, -328, -216, -488, -136, -648, 128, -616, 304, -504, 424, -544, 552, -544, 656, -440, 768, -248, 768, -264, 928, -224, 1032, -72, 1136, 80, 1144, 280, 1152, 528, 1184, 688, 1248, 856, 1176, 968, 1072, 1048, 864, 1064, 672, 920, 496, 792, 440, 656, 288, 680, 184, 744, 72, 728, 16, 520, -88, 440, -120, 256, -192)
 script = ExtResource("1_mn54j")
@@ -942,9 +671,1331 @@ align_names = Array[String](["", "Little Guy", "Tiny Gal", "Mini Guy", "Big Guy"
 main_character = 1
 city_size = 0.85
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="Node" type="Node" parent="."]
-script = SubResource("GDScript_6hb3u")
+[node name="links" type="Node" parent="."]
+
+[node name="Courtyard-Big Guy Headquarters" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Courtyard"
+to_name = &"Big Guy Headquarters"
+
+[node name="Big Guy Headquarters-View Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"View Path"
+to_name = &"Big Guy Headquarters"
+
+[node name="Big Guy Headquarters-Honk Fallout Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Honk Fallout Zone"
+to_name = &"Big Guy Headquarters"
+
+[node name="Big Guy Headquarters-Little Big Hill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Little Big Hill"
+to_name = &"Big Guy Headquarters"
+power_reduction = 1
+
+[node name="Courtyard-Weird Barn" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Courtyard"
+to_name = &"Weird Barn"
+
+[node name="Courtyard-View Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Courtyard"
+to_name = &"View Path"
+
+[node name="Training Ground-Courtyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Courtyard"
+to_name = &"Training Ground"
+
+[node name="Staggered Path-Courtyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Courtyard"
+to_name = &"Staggered Path"
+
+[node name="Sleigh Crash Site-Staggered Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sleigh Crash Site"
+to_name = &"Staggered Path"
+
+[node name="Sister Path-View Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"View Path"
+
+[node name="Sister Path-Grass Cut" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"Grass Cut"
+
+[node name="Sister Path-Hotdog Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"Hotdog Path"
+
+[node name="Benches-Sister Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"Benches"
+
+[node name="Grass Cut-View Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Grass Cut"
+to_name = &"View Path"
+
+[node name="Grass Cut-Butterfly Field" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Grass Cut"
+to_name = &"Butterfly Field"
+
+[node name="Sleigh Crash Site-Butterfly Field" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sleigh Crash Site"
+to_name = &"Butterfly Field"
+
+[node name="Butterfly Field-View Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Butterfly Field"
+to_name = &"View Path"
+
+[node name="View Path-Honk Fallout Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Honk Fallout Zone"
+to_name = &"View Path"
+
+[node name="Sister Path-Honk Fallout Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"Honk Fallout Zone"
+
+[node name="Sister Path-Big Sister Home" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"Big Sister Home"
+
+[node name="Hotdog Path-Big Sister Home" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hotdog Path"
+to_name = &"Big Sister Home"
+
+[node name="Nettles-Hotdog Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hotdog Path"
+to_name = &"Nettles"
+
+[node name="Nettles-Big Sister Home" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Nettles"
+to_name = &"Big Sister Home"
+
+[node name="Sister Path-Dog Shed" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sister Path"
+to_name = &"Dog Shed"
+
+[node name="Dog Shed-Big Sister Home" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Dog Shed"
+to_name = &"Big Sister Home"
+
+[node name="Honker Central-Dog Shed" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Dog Shed"
+to_name = &"Honker Central"
+
+[node name="Dog Shed-Honk Fallout Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Dog Shed"
+to_name = &"Honk Fallout Zone"
+
+[node name="Honker Central-Honk Fallout Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Honk Fallout Zone"
+to_name = &"Honker Central"
+
+[node name="Staggered Path-View Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"View Path"
+to_name = &"Staggered Path"
+
+[node name="Staggered Path-Beans" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Beans"
+to_name = &"Staggered Path"
+
+[node name="Staggered Path-Training Ground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Staggered Path"
+to_name = &"Training Ground"
+
+[node name="Training Ground-Weird Barn" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Training Ground"
+to_name = &"Weird Barn"
+
+[node name="Training Ground-Little Big Hill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Training Ground"
+to_name = &"Little Big Hill"
+power_reduction = 1
+
+[node name="Weird Barn-Little Big Hill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Little Big Hill"
+to_name = &"Weird Barn"
+power_reduction = 1
+
+[node name="Training Ground-Vineyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Training Ground"
+to_name = &"Vineyard"
+
+[node name="Staggered Path-Vineyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Staggered Path"
+to_name = &"Vineyard"
+
+[node name="Staggered Path-Center Square" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Staggered Path"
+to_name = &"Center Square"
+
+[node name="Center Square-Taki Uphill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Taki Uphill"
+to_name = &"Center Square"
+
+[node name="Center Grass-Taki Uphill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Taki Uphill"
+to_name = &"Center Grass"
+
+[node name="Center Grass-Center Square" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Center Grass"
+to_name = &"Center Square"
+
+[node name="Center Square-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Center Square"
+
+[node name="Telephone Box-Center Square" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Telephone Box"
+to_name = &"Center Square"
+
+[node name="Wow-Telephone Box" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Telephone Box"
+to_name = &"Wow"
+
+[node name="Telephone Box-Bullet" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Telephone Box"
+to_name = &"Bullet"
+
+[node name="Wow-Bullet" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Bullet"
+to_name = &"Wow"
+
+[node name="Telephone Box-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Telephone Box"
+
+[node name="Center Grass-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Center Grass"
+
+[node name="T Juction-Pothole" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Pothole"
+
+[node name="Finland-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Finland"
+
+[node name="Finland-Pothole" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Finland"
+to_name = &"Pothole"
+
+[node name="Center Square-Vineyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Center Square"
+to_name = &"Vineyard"
+
+[node name="Vineyard-Vinehaus" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinehaus"
+to_name = &"Vineyard"
+
+[node name="Vinley Center-Vinehaus" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinehaus"
+to_name = &"Vinley Center"
+
+[node name="Triangle Backyard-Vinehaus" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinehaus"
+to_name = &"Triangle Backyard"
+
+[node name="Vinehaus-Little Big Hill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinehaus"
+to_name = &"Little Big Hill"
+
+[node name="Triangle Backyard-Little Big Hill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Little Big Hill"
+to_name = &"Triangle Backyard"
+
+[node name="Triangle Backyard-Vinley Center" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Triangle Backyard"
+to_name = &"Vinley Center"
+
+[node name="Triangle Backyard-Hangout Spot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Triangle Backyard"
+to_name = &"Hangout Spot"
+
+[node name="Triangle Backyard-Fisherman\'s Land" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Triangle Backyard"
+to_name = &"Fisherman\'s Land"
+
+[node name="Fisherman\'s Land-Cornfield" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cornfield"
+to_name = &"Fisherman\'s Land"
+power_reduction = 1
+
+[node name="Hangout Spot-Fisherman\'s Land" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fisherman\'s Land"
+to_name = &"Hangout Spot"
+
+[node name="Vinley Center-Hangout Spot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hangout Spot"
+to_name = &"Vinley Center"
+
+[node name="Vinley Center-Vineyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Center"
+to_name = &"Vineyard"
+
+[node name="Pathway Ditch-Vinley Center" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Center"
+to_name = &"Pathway Ditch"
+
+[node name="Vinley Center-Vinley Curve" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Center"
+to_name = &"Vinley Curve"
+
+[node name="Vinley Curve-Bullet" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Bullet"
+to_name = &"Vinley Curve"
+
+[node name="Oklahoma-Bullet" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Bullet"
+to_name = &"Oklahoma"
+
+[node name="Oklahoma-Vinley Curve" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Oklahoma"
+to_name = &"Vinley Curve"
+
+[node name="Pathway Ditch-Vinley Curve" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Curve"
+to_name = &"Pathway Ditch"
+
+[node name="Pathway Ditch-Vineyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Pathway Ditch"
+to_name = &"Vineyard"
+
+[node name="Vineyard-Little Big Hill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Little Big Hill"
+to_name = &"Vineyard"
+
+[node name="Vinley Center-Vinley Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Center"
+to_name = &"Vinley Bridge"
+
+[node name="Oklahoma-Vinley Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Oklahoma"
+to_name = &"Vinley Bridge"
+
+[node name="Vinley Bridge-Vinley Curve" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Curve"
+to_name = &"Vinley Bridge"
+
+[node name="Center Square-Vinley Curve" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Vinley Curve"
+to_name = &"Center Square"
+
+[node name="Lil Frontyard-Vinley Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Vinley Bridge"
+
+[node name="Lil Frontyard-Boat Spot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Boat Spot"
+
+[node name="Boat Spot-Vinley Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Boat Spot"
+to_name = &"Vinley Bridge"
+
+[node name="Lil Frontyard-Lil Cottage" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Lil Cottage"
+
+[node name="Lil Frontyard-Corn Backdoor" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Corn Backdoor"
+
+[node name="Corn Backdoor-Lil Cottage" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Backdoor"
+to_name = &"Lil Cottage"
+
+[node name="Lil Frontyard-Lil Backline" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Lil Backline"
+
+[node name="Lil Backline-Corn Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Fence"
+to_name = &"Lil Backline"
+
+[node name="Lil Cottage-Lil Backline" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Backline"
+to_name = &"Lil Cottage"
+
+[node name="Lil Cottage-Corn Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Fence"
+to_name = &"Lil Cottage"
+
+[node name="Lil Frontyard-Benched Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Benched Path"
+
+[node name="Lil Frontyard-Kite Field" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Kite Field"
+
+[node name="Lil Frontyard-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Danger Noodle"
+
+[node name="Kite Field-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Danger Noodle"
+to_name = &"Kite Field"
+
+[node name="Kite Field-Benched Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Kite Field"
+to_name = &"Benched Path"
+
+[node name="Lil Backline-Benched Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Backline"
+to_name = &"Benched Path"
+
+[node name="U Turn-Benched Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Benched Path"
+
+[node name="Row of Roses-Benched Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Row of Roses"
+to_name = &"Benched Path"
+
+[node name="U Turn-Row of Roses" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Row of Roses"
+
+[node name="U Turn-Middle Ground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Middle Ground"
+
+[node name="U Turn-Sharpies" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Sharpies"
+
+[node name="U Turn-Unofficial Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Unofficial Path"
+
+[node name="U Turn-Empty Pots" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Empty Pots"
+
+[node name="Mini\'s Puddle-Empty Pots" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Puddle"
+to_name = &"Empty Pots"
+
+[node name="Unofficial Path-Empty Pots" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Empty Pots"
+to_name = &"Unofficial Path"
+
+[node name="Land Pickles-Unofficial Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Land Pickles"
+to_name = &"Unofficial Path"
+
+[node name="Old Shed-Land Pickles" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Land Pickles"
+to_name = &"Old Shed"
+
+[node name="Land Pickles-Row of Roses" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Land Pickles"
+to_name = &"Row of Roses"
+
+[node name="Old Shed-Row of Roses" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Row of Roses"
+to_name = &"Old Shed"
+
+[node name="Old Shed-Shed Leftovers" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shed Leftovers"
+to_name = &"Old Shed"
+
+[node name="Hawk Rock-Shed Leftovers" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shed Leftovers"
+to_name = &"Hawk Rock"
+
+[node name="Old Shed-Hawk Rock" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hawk Rock"
+to_name = &"Old Shed"
+
+[node name="Danger Noodle-Shed Leftovers" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shed Leftovers"
+to_name = &"Danger Noodle"
+
+[node name="Row of Roses-Shed Leftovers" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Row of Roses"
+to_name = &"Shed Leftovers"
+
+[node name="Kite Field-Shed Leftovers" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Kite Field"
+to_name = &"Shed Leftovers"
+
+[node name="Kite Field-Row of Roses" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Row of Roses"
+to_name = &"Kite Field"
+
+[node name="Land Pickles-U Turn" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"U Turn"
+to_name = &"Land Pickles"
+
+[node name="Unofficial Path-Rocky Patch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Unofficial Path"
+
+[node name="Land Pickles-Rocky Patch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Land Pickles"
+
+[node name="Bush Barrier-Rocky Patch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Bush Barrier"
+
+[node name="Rocky Patch-Planks" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Planks"
+
+[node name="Bush Barrier-Planks" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Planks"
+to_name = &"Bush Barrier"
+
+[node name="Rocky Patch-Fineas and Fern" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Fineas and Fern"
+
+[node name="Bush Barrier-Fineas and Fern" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fineas and Fern"
+to_name = &"Bush Barrier"
+
+[node name="Hawk Rock-Rocky Patch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Hawk Rock"
+
+[node name="Land Pickles-Hawk Rock" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hawk Rock"
+to_name = &"Land Pickles"
+
+[node name="Unofficial Path-Tiny\'s Treehouse" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Treehouse"
+to_name = &"Unofficial Path"
+
+[node name="Tiny\'s Treehouse-Planks" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Treehouse"
+to_name = &"Planks"
+
+[node name="Unofficial Path-Planks" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Planks"
+to_name = &"Unofficial Path"
+
+[node name="Unofficial Path-Tree Ladder" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tree Ladder"
+to_name = &"Unofficial Path"
+
+[node name="Tiny\'s Treehouse-Tree Ladder" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Treehouse"
+to_name = &"Tree Ladder"
+
+[node name="Tiny\'s Treehouse-Bugnana" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Treehouse"
+to_name = &"Bugnana"
+
+[node name="A Longer But Harder Path-Bugnana" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"A Longer But Harder Path"
+to_name = &"Bugnana"
+
+[node name="Big Puddle-A Longer But Harder Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"A Longer But Harder Path"
+to_name = &"Big Puddle"
+
+[node name="Mini\'s Puddle-Big Puddle" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Puddle"
+to_name = &"Big Puddle"
+
+[node name="Bugnana-Shipish" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shipish"
+to_name = &"Bugnana"
+
+[node name="A Longer But Harder Path-Shipish" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"A Longer But Harder Path"
+to_name = &"Shipish"
+
+[node name="Mini\'s Backyard-A Longer But Harder Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"A Longer But Harder Path"
+to_name = &"Mini\'s Backyard"
+
+[node name="Big Puddle-Mini\'s Backyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big Puddle"
+to_name = &"Mini\'s Backyard"
+
+[node name="Mini\'s Puddle-Mini\'s Backyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Puddle"
+to_name = &"Mini\'s Backyard"
+
+[node name="Tiny\'s Treehouse-Quick Tree Exit" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Treehouse"
+to_name = &"Quick Tree Exit"
+
+[node name="Bugnana-Quick Tree Exit" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Quick Tree Exit"
+to_name = &"Bugnana"
+
+[node name="Tree Ladder-Bugnana" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Bugnana"
+to_name = &"Tree Ladder"
+
+[node name="Tree Ladder-Shipish" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shipish"
+to_name = &"Tree Ladder"
+
+[node name="Big Puddle-Shipish" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shipish"
+to_name = &"Big Puddle"
+
+[node name="Empty Pots-Shipish" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Shipish"
+to_name = &"Empty Pots"
+
+[node name="Big Puddle-Empty Pots" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big Puddle"
+to_name = &"Empty Pots"
+
+[node name="Tree Ladder-Empty Pots" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Empty Pots"
+to_name = &"Tree Ladder"
+
+[node name="Benched Path-Middle Ground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Middle Ground"
+to_name = &"Benched Path"
+
+[node name="Broken Fence-Middle Ground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Middle Ground"
+to_name = &"Broken Fence"
+
+[node name="Broken Fence-Benched Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Broken Fence"
+to_name = &"Benched Path"
+
+[node name="Path Away-Middle Ground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Middle Ground"
+to_name = &"Path Away"
+
+[node name="Sharpies-Middle Ground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Middle Ground"
+to_name = &"Sharpies"
+
+[node name="Mini\'s Puddle-Sharpies" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Puddle"
+to_name = &"Sharpies"
+
+[node name="Path Away-Sharpies" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sharpies"
+to_name = &"Path Away"
+
+[node name="Path Away-Mini\'s Cabin" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Cabin"
+to_name = &"Path Away"
+
+[node name="Mini\'s Cabin-Mini\'s Backyard" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Cabin"
+to_name = &"Mini\'s Backyard"
+
+[node name="Mini\'s Cabin-Sharpies" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mini\'s Cabin"
+to_name = &"Sharpies"
+
+[node name="Mini\'s Backyard-Sharpies" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sharpies"
+to_name = &"Mini\'s Backyard"
+
+[node name="Path Away-More Cornfield" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"More Cornfield"
+to_name = &"Path Away"
+
+[node name="Path Away-Broken Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Broken Fence"
+to_name = &"Path Away"
+
+[node name="Broken Fence-More Cornfield" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"More Cornfield"
+to_name = &"Broken Fence"
+
+[node name="Lil Frontyard-Vinley Center" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Lil Frontyard"
+to_name = &"Vinley Center"
+power_reduction = 1
+
+[node name="Big Guy Headquarters-Weird Barn" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Weird Barn"
+to_name = &"Big Guy Headquarters"
+
+[node name="Hangout Spot-Rickety Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hangout Spot"
+to_name = &"Rickety Bridge"
+
+[node name="Corn Backdoor-Hangout Spot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hangout Spot"
+to_name = &"Corn Backdoor"
+power_reduction = 1
+
+[node name="Corn Backdoor-Rickety Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Backdoor"
+to_name = &"Rickety Bridge"
+
+[node name="Corn Backdoor-Cornfield" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Backdoor"
+to_name = &"Cornfield"
+
+[node name="Corn Backdoor-Corn Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Backdoor"
+to_name = &"Corn Fence"
+
+[node name="Broken Fence-Corn Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Broken Fence"
+to_name = &"Corn Fence"
+
+[node name="Cornfield-Rickety Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cornfield"
+to_name = &"Rickety Bridge"
+
+[node name="More Cornfield-Cornfield" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cornfield"
+to_name = &"More Cornfield"
+
+[node name="Cornfield-Corn Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cornfield"
+to_name = &"Corn Fence"
+
+[node name="More Cornfield-Corn Fence" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Corn Fence"
+to_name = &"More Cornfield"
+
+[node name="Fisherman\'s Land-Rickety Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fisherman\'s Land"
+to_name = &"Rickety Bridge"
+
+[node name="Fort Pathway-Rock Bridge" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rock Bridge"
+to_name = &"Fort Pathway"
+
+[node name="Fort Pathway-Fineas and Fern" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fineas and Fern"
+to_name = &"Fort Pathway"
+
+[node name="Rock Bridge-Forest Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rock Bridge"
+to_name = &"Forest Entrance"
+
+[node name="Fallen Tree-Forest Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fallen Tree"
+to_name = &"Forest Entrance"
+
+[node name="Finland-Fallen Tree" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fallen Tree"
+to_name = &"Finland"
+
+[node name="Triangle Shore-Finland" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Triangle Shore"
+to_name = &"Finland"
+
+[node name="Wow-Triangle Shore" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Triangle Shore"
+to_name = &"Wow"
+
+[node name="Wow-Oklahoma" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Oklahoma"
+to_name = &"Wow"
+
+[node name="Boat Spot-Oklahoma" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Oklahoma"
+to_name = &"Boat Spot"
+power_reduction = 1
+
+[node name="Wow-Boat Spot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Boat Spot"
+to_name = &"Wow"
+power_reduction = 1
+
+[node name="Fallen Tree-Pothole" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fallen Tree"
+to_name = &"Pothole"
+
+[node name="Uproot-Pothole" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Uproot"
+to_name = &"Pothole"
+
+[node name="Uproot-Fallen Tree" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fallen Tree"
+to_name = &"Uproot"
+
+[node name="Rock Bridge-Kiddie Shore" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rock Bridge"
+to_name = &"Kiddie Shore"
+
+[node name="Fallen Tree-Kiddie Shore" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fallen Tree"
+to_name = &"Kiddie Shore"
+
+[node name="Kiddie Shore-Forest Entrance" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Kiddie Shore"
+to_name = &"Forest Entrance"
+
+[node name="Fort Pathway-Rocky Patch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Fort Pathway"
+
+[node name="Fort Moat-Rocky Patch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Rocky Patch"
+to_name = &"Fort Moat"
+
+[node name="Fort Moat-Boat Spot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Boat Spot"
+to_name = &"Fort Moat"
+
+[node name="Boat Spot-Danger Noodle" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Boat Spot"
+to_name = &"Danger Noodle"
+
+[node name="Boat Spot-Pkili" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Boat Spot"
+to_name = &"Pkili"
+
+[node name="Danger Noodle-Pkili" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Pkili"
+to_name = &"Danger Noodle"
+
+[node name="Fort Moat-Fort Pathway" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fort Moat"
+to_name = &"Fort Pathway"
+
+[node name="Fort Moat-Pkili" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fort Moat"
+to_name = &"Pkili"
+
+[node name="Fort Moat-Hawk Rock" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fort Moat"
+to_name = &"Hawk Rock"
+
+[node name="Hawk Rock-Pkili" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hawk Rock"
+to_name = &"Pkili"
+
+[node name="Tiny\'s House-Cliff" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cliff"
+to_name = &"Tiny\'s House"
+
+[node name="Cliff-Campfire" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cliff"
+to_name = &"Campfire"
+power_reduction = 1
+
+[node name="Cliff-Game Space Tip" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cliff"
+to_name = &"Game Space Tip"
+power_reduction = 1
+
+[node name="Benches-Cliff" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cliff"
+to_name = &"Benches"
+power_reduction = 1
+
+[node name="Game Space Tip-Campfire" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Game Space Tip"
+to_name = &"Campfire"
+
+[node name="Game Space Tip-Extra Wood" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Game Space Tip"
+to_name = &"Extra Wood"
+
+[node name="Campfire-Extra Wood" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Extra Wood"
+to_name = &"Campfire"
+
+[node name="Campfire-Hotdog Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hotdog Path"
+to_name = &"Campfire"
+
+[node name="Benches-Hotdog Path" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hotdog Path"
+to_name = &"Benches"
+
+[node name="Benches-Campfire" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Benches"
+to_name = &"Campfire"
+
+[node name="Hotdog Path-Extra Wood" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Hotdog Path"
+to_name = &"Extra Wood"
+
+[node name="Sleighway-Cliff" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cliff"
+to_name = &"Sleighway"
+
+[node name="Benches-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Benches"
+to_name = &"Sleighway"
+
+[node name="Sleighway-Butterfly Field" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Butterfly Field"
+to_name = &"Sleighway"
+
+[node name="Benches-Butterfly Field" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Benches"
+to_name = &"Butterfly Field"
+
+[node name="Tiny\'s House-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sleighway"
+to_name = &"Tiny\'s House"
+
+[node name="Cliff-Clifford" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Cliff"
+to_name = &"Clifford"
+
+[node name="Tiny\'s House-Clifford" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Clifford"
+to_name = &"Tiny\'s House"
+
+[node name="Tiny\'s House-Tiny\'s Porch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Porch"
+to_name = &"Tiny\'s House"
+
+[node name="Sleighway-Tiny\'s Porch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Porch"
+to_name = &"Sleighway"
+
+[node name="Beans-Tiny\'s Porch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Porch"
+to_name = &"Beans"
+
+[node name="Sleighway-Beans" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Beans"
+to_name = &"Sleighway"
+
+[node name="Sleigh Crash Site-Beans" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Beans"
+to_name = &"Sleigh Crash Site"
+
+[node name="Sleigh Crash Site-Sleighway" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Sleigh Crash Site"
+to_name = &"Sleighway"
+
+[node name="Tiny\'s Porch-Clifford" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Clifford"
+to_name = &"Tiny\'s Porch"
+
+[node name="Tiny\'s Porch-Taki Uphill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Taki Uphill"
+to_name = &"Tiny\'s Porch"
+
+[node name="Star Zone-Taki Uphill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Taki Uphill"
+to_name = &"Star Zone"
+power_reduction = 1
+
+[node name="Star Zone-Tiny\'s Porch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Star Zone"
+to_name = &"Tiny\'s Porch"
+power_reduction = 1
+
+[node name="Beans-Taki Uphill" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Taki Uphill"
+to_name = &"Beans"
+
+[node name="Spooky Cave-Clifford" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Clifford"
+to_name = &"Spooky Cave"
+power_reduction = 1
+
+[node name="Spooky Cave-Tiny\'s Porch" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Tiny\'s Porch"
+to_name = &"Spooky Cave"
+power_reduction = 1
+
+[node name="Red Carpet-Medium\'s Manor" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Medium\'s Manor"
+to_name = &"Red Carpet"
+
+[node name="Medium\'s Manor-Mid Gard(en)" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Medium\'s Manor"
+to_name = &"Mid Gard(en)"
+
+[node name="Uproot-Mid Gard(en)" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Uproot"
+to_name = &"Mid Gard(en)"
+
+[node name="Thank-Uproot" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Uproot"
+to_name = &"Thank"
+
+[node name="Thank-Mid Gard(en)" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Thank"
+to_name = &"Mid Gard(en)"
+
+[node name="Red Carpet-Mid Gard(en)" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mid Gard(en)"
+to_name = &"Red Carpet"
+
+[node name="Medium\'s Manor-Mid Playground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Medium\'s Manor"
+to_name = &"Mid Playground"
+
+[node name="Spooky Cave-Mid Playground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Spooky Cave"
+to_name = &"Mid Playground"
+
+[node name="Star Zone-Spooky Cave" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Spooky Cave"
+to_name = &"Star Zone"
+
+[node name="Center Grass-Star Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Center Grass"
+to_name = &"Star Zone"
+
+[node name="Red Carpet-Mid Playground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mid Playground"
+to_name = &"Red Carpet"
+
+[node name="Red Carpet-Star Zone" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Star Zone"
+to_name = &"Red Carpet"
+
+[node name="Star Zone-Mid Playground" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Mid Playground"
+to_name = &"Star Zone"
+
+[node name="Red Carpet-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Red Carpet"
+
+[node name="Thank-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Thank"
+
+[node name="Wow-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Wow"
+
+[node name="Red Carpet-Thank" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Thank"
+to_name = &"Red Carpet"
+
+[node name="Fort Pathway-Big\'s OP Fort" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big\'s OP Fort"
+to_name = &"Fort Pathway"
+power_reduction = 1
+
+[node name="Fort Moat-Big\'s OP Fort" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big\'s OP Fort"
+to_name = &"Fort Moat"
+power_reduction = 1
+
+[node name="Triangle Shore-Big\'s OP Fort" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big\'s OP Fort"
+to_name = &"Triangle Shore"
+power_reduction = 1
+
+[node name="Triangle Shore-T Juction" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"T Juction"
+to_name = &"Triangle Shore"
+
+[node name="Fort Moat-Triangle Shore" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Fort Moat"
+to_name = &"Triangle Shore"
+power_reduction = 1
+
+[node name="Kiddie Shore-Big\'s OP Fort" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big\'s OP Fort"
+to_name = &"Kiddie Shore"
+power_reduction = 1
+
+[node name="Rock Bridge-Big\'s OP Fort" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big\'s OP Fort"
+to_name = &"Rock Bridge"
+power_reduction = 1
+
+[node name="Fallen Tree-Big\'s OP Fort" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Big\'s OP Fort"
+to_name = &"Fallen Tree"
+power_reduction = 1
+
+[node name="?-???" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"???"
+to_name = &"?"
+
+[node name="Wet Region-?" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Wet Region"
+to_name = &"?"
+
+[node name="Bush Barrier-?" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Bush Barrier"
+to_name = &"?"
+
+[node name="Wet Region-Quick Tree Exit" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Wet Region"
+to_name = &"Quick Tree Exit"
+
+[node name="?-Quick Tree Exit" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Quick Tree Exit"
+to_name = &"?"
+
+[node name="Planks-Quick Tree Exit" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Quick Tree Exit"
+to_name = &"Planks"
+
+[node name="?-Planks" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Planks"
+to_name = &"?"
+
+[node name="Wet Region-Bugnana" type="Line2D" parent="links"]
+script = ExtResource("2_0yvdf")
+from_name = &"Wet Region"
+to_name = &"Bugnana"
 
 [node name="bg" parent="." instance=ExtResource("2_r36m6")]
 color = Color(0.313726, 0.364706, 0.537255, 1)

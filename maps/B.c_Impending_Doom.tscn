@@ -2,135 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_px6qq"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_gtu3t"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_t3ii2"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_x4h5u"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_dyl6w"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_tjwvy"]
-
-[sub_resource type="GDScript" id="GDScript_fsydj"]
-script/source = "extends Node
-
-var connections : Array = [
-	[\"Clueless\", \"Oh-Oh\"],
-	[\"Clueless\", \"Paratop\"],
-	[\"Clueless\", \"Burgit\"],
-	[\"Cluud\", \"Paratop\"],
-	[\"Cluud\", \"Burgit\"],
-	[\"Cluud\", \"Stand\"],
-	[\"Chest\", \"Stand\"],
-	[\"Don\", \"Stand\"],
-	[\"Don\", \"Damned Fourth\"],
-	[\"Burgit\", \"Damned Fourth\"],
-	[\"Don\", \"Tanta\"],
-	[\"Damned Fourth\", \"Stand\"],
-	[\"Chest\", \"Don\"],
-	[\"Cluud\", \"Lay\"],
-	[\"End\", \"Lay\"],
-	[\"Chest\", \"Lay\"],
-	[\"Don\", \"Lay\"],
-	[\"Don\", \"Hawk\"],
-	[\"End\", \"Hawk\"],
-	[\"Don\", \"End\"],
-	[\"Tanta\", \"Hawk\"],
-	[\"Cluud\", \"End\"],
-	[\"Cluud\", \"Damned Fourth\"],
-	[\"Cluud\", \"Chest\"],
-	[\"Clueless\", \"Paraleg\"],
-	[\"Clueless\", \"Legies\"],
-	[\"Burgit\", \"Legies\"],
-	[\"Armos\", \"Oh-Oh\"],
-	[\"Clueless\", \"Armos\"],
-	[\"Paraleg\", \"Armos\"],
-	[\"Paraleg\", \"Paratop\"],
-	[\"Paraleg\", \"Georat\"],
-	[\"Georat\", \"Paratop\"],
-	[\"Burgit\", \"Paratop\"],
-	[\"Clueless\", \"Right\"],
-	[\"Clueless\", \"Zeds\"],
-	[\"BeachBox\", \"Right\"],
-	[\"BeachBox\", \"Radio\"],
-	[\"BeachBox\", \"Music\"],
-	[\"Cliffside\", \"Music\"],
-	[\"Cliffside\", \"Crocks\"],
-	[\"Cliffside\", \"Watch Out\"],
-	[\"Cliffside\", \"Rocktop\"],
-	[\"Crocks\", \"Music\"],
-	[\"Crocks\", \"Stiffs\"],
-	[\"Crocks\", \"Rocktop\"],
-	[\"Rocktop\", \"Stiffs\"],
-	[\"Bagochips\", \"Music\"],
-	[\"BeachBox\", \"Bagochips\"],
-	[\"Music\", \"Radio\"],
-	[\"Zeds\", \"Radio\"],
-	[\"Right\", \"Radio\"],
-	[\"Zeds\", \"Watch Out\"],
-	[\"Zeds\", \"Flower\"],
-	[\"Watch Out\", \"Radio\"],
-	[\"Watch Out\", \"Flower\"],
-	[\"Rocktop\", \"Flower\"],
-	[\"Rocktop\", \"Ze Hando\"],
-	[\"Flocks\", \"Flower\"],
-	[\"Flocks\", \"Ze Bop\"],
-	[\"Ze Hando\", \"Ze Bop\"],
-	[\"Flocks\", \"Ze Hando\"],
-	[\"Ze Bop\", \"Flower\"],
-	[\"Ze Bop\", \"Flip\"],
-	[\"Smug\", \"Flip\"],
-	[\"Doom's Right Hand\", \"Flip\"],
-	[\"Doom's Right Hand\", \"Ze Hando\"],
-	[\"Glock\", \"Ze Hando\"],
-	[\"Guy\", \"Ze Hando\"],
-	[\"Doom's Right Hand\", \"Glock\"],
-	[\"Guy\", \"Glock\"],
-	[\"Doom's Right Hand\", \"Guy\"],
-	[\"Doom's Right Hand\", \"Goopacle\"],
-	[\"Ze Bop\", \"Doom's Right Hand\"],
-	[\"Flip\", \"Flower\"],
-	[\"Front Arm\", \"Flower\"],
-	[\"Flip\", \"Goopacle\"],
-	[\"Rocktop\", \"Flocks\"],
-	[\"Watch Out\", \"Music\"],
-	[\"Watch Out\", \"Rocktop\"],
-	[\"Zeds\", \"Right\"],
-	[\"Right\", \"Oh-Oh\"],
-	[\"Legoos\", \"Oh-Oh\"],
-	[\"Legas\", \"Oh-Oh\"],
-	[\"Legas\", \"Right\"],
-	[\"Legas\", \"BeachBox\"],
-	[\"Legas\", \"Legoos\"],
-	[\"Legies\", \"Zeds\"],
-	[\"Front Arm\", \"Zeds\"],
-	[\"Legies\", \"Front Arm\"],
-	[\"Back Arm\", \"Front Arm\"],
-	[\"Back Arm\", \"Smug\"],
-	[\"Back Arm\", \"Tum\"],
-	[\"Tum\", \"Smug\"],
-	[\"Tum\", \"Musskles\"],
-	[\"Tum\", \"The Doom\"],
-	[\"The Doom\", \"Musskles\"],
-	[\"Tanta\", \"Musskles\"],
-	[\"Damned Fourth\", \"Musskles\"],
-	[\"Tanta\", \"Damned Fourth\"],
-	[\"Smug\", \"The Doom\"],
-	[\"Smug\", \"Tenta\"],
-	[\"Goopacle\", \"Tenta\"],
-	[\"Smug\", \"Goopacle\"],
-	[\"Star\", \"The Doom\"],
-	[\"Star\", \"Tanta\"],
-	[\"Tanta\", \"The Doom\"],
-	[\"Tenta\", \"The Doom\"],
-	[\"Star\", \"Tenta\"],
-	[\"Smug\", \"Front Arm\"],
-	[\"Damned Fourth\", \"Front Arm\"],
-	[\"Burgit\", \"Front Arm\"],
-	[\"Musskles\", \"Front Arm\"],
-]
-
-
-func _ready():
-	get_parent().connections = connections.duplicate()
-	queue_free()
-
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pnx6q"]
 shader = ExtResource("3_x4h5u")
@@ -414,7 +289,7 @@ shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
-[node name="doom" type="Polygon2D"]
+[node name="doom" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.380392, 0.368627, 0.552941, 1)
 polygon = PackedVector2Array(-724, -16, -576, 264, 16, 512, 464, 284, 676, 0, 392, -364, -16, -496, -488, -376)
 script = ExtResource("1_px6qq")
@@ -436,9 +311,574 @@ align_names = Array[String](["", "The Clueless", "DOOOOM", "Edgy OC", "Some Ghos
 color_bg_according_to_alignment = false
 city_size = 0.5
 render_mode = 1
+region_links = NodePath("links")
 
-[node name="connection_setter" type="Node" parent="."]
-script = SubResource("GDScript_fsydj")
+[node name="links" type="Node" parent="."]
+
+[node name="Clueless-Oh-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Oh-Oh"
+
+[node name="Clueless-Paratop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Paratop"
+
+[node name="Clueless-Burgit" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Burgit"
+
+[node name="Cluud-Paratop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"Paratop"
+
+[node name="Cluud-Burgit" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"Burgit"
+
+[node name="Cluud-Stand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"Stand"
+
+[node name="Chest-Stand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Chest"
+to_name = &"Stand"
+
+[node name="Don-Stand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Don"
+to_name = &"Stand"
+
+[node name="Damned Fourth-Don" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Don"
+to_name = &"Damned Fourth"
+
+[node name="Damned Fourth-Burgit" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Burgit"
+to_name = &"Damned Fourth"
+
+[node name="Don-Tanta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Don"
+to_name = &"Tanta"
+
+[node name="Damned Fourth-Stand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Damned Fourth"
+to_name = &"Stand"
+
+[node name="Don-Chest" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Chest"
+to_name = &"Don"
+
+[node name="Cluud-Lay" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"Lay"
+
+[node name="End-Lay" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"End"
+to_name = &"Lay"
+
+[node name="Chest-Lay" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Chest"
+to_name = &"Lay"
+
+[node name="Don-Lay" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Don"
+to_name = &"Lay"
+
+[node name="Don-Hawk" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Don"
+to_name = &"Hawk"
+
+[node name="End-Hawk" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"End"
+to_name = &"Hawk"
+
+[node name="End-Don" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Don"
+to_name = &"End"
+
+[node name="Hawk-Tanta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tanta"
+to_name = &"Hawk"
+
+[node name="Cluud-End" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"End"
+
+[node name="Damned Fourth-Cluud" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"Damned Fourth"
+
+[node name="Cluud-Chest" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cluud"
+to_name = &"Chest"
+
+[node name="Clueless-Paraleg" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Paraleg"
+
+[node name="Clueless-Legies" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Legies"
+
+[node name="Burgit-Legies" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Burgit"
+to_name = &"Legies"
+
+[node name="Armos-Oh-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Armos"
+to_name = &"Oh-Oh"
+
+[node name="Clueless-Armos" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Armos"
+
+[node name="Paraleg-Armos" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Paraleg"
+to_name = &"Armos"
+
+[node name="Paraleg-Paratop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Paraleg"
+to_name = &"Paratop"
+
+[node name="Paraleg-Georat" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Paraleg"
+to_name = &"Georat"
+
+[node name="Georat-Paratop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Georat"
+to_name = &"Paratop"
+
+[node name="Burgit-Paratop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Burgit"
+to_name = &"Paratop"
+
+[node name="Clueless-Right" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Right"
+
+[node name="Clueless-Zeds" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Clueless"
+to_name = &"Zeds"
+
+[node name="Right-BeachBox" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"BeachBox"
+to_name = &"Right"
+
+[node name="BeachBox-Radio" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"BeachBox"
+to_name = &"Radio"
+
+[node name="BeachBox-Music" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"BeachBox"
+to_name = &"Music"
+
+[node name="Cliffside-Music" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cliffside"
+to_name = &"Music"
+
+[node name="Cliffside-Crocks" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cliffside"
+to_name = &"Crocks"
+
+[node name="Cliffside-Watch Out" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cliffside"
+to_name = &"Watch Out"
+
+[node name="Cliffside-Rocktop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Cliffside"
+to_name = &"Rocktop"
+
+[node name="Crocks-Music" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Crocks"
+to_name = &"Music"
+
+[node name="Stiffs-Crocks" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Crocks"
+to_name = &"Stiffs"
+
+[node name="Crocks-Rocktop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Crocks"
+to_name = &"Rocktop"
+
+[node name="Stiffs-Rocktop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Rocktop"
+to_name = &"Stiffs"
+
+[node name="Bagochips-Music" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Bagochips"
+to_name = &"Music"
+
+[node name="Bagochips-BeachBox" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"BeachBox"
+to_name = &"Bagochips"
+
+[node name="Music-Radio" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Music"
+to_name = &"Radio"
+
+[node name="Zeds-Radio" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Zeds"
+to_name = &"Radio"
+
+[node name="Right-Radio" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Right"
+to_name = &"Radio"
+
+[node name="Zeds-Watch Out" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Zeds"
+to_name = &"Watch Out"
+
+[node name="Flower-Zeds" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Zeds"
+to_name = &"Flower"
+
+[node name="Watch Out-Radio" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Watch Out"
+to_name = &"Radio"
+
+[node name="Flower-Watch Out" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Watch Out"
+to_name = &"Flower"
+
+[node name="Rocktop-Flower" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Rocktop"
+to_name = &"Flower"
+
+[node name="Ze Hando-Rocktop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Rocktop"
+to_name = &"Ze Hando"
+
+[node name="Flower-Flocks" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Flocks"
+to_name = &"Flower"
+
+[node name="Ze Bop-Flocks" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Flocks"
+to_name = &"Ze Bop"
+
+[node name="Ze Hando-Ze Bop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Ze Hando"
+to_name = &"Ze Bop"
+
+[node name="Ze Hando-Flocks" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Flocks"
+to_name = &"Ze Hando"
+
+[node name="Flower-Ze Bop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Ze Bop"
+to_name = &"Flower"
+
+[node name="Ze Bop-Flip" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Ze Bop"
+to_name = &"Flip"
+
+[node name="Smug-Flip" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Smug"
+to_name = &"Flip"
+
+[node name="Doom\'s Right Hand-Flip" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Doom\'s Right Hand"
+to_name = &"Flip"
+
+[node name="Ze Hando-Doom\'s Right Hand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Doom\'s Right Hand"
+to_name = &"Ze Hando"
+
+[node name="Ze Hando-Glock" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Glock"
+to_name = &"Ze Hando"
+
+[node name="Ze Hando-Guy" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Guy"
+to_name = &"Ze Hando"
+
+[node name="Glock-Doom\'s Right Hand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Doom\'s Right Hand"
+to_name = &"Glock"
+
+[node name="Guy-Glock" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Guy"
+to_name = &"Glock"
+
+[node name="Guy-Doom\'s Right Hand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Doom\'s Right Hand"
+to_name = &"Guy"
+
+[node name="Goopacle-Doom\'s Right Hand" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Doom\'s Right Hand"
+to_name = &"Goopacle"
+
+[node name="Doom\'s Right Hand-Ze Bop" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Ze Bop"
+to_name = &"Doom\'s Right Hand"
+
+[node name="Flower-Flip" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Flip"
+to_name = &"Flower"
+
+[node name="Front Arm-Flower" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Front Arm"
+to_name = &"Flower"
+
+[node name="Goopacle-Flip" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Flip"
+to_name = &"Goopacle"
+
+[node name="Rocktop-Flocks" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Rocktop"
+to_name = &"Flocks"
+
+[node name="Watch Out-Music" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Watch Out"
+to_name = &"Music"
+
+[node name="Rocktop-Watch Out" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Watch Out"
+to_name = &"Rocktop"
+
+[node name="Right-Zeds" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Zeds"
+to_name = &"Right"
+
+[node name="Right-Oh-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Right"
+to_name = &"Oh-Oh"
+
+[node name="Legoos-Oh-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legoos"
+to_name = &"Oh-Oh"
+
+[node name="Legas-Oh-Oh" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legas"
+to_name = &"Oh-Oh"
+
+[node name="Legas-Right" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legas"
+to_name = &"Right"
+
+[node name="Legas-BeachBox" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legas"
+to_name = &"BeachBox"
+
+[node name="Legoos-Legas" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legas"
+to_name = &"Legoos"
+
+[node name="Zeds-Legies" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legies"
+to_name = &"Zeds"
+
+[node name="Front Arm-Zeds" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Front Arm"
+to_name = &"Zeds"
+
+[node name="Front Arm-Legies" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Legies"
+to_name = &"Front Arm"
+
+[node name="Front Arm-Back Arm" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Back Arm"
+to_name = &"Front Arm"
+
+[node name="Smug-Back Arm" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Back Arm"
+to_name = &"Smug"
+
+[node name="Tum-Back Arm" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Back Arm"
+to_name = &"Tum"
+
+[node name="Smug-Tum" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tum"
+to_name = &"Smug"
+
+[node name="Musskles-Tum" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tum"
+to_name = &"Musskles"
+
+[node name="The Doom-Tum" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tum"
+to_name = &"The Doom"
+
+[node name="The Doom-Musskles" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"The Doom"
+to_name = &"Musskles"
+
+[node name="Musskles-Tanta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tanta"
+to_name = &"Musskles"
+
+[node name="Damned Fourth-Musskles" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Damned Fourth"
+to_name = &"Musskles"
+
+[node name="Damned Fourth-Tanta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tanta"
+to_name = &"Damned Fourth"
+
+[node name="Smug-The Doom" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Smug"
+to_name = &"The Doom"
+
+[node name="Smug-Tenta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Smug"
+to_name = &"Tenta"
+
+[node name="Goopacle-Tenta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Goopacle"
+to_name = &"Tenta"
+
+[node name="Smug-Goopacle" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Smug"
+to_name = &"Goopacle"
+
+[node name="The Doom-Star" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Star"
+to_name = &"The Doom"
+
+[node name="Star-Tanta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Star"
+to_name = &"Tanta"
+
+[node name="The Doom-Tanta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tanta"
+to_name = &"The Doom"
+
+[node name="The Doom-Tenta" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Tenta"
+to_name = &"The Doom"
+
+[node name="Tenta-Star" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Star"
+to_name = &"Tenta"
+
+[node name="Smug-Front Arm" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Smug"
+to_name = &"Front Arm"
+
+[node name="Front Arm-Damned Fourth" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Damned Fourth"
+to_name = &"Front Arm"
+
+[node name="Front Arm-Burgit" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Burgit"
+to_name = &"Front Arm"
+
+[node name="Front Arm-Musskles" type="Line2D" parent="links"]
+script = ExtResource("2_t3ii2")
+from_name = &"Musskles"
+to_name = &"Front Arm"
 
 [node name="bg" parent="." instance=ExtResource("2_gtu3t")]
 position = Vector2(4, 0)
