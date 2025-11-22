@@ -49,8 +49,8 @@ func _ready():
 
 func _process(_delta):
 	if Input.is_action_just_pressed("escape"):
-		Options.timestamp("START TITLE", "")
 		Options.discard_timestamp_sums()
+		Options.timestamp("START TITLE", "")
 		get_tree().change_scene_to_file("res://title.tscn")
 
 
@@ -239,12 +239,12 @@ func start_playing(index):
 		MapSetup.aliances_amount = int(slider_aliances.value)
 		MapSetup.used_alignments = int(slider_leader.value)
 		if current_map.use_alignment_picker and MapSetup.player_amount > 0:
-			Options.timestamp("START ALIGN PICKER", "")
 			Options.discard_timestamp_sums()
+			Options.timestamp("START ALIGN PICKER", "")
 			get_tree().change_scene_to_file("res://alignment_picker.tscn")
 		else:
-			Options.timestamp("START MAP", "")
 			Options.discard_timestamp_sums()
+			Options.timestamp("START MAP", "")
 			get_tree().change_scene_to_file("res://main.tscn")
 
 
@@ -301,8 +301,8 @@ func _on_replay_pressed():
 func _on_replay_window_file_selected(path):
 	if ReplayControl.load_replay(path):
 		ReplayControl.paused = true
-		Options.timestamp("START MAP", "")
 		Options.discard_timestamp_sums()
+		Options.timestamp("START MAP", "")
 		get_tree().change_scene_to_file("res://main.tscn")
 	else:
 		_show_replay_fail()

@@ -3,6 +3,7 @@ extends Node
 
 const SAVEFILE : String = "user://OPTIONS.json"
 
+const TIMESTAMPS_ACTIVE : bool = true
 # 0 Will let through anything
 const TIMESTAMP_THRESHOLD : float = 0.001
 
@@ -74,8 +75,8 @@ func _timestamp_duration(stamp : int, current : int) -> float:
 
 
 func timestamp(timestamp_name : String = "Timestamp", group : String = "Other") -> void:
-	if not editor:
-		pass
+	if not TIMESTAMPS_ACTIVE or not editor:
+		return
 	var new : int = Time.get_ticks_usec()
 	var duration : float = _timestamp_duration(current_timestamp, new)
 	if duration >= TIMESTAMP_THRESHOLD:
@@ -87,8 +88,18 @@ func timestamp(timestamp_name : String = "Timestamp", group : String = "Other") 
 
 
 func discard_timestamp_sums():
+	if not TIMESTAMPS_ACTIVE or not editor:
+		return
 	print("SUMMARY OF CURRENT SECTION")
-	for key in timestamp_sums:
-		_print_timestamp(key, timestamp_sums[key])
-	print("SUMMARY OVER")
+	var keys : Array = timestamp_sums.keys()
+	var summaries : Array = []
+	for key in keys:
+		summaries.append([timestamp_sums[key], key])
+	summaries.sort()
+	summaries.reverse()
+	for pair in summaries:
+		var value = pair[0]
+		var key = pair[1]
+		_print_timestamp(key, value)
+	print("")
 	timestamp_sums.clear()

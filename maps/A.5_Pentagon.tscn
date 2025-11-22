@@ -149,219 +149,219 @@ region_links = NodePath("links")
 
 [node name="Kindness Valley-Burbulence" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Burbulence")
-to_path = NodePath("../../Kindness Valley")
+from_name = &"Burbulence"
+to_name = &"Kindness Valley"
 
 [node name="Pottery-Kindness Valley" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Kindness Valley")
-to_path = NodePath("../../Pottery")
+from_name = &"Kindness Valley"
+to_name = &"Pottery"
 
 [node name="Pottery-Jockay" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Pottery")
-to_path = NodePath("../../Jockay")
+from_name = &"Pottery"
+to_name = &"Jockay"
 
 [node name="Reference Mine-Pottery" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Reference Mine")
-to_path = NodePath("../../Pottery")
+from_name = &"Reference Mine"
+to_name = &"Pottery"
 
 [node name="Jockay-Gallump" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Gallump")
-to_path = NodePath("../../Jockay")
+from_name = &"Gallump"
+to_name = &"Jockay"
 
 [node name="Reference Mine-Crown Jewels" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Crown Jewels")
-to_path = NodePath("../../Reference Mine")
+from_name = &"Crown Jewels"
+to_name = &"Reference Mine"
 
 [node name="Gallump-Crown Jewels" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Crown Jewels")
-to_path = NodePath("../../Gallump")
+from_name = &"Crown Jewels"
+to_name = &"Gallump"
 
 [node name="Pottery-Crown Jewels" type="Line2D" parent="links"]
 points = PackedVector2Array(344, 392)
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Crown Jewels")
-to_path = NodePath("../../Pottery")
+from_name = &"Crown Jewels"
+to_name = &"Pottery"
 
 [node name="Wwenches-Burbulence" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Wwenches")
-to_path = NodePath("../../Burbulence")
+from_name = &"Wwenches"
+to_name = &"Burbulence"
 
 [node name="Wwenches-Kindness Valley" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Wwenches")
-to_path = NodePath("../../Kindness Valley")
+from_name = &"Wwenches"
+to_name = &"Kindness Valley"
 
 [node name="Wwenches-Pottery" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Wwenches")
-to_path = NodePath("../../Pottery")
+from_name = &"Wwenches"
+to_name = &"Pottery"
 
 [node name="Reference Mine-Wwenches" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Wwenches")
-to_path = NodePath("../../Reference Mine")
+from_name = &"Wwenches"
+to_name = &"Reference Mine"
 
 [node name="Hoggers-Ues Ofey" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Hoggers")
-to_path = NodePath("../../Ues Ofey")
+from_name = &"Hoggers"
+to_name = &"Ues Ofey"
 
 [node name="Gallump-Hoggers" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Hoggers")
-to_path = NodePath("../../Gallump")
+from_name = &"Hoggers"
+to_name = &"Gallump"
 
 [node name="Johnsville-Reference Mine" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Johnsville")
-to_path = NodePath("../../Reference Mine")
+from_name = &"Johnsville"
+to_name = &"Reference Mine"
 
 [node name="Crown Jewels-Johnsville" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Johnsville")
-to_path = NodePath("../../Crown Jewels")
+from_name = &"Johnsville"
+to_name = &"Crown Jewels"
 
 [node name="Johnsville-Sleighway" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Sleighway")
-to_path = NodePath("../../Johnsville")
+from_name = &"Sleighway"
+to_name = &"Johnsville"
 
 [node name="Crown Jewels-Sleighway" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Sleighway")
-to_path = NodePath("../../Crown Jewels")
+from_name = &"Sleighway"
+to_name = &"Crown Jewels"
 
 [node name="Gallump-Sleighway" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Sleighway")
-to_path = NodePath("../../Gallump")
+from_name = &"Sleighway"
+to_name = &"Gallump"
 
 [node name="Hoggers-Sleighway" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Sleighway")
-to_path = NodePath("../../Hoggers")
+from_name = &"Sleighway"
+to_name = &"Hoggers"
 
 [node name="Sleighway-Ues Ofey" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Sleighway")
-to_path = NodePath("../../Ues Ofey")
+from_name = &"Sleighway"
+to_name = &"Ues Ofey"
 
 [node name="Gasoline Road-Johnsville" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Gasoline Road")
-to_path = NodePath("../../Johnsville")
+from_name = &"Gasoline Road"
+to_name = &"Johnsville"
 
 [node name="Gasoline Road-TeeTeeTee" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Gasoline Road")
-to_path = NodePath("../../TeeTeeTee")
+from_name = &"Gasoline Road"
+to_name = &"TeeTeeTee"
 
 [node name="Frugal People-Tristan\'s Rock" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Tristan\'s Rock")
-to_path = NodePath("../../Frugal People")
+from_name = &"Tristan\'s Rock"
+to_name = &"Frugal People"
 
 [node name="Noaforce-TeeTeeTee" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Noaforce")
-to_path = NodePath("../../TeeTeeTee")
+from_name = &"Noaforce"
+to_name = &"TeeTeeTee"
 
 [node name="Hund in German-Noaforce" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Hund in German")
-to_path = NodePath("../../Noaforce")
+from_name = &"Hund in German"
+to_name = &"Noaforce"
 
 [node name="Gasoline Road-Hund in German" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Hund in German")
-to_path = NodePath("../../Gasoline Road")
+from_name = &"Hund in German"
+to_name = &"Gasoline Road"
 
 [node name="Hund in German-Johnsville" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Hund in German")
-to_path = NodePath("../../Johnsville")
+from_name = &"Hund in German"
+to_name = &"Johnsville"
 
 [node name="Hund in German-Tristan\'s Rock" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Hund in German")
-to_path = NodePath("../../Tristan\'s Rock")
+from_name = &"Hund in German"
+to_name = &"Tristan\'s Rock"
 
 [node name="Kirt Connagan-Tristan\'s Rock" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Kirt Connagan")
-to_path = NodePath("../../Tristan\'s Rock")
+from_name = &"Kirt Connagan"
+to_name = &"Tristan\'s Rock"
 
 [node name="Frugal People-Kirt Connagan" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Kirt Connagan")
-to_path = NodePath("../../Frugal People")
+from_name = &"Kirt Connagan"
+to_name = &"Frugal People"
 
 [node name="Cryptic Minor-Kirt Connagan" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Cryptic Minor")
-to_path = NodePath("../../Kirt Connagan")
+from_name = &"Cryptic Minor"
+to_name = &"Kirt Connagan"
 
 [node name="Cryptic Minor-Tristan\'s Rock" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Cryptic Minor")
-to_path = NodePath("../../Tristan\'s Rock")
+from_name = &"Cryptic Minor"
+to_name = &"Tristan\'s Rock"
 
 [node name="Cryptic Minor-Hund in German" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Cryptic Minor")
-to_path = NodePath("../../Hund in German")
+from_name = &"Cryptic Minor"
+to_name = &"Hund in German"
 
 [node name="Cryptic Minor-Johnsville" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Cryptic Minor")
-to_path = NodePath("../../Johnsville")
+from_name = &"Cryptic Minor"
+to_name = &"Johnsville"
 
 [node name="Cryptic Minor-Reference Mine" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Cryptic Minor")
-to_path = NodePath("../../Reference Mine")
+from_name = &"Cryptic Minor"
+to_name = &"Reference Mine"
 
 [node name="Final Filler-Kirt Connagan" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Final Filler")
-to_path = NodePath("../../Kirt Connagan")
+from_name = &"Final Filler"
+to_name = &"Kirt Connagan"
 
 [node name="Cryptic Minor-Final Filler" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Final Filler")
-to_path = NodePath("../../Cryptic Minor")
+from_name = &"Final Filler"
+to_name = &"Cryptic Minor"
 
 [node name="Final Filler-Reference Mine" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Final Filler")
-to_path = NodePath("../../Reference Mine")
+from_name = &"Final Filler"
+to_name = &"Reference Mine"
 
 [node name="Final Filler-Wwenches" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Final Filler")
-to_path = NodePath("../../Wwenches")
+from_name = &"Final Filler"
+to_name = &"Wwenches"
 
 [node name="Gasoline Road-Noaforce" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Noaforce")
-to_path = NodePath("../../Gasoline Road")
+from_name = &"Noaforce"
+to_name = &"Gasoline Road"
 
 [node name="Noaforce-Tristan\'s Rock" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Noaforce")
-to_path = NodePath("../../Tristan\'s Rock")
+from_name = &"Noaforce"
+to_name = &"Tristan\'s Rock"
 
 [node name="Gallump-Pottery" type="Line2D" parent="links"]
 script = ExtResource("2_8y5lh")
-from_path = NodePath("../../Gallump")
-to_path = NodePath("../../Pottery")
+from_name = &"Gallump"
+to_name = &"Pottery"
 
 [node name="bg" parent="." instance=ExtResource("2_l3uxk")]
 

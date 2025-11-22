@@ -336,6 +336,6 @@ func lose(align : int):
 
 
 func leave():
-	Options.timestamp("EXIT MAP", "")
 	Options.discard_timestamp_sums()
+	Options.timestamp("EXIT MAP", "")
 	get_tree().change_scene_to_file("res://stats.tscn")

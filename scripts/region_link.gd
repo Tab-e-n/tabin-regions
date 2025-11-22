@@ -14,8 +14,15 @@ const CUTOFF_APLHA : float = 0.0
 const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)
 
 
-@export_node_path("Region") var from_path : NodePath
-@export_node_path("Region") var to_path : NodePath
+@export_node_path("Region") var from_path : NodePath:
+	set(path):
+		from_name = path.get_name(path.get_name_count() - 1)
+@export_node_path("Region") var to_path : NodePath:
+	set(path):
+		to_name = path.get_name(path.get_name_count() - 1)
+
+@export var from_name : StringName
+@export var to_name : StringName
 
 @export var generate_name : bool = false:
 	set(_u):
@@ -49,26 +56,8 @@ func _ready():
 	if Engine.is_editor_hint():
 		return
 	
-	if not from_path.is_empty():
-		from = get_node(from_path)
-	if not to_path.is_empty():
-		to = get_node(to_path)
-	
-	if from:
-		from.links.append(self)
-		if from.kinetic:
-			kinetic = true
-	if to:
-		to.links.append(self)
-		if to.kinetic:
-			kinetic = true
-	
-	var region_control : RegionControl = _get_region_control()
-	
-	if region_control:
-		if region_control.dummy:
-			return
-		width *= region_control.city_size
+	_link_up(from)
+	_link_up(to)
 	
 	gradient = Gradient.new()
 	gradient.set_offset(1, 0.325)
@@ -82,7 +71,25 @@ func _ready():
 	hide_self()
 	
 	Options.timestamp(" -- " + name + " ready", "RegionLinks")
+
+
+func _link_up(region : Region) -> void:
+	if not region:
+		return
+	region.links.append(self)
+	if region.kinetic:
+		kinetic = true
+
+
+func _ready_link(region_control : RegionControl) -> void:
+	from = region_control.get_region(from_name)
+	to = region_control.get_region(to_name)
 	
+	_link_up(from)
+	_link_up(to)
+	
+	width *= region_control.city_size
+	Options.timestamp("_ready_link", "RegionLinks")
 
 
 func _process(delta):
@@ -140,9 +147,6 @@ func _get_region_name(path : NodePath) -> String:
 
 
 func _generate_name() -> void:
-	var to_name : String = _get_region_name(to_path)
-	var from_name : String = _get_region_name(from_path)
-	
 	if to_name < from_name:
 		name = to_name + "-" + from_name
 	else:

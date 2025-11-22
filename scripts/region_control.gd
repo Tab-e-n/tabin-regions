@@ -475,6 +475,8 @@ func _ready():
 	if not region_links:
 		region_links = Node.new()
 		add_child(region_links)
+	else:
+		_ready_region_links()
 	
 	_create_region_connections()
 	Options.timestamp("_create_region_connections", "RegionControl")
@@ -658,7 +660,13 @@ func _get_all_regions():
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
-			regions[region.name] = region
+			regions[StringName(region.name)] = region
+
+
+func _ready_region_links():
+	Options.timestamp("_ready_region_links start", "RegionControl")
+	for link in region_links.get_children():
+		link._ready_link(self)
 
 
 func _create_region_connections():
@@ -966,7 +974,9 @@ func _modify_action_amount(amount : int) -> bool:
 
 
 ## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
-func get_region(reg_name : String) -> Region:
+func get_region(reg_name : StringName) -> Region:
+	if not regions.has(reg_name):
+		return null
 	var node : Node = regions[reg_name]
 	if node is Region:
 		return node

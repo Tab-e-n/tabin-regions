@@ -1,4 +1,4 @@
-[gd_scene load_steps=307 format=3 uid="uid://cvs2arpbio3au"]
+[gd_scene load_steps=308 format=3 uid="uid://cvs2arpbio3au"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_5aq8s"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_xpt7n"]
@@ -6,6 +6,14 @@
 [ext_resource type="Script" path="res://scripts/region.gd" id="3_b6jsf"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="3_bhcgi"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="3_qgnk2"]
+
+[sub_resource type="GDScript" id="GDScript_v4ljr"]
+script/source = "extends Node
+
+
+func _ready():
+	Options.timestamp(\"Starting Ready\")
+"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p41mi"]
 shader = ExtResource("2_xpt7n")
@@ -1826,3873 +1834,3876 @@ render_mode = 5
 render_range = 60.0
 region_links = NodePath("links")
 
+[node name="Node" type="Node" parent="."]
+script = SubResource("GDScript_v4ljr")
+
 [node name="links" type="Node" parent="."]
 
 [node name="Czechoslovakia-Germany" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Czechoslovakia")
-to_path = NodePath("../../Germany")
+from_name = &"Czechoslovakia"
+to_name = &"Germany"
 
 [node name="Germany-Poland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Poland")
-to_path = NodePath("../../Germany")
+from_name = &"Poland"
+to_name = &"Germany"
 
 [node name="Czechoslovakia-Poland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Czechoslovakia")
-to_path = NodePath("../../Poland")
+from_name = &"Czechoslovakia"
+to_name = &"Poland"
 
 [node name="France-Germany" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Germany")
+from_name = &"France"
+to_name = &"Germany"
 
 [node name="France-Switzerland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Switzerland")
+from_name = &"France"
+to_name = &"Switzerland"
 
 [node name="Germany-Switzerland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Switzerland")
-to_path = NodePath("../../Germany")
+from_name = &"Switzerland"
+to_name = &"Germany"
 
 [node name="Germany-Netherlands, Belgium" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Netherlands, Belgium")
-to_path = NodePath("../../Germany")
+from_name = &"Netherlands, Belgium"
+to_name = &"Germany"
 
 [node name="Denmark-Netherlands, Belgium" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Netherlands, Belgium")
-to_path = NodePath("../../Denmark")
+from_name = &"Netherlands, Belgium"
+to_name = &"Denmark"
 
 [node name="France-Netherlands, Belgium" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Netherlands, Belgium")
+from_name = &"France"
+to_name = &"Netherlands, Belgium"
 
 [node name="France-Italy" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Italy")
+from_name = &"France"
+to_name = &"Italy"
 power_reduction = 1
 
 [node name="Italy-Switzerland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Switzerland")
-to_path = NodePath("../../Italy")
+from_name = &"Switzerland"
+to_name = &"Italy"
 power_reduction = 1
 
 [node name="Austria-Czechoslovakia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Czechoslovakia")
-to_path = NodePath("../../Austria")
+from_name = &"Czechoslovakia"
+to_name = &"Austria"
 
 [node name="Austria-Switzerland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Switzerland")
-to_path = NodePath("../../Austria")
+from_name = &"Switzerland"
+to_name = &"Austria"
 
 [node name="Austria-Germany" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Austria")
-to_path = NodePath("../../Germany")
+from_name = &"Austria"
+to_name = &"Germany"
 
 [node name="Austria-Italy" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Austria")
-to_path = NodePath("../../Italy")
+from_name = &"Austria"
+to_name = &"Italy"
 power_reduction = 1
 
 [node name="France-Spain" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Spain")
+from_name = &"France"
+to_name = &"Spain"
 
 [node name="Portugal-Spain" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Portugal")
-to_path = NodePath("../../Spain")
+from_name = &"Portugal"
+to_name = &"Spain"
 
 [node name="Canaries-Portugal" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Portugal")
-to_path = NodePath("../../Canaries")
+from_name = &"Portugal"
+to_name = &"Canaries"
 
 [node name="Acores-Portugal" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Portugal")
-to_path = NodePath("../../Acores")
+from_name = &"Portugal"
+to_name = &"Acores"
 
 [node name="Britain-France" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Britain")
+from_name = &"France"
+to_name = &"Britain"
 
 [node name="Britain-Ireland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ireland")
-to_path = NodePath("../../Britain")
+from_name = &"Ireland"
+to_name = &"Britain"
 
 [node name="Greenland-Iceland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Greenland")
-to_path = NodePath("../../Iceland")
+from_name = &"Greenland"
+to_name = &"Iceland"
 
 [node name="Greenland-Labrador" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Greenland")
-to_path = NodePath("../../Labrador")
+from_name = &"Greenland"
+to_name = &"Labrador"
 
 [node name="Greenland-What\'s Baffin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Greenland")
-to_path = NodePath("../../What\'s Baffin")
+from_name = &"Greenland"
+to_name = &"What\'s Baffin"
 
 [node name="Britain-Iceland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iceland")
-to_path = NodePath("../../Britain")
+from_name = &"Iceland"
+to_name = &"Britain"
 
 [node name="Britain-Netherlands, Belgium" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Netherlands, Belgium")
-to_path = NodePath("../../Britain")
+from_name = &"Netherlands, Belgium"
+to_name = &"Britain"
 
 [node name="Iceland-Norway" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iceland")
-to_path = NodePath("../../Norway")
+from_name = &"Iceland"
+to_name = &"Norway"
 
 [node name="Norway-Svalbard" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Svalbard")
-to_path = NodePath("../../Norway")
+from_name = &"Svalbard"
+to_name = &"Norway"
 
 [node name="Greenland-Svalbard" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Svalbard")
-to_path = NodePath("../../Greenland")
+from_name = &"Svalbard"
+to_name = &"Greenland"
 
 [node name="Ellesmere, Axel Heiberg-Greenland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ellesmere, Axel Heiberg")
-to_path = NodePath("../../Greenland")
+from_name = &"Ellesmere, Axel Heiberg"
+to_name = &"Greenland"
 
 [node name="Ellesmere, Axel Heiberg-What\'s Baffin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ellesmere, Axel Heiberg")
-to_path = NodePath("../../What\'s Baffin")
+from_name = &"Ellesmere, Axel Heiberg"
+to_name = &"What\'s Baffin"
 
 [node name="Ellesmere, Axel Heiberg-Remaining Inuit Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ellesmere, Axel Heiberg")
-to_path = NodePath("../../Remaining Inuit Islands")
+from_name = &"Ellesmere, Axel Heiberg"
+to_name = &"Remaining Inuit Islands"
 
 [node name="Novaya Zemlya-Svalbard" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Svalbard")
-to_path = NodePath("../../Novaya Zemlya")
+from_name = &"Svalbard"
+to_name = &"Novaya Zemlya"
 
 [node name="Novaya Zemlya-Yamalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yamalia")
-to_path = NodePath("../../Novaya Zemlya")
+from_name = &"Yamalia"
+to_name = &"Novaya Zemlya"
 
 [node name="Nenetsia-Yamalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yamalia")
-to_path = NodePath("../../Nenetsia")
+from_name = &"Yamalia"
+to_name = &"Nenetsia"
 
 [node name="Nenetsia-Novaya Zemlya" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nenetsia")
-to_path = NodePath("../../Novaya Zemlya")
+from_name = &"Nenetsia"
+to_name = &"Novaya Zemlya"
 
 [node name="Commie Isles-Novaya Zemlya" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Commie Isles")
-to_path = NodePath("../../Novaya Zemlya")
+from_name = &"Commie Isles"
+to_name = &"Novaya Zemlya"
 
 [node name="Commie Isles-Krasnoyarsk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Commie Isles")
-to_path = NodePath("../../Krasnoyarsk")
+from_name = &"Commie Isles"
+to_name = &"Krasnoyarsk"
 
 [node name="Svalbard-Zemlya Georga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Svalbard")
-to_path = NodePath("../../Zemlya Georga")
+from_name = &"Svalbard"
+to_name = &"Zemlya Georga"
 
 [node name="Novaya Zemlya-Zemlya Georga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zemlya Georga")
-to_path = NodePath("../../Novaya Zemlya")
+from_name = &"Zemlya Georga"
+to_name = &"Novaya Zemlya"
 
 [node name="Commie Isles-Zemlya Georga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Commie Isles")
-to_path = NodePath("../../Zemlya Georga")
+from_name = &"Commie Isles"
+to_name = &"Zemlya Georga"
 
 [node name="Anzhu Islands-Commie Isles" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Anzhu Islands")
-to_path = NodePath("../../Commie Isles")
+from_name = &"Anzhu Islands"
+to_name = &"Commie Isles"
 
 [node name="Anzhu Islands-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Anzhu Islands")
-to_path = NodePath("../../Republic of Sakha")
+from_name = &"Anzhu Islands"
+to_name = &"Republic of Sakha"
 
 [node name="Anzhu Islands-Wrangel Island" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Anzhu Islands")
-to_path = NodePath("../../Wrangel Island")
+from_name = &"Anzhu Islands"
+to_name = &"Wrangel Island"
 
 [node name="Chukotka-Wrangel Island" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chukotka")
-to_path = NodePath("../../Wrangel Island")
+from_name = &"Chukotka"
+to_name = &"Wrangel Island"
 
 [node name="Chukotka-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chukotka")
-to_path = NodePath("../../Republic of Sakha")
+from_name = &"Chukotka"
+to_name = &"Republic of Sakha"
 
 [node name="Belarus-Poland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Poland")
-to_path = NodePath("../../Belarus")
+from_name = &"Poland"
+to_name = &"Belarus"
 
 [node name="Belarus-Estonia, Latvia, Lithuania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Estonia, Latvia, Lithuania")
-to_path = NodePath("../../Belarus")
+from_name = &"Estonia, Latvia, Lithuania"
+to_name = &"Belarus"
 
 [node name="Estonia, Latvia, Lithuania-Northwest Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Estonia, Latvia, Lithuania")
-to_path = NodePath("../../Northwest Russia")
+from_name = &"Estonia, Latvia, Lithuania"
+to_name = &"Northwest Russia"
 
 [node name="Estonia, Latvia, Lithuania-Poland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Poland")
-to_path = NodePath("../../Estonia, Latvia, Lithuania")
+from_name = &"Poland"
+to_name = &"Estonia, Latvia, Lithuania"
 
 [node name="Estonia, Latvia, Lithuania-Finland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Finland")
-to_path = NodePath("../../Estonia, Latvia, Lithuania")
+from_name = &"Finland"
+to_name = &"Estonia, Latvia, Lithuania"
 
 [node name="Finland-Northwest Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Finland")
-to_path = NodePath("../../Northwest Russia")
+from_name = &"Finland"
+to_name = &"Northwest Russia"
 
 [node name="Finland-Karelia, Murmansk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Finland")
-to_path = NodePath("../../Karelia, Murmansk")
+from_name = &"Finland"
+to_name = &"Karelia, Murmansk"
 
 [node name="Karelia, Murmansk-Nenetsia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nenetsia")
-to_path = NodePath("../../Karelia, Murmansk")
+from_name = &"Nenetsia"
+to_name = &"Karelia, Murmansk"
 
 [node name="Arkhangelsk-Karelia, Murmansk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkhangelsk")
-to_path = NodePath("../../Karelia, Murmansk")
+from_name = &"Arkhangelsk"
+to_name = &"Karelia, Murmansk"
 
 [node name="Arkhangelsk-Northwest Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkhangelsk")
-to_path = NodePath("../../Northwest Russia")
+from_name = &"Arkhangelsk"
+to_name = &"Northwest Russia"
 
 [node name="Karelia, Murmansk-Northwest Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northwest Russia")
-to_path = NodePath("../../Karelia, Murmansk")
+from_name = &"Northwest Russia"
+to_name = &"Karelia, Murmansk"
 
 [node name="Arkhangelsk-Nenetsia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nenetsia")
-to_path = NodePath("../../Arkhangelsk")
+from_name = &"Nenetsia"
+to_name = &"Arkhangelsk"
 
 [node name="Komi-Nenetsia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nenetsia")
-to_path = NodePath("../../Komi")
+from_name = &"Nenetsia"
+to_name = &"Komi"
 
 [node name="Arkhangelsk-Komi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkhangelsk")
-to_path = NodePath("../../Komi")
+from_name = &"Arkhangelsk"
+to_name = &"Komi"
 
 [node name="Komi-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Volga")
-to_path = NodePath("../../Komi")
+from_name = &"Volga"
+to_name = &"Komi"
 
 [node name="Belarus-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ukraine")
-to_path = NodePath("../../Belarus")
+from_name = &"Ukraine"
+to_name = &"Belarus"
 
 [node name="Belarus-Northwest Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northwest Russia")
-to_path = NodePath("../../Belarus")
+from_name = &"Northwest Russia"
+to_name = &"Belarus"
 
 [node name="Belarus-Central Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Russia")
-to_path = NodePath("../../Belarus")
+from_name = &"Central Russia"
+to_name = &"Belarus"
 
 [node name="Southern Russia-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ukraine")
-to_path = NodePath("../../Southern Russia")
+from_name = &"Ukraine"
+to_name = &"Southern Russia"
 
 [node name="Central Russia-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Russia")
-to_path = NodePath("../../Volga")
+from_name = &"Central Russia"
+to_name = &"Volga"
 
 [node name="Southern Russia-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Volga")
-to_path = NodePath("../../Southern Russia")
+from_name = &"Volga"
+to_name = &"Southern Russia"
 
 [node name="Central Russia-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ukraine")
-to_path = NodePath("../../Central Russia")
+from_name = &"Ukraine"
+to_name = &"Central Russia"
 
 [node name="Central Russia-Southern Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Russia")
-to_path = NodePath("../../Southern Russia")
+from_name = &"Central Russia"
+to_name = &"Southern Russia"
 
 [node name="Poland-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Poland")
-to_path = NodePath("../../Ukraine")
+from_name = &"Poland"
+to_name = &"Ukraine"
 
 [node name="Czechoslovakia-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Czechoslovakia")
-to_path = NodePath("../../Ukraine")
+from_name = &"Czechoslovakia"
+to_name = &"Ukraine"
 
 [node name="Romania-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Romania")
-to_path = NodePath("../../Ukraine")
+from_name = &"Romania"
+to_name = &"Ukraine"
 
 [node name="Balkan-Czechoslovakia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Czechoslovakia")
-to_path = NodePath("../../Balkan")
+from_name = &"Czechoslovakia"
+to_name = &"Balkan"
 
 [node name="Balkan-Romania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Romania")
-to_path = NodePath("../../Balkan")
+from_name = &"Romania"
+to_name = &"Balkan"
 
 [node name="Austria-Balkan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Austria")
-to_path = NodePath("../../Balkan")
+from_name = &"Austria"
+to_name = &"Balkan"
 
 [node name="Balkan-Italy" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Balkan")
-to_path = NodePath("../../Italy")
+from_name = &"Balkan"
+to_name = &"Italy"
 
 [node name="Greece-Italy" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Italy")
-to_path = NodePath("../../Greece")
+from_name = &"Italy"
+to_name = &"Greece"
 
 [node name="Balkan-Greece" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Balkan")
-to_path = NodePath("../../Greece")
+from_name = &"Balkan"
+to_name = &"Greece"
 
 [node name="Balkan-Black Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Balkan")
-to_path = NodePath("../../Black Sea")
+from_name = &"Balkan"
+to_name = &"Black Sea"
 
 [node name="Black Sea-Greece" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Black Sea")
-to_path = NodePath("../../Greece")
+from_name = &"Black Sea"
+to_name = &"Greece"
 
 [node name="Black Sea-Romania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Romania")
-to_path = NodePath("../../Black Sea")
+from_name = &"Romania"
+to_name = &"Black Sea"
 
 [node name="Black Sea-Ukraine" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Black Sea")
-to_path = NodePath("../../Ukraine")
+from_name = &"Black Sea"
+to_name = &"Ukraine"
 
 [node name="Denmark-Germany" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Denmark")
-to_path = NodePath("../../Germany")
+from_name = &"Denmark"
+to_name = &"Germany"
 
 [node name="Denmark-Sweden" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Denmark")
-to_path = NodePath("../../Sweden")
+from_name = &"Denmark"
+to_name = &"Sweden"
 
 [node name="Denmark-Norway" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Denmark")
-to_path = NodePath("../../Norway")
+from_name = &"Denmark"
+to_name = &"Norway"
 
 [node name="Karelia, Murmansk-Norway" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Karelia, Murmansk")
-to_path = NodePath("../../Norway")
+from_name = &"Karelia, Murmansk"
+to_name = &"Norway"
 
 [node name="Norway-Sweden" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Norway")
-to_path = NodePath("../../Sweden")
+from_name = &"Norway"
+to_name = &"Sweden"
 
 [node name="Finland-Sweden" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Finland")
-to_path = NodePath("../../Sweden")
+from_name = &"Finland"
+to_name = &"Sweden"
 
 [node name="Finland-Norway" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Norway")
-to_path = NodePath("../../Finland")
+from_name = &"Norway"
+to_name = &"Finland"
 
 [node name="Greece-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Turkey")
-to_path = NodePath("../../Greece")
+from_name = &"Turkey"
+to_name = &"Greece"
 
 [node name="Black Sea-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Black Sea")
-to_path = NodePath("../../Turkey")
+from_name = &"Black Sea"
+to_name = &"Turkey"
 
 [node name="Georgia, Armenia, Azerbaijan-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Georgia, Armenia, Azerbaijan")
-to_path = NodePath("../../Turkey")
+from_name = &"Georgia, Armenia, Azerbaijan"
+to_name = &"Turkey"
 
 [node name="Georgia, Armenia, Azerbaijan-North Caucasian" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Georgia, Armenia, Azerbaijan")
-to_path = NodePath("../../North Caucasian")
+from_name = &"Georgia, Armenia, Azerbaijan"
+to_name = &"North Caucasian"
 power_reduction = 1
 
 [node name="North Caucasian-Southern Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southern Russia")
-to_path = NodePath("../../North Caucasian")
+from_name = &"Southern Russia"
+to_name = &"North Caucasian"
 
 [node name="Black Sea-Southern Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southern Russia")
-to_path = NodePath("../../Black Sea")
+from_name = &"Southern Russia"
+to_name = &"Black Sea"
 
 [node name="Black Sea-North Caucasian" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Black Sea")
-to_path = NodePath("../../North Caucasian")
+from_name = &"Black Sea"
+to_name = &"North Caucasian"
 
 [node name="Black Sea-Georgia, Armenia, Azerbaijan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Black Sea")
-to_path = NodePath("../../Georgia, Armenia, Azerbaijan")
+from_name = &"Black Sea"
+to_name = &"Georgia, Armenia, Azerbaijan"
 
 [node name="Black Sea-Mediterranean Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Black Sea")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Black Sea"
+to_name = &"Mediterranean Sea"
 
 [node name="Greece-Mediterranean Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mediterranean Sea")
-to_path = NodePath("../../Greece")
+from_name = &"Mediterranean Sea"
+to_name = &"Greece"
 
 [node name="Mediterranean Sea-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Turkey")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Turkey"
+to_name = &"Mediterranean Sea"
 
 [node name="Mediterranean Sea-Syria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Syria")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Syria"
+to_name = &"Mediterranean Sea"
 
 [node name="Syria-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Turkey")
-to_path = NodePath("../../Syria")
+from_name = &"Turkey"
+to_name = &"Syria"
 power_reduction = 1
 
 [node name="Iraq-Syria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iraq")
-to_path = NodePath("../../Syria")
+from_name = &"Iraq"
+to_name = &"Syria"
 
 [node name="Palestinian Jordans-Syria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Palestinian Jordans")
-to_path = NodePath("../../Syria")
+from_name = &"Palestinian Jordans"
+to_name = &"Syria"
 
 [node name="Iraq-Palestinian Jordans" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iraq")
-to_path = NodePath("../../Palestinian Jordans")
+from_name = &"Iraq"
+to_name = &"Palestinian Jordans"
 
 [node name="Palestinian Jordans-Saudi Arabia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Saudi Arabia")
-to_path = NodePath("../../Palestinian Jordans")
+from_name = &"Saudi Arabia"
+to_name = &"Palestinian Jordans"
 
 [node name="Iraq-Saudi Arabia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iraq")
-to_path = NodePath("../../Saudi Arabia")
+from_name = &"Iraq"
+to_name = &"Saudi Arabia"
 
 [node name="Egypt-Saudi Arabia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Egypt")
-to_path = NodePath("../../Saudi Arabia")
+from_name = &"Egypt"
+to_name = &"Saudi Arabia"
 
 [node name="Saudi Arabia-Yemen" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yemen")
-to_path = NodePath("../../Saudi Arabia")
+from_name = &"Yemen"
+to_name = &"Saudi Arabia"
 
 [node name="Oman-Yemen" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yemen")
-to_path = NodePath("../../Oman")
+from_name = &"Yemen"
+to_name = &"Oman"
 
 [node name="Arabian Sea-Yemen" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yemen")
-to_path = NodePath("../../Arabian Sea")
+from_name = &"Yemen"
+to_name = &"Arabian Sea"
 
 [node name="Arabian Sea-Oman" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arabian Sea")
-to_path = NodePath("../../Oman")
+from_name = &"Arabian Sea"
+to_name = &"Oman"
 
 [node name="Eritrea, Djibouti-Yemen" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yemen")
-to_path = NodePath("../../Eritrea, Djibouti")
+from_name = &"Yemen"
+to_name = &"Eritrea, Djibouti"
 power_reduction = 1
 
 [node name="Eritrea, Djibouti-Saudi Arabia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Saudi Arabia")
-to_path = NodePath("../../Eritrea, Djibouti")
+from_name = &"Saudi Arabia"
+to_name = &"Eritrea, Djibouti"
 power_reduction = 1
 
 [node name="Eritrea, Djibouti-Somalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Somalia")
-to_path = NodePath("../../Eritrea, Djibouti")
+from_name = &"Somalia"
+to_name = &"Eritrea, Djibouti"
 
 [node name="Arabian Sea-Somalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Somalia")
-to_path = NodePath("../../Arabian Sea")
+from_name = &"Somalia"
+to_name = &"Arabian Sea"
 
 [node name="Somalia-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Somalia")
-to_path = NodePath("../../Sri Lanka")
+from_name = &"Somalia"
+to_name = &"Sri Lanka"
 
 [node name="Arabian Sea-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arabian Sea")
-to_path = NodePath("../../Sri Lanka")
+from_name = &"Arabian Sea"
+to_name = &"Sri Lanka"
 
 [node name="Eritrea, Djibouti-Ethiopia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ethiopia")
-to_path = NodePath("../../Eritrea, Djibouti")
+from_name = &"Ethiopia"
+to_name = &"Eritrea, Djibouti"
 
 [node name="Ethiopia-Somalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Somalia")
-to_path = NodePath("../../Ethiopia")
+from_name = &"Somalia"
+to_name = &"Ethiopia"
 
 [node name="Kenya-Somalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Somalia")
-to_path = NodePath("../../Kenya")
+from_name = &"Somalia"
+to_name = &"Kenya"
 
 [node name="Ethiopia-Kenya" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kenya")
-to_path = NodePath("../../Ethiopia")
+from_name = &"Kenya"
+to_name = &"Ethiopia"
 power_reduction = 1
 
 [node name="Ethiopia-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ethiopia")
-to_path = NodePath("../../Sudan")
+from_name = &"Ethiopia"
+to_name = &"Sudan"
 power_reduction = 1
 
 [node name="Ethiopia-South Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ethiopia")
-to_path = NodePath("../../South Sudan")
+from_name = &"Ethiopia"
+to_name = &"South Sudan"
 power_reduction = 1
 
 [node name="South Sudan-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Sudan")
-to_path = NodePath("../../Sudan")
+from_name = &"South Sudan"
+to_name = &"Sudan"
 
 [node name="Oman-Saudi Arabia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oman")
-to_path = NodePath("../../Saudi Arabia")
+from_name = &"Oman"
+to_name = &"Saudi Arabia"
 
 [node name="Saudi Arabia-United Arab Emirates, Quatar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../United Arab Emirates, Quatar")
-to_path = NodePath("../../Saudi Arabia")
+from_name = &"United Arab Emirates, Quatar"
+to_name = &"Saudi Arabia"
 
 [node name="Persian Gulf-United Arab Emirates, Quatar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../United Arab Emirates, Quatar")
-to_path = NodePath("../../Persian Gulf")
+from_name = &"United Arab Emirates, Quatar"
+to_name = &"Persian Gulf"
 
 [node name="Iran-Persian Gulf" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iran")
-to_path = NodePath("../../Persian Gulf")
+from_name = &"Iran"
+to_name = &"Persian Gulf"
 power_reduction = 1
 
 [node name="Iran-Turkmenistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iran")
-to_path = NodePath("../../Turkmenistan")
+from_name = &"Iran"
+to_name = &"Turkmenistan"
 power_reduction = 1
 
 [node name="Iran-United Arab Emirates, Quatar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iran")
-to_path = NodePath("../../United Arab Emirates, Quatar")
+from_name = &"Iran"
+to_name = &"United Arab Emirates, Quatar"
 power_reduction = 1
 
 [node name="Turkmenistan-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Turkmenistan")
+from_name = &"Uzbekistan"
+to_name = &"Turkmenistan"
 
 [node name="Caspian Basin-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Caspian Basin")
+from_name = &"Uzbekistan"
+to_name = &"Caspian Basin"
 
 [node name="Caspian Basin-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Volga")
-to_path = NodePath("../../Caspian Basin")
+from_name = &"Volga"
+to_name = &"Caspian Basin"
 
 [node name="Caspian Basin-Southern Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southern Russia")
-to_path = NodePath("../../Caspian Basin")
+from_name = &"Southern Russia"
+to_name = &"Caspian Basin"
 
 [node name="Central West Kazakhstan-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Central West Kazakhstan")
+from_name = &"Uzbekistan"
+to_name = &"Central West Kazakhstan"
 
 [node name="Central West Kazakhstan-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Volga")
-to_path = NodePath("../../Central West Kazakhstan")
+from_name = &"Volga"
+to_name = &"Central West Kazakhstan"
 
 [node name="South Ural-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Volga")
-to_path = NodePath("../../South Ural")
+from_name = &"Volga"
+to_name = &"South Ural"
 
 [node name="Kazakhstani North-South Ural" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Ural")
-to_path = NodePath("../../Kazakhstani North")
+from_name = &"South Ural"
+to_name = &"Kazakhstani North"
 
 [node name="Caspian Basin-Turkmenistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caspian Basin")
-to_path = NodePath("../../Turkmenistan")
+from_name = &"Caspian Basin"
+to_name = &"Turkmenistan"
 
 [node name="Caspian Basin-Central West Kazakhstan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caspian Basin")
-to_path = NodePath("../../Central West Kazakhstan")
+from_name = &"Caspian Basin"
+to_name = &"Central West Kazakhstan"
 
 [node name="Tajikistan-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Tajikistan")
+from_name = &"Uzbekistan"
+to_name = &"Tajikistan"
 power_reduction = 1
 
 [node name="Kyrgyzstan-Tajikistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kyrgyzstan")
-to_path = NodePath("../../Tajikistan")
+from_name = &"Kyrgyzstan"
+to_name = &"Tajikistan"
 
 [node name="Tajikistan-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Tajikistan")
+from_name = &"Xinjiang"
+to_name = &"Tajikistan"
 
 [node name="Kyrgyzstan-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kyrgyzstan")
-to_path = NodePath("../../Xinjiang")
+from_name = &"Kyrgyzstan"
+to_name = &"Xinjiang"
 
 [node name="Kyrgyzstan-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Kyrgyzstan")
+from_name = &"Uzbekistan"
+to_name = &"Kyrgyzstan"
 power_reduction = 1
 
 [node name="Kazakh Desert-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Kazakh Desert")
+from_name = &"Uzbekistan"
+to_name = &"Kazakh Desert"
 
 [node name="Kazakh Desert-Kyrgyzstan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kazakh Desert")
-to_path = NodePath("../../Kyrgyzstan")
+from_name = &"Kazakh Desert"
+to_name = &"Kyrgyzstan"
 power_reduction = 1
 
 [node name="Almaty Province-Kazakh Desert" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kazakh Desert")
-to_path = NodePath("../../Almaty Province")
+from_name = &"Kazakh Desert"
+to_name = &"Almaty Province"
 
 [node name="Central Kazakhstan-Kazakh Desert" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kazakh Desert")
-to_path = NodePath("../../Central Kazakhstan")
+from_name = &"Kazakh Desert"
+to_name = &"Central Kazakhstan"
 
 [node name="Central West Kazakhstan-Kazakh Desert" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kazakh Desert")
-to_path = NodePath("../../Central West Kazakhstan")
+from_name = &"Kazakh Desert"
+to_name = &"Central West Kazakhstan"
 
 [node name="Almaty Province-Central Kazakhstan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Kazakhstan")
-to_path = NodePath("../../Almaty Province")
+from_name = &"Central Kazakhstan"
+to_name = &"Almaty Province"
 power_reduction = 1
 
 [node name="Central Kazakhstan-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Kazakhstan")
-to_path = NodePath("../../Xinjiang")
+from_name = &"Central Kazakhstan"
+to_name = &"Xinjiang"
 power_reduction = 1
 
 [node name="Almaty Province-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Almaty Province")
+from_name = &"Xinjiang"
+to_name = &"Almaty Province"
 
 [node name="Altai-Central Kazakhstan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Kazakhstan")
-to_path = NodePath("../../Altai")
+from_name = &"Central Kazakhstan"
+to_name = &"Altai"
 power_reduction = 1
 
 [node name="Central Kazakhstan-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Kazakhstan")
-to_path = NodePath("../../Tuva Altai")
+from_name = &"Central Kazakhstan"
+to_name = &"Tuva Altai"
 power_reduction = 1
 
 [node name="Altai-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tuva Altai")
-to_path = NodePath("../../Altai")
+from_name = &"Tuva Altai"
+to_name = &"Altai"
 
 [node name="Krasnoyarsk-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tuva Altai")
-to_path = NodePath("../../Krasnoyarsk")
+from_name = &"Tuva Altai"
+to_name = &"Krasnoyarsk"
 power_reduction = 1
 
 [node name="Khanty-Mansi-Krasnoyarsk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khanty-Mansi")
-to_path = NodePath("../../Krasnoyarsk")
+from_name = &"Khanty-Mansi"
+to_name = &"Krasnoyarsk"
 
 [node name="Khanty-Mansi-South Ural" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khanty-Mansi")
-to_path = NodePath("../../South Ural")
+from_name = &"Khanty-Mansi"
+to_name = &"South Ural"
 
 [node name="Khanty-Mansi-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khanty-Mansi")
-to_path = NodePath("../../Volga")
+from_name = &"Khanty-Mansi"
+to_name = &"Volga"
 
 [node name="Khanty-Mansi-Yamalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khanty-Mansi")
-to_path = NodePath("../../Yamalia")
+from_name = &"Khanty-Mansi"
+to_name = &"Yamalia"
 
 [node name="Khanty-Mansi-Komi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khanty-Mansi")
-to_path = NodePath("../../Komi")
+from_name = &"Khanty-Mansi"
+to_name = &"Komi"
 
 [node name="Khanty-Mansi-Novosibirsk\'s Surroundings" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khanty-Mansi")
-to_path = NodePath("../../Novosibirsk\'s Surroundings")
+from_name = &"Khanty-Mansi"
+to_name = &"Novosibirsk\'s Surroundings"
 
 [node name="Novosibirsk\'s Surroundings-South Ural" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Novosibirsk\'s Surroundings")
-to_path = NodePath("../../South Ural")
+from_name = &"Novosibirsk\'s Surroundings"
+to_name = &"South Ural"
 
 [node name="Central Russia-Komi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Russia")
-to_path = NodePath("../../Komi")
+from_name = &"Central Russia"
+to_name = &"Komi"
 
 [node name="Central Russia-Northwest Russia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Russia")
-to_path = NodePath("../../Northwest Russia")
+from_name = &"Central Russia"
+to_name = &"Northwest Russia"
 
 [node name="Komi-Yamalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Komi")
-to_path = NodePath("../../Yamalia")
+from_name = &"Komi"
+to_name = &"Yamalia"
 
 [node name="Krasnoyarsk-Yamalia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yamalia")
-to_path = NodePath("../../Krasnoyarsk")
+from_name = &"Yamalia"
+to_name = &"Krasnoyarsk"
 
 [node name="Krasnoyarsk-Novosibirsk\'s Surroundings" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Novosibirsk\'s Surroundings")
-to_path = NodePath("../../Krasnoyarsk")
+from_name = &"Novosibirsk\'s Surroundings"
+to_name = &"Krasnoyarsk"
 
 [node name="Altai-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Altai")
+from_name = &"Xinjiang"
+to_name = &"Altai"
 
 [node name="Kazakhstani North-Volga" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Volga")
-to_path = NodePath("../../Kazakhstani North")
+from_name = &"Volga"
+to_name = &"Kazakhstani North"
 
 [node name="Central Kazakhstan-Kazakhstani North" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Kazakhstan")
-to_path = NodePath("../../Kazakhstani North")
+from_name = &"Central Kazakhstan"
+to_name = &"Kazakhstani North"
 
 [node name="Kazakhstani North-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tuva Altai")
-to_path = NodePath("../../Kazakhstani North")
+from_name = &"Tuva Altai"
+to_name = &"Kazakhstani North"
 power_reduction = 1
 
 [node name="Novosibirsk\'s Surroundings-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tuva Altai")
-to_path = NodePath("../../Novosibirsk\'s Surroundings")
+from_name = &"Tuva Altai"
+to_name = &"Novosibirsk\'s Surroundings"
 power_reduction = 1
 
 [node name="Kazakhstani North-Novosibirsk\'s Surroundings" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Novosibirsk\'s Surroundings")
-to_path = NodePath("../../Kazakhstani North")
+from_name = &"Novosibirsk\'s Surroundings"
+to_name = &"Kazakhstani North"
 
 [node name="Central Kazakhstan-Central West Kazakhstan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Kazakhstan")
-to_path = NodePath("../../Central West Kazakhstan")
+from_name = &"Central Kazakhstan"
+to_name = &"Central West Kazakhstan"
 
 [node name="Central West Kazakhstan-Kazakhstani North" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central West Kazakhstan")
-to_path = NodePath("../../Kazakhstani North")
+from_name = &"Central West Kazakhstan"
+to_name = &"Kazakhstani North"
 
 [node name="Almaty Province-Kyrgyzstan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Almaty Province")
-to_path = NodePath("../../Kyrgyzstan")
+from_name = &"Almaty Province"
+to_name = &"Kyrgyzstan"
 
 [node name="Altai-Altai Mountains" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Altai")
-to_path = NodePath("../../Altai Mountains")
+from_name = &"Altai"
+to_name = &"Altai Mountains"
 
 [node name="Altai Mountains-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Altai Mountains")
+from_name = &"Xinjiang"
+to_name = &"Altai Mountains"
 
 [node name="Altai Mountains-Northern Mongolia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Mongolia")
-to_path = NodePath("../../Altai Mountains")
+from_name = &"Northern Mongolia"
+to_name = &"Altai Mountains"
 
 [node name="Northern Mongolia-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Mongolia")
-to_path = NodePath("../../Tuva Altai")
+from_name = &"Northern Mongolia"
+to_name = &"Tuva Altai"
 
 [node name="Altai Mountains-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tuva Altai")
-to_path = NodePath("../../Altai Mountains")
+from_name = &"Tuva Altai"
+to_name = &"Altai Mountains"
 
 [node name="Central Mongolia-Northern Mongolia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Mongolia")
-to_path = NodePath("../../Central Mongolia")
+from_name = &"Northern Mongolia"
+to_name = &"Central Mongolia"
 
 [node name="Eastern Mongolia-Northern Mongolia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Mongolia")
-to_path = NodePath("../../Eastern Mongolia")
+from_name = &"Northern Mongolia"
+to_name = &"Eastern Mongolia"
 power_reduction = 1
 
 [node name="Northern Mongolia-Zabaykalsky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Mongolia")
-to_path = NodePath("../../Zabaykalsky")
+from_name = &"Northern Mongolia"
+to_name = &"Zabaykalsky"
 power_reduction = 1
 
 [node name="Buryatia-Northern Mongolia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Mongolia")
-to_path = NodePath("../../Buryatia")
+from_name = &"Northern Mongolia"
+to_name = &"Buryatia"
 power_reduction = 1
 
 [node name="Buryatia-Zabaykalsky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Buryatia")
-to_path = NodePath("../../Zabaykalsky")
+from_name = &"Buryatia"
+to_name = &"Zabaykalsky"
 
 [node name="Buryatia-Irkutsk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Buryatia")
-to_path = NodePath("../../Irkutsk")
+from_name = &"Buryatia"
+to_name = &"Irkutsk"
 
 [node name="Buryatia-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Buryatia")
-to_path = NodePath("../../Tuva Altai")
+from_name = &"Buryatia"
+to_name = &"Tuva Altai"
 power_reduction = 1
 
 [node name="Irkutsk-Tuva Altai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tuva Altai")
-to_path = NodePath("../../Irkutsk")
+from_name = &"Tuva Altai"
+to_name = &"Irkutsk"
 power_reduction = 1
 
 [node name="Irkutsk-Zabaykalsky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Irkutsk")
-to_path = NodePath("../../Zabaykalsky")
+from_name = &"Irkutsk"
+to_name = &"Zabaykalsky"
 
 [node name="Eastern Mongolia-Zabaykalsky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zabaykalsky")
-to_path = NodePath("../../Eastern Mongolia")
+from_name = &"Zabaykalsky"
+to_name = &"Eastern Mongolia"
 
 [node name="Altai Mountains-Central Mongolia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Mongolia")
-to_path = NodePath("../../Altai Mountains")
+from_name = &"Central Mongolia"
+to_name = &"Altai Mountains"
 
 [node name="Central Mongolia-Gobi Desert" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Mongolia")
-to_path = NodePath("../../Gobi Desert")
+from_name = &"Central Mongolia"
+to_name = &"Gobi Desert"
 power_reduction = 1
 
 [node name="Gobi Desert-Northwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northwest China")
-to_path = NodePath("../../Gobi Desert")
+from_name = &"Northwest China"
+to_name = &"Gobi Desert"
 power_reduction = 1
 
 [node name="Gobi Desert-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Gobi Desert")
+from_name = &"Xinjiang"
+to_name = &"Gobi Desert"
 power_reduction = 1
 
 [node name="Northwest China-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Northwest China")
+from_name = &"Xinjiang"
+to_name = &"Northwest China"
 
 [node name="Central Mongolia-Eastern Mongolia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Mongolia")
-to_path = NodePath("../../Eastern Mongolia")
+from_name = &"Central Mongolia"
+to_name = &"Eastern Mongolia"
 power_reduction = 1
 
 [node name="Eastern Mongolia-Gobi Desert" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Eastern Mongolia")
-to_path = NodePath("../../Gobi Desert")
+from_name = &"Eastern Mongolia"
+to_name = &"Gobi Desert"
 
 [node name="Eastern Mongolia-North China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Eastern Mongolia")
-to_path = NodePath("../../North China")
+from_name = &"Eastern Mongolia"
+to_name = &"North China"
 
 [node name="Gobi Desert-North China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North China")
-to_path = NodePath("../../Gobi Desert")
+from_name = &"North China"
+to_name = &"Gobi Desert"
 
 [node name="Altai Mountains-Gobi Desert" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Gobi Desert")
-to_path = NodePath("../../Altai Mountains")
+from_name = &"Gobi Desert"
+to_name = &"Altai Mountains"
 
 [node name="Afghanistan-Turkmenistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Afghanistan")
-to_path = NodePath("../../Turkmenistan")
+from_name = &"Afghanistan"
+to_name = &"Turkmenistan"
 power_reduction = 1
 
 [node name="Afghanistan-Iran" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iran")
-to_path = NodePath("../../Afghanistan")
+from_name = &"Iran"
+to_name = &"Afghanistan"
 
 [node name="Afghanistan-Tajikistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Afghanistan")
-to_path = NodePath("../../Tajikistan")
+from_name = &"Afghanistan"
+to_name = &"Tajikistan"
 
 [node name="Afghanistan-Uzbekistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uzbekistan")
-to_path = NodePath("../../Afghanistan")
+from_name = &"Uzbekistan"
+to_name = &"Afghanistan"
 power_reduction = 1
 
 [node name="Iran-Pakistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iran")
-to_path = NodePath("../../Pakistan")
+from_name = &"Iran"
+to_name = &"Pakistan"
 
 [node name="Arabian Sea-Pakistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arabian Sea")
-to_path = NodePath("../../Pakistan")
+from_name = &"Arabian Sea"
+to_name = &"Pakistan"
 
 [node name="Pakistan-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Pakistan")
+from_name = &"Xinjiang"
+to_name = &"Pakistan"
 power_reduction = 1
 
 [node name="Pakistan-Tajikistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Pakistan")
-to_path = NodePath("../../Tajikistan")
+from_name = &"Pakistan"
+to_name = &"Tajikistan"
 power_reduction = 1
 
 [node name="Afghanistan-Pakistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Afghanistan")
-to_path = NodePath("../../Pakistan")
+from_name = &"Afghanistan"
+to_name = &"Pakistan"
 
 [node name="Georgia, Armenia, Azerbaijan-Iran" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Georgia, Armenia, Azerbaijan")
-to_path = NodePath("../../Iran")
+from_name = &"Georgia, Armenia, Azerbaijan"
+to_name = &"Iran"
 power_reduction = 1
 
 [node name="Iran-Iraq" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Iraq")
-to_path = NodePath("../../Iran")
+from_name = &"Iraq"
+to_name = &"Iran"
 power_reduction = 1
 
 [node name="Iran-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Turkey")
-to_path = NodePath("../../Iran")
+from_name = &"Turkey"
+to_name = &"Iran"
 
 [node name="Persian Gulf-Saudi Arabia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Persian Gulf")
-to_path = NodePath("../../Saudi Arabia")
+from_name = &"Persian Gulf"
+to_name = &"Saudi Arabia"
 
 [node name="Arabian Sea-Persian Gulf" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Persian Gulf")
-to_path = NodePath("../../Arabian Sea")
+from_name = &"Persian Gulf"
+to_name = &"Arabian Sea"
 
 [node name="Oman-United Arab Emirates, Quatar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oman")
-to_path = NodePath("../../United Arab Emirates, Quatar")
+from_name = &"Oman"
+to_name = &"United Arab Emirates, Quatar"
 
 [node name="Iraq-Turkey" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Turkey")
-to_path = NodePath("../../Iraq")
+from_name = &"Turkey"
+to_name = &"Iraq"
 power_reduction = 1
 
 [node name="Iraq-Persian Gulf" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Persian Gulf")
-to_path = NodePath("../../Iraq")
+from_name = &"Persian Gulf"
+to_name = &"Iraq"
 
 [node name="Egypt-Mediterranean Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Egypt")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Egypt"
+to_name = &"Mediterranean Sea"
 
 [node name="Egypt-Libya" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Egypt")
-to_path = NodePath("../../Libya")
+from_name = &"Egypt"
+to_name = &"Libya"
 
 [node name="Libya-Mediterranean Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Libya")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Libya"
+to_name = &"Mediterranean Sea"
 
 [node name="Mediterranean Sea-Palestinian Jordans" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Palestinian Jordans")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Palestinian Jordans"
+to_name = &"Mediterranean Sea"
 
 [node name="Egypt-Palestinian Jordans" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Egypt")
-to_path = NodePath("../../Palestinian Jordans")
+from_name = &"Egypt"
+to_name = &"Palestinian Jordans"
 
 [node name="Italy-Mediterranean Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Italy")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Italy"
+to_name = &"Mediterranean Sea"
 
 [node name="Italy-Tyrrhenian Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Italy")
-to_path = NodePath("../../Tyrrhenian Sea")
+from_name = &"Italy"
+to_name = &"Tyrrhenian Sea"
 
 [node name="Mediterranean Sea-Tunisia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tunisia")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Tunisia"
+to_name = &"Mediterranean Sea"
 
 [node name="Tunisia-Tyrrhenian Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tunisia")
-to_path = NodePath("../../Tyrrhenian Sea")
+from_name = &"Tunisia"
+to_name = &"Tyrrhenian Sea"
 
 [node name="Libya-Tunisia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tunisia")
-to_path = NodePath("../../Libya")
+from_name = &"Tunisia"
+to_name = &"Libya"
 
 [node name="Algeria-Tunisia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tunisia")
-to_path = NodePath("../../Algeria")
+from_name = &"Tunisia"
+to_name = &"Algeria"
 
 [node name="Algeria-Libya" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Libya")
-to_path = NodePath("../../Algeria")
+from_name = &"Libya"
+to_name = &"Algeria"
 
 [node name="Algeria-Tyrrhenian Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Algeria")
-to_path = NodePath("../../Tyrrhenian Sea")
+from_name = &"Algeria"
+to_name = &"Tyrrhenian Sea"
 
 [node name="France-Tyrrhenian Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../France")
-to_path = NodePath("../../Tyrrhenian Sea")
+from_name = &"France"
+to_name = &"Tyrrhenian Sea"
 
 [node name="Spain-Tyrrhenian Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Spain")
-to_path = NodePath("../../Tyrrhenian Sea")
+from_name = &"Spain"
+to_name = &"Tyrrhenian Sea"
 
 [node name="Mediterranean Sea-Tyrrhenian Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tyrrhenian Sea")
-to_path = NodePath("../../Mediterranean Sea")
+from_name = &"Tyrrhenian Sea"
+to_name = &"Mediterranean Sea"
 
 [node name="Algeria-Niger" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Algeria")
-to_path = NodePath("../../Niger")
+from_name = &"Algeria"
+to_name = &"Niger"
 
 [node name="Mali-Niger" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mali")
-to_path = NodePath("../../Niger")
+from_name = &"Mali"
+to_name = &"Niger"
 
 [node name="Burkina Faso-Niger" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Burkina Faso")
-to_path = NodePath("../../Niger")
+from_name = &"Burkina Faso"
+to_name = &"Niger"
 
 [node name="Niger-Togo, Benin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Togo, Benin")
-to_path = NodePath("../../Niger")
+from_name = &"Togo, Benin"
+to_name = &"Niger"
 
 [node name="Niger-Nigeria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nigeria")
-to_path = NodePath("../../Niger")
+from_name = &"Nigeria"
+to_name = &"Niger"
 
 [node name="Nigeria-Togo, Benin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Togo, Benin")
-to_path = NodePath("../../Nigeria")
+from_name = &"Togo, Benin"
+to_name = &"Nigeria"
 
 [node name="Burkina Faso-Mali" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mali")
-to_path = NodePath("../../Burkina Faso")
+from_name = &"Mali"
+to_name = &"Burkina Faso"
 
 [node name="Burkina Faso-Côte d\'Ivoire" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Côte d\'Ivoire")
-to_path = NodePath("../../Burkina Faso")
+from_name = &"Côte d\'Ivoire"
+to_name = &"Burkina Faso"
 
 [node name="Burkina Faso-Ghana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ghana")
-to_path = NodePath("../../Burkina Faso")
+from_name = &"Ghana"
+to_name = &"Burkina Faso"
 
 [node name="Ghana-Togo, Benin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ghana")
-to_path = NodePath("../../Togo, Benin")
+from_name = &"Ghana"
+to_name = &"Togo, Benin"
 
 [node name="Burkina Faso-Togo, Benin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Togo, Benin")
-to_path = NodePath("../../Burkina Faso")
+from_name = &"Togo, Benin"
+to_name = &"Burkina Faso"
 
 [node name="Côte d\'Ivoire-Ghana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Côte d\'Ivoire")
-to_path = NodePath("../../Ghana")
+from_name = &"Côte d\'Ivoire"
+to_name = &"Ghana"
 
 [node name="Algeria-Mali" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Algeria")
-to_path = NodePath("../../Mali")
+from_name = &"Algeria"
+to_name = &"Mali"
 
 [node name="Libya-Niger" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Niger")
-to_path = NodePath("../../Libya")
+from_name = &"Niger"
+to_name = &"Libya"
 
 [node name="Chad-Libya" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chad")
-to_path = NodePath("../../Libya")
+from_name = &"Chad"
+to_name = &"Libya"
 
 [node name="Chad-Niger" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Niger")
-to_path = NodePath("../../Chad")
+from_name = &"Niger"
+to_name = &"Chad"
 
 [node name="Chad-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chad")
-to_path = NodePath("../../Sudan")
+from_name = &"Chad"
+to_name = &"Sudan"
 
 [node name="CAR-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../CAR")
-to_path = NodePath("../../Sudan")
+from_name = &"CAR"
+to_name = &"Sudan"
 
 [node name="CAR-Chad" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chad")
-to_path = NodePath("../../CAR")
+from_name = &"Chad"
+to_name = &"CAR"
 
 [node name="Chad-Nigeria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chad")
-to_path = NodePath("../../Nigeria")
+from_name = &"Chad"
+to_name = &"Nigeria"
 
 [node name="Cameroon-Chad" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chad")
-to_path = NodePath("../../Cameroon")
+from_name = &"Chad"
+to_name = &"Cameroon"
 
 [node name="Cameroon-Nigeria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cameroon")
-to_path = NodePath("../../Nigeria")
+from_name = &"Cameroon"
+to_name = &"Nigeria"
 
 [node name="Cameroon-Gabon, Equatorial Guinea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cameroon")
-to_path = NodePath("../../Gabon, Equatorial Guinea")
+from_name = &"Cameroon"
+to_name = &"Gabon, Equatorial Guinea"
 
 [node name="Gabon, Equatorial Guinea-Republic of the Congo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Republic of the Congo")
-to_path = NodePath("../../Gabon, Equatorial Guinea")
+from_name = &"Republic of the Congo"
+to_name = &"Gabon, Equatorial Guinea"
 
 [node name="Cameroon-Republic of the Congo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cameroon")
-to_path = NodePath("../../Republic of the Congo")
+from_name = &"Cameroon"
+to_name = &"Republic of the Congo"
 
 [node name="CAR-Republic of the Congo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../CAR")
-to_path = NodePath("../../Republic of the Congo")
+from_name = &"CAR"
+to_name = &"Republic of the Congo"
 
 [node name="Democratic Republic of the Congo-Republic of the Congo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Democratic Republic of the Congo")
-to_path = NodePath("../../Republic of the Congo")
+from_name = &"Democratic Republic of the Congo"
+to_name = &"Republic of the Congo"
 
 [node name="CAR-Democratic Republic of the Congo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../CAR")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"CAR"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="Democratic Republic of the Congo-South Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Sudan")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"South Sudan"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="Democratic Republic of the Congo-Uganda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uganda")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"Uganda"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="Democratic Republic of the Congo-Rwanda, Burundi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Rwanda, Burundi")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"Rwanda, Burundi"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="Rwanda, Burundi-Uganda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Uganda")
-to_path = NodePath("../../Rwanda, Burundi")
+from_name = &"Uganda"
+to_name = &"Rwanda, Burundi"
 
 [node name="Rwanda, Burundi-Tanzania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tanzania")
-to_path = NodePath("../../Rwanda, Burundi")
+from_name = &"Tanzania"
+to_name = &"Rwanda, Burundi"
 
 [node name="South Sudan-Uganda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Sudan")
-to_path = NodePath("../../Uganda")
+from_name = &"South Sudan"
+to_name = &"Uganda"
 
 [node name="Kenya-Uganda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kenya")
-to_path = NodePath("../../Uganda")
+from_name = &"Kenya"
+to_name = &"Uganda"
 
 [node name="Tanzania-Uganda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tanzania")
-to_path = NodePath("../../Uganda")
+from_name = &"Tanzania"
+to_name = &"Uganda"
 
 [node name="Kenya-Tanzania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kenya")
-to_path = NodePath("../../Tanzania")
+from_name = &"Kenya"
+to_name = &"Tanzania"
 power_reduction = 1
 
 [node name="Kenya-South Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Sudan")
-to_path = NodePath("../../Kenya")
+from_name = &"South Sudan"
+to_name = &"Kenya"
 
 [node name="CAR-South Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../CAR")
-to_path = NodePath("../../South Sudan")
+from_name = &"CAR"
+to_name = &"South Sudan"
 
 [node name="Angola-Democratic Republic of the Congo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Angola")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"Angola"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="Angola-Namibia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Angola")
-to_path = NodePath("../../Namibia")
+from_name = &"Angola"
+to_name = &"Namibia"
 
 [node name="Botswana-Namibia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Botswana")
-to_path = NodePath("../../Namibia")
+from_name = &"Botswana"
+to_name = &"Namibia"
 
 [node name="Botswana-Zimbabwe" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Botswana")
-to_path = NodePath("../../Zimbabwe")
+from_name = &"Botswana"
+to_name = &"Zimbabwe"
 
 [node name="Namibia-South Africa, Lesotho, Eswatini" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Africa, Lesotho, Eswatini")
-to_path = NodePath("../../Namibia")
+from_name = &"South Africa, Lesotho, Eswatini"
+to_name = &"Namibia"
 
 [node name="Botswana-South Africa, Lesotho, Eswatini" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Botswana")
-to_path = NodePath("../../South Africa, Lesotho, Eswatini")
+from_name = &"Botswana"
+to_name = &"South Africa, Lesotho, Eswatini"
 
 [node name="South Africa, Lesotho, Eswatini-Zimbabwe" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Africa, Lesotho, Eswatini")
-to_path = NodePath("../../Zimbabwe")
+from_name = &"South Africa, Lesotho, Eswatini"
+to_name = &"Zimbabwe"
 
 [node name="Mozambique-South Africa, Lesotho, Eswatini" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Africa, Lesotho, Eswatini")
-to_path = NodePath("../../Mozambique")
+from_name = &"South Africa, Lesotho, Eswatini"
+to_name = &"Mozambique"
 
 [node name="Mozambique-Zimbabwe" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mozambique")
-to_path = NodePath("../../Zimbabwe")
+from_name = &"Mozambique"
+to_name = &"Zimbabwe"
 
 [node name="Zambia-Zimbabwe" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zambia")
-to_path = NodePath("../../Zimbabwe")
+from_name = &"Zambia"
+to_name = &"Zimbabwe"
 
 [node name="Mozambique-Zambia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zambia")
-to_path = NodePath("../../Mozambique")
+from_name = &"Zambia"
+to_name = &"Mozambique"
 
 [node name="Mozambique-Tanzania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tanzania")
-to_path = NodePath("../../Mozambique")
+from_name = &"Tanzania"
+to_name = &"Mozambique"
 
 [node name="Tanzania-Zambia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zambia")
-to_path = NodePath("../../Tanzania")
+from_name = &"Zambia"
+to_name = &"Tanzania"
 
 [node name="Malawi-Mozambique" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malawi")
-to_path = NodePath("../../Mozambique")
+from_name = &"Malawi"
+to_name = &"Mozambique"
 
 [node name="Malawi-Tanzania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malawi")
-to_path = NodePath("../../Tanzania")
+from_name = &"Malawi"
+to_name = &"Tanzania"
 
 [node name="Mayonnaise-Tanzania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mayonnaise")
-to_path = NodePath("../../Tanzania")
+from_name = &"Mayonnaise"
+to_name = &"Tanzania"
 
 [node name="Malawi-Zambia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zambia")
-to_path = NodePath("../../Malawi")
+from_name = &"Zambia"
+to_name = &"Malawi"
 
 [node name="Madagascar-Mozambique" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mozambique")
-to_path = NodePath("../../Madagascar")
+from_name = &"Mozambique"
+to_name = &"Madagascar"
 
 [node name="Madagascar-Mayonnaise" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mayonnaise")
-to_path = NodePath("../../Madagascar")
+from_name = &"Mayonnaise"
+to_name = &"Madagascar"
 
 [node name="Mayonnaise-Mozambique" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mozambique")
-to_path = NodePath("../../Mayonnaise")
+from_name = &"Mozambique"
+to_name = &"Mayonnaise"
 
 [node name="Madagascar-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sri Lanka")
-to_path = NodePath("../../Madagascar")
+from_name = &"Sri Lanka"
+to_name = &"Madagascar"
 
 [node name="Maurice-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sri Lanka")
-to_path = NodePath("../../Maurice")
+from_name = &"Sri Lanka"
+to_name = &"Maurice"
 
 [node name="Angola-Zambia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Angola")
-to_path = NodePath("../../Zambia")
+from_name = &"Angola"
+to_name = &"Zambia"
 
 [node name="Namibia-Zambia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zambia")
-to_path = NodePath("../../Namibia")
+from_name = &"Zambia"
+to_name = &"Namibia"
 
 [node name="Democratic Republic of the Congo-Zambia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zambia")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"Zambia"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="Democratic Republic of the Congo-Tanzania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tanzania")
-to_path = NodePath("../../Democratic Republic of the Congo")
+from_name = &"Tanzania"
+to_name = &"Democratic Republic of the Congo"
 
 [node name="CAR-Cameroon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cameroon")
-to_path = NodePath("../../CAR")
+from_name = &"Cameroon"
+to_name = &"CAR"
 
 [node name="Libya-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sudan")
-to_path = NodePath("../../Libya")
+from_name = &"Sudan"
+to_name = &"Libya"
 
 [node name="Egypt-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Egypt")
-to_path = NodePath("../../Sudan")
+from_name = &"Egypt"
+to_name = &"Sudan"
 
 [node name="Eritrea, Djibouti-Sudan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Eritrea, Djibouti")
-to_path = NodePath("../../Sudan")
+from_name = &"Eritrea, Djibouti"
+to_name = &"Sudan"
 
 [node name="Mali-Mauritania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mauritania")
-to_path = NodePath("../../Mali")
+from_name = &"Mauritania"
+to_name = &"Mali"
 
 [node name="Mauritania-Senegal, Gambia, Guinea-Bissau" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mauritania")
-to_path = NodePath("../../Senegal, Gambia, Guinea-Bissau")
+from_name = &"Mauritania"
+to_name = &"Senegal, Gambia, Guinea-Bissau"
 
 [node name="Cabo Verde-Mauritania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Mauritania")
-to_path = NodePath("../../Cabo Verde")
+from_name = &"Mauritania"
+to_name = &"Cabo Verde"
 
 [node name="Cabo Verde-Senegal, Gambia, Guinea-Bissau" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cabo Verde")
-to_path = NodePath("../../Senegal, Gambia, Guinea-Bissau")
+from_name = &"Cabo Verde"
+to_name = &"Senegal, Gambia, Guinea-Bissau"
 
 [node name="Mali-Senegal, Gambia, Guinea-Bissau" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Senegal, Gambia, Guinea-Bissau")
-to_path = NodePath("../../Mali")
+from_name = &"Senegal, Gambia, Guinea-Bissau"
+to_name = &"Mali"
 
 [node name="Guinea-Mali" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guinea")
-to_path = NodePath("../../Mali")
+from_name = &"Guinea"
+to_name = &"Mali"
 
 [node name="Côte d\'Ivoire-Mali" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Côte d\'Ivoire")
-to_path = NodePath("../../Mali")
+from_name = &"Côte d\'Ivoire"
+to_name = &"Mali"
 
 [node name="Guinea-Sierra Liberia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guinea")
-to_path = NodePath("../../Sierra Liberia")
+from_name = &"Guinea"
+to_name = &"Sierra Liberia"
 
 [node name="Northeast Brazil-Sierra Liberia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northeast Brazil")
-to_path = NodePath("../../Sierra Liberia")
+from_name = &"Northeast Brazil"
+to_name = &"Sierra Liberia"
 
 [node name="Côte d\'Ivoire-Sierra Liberia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Côte d\'Ivoire")
-to_path = NodePath("../../Sierra Liberia")
+from_name = &"Côte d\'Ivoire"
+to_name = &"Sierra Liberia"
 
 [node name="Côte d\'Ivoire-Guinea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guinea")
-to_path = NodePath("../../Côte d\'Ivoire")
+from_name = &"Guinea"
+to_name = &"Côte d\'Ivoire"
 
 [node name="Guinea-Senegal, Gambia, Guinea-Bissau" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Senegal, Gambia, Guinea-Bissau")
-to_path = NodePath("../../Guinea")
+from_name = &"Senegal, Gambia, Guinea-Bissau"
+to_name = &"Guinea"
 
 [node name="Algeria-Mauritania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Algeria")
-to_path = NodePath("../../Mauritania")
+from_name = &"Algeria"
+to_name = &"Mauritania"
 
 [node name="Algeria-Morocco" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Algeria")
-to_path = NodePath("../../Morocco")
+from_name = &"Algeria"
+to_name = &"Morocco"
 power_reduction = 1
 
 [node name="Algeria-West Sahara" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Algeria")
-to_path = NodePath("../../West Sahara")
+from_name = &"Algeria"
+to_name = &"West Sahara"
 
 [node name="Canaries-West Sahara" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canaries")
-to_path = NodePath("../../West Sahara")
+from_name = &"Canaries"
+to_name = &"West Sahara"
 
 [node name="Morocco-West Sahara" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Sahara")
-to_path = NodePath("../../Morocco")
+from_name = &"West Sahara"
+to_name = &"Morocco"
 
 [node name="Morocco-Portugal" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Portugal")
-to_path = NodePath("../../Morocco")
+from_name = &"Portugal"
+to_name = &"Morocco"
 
 [node name="Canaries-Morocco" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canaries")
-to_path = NodePath("../../Morocco")
+from_name = &"Canaries"
+to_name = &"Morocco"
 
 [node name="Mauritania-West Sahara" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Sahara")
-to_path = NodePath("../../Mauritania")
+from_name = &"West Sahara"
+to_name = &"Mauritania"
 
 [node name="Morocco-Spain" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Spain")
-to_path = NodePath("../../Morocco")
+from_name = &"Spain"
+to_name = &"Morocco"
 
 [node name="Myanmar-Thailand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Myanmar")
-to_path = NodePath("../../Thailand")
+from_name = &"Myanmar"
+to_name = &"Thailand"
 
 [node name="Malaysia-Thailand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malaysia")
-to_path = NodePath("../../Thailand")
+from_name = &"Malaysia"
+to_name = &"Thailand"
 
 [node name="Malaysia-Sumatra" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malaysia")
-to_path = NodePath("../../Sumatra")
+from_name = &"Malaysia"
+to_name = &"Sumatra"
 
 [node name="Maurice-Sumatra" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Maurice")
-to_path = NodePath("../../Sumatra")
+from_name = &"Maurice"
+to_name = &"Sumatra"
 
 [node name="Andaman-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sri Lanka")
-to_path = NodePath("../../Andaman")
+from_name = &"Sri Lanka"
+to_name = &"Andaman"
 
 [node name="Nicobar-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sri Lanka")
-to_path = NodePath("../../Nicobar")
+from_name = &"Sri Lanka"
+to_name = &"Nicobar"
 
 [node name="Nicobar-Sumatra" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nicobar")
-to_path = NodePath("../../Sumatra")
+from_name = &"Nicobar"
+to_name = &"Sumatra"
 
 [node name="Kalimantan-Sumatra" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kalimantan")
-to_path = NodePath("../../Sumatra")
+from_name = &"Kalimantan"
+to_name = &"Sumatra"
 
 [node name="Kalimantan-Philippines" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kalimantan")
-to_path = NodePath("../../Philippines")
+from_name = &"Kalimantan"
+to_name = &"Philippines"
 
 [node name="Java-Sumatra" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Java")
-to_path = NodePath("../../Sumatra")
+from_name = &"Java"
+to_name = &"Sumatra"
 
 [node name="Java-Kalimantan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kalimantan")
-to_path = NodePath("../../Java")
+from_name = &"Kalimantan"
+to_name = &"Java"
 
 [node name="Java-Lesser Sunda Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Lesser Sunda Islands")
-to_path = NodePath("../../Java")
+from_name = &"Lesser Sunda Islands"
+to_name = &"Java"
 
 [node name="Lesser Sunda Islands-Timor-Leste" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Lesser Sunda Islands")
-to_path = NodePath("../../Timor-Leste")
+from_name = &"Lesser Sunda Islands"
+to_name = &"Timor-Leste"
 
 [node name="Banda Arc-Timor-Leste" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Banda Arc")
-to_path = NodePath("../../Timor-Leste")
+from_name = &"Banda Arc"
+to_name = &"Timor-Leste"
 
 [node name="Banda Arc-Philippines" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Banda Arc")
-to_path = NodePath("../../Philippines")
+from_name = &"Banda Arc"
+to_name = &"Philippines"
 
 [node name="Philippines-Taiwan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Taiwan")
-to_path = NodePath("../../Philippines")
+from_name = &"Taiwan"
+to_name = &"Philippines"
 
 [node name="Hainan-Philippines" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Hainan")
-to_path = NodePath("../../Philippines")
+from_name = &"Hainan"
+to_name = &"Philippines"
 
 [node name="Lesser Sunda Islands-Sulawesi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Lesser Sunda Islands")
-to_path = NodePath("../../Sulawesi")
+from_name = &"Lesser Sunda Islands"
+to_name = &"Sulawesi"
 
 [node name="Philippines-Sulawesi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Philippines")
-to_path = NodePath("../../Sulawesi")
+from_name = &"Philippines"
+to_name = &"Sulawesi"
 
 [node name="Banda Arc-Sulawesi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Banda Arc")
-to_path = NodePath("../../Sulawesi")
+from_name = &"Banda Arc"
+to_name = &"Sulawesi"
 
 [node name="Papua-Papua New Guinea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Papua New Guinea")
-to_path = NodePath("../../Papua")
+from_name = &"Papua New Guinea"
+to_name = &"Papua"
 
 [node name="Papua New Guinea-Solomon Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Papua New Guinea")
-to_path = NodePath("../../Solomon Islands")
+from_name = &"Papua New Guinea"
+to_name = &"Solomon Islands"
 
 [node name="New Caledonia-Solomon Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Caledonia")
-to_path = NodePath("../../Solomon Islands")
+from_name = &"New Caledonia"
+to_name = &"Solomon Islands"
 
 [node name="Fiji-New Caledonia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Caledonia")
-to_path = NodePath("../../Fiji")
+from_name = &"New Caledonia"
+to_name = &"Fiji"
 
 [node name="Fiji-Hanga Roa" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Hanga Roa")
-to_path = NodePath("../../Fiji")
+from_name = &"Hanga Roa"
+to_name = &"Fiji"
 
 [node name="Fiji-Solomon Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Fiji")
-to_path = NodePath("../../Solomon Islands")
+from_name = &"Fiji"
+to_name = &"Solomon Islands"
 
 [node name="Fiji-Vanuatu" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Fiji")
-to_path = NodePath("../../Vanuatu")
+from_name = &"Fiji"
+to_name = &"Vanuatu"
 
 [node name="Solomon Islands-Vanuatu" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Vanuatu")
-to_path = NodePath("../../Solomon Islands")
+from_name = &"Vanuatu"
+to_name = &"Solomon Islands"
 
 [node name="Guam-Hawaii" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guam")
-to_path = NodePath("../../Hawaii")
+from_name = &"Guam"
+to_name = &"Hawaii"
 
 [node name="Guam-Solomon Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Solomon Islands")
-to_path = NodePath("../../Guam")
+from_name = &"Solomon Islands"
+to_name = &"Guam"
 
 [node name="Fiji-Hawaii" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Fiji")
-to_path = NodePath("../../Hawaii")
+from_name = &"Fiji"
+to_name = &"Hawaii"
 
 [node name="Banda Arc-Papua" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Banda Arc")
-to_path = NodePath("../../Papua")
+from_name = &"Banda Arc"
+to_name = &"Papua"
 
 [node name="Papua New Guinea-Queensland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Papua New Guinea")
-to_path = NodePath("../../Queensland")
+from_name = &"Papua New Guinea"
+to_name = &"Queensland"
 
 [node name="Kalimantan-Malaysia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malaysia")
-to_path = NodePath("../../Kalimantan")
+from_name = &"Malaysia"
+to_name = &"Kalimantan"
 
 [node name="Malaysia-Philippines" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malaysia")
-to_path = NodePath("../../Philippines")
+from_name = &"Malaysia"
+to_name = &"Philippines"
 
 [node name="Guam-Philippines" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guam")
-to_path = NodePath("../../Philippines")
+from_name = &"Guam"
+to_name = &"Philippines"
 
 [node name="Kalimantan-Sulawesi" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sulawesi")
-to_path = NodePath("../../Kalimantan")
+from_name = &"Sulawesi"
+to_name = &"Kalimantan"
 
 [node name="Bangladesh-Myanmar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Myanmar")
-to_path = NodePath("../../Bangladesh")
+from_name = &"Myanmar"
+to_name = &"Bangladesh"
 
 [node name="Bangladesh-Central India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central India")
-to_path = NodePath("../../Bangladesh")
+from_name = &"Central India"
+to_name = &"Bangladesh"
 
 [node name="South India-Sri Lanka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South India")
-to_path = NodePath("../../Sri Lanka")
+from_name = &"South India"
+to_name = &"Sri Lanka"
 
 [node name="Andaman-South India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South India")
-to_path = NodePath("../../Andaman")
+from_name = &"South India"
+to_name = &"Andaman"
 
 [node name="South India-West India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South India")
-to_path = NodePath("../../West India")
+from_name = &"South India"
+to_name = &"West India"
 
 [node name="Arabian Sea-South India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South India")
-to_path = NodePath("../../Arabian Sea")
+from_name = &"South India"
+to_name = &"Arabian Sea"
 
 [node name="Arabian Sea-West India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arabian Sea")
-to_path = NodePath("../../West India")
+from_name = &"Arabian Sea"
+to_name = &"West India"
 
 [node name="Central India-West India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central India")
-to_path = NodePath("../../West India")
+from_name = &"Central India"
+to_name = &"West India"
 
 [node name="Central India-South India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South India")
-to_path = NodePath("../../Central India")
+from_name = &"South India"
+to_name = &"Central India"
 
 [node name="East India-Nepal" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Nepal")
+from_name = &"East India"
+to_name = &"Nepal"
 power_reduction = 1
 
 [node name="Central India-East India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Central India")
+from_name = &"East India"
+to_name = &"Central India"
 
 [node name="Central India-Nepal" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central India")
-to_path = NodePath("../../Nepal")
+from_name = &"Central India"
+to_name = &"Nepal"
 power_reduction = 1
 
 [node name="Nepal-North India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North India")
-to_path = NodePath("../../Nepal")
+from_name = &"North India"
+to_name = &"Nepal"
 power_reduction = 1
 
 [node name="North India-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North India")
-to_path = NodePath("../../Xinjiang")
+from_name = &"North India"
+to_name = &"Xinjiang"
 
 [node name="North India-Tibet" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North India")
-to_path = NodePath("../../Tibet")
+from_name = &"North India"
+to_name = &"Tibet"
 power_reduction = 1
 
 [node name="Nepal-Tibet" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tibet")
-to_path = NodePath("../../Nepal")
+from_name = &"Tibet"
+to_name = &"Nepal"
 
 [node name="Central India-North India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North India")
-to_path = NodePath("../../Central India")
+from_name = &"North India"
+to_name = &"Central India"
 
 [node name="North India-West India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North India")
-to_path = NodePath("../../West India")
+from_name = &"North India"
+to_name = &"West India"
 
 [node name="North India-Pakistan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North India")
-to_path = NodePath("../../Pakistan")
+from_name = &"North India"
+to_name = &"Pakistan"
 
 [node name="Pakistan-West India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West India")
-to_path = NodePath("../../Pakistan")
+from_name = &"West India"
+to_name = &"Pakistan"
 
 [node name="Bhutan-East India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Bhutan")
+from_name = &"East India"
+to_name = &"Bhutan"
 power_reduction = 1
 
 [node name="East India-Tibet" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Tibet")
+from_name = &"East India"
+to_name = &"Tibet"
 power_reduction = 1
 
 [node name="Tibet-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Tibet")
+from_name = &"Xinjiang"
+to_name = &"Tibet"
 
 [node name="Southwest China-Xinjiang" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Xinjiang")
-to_path = NodePath("../../Southwest China")
+from_name = &"Xinjiang"
+to_name = &"Southwest China"
 
 [node name="Southwest China-Tibet" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southwest China")
-to_path = NodePath("../../Tibet")
+from_name = &"Southwest China"
+to_name = &"Tibet"
 
 [node name="Bhutan-Tibet" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tibet")
-to_path = NodePath("../../Bhutan")
+from_name = &"Tibet"
+to_name = &"Bhutan"
 
 [node name="Bangladesh-East India" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Bangladesh")
+from_name = &"East India"
+to_name = &"Bangladesh"
 
 [node name="East India-Myanmar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Myanmar")
+from_name = &"East India"
+to_name = &"Myanmar"
 
 [node name="Myanmar-Southwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southwest China")
-to_path = NodePath("../../Myanmar")
+from_name = &"Southwest China"
+to_name = &"Myanmar"
 power_reduction = 1
 
 [node name="East India-Southwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East India")
-to_path = NodePath("../../Southwest China")
+from_name = &"East India"
+to_name = &"Southwest China"
 power_reduction = 1
 
 [node name="Cambodia-Thailand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cambodia")
-to_path = NodePath("../../Thailand")
+from_name = &"Cambodia"
+to_name = &"Thailand"
 
 [node name="Nicobar-Thailand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nicobar")
-to_path = NodePath("../../Thailand")
+from_name = &"Nicobar"
+to_name = &"Thailand"
 
 [node name="Andaman-Nicobar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nicobar")
-to_path = NodePath("../../Andaman")
+from_name = &"Nicobar"
+to_name = &"Andaman"
 
 [node name="Laos-Myanmar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Myanmar")
-to_path = NodePath("../../Laos")
+from_name = &"Myanmar"
+to_name = &"Laos"
 
 [node name="Andaman-Myanmar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Myanmar")
-to_path = NodePath("../../Andaman")
+from_name = &"Myanmar"
+to_name = &"Andaman"
 
 [node name="Laos-Southwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southwest China")
-to_path = NodePath("../../Laos")
+from_name = &"Southwest China"
+to_name = &"Laos"
 power_reduction = 1
 
 [node name="Laos-Thailand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Laos")
-to_path = NodePath("../../Thailand")
+from_name = &"Laos"
+to_name = &"Thailand"
 
 [node name="Cambodia-Laos" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cambodia")
-to_path = NodePath("../../Laos")
+from_name = &"Cambodia"
+to_name = &"Laos"
 
 [node name="Laos-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Vietnam")
-to_path = NodePath("../../Laos")
+from_name = &"Vietnam"
+to_name = &"Laos"
 
 [node name="South Central China-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Vietnam")
-to_path = NodePath("../../South Central China")
+from_name = &"Vietnam"
+to_name = &"South Central China"
 
 [node name="Southwest China-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Vietnam")
-to_path = NodePath("../../Southwest China")
+from_name = &"Vietnam"
+to_name = &"Southwest China"
 power_reduction = 1
 
 [node name="Northwest China-Southwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northwest China")
-to_path = NodePath("../../Southwest China")
+from_name = &"Northwest China"
+to_name = &"Southwest China"
 
 [node name="South Central China-Southwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southwest China")
-to_path = NodePath("../../South Central China")
+from_name = &"Southwest China"
+to_name = &"South Central China"
 power_reduction = 1
 
 [node name="Hainan-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Vietnam")
-to_path = NodePath("../../Hainan")
+from_name = &"Vietnam"
+to_name = &"Hainan"
 
 [node name="Cambodia-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cambodia")
-to_path = NodePath("../../Vietnam")
+from_name = &"Cambodia"
+to_name = &"Vietnam"
 
 [node name="Philippines-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Philippines")
-to_path = NodePath("../../Vietnam")
+from_name = &"Philippines"
+to_name = &"Vietnam"
 
 [node name="Malaysia-Vietnam" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Malaysia")
-to_path = NodePath("../../Vietnam")
+from_name = &"Malaysia"
+to_name = &"Vietnam"
 
 [node name="French Guiana-Suriname" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../French Guiana")
-to_path = NodePath("../../Suriname")
+from_name = &"French Guiana"
+to_name = &"Suriname"
 
 [node name="French Guiana-North Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../French Guiana")
-to_path = NodePath("../../North Brazil")
+from_name = &"French Guiana"
+to_name = &"North Brazil"
 
 [node name="Cabo Verde-French Guiana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../French Guiana")
-to_path = NodePath("../../Cabo Verde")
+from_name = &"French Guiana"
+to_name = &"Cabo Verde"
 
 [node name="Guyana-Suriname" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guyana")
-to_path = NodePath("../../Suriname")
+from_name = &"Guyana"
+to_name = &"Suriname"
 
 [node name="Guyana-North Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guyana")
-to_path = NodePath("../../North Brazil")
+from_name = &"Guyana"
+to_name = &"North Brazil"
 
 [node name="North Brazil-Suriname" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Brazil")
-to_path = NodePath("../../Suriname")
+from_name = &"North Brazil"
+to_name = &"Suriname"
 
 [node name="Guyana-Venezuela" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guyana")
-to_path = NodePath("../../Venezuela")
+from_name = &"Guyana"
+to_name = &"Venezuela"
 
 [node name="Nortwest Brazil-Venezuela" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nortwest Brazil")
-to_path = NodePath("../../Venezuela")
+from_name = &"Nortwest Brazil"
+to_name = &"Venezuela"
 
 [node name="Guyana-Nortwest Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guyana")
-to_path = NodePath("../../Nortwest Brazil")
+from_name = &"Guyana"
+to_name = &"Nortwest Brazil"
 
 [node name="Venezuela-Windward Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Windward Islands")
-to_path = NodePath("../../Venezuela")
+from_name = &"Windward Islands"
+to_name = &"Venezuela"
 
 [node name="Caribbean-Windward Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Windward Islands")
-to_path = NodePath("../../Caribbean")
+from_name = &"Windward Islands"
+to_name = &"Caribbean"
 
 [node name="Guyana-Windward Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guyana")
-to_path = NodePath("../../Windward Islands")
+from_name = &"Guyana"
+to_name = &"Windward Islands"
 
 [node name="Colombia-Venezuela" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colombia")
-to_path = NodePath("../../Venezuela")
+from_name = &"Colombia"
+to_name = &"Venezuela"
 
 [node name="Caribbean-Colombia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colombia")
-to_path = NodePath("../../Caribbean")
+from_name = &"Colombia"
+to_name = &"Caribbean"
 
 [node name="Colombia-Panama" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colombia")
-to_path = NodePath("../../Panama")
+from_name = &"Colombia"
+to_name = &"Panama"
 
 [node name="Colombia-Ecuador" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colombia")
-to_path = NodePath("../../Ecuador")
+from_name = &"Colombia"
+to_name = &"Ecuador"
 power_reduction = 1
 
 [node name="Ecuador-Galapagos" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Galapagos")
-to_path = NodePath("../../Ecuador")
+from_name = &"Galapagos"
+to_name = &"Ecuador"
 
 [node name="Colombia-Peru" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colombia")
-to_path = NodePath("../../Peru")
+from_name = &"Colombia"
+to_name = &"Peru"
 
 [node name="Colombia-Nortwest Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colombia")
-to_path = NodePath("../../Nortwest Brazil")
+from_name = &"Colombia"
+to_name = &"Nortwest Brazil"
 
 [node name="Nortwest Brazil-Peru" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nortwest Brazil")
-to_path = NodePath("../../Peru")
+from_name = &"Nortwest Brazil"
+to_name = &"Peru"
 power_reduction = 1
 
 [node name="Ecuador-Peru" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Peru")
-to_path = NodePath("../../Ecuador")
+from_name = &"Peru"
+to_name = &"Ecuador"
 power_reduction = 1
 
 [node name="Bolivia-Peru" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Peru")
-to_path = NodePath("../../Bolivia")
+from_name = &"Peru"
+to_name = &"Bolivia"
 power_reduction = 1
 
 [node name="Bolivia-Nortwest Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nortwest Brazil")
-to_path = NodePath("../../Bolivia")
+from_name = &"Nortwest Brazil"
+to_name = &"Bolivia"
 
 [node name="North Chile-Peru" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Peru")
-to_path = NodePath("../../North Chile")
+from_name = &"Peru"
+to_name = &"North Chile"
 
 [node name="Bolivia-North Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Chile")
-to_path = NodePath("../../Bolivia")
+from_name = &"North Chile"
+to_name = &"Bolivia"
 power_reduction = 1
 
 [node name="Bolivia-Paraguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Paraguay")
-to_path = NodePath("../../Bolivia")
+from_name = &"Paraguay"
+to_name = &"Bolivia"
 
 [node name="Center-West Brazil-Paraguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Paraguay")
-to_path = NodePath("../../Center-West Brazil")
+from_name = &"Paraguay"
+to_name = &"Center-West Brazil"
 
 [node name="Bolivia-Center-West Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Center-West Brazil")
-to_path = NodePath("../../Bolivia")
+from_name = &"Center-West Brazil"
+to_name = &"Bolivia"
 
 [node name="Paraguay-South Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Paraguay")
-to_path = NodePath("../../South Brazil")
+from_name = &"Paraguay"
+to_name = &"South Brazil"
 
 [node name="North Greater Argentina-Paraguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Paraguay")
-to_path = NodePath("../../North Greater Argentina")
+from_name = &"Paraguay"
+to_name = &"North Greater Argentina"
 
 [node name="Bolivia-North Greater Argentina" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Greater Argentina")
-to_path = NodePath("../../Bolivia")
+from_name = &"North Greater Argentina"
+to_name = &"Bolivia"
 
 [node name="Caribbean-Venezuela" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Venezuela")
+from_name = &"Caribbean"
+to_name = &"Venezuela"
 
 [node name="Caribbean-Panama" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Panama")
+from_name = &"Caribbean"
+to_name = &"Panama"
 
 [node name="Costa Rica-Panama" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Costa Rica")
-to_path = NodePath("../../Panama")
+from_name = &"Costa Rica"
+to_name = &"Panama"
 
 [node name="Costa Rica-Galapagos" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Costa Rica")
-to_path = NodePath("../../Galapagos")
+from_name = &"Costa Rica"
+to_name = &"Galapagos"
 
 [node name="Galapagos-Panama" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Galapagos")
-to_path = NodePath("../../Panama")
+from_name = &"Galapagos"
+to_name = &"Panama"
 
 [node name="Caribbean-Costa Rica" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Costa Rica")
+from_name = &"Caribbean"
+to_name = &"Costa Rica"
 
 [node name="Costa Rica-Nicaragua" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nicaragua")
-to_path = NodePath("../../Costa Rica")
+from_name = &"Nicaragua"
+to_name = &"Costa Rica"
 
 [node name="Caribbean-Nicaragua" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Nicaragua")
+from_name = &"Caribbean"
+to_name = &"Nicaragua"
 
 [node name="Honduras-Nicaragua" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Honduras")
-to_path = NodePath("../../Nicaragua")
+from_name = &"Honduras"
+to_name = &"Nicaragua"
 
 [node name="Caribbean-Honduras" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Honduras")
+from_name = &"Caribbean"
+to_name = &"Honduras"
 
 [node name="East Mexico-Guatemala, Belize" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East Mexico")
-to_path = NodePath("../../Guatemala, Belize")
+from_name = &"East Mexico"
+to_name = &"Guatemala, Belize"
 
 [node name="Cuba-East Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East Mexico")
-to_path = NodePath("../../Cuba")
+from_name = &"East Mexico"
+to_name = &"Cuba"
 
 [node name="East Mexico-South Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East Mexico")
-to_path = NodePath("../../South Mexico")
+from_name = &"East Mexico"
+to_name = &"South Mexico"
 power_reduction = 1
 
 [node name="Galapagos-South Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Galapagos")
-to_path = NodePath("../../South Mexico")
+from_name = &"Galapagos"
+to_name = &"South Mexico"
 power_reduction = 1
 
 [node name="East Mexico-Gulf Of Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East Mexico")
-to_path = NodePath("../../Gulf Of Mexico")
+from_name = &"East Mexico"
+to_name = &"Gulf Of Mexico"
 
 [node name="Gulf Of Mexico-South Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Gulf Of Mexico")
-to_path = NodePath("../../South Mexico")
+from_name = &"Gulf Of Mexico"
+to_name = &"South Mexico"
 power_reduction = 1
 
 [node name="El Salvador-Honduras" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../El Salvador")
-to_path = NodePath("../../Honduras")
+from_name = &"El Salvador"
+to_name = &"Honduras"
 
 [node name="El Salvador-Nicaragua" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../El Salvador")
-to_path = NodePath("../../Nicaragua")
+from_name = &"El Salvador"
+to_name = &"Nicaragua"
 
 [node name="El Salvador-Guatemala, Belize" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../El Salvador")
-to_path = NodePath("../../Guatemala, Belize")
+from_name = &"El Salvador"
+to_name = &"Guatemala, Belize"
 
 [node name="Guatemala, Belize-Honduras" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Guatemala, Belize")
-to_path = NodePath("../../Honduras")
+from_name = &"Guatemala, Belize"
+to_name = &"Honduras"
 
 [node name="Caribbean-Dominican Republic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Dominican Republic")
+from_name = &"Caribbean"
+to_name = &"Dominican Republic"
 
 [node name="Dominican Republic-Windward Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Windward Islands")
-to_path = NodePath("../../Dominican Republic")
+from_name = &"Windward Islands"
+to_name = &"Dominican Republic"
 
 [node name="Dominican Republic-Haiti" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Haiti")
-to_path = NodePath("../../Dominican Republic")
+from_name = &"Haiti"
+to_name = &"Dominican Republic"
 
 [node name="Caribbean-Haiti" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Haiti")
+from_name = &"Caribbean"
+to_name = &"Haiti"
 
 [node name="Antillas Mayores-Haiti" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Antillas Mayores")
-to_path = NodePath("../../Haiti")
+from_name = &"Antillas Mayores"
+to_name = &"Haiti"
 
 [node name="Cuba-Haiti" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cuba")
-to_path = NodePath("../../Haiti")
+from_name = &"Cuba"
+to_name = &"Haiti"
 
 [node name="Bahamas-Cuba" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cuba")
-to_path = NodePath("../../Bahamas")
+from_name = &"Cuba"
+to_name = &"Bahamas"
 
 [node name="Bahamas-Bermuda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Bermuda")
-to_path = NodePath("../../Bahamas")
+from_name = &"Bermuda"
+to_name = &"Bahamas"
 
 [node name="Antillas Mayores-Atlantis" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Atlantis")
-to_path = NodePath("../../Antillas Mayores")
+from_name = &"Atlantis"
+to_name = &"Antillas Mayores"
 
 [node name="Antillas Mayores-Bermuda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Bermuda")
-to_path = NodePath("../../Antillas Mayores")
+from_name = &"Bermuda"
+to_name = &"Antillas Mayores"
 
 [node name="Antillas Mayores-Bahamas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Antillas Mayores")
-to_path = NodePath("../../Bahamas")
+from_name = &"Antillas Mayores"
+to_name = &"Bahamas"
 
 [node name="Caribbean-Cuba" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Cuba")
+from_name = &"Caribbean"
+to_name = &"Cuba"
 
 [node name="Antillas Mayores-Cuba" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Antillas Mayores")
-to_path = NodePath("../../Cuba")
+from_name = &"Antillas Mayores"
+to_name = &"Cuba"
 
 [node name="Caribbean-Gulf Of Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Caribbean")
-to_path = NodePath("../../Gulf Of Mexico")
+from_name = &"Caribbean"
+to_name = &"Gulf Of Mexico"
 
 [node name="Cuba-Florida" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Florida")
-to_path = NodePath("../../Cuba")
+from_name = &"Florida"
+to_name = &"Cuba"
 
 [node name="Florida-Gulf Of Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Florida")
-to_path = NodePath("../../Gulf Of Mexico")
+from_name = &"Florida"
+to_name = &"Gulf Of Mexico"
 
 [node name="Cuba-Gulf Of Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Gulf Of Mexico")
-to_path = NodePath("../../Cuba")
+from_name = &"Gulf Of Mexico"
+to_name = &"Cuba"
 
 [node name="Bahamas-Florida" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Florida")
-to_path = NodePath("../../Bahamas")
+from_name = &"Florida"
+to_name = &"Bahamas"
 
 [node name="Florida-Miss Ala Georgia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Florida")
-to_path = NodePath("../../Miss Ala Georgia")
+from_name = &"Florida"
+to_name = &"Miss Ala Georgia"
 
 [node name="Miss Ala Georgia-Tennessee" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Miss Ala Georgia")
-to_path = NodePath("../../Tennessee")
+from_name = &"Miss Ala Georgia"
+to_name = &"Tennessee"
 
 [node name="Gulf Of Mexico-Miss Ala Georgia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Gulf Of Mexico")
-to_path = NodePath("../../Miss Ala Georgia")
+from_name = &"Gulf Of Mexico"
+to_name = &"Miss Ala Georgia"
 
 [node name="Louisiana-Miss Ala Georgia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Louisiana")
-to_path = NodePath("../../Miss Ala Georgia")
+from_name = &"Louisiana"
+to_name = &"Miss Ala Georgia"
 
 [node name="Arkansas-Miss Ala Georgia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkansas")
-to_path = NodePath("../../Miss Ala Georgia")
+from_name = &"Arkansas"
+to_name = &"Miss Ala Georgia"
 
 [node name="Louisiana-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Louisiana")
-to_path = NodePath("../../Texas")
+from_name = &"Louisiana"
+to_name = &"Texas"
 
 [node name="Arkansas-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkansas")
-to_path = NodePath("../../Texas")
+from_name = &"Arkansas"
+to_name = &"Texas"
 
 [node name="Arkansas-Oklahoma" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkansas")
-to_path = NodePath("../../Oklahoma")
+from_name = &"Arkansas"
+to_name = &"Oklahoma"
 
 [node name="Oklahoma-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oklahoma")
-to_path = NodePath("../../Texas")
+from_name = &"Oklahoma"
+to_name = &"Texas"
 
 [node name="North Mexico-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Mexico")
-to_path = NodePath("../../Texas")
+from_name = &"North Mexico"
+to_name = &"Texas"
 power_reduction = 1
 
 [node name="Central Mexico-North Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Mexico")
-to_path = NodePath("../../Central Mexico")
+from_name = &"North Mexico"
+to_name = &"Central Mexico"
 
 [node name="Central Mexico-Gulf Of Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Gulf Of Mexico")
-to_path = NodePath("../../Central Mexico")
+from_name = &"Gulf Of Mexico"
+to_name = &"Central Mexico"
 power_reduction = 1
 
 [node name="Central Mexico-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Mexico")
-to_path = NodePath("../../Texas")
+from_name = &"Central Mexico"
+to_name = &"Texas"
 power_reduction = 1
 
 [node name="Central Mexico-South Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Mexico")
-to_path = NodePath("../../South Mexico")
+from_name = &"Central Mexico"
+to_name = &"South Mexico"
 
 [node name="New Mexico-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Mexico")
-to_path = NodePath("../../Texas")
+from_name = &"New Mexico"
+to_name = &"Texas"
 power_reduction = 1
 
 [node name="Gulf Of Mexico-Texas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Gulf Of Mexico")
-to_path = NodePath("../../Texas")
+from_name = &"Gulf Of Mexico"
+to_name = &"Texas"
 
 [node name="Colorado-New Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Mexico")
-to_path = NodePath("../../Colorado")
+from_name = &"New Mexico"
+to_name = &"Colorado"
 
 [node name="Arizona-New Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Mexico")
-to_path = NodePath("../../Arizona")
+from_name = &"New Mexico"
+to_name = &"Arizona"
 
 [node name="New Mexico-North Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Mexico")
-to_path = NodePath("../../North Mexico")
+from_name = &"New Mexico"
+to_name = &"North Mexico"
 
 [node name="Arkansas-Louisiana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Louisiana")
-to_path = NodePath("../../Arkansas")
+from_name = &"Louisiana"
+to_name = &"Arkansas"
 
 [node name="Gulf Of Mexico-Louisiana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Louisiana")
-to_path = NodePath("../../Gulf Of Mexico")
+from_name = &"Louisiana"
+to_name = &"Gulf Of Mexico"
 
 [node name="Calorinia-Tennessee" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Calorinia")
-to_path = NodePath("../../Tennessee")
+from_name = &"Calorinia"
+to_name = &"Tennessee"
 
 [node name="Arkansas-Tennessee" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkansas")
-to_path = NodePath("../../Tennessee")
+from_name = &"Arkansas"
+to_name = &"Tennessee"
 
 [node name="Missouri-Tennessee" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Missouri")
-to_path = NodePath("../../Tennessee")
+from_name = &"Missouri"
+to_name = &"Tennessee"
 
 [node name="Arkansas-Missouri" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arkansas")
-to_path = NodePath("../../Missouri")
+from_name = &"Arkansas"
+to_name = &"Missouri"
 
 [node name="Kentucky-Tennessee" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kentucky")
-to_path = NodePath("../../Tennessee")
+from_name = &"Kentucky"
+to_name = &"Tennessee"
 
 [node name="Calorinia-Kentucky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Calorinia")
-to_path = NodePath("../../Kentucky")
+from_name = &"Calorinia"
+to_name = &"Kentucky"
 
 [node name="Kentucky-Missouri" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Missouri")
-to_path = NodePath("../../Kentucky")
+from_name = &"Missouri"
+to_name = &"Kentucky"
 
 [node name="Missouri-Nebransas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Missouri")
-to_path = NodePath("../../Nebransas")
+from_name = &"Missouri"
+to_name = &"Nebransas"
 
 [node name="Colorado-Nebransas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Colorado")
-to_path = NodePath("../../Nebransas")
+from_name = &"Colorado"
+to_name = &"Nebransas"
 power_reduction = 1
 
 [node name="Manitoba-Minnesota" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Minnesota")
-to_path = NodePath("../../Manitoba")
+from_name = &"Minnesota"
+to_name = &"Manitoba"
 
 [node name="Dakota-Manitoba" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Manitoba")
-to_path = NodePath("../../Dakota")
+from_name = &"Manitoba"
+to_name = &"Dakota"
 
 [node name="Manitoba-Saskatchewan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Manitoba")
-to_path = NodePath("../../Saskatchewan")
+from_name = &"Manitoba"
+to_name = &"Saskatchewan"
 
 [node name="Dakota-Saskatchewan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Saskatchewan")
-to_path = NodePath("../../Dakota")
+from_name = &"Saskatchewan"
+to_name = &"Dakota"
 
 [node name="Dakota-Montana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Montana")
-to_path = NodePath("../../Dakota")
+from_name = &"Montana"
+to_name = &"Dakota"
 power_reduction = 1
 
 [node name="British Columbia-Montana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Montana")
-to_path = NodePath("../../British Columbia")
+from_name = &"Montana"
+to_name = &"British Columbia"
 
 [node name="British Columbia-Yukon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yukon")
-to_path = NodePath("../../British Columbia")
+from_name = &"Yukon"
+to_name = &"British Columbia"
 
 [node name="Alaska-Yukon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yukon")
-to_path = NodePath("../../Alaska")
+from_name = &"Yukon"
+to_name = &"Alaska"
 power_reduction = 1
 
 [node name="Alaska-Chukotka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Chukotka")
-to_path = NodePath("../../Alaska")
+from_name = &"Chukotka"
+to_name = &"Alaska"
 
 [node name="Alaska-Kamchatka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kamchatka")
-to_path = NodePath("../../Alaska")
+from_name = &"Kamchatka"
+to_name = &"Alaska"
 
 [node name="Alaska-Wrangel Island" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Wrangel Island")
-to_path = NodePath("../../Alaska")
+from_name = &"Wrangel Island"
+to_name = &"Alaska"
 
 [node name="Alaska-British Columbia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Alaska")
-to_path = NodePath("../../British Columbia")
+from_name = &"Alaska"
+to_name = &"British Columbia"
 power_reduction = 1
 
 [node name="British Columbia-Canada Northwest Territories 1" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canada Northwest Territories 1")
-to_path = NodePath("../../British Columbia")
+from_name = &"Canada Northwest Territories 1"
+to_name = &"British Columbia"
 power_reduction = 1
 
 [node name="Canada Northwest Territories 1-Yukon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Yukon")
-to_path = NodePath("../../Canada Northwest Territories 1")
+from_name = &"Yukon"
+to_name = &"Canada Northwest Territories 1"
 power_reduction = 1
 
 [node name="Montana-Saskatchewan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Saskatchewan")
-to_path = NodePath("../../Montana")
+from_name = &"Saskatchewan"
+to_name = &"Montana"
 power_reduction = 1
 
 [node name="Alberta-Saskatchewan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Saskatchewan")
-to_path = NodePath("../../Alberta")
+from_name = &"Saskatchewan"
+to_name = &"Alberta"
 power_reduction = 1
 
 [node name="Canada Northwest Territories 2-Saskatchewan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Saskatchewan")
-to_path = NodePath("../../Canada Northwest Territories 2")
+from_name = &"Saskatchewan"
+to_name = &"Canada Northwest Territories 2"
 
 [node name="Alberta-Canada Northwest Territories 1" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canada Northwest Territories 1")
-to_path = NodePath("../../Alberta")
+from_name = &"Canada Northwest Territories 1"
+to_name = &"Alberta"
 power_reduction = 1
 
 [node name="Alberta-Canada Northwest Territories 2" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canada Northwest Territories 2")
-to_path = NodePath("../../Alberta")
+from_name = &"Canada Northwest Territories 2"
+to_name = &"Alberta"
 power_reduction = 1
 
 [node name="Canada Northwest Territories 2-Nunavut" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canada Northwest Territories 2")
-to_path = NodePath("../../Nunavut")
+from_name = &"Canada Northwest Territories 2"
+to_name = &"Nunavut"
 
 [node name="Nunavut-Victoria Banks" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Victoria Banks")
-to_path = NodePath("../../Nunavut")
+from_name = &"Victoria Banks"
+to_name = &"Nunavut"
 
 [node name="Canada Northwest Territories 1-Victoria Banks" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Victoria Banks")
-to_path = NodePath("../../Canada Northwest Territories 1")
+from_name = &"Victoria Banks"
+to_name = &"Canada Northwest Territories 1"
 
 [node name="Nunavut-Remaining Inuit Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Remaining Inuit Islands")
-to_path = NodePath("../../Nunavut")
+from_name = &"Remaining Inuit Islands"
+to_name = &"Nunavut"
 
 [node name="Remaining Inuit Islands-Victoria Banks" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Victoria Banks")
-to_path = NodePath("../../Remaining Inuit Islands")
+from_name = &"Victoria Banks"
+to_name = &"Remaining Inuit Islands"
 
 [node name="Nunavut-What\'s Baffin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../What\'s Baffin")
-to_path = NodePath("../../Nunavut")
+from_name = &"What\'s Baffin"
+to_name = &"Nunavut"
 
 [node name="Remaining Inuit Islands-What\'s Baffin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../What\'s Baffin")
-to_path = NodePath("../../Remaining Inuit Islands")
+from_name = &"What\'s Baffin"
+to_name = &"Remaining Inuit Islands"
 
 [node name="Canada Northwest Territories 1-Canada Northwest Territories 2" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Canada Northwest Territories 1")
-to_path = NodePath("../../Canada Northwest Territories 2")
+from_name = &"Canada Northwest Territories 1"
+to_name = &"Canada Northwest Territories 2"
 
 [node name="Alberta-British Columbia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../British Columbia")
-to_path = NodePath("../../Alberta")
+from_name = &"British Columbia"
+to_name = &"Alberta"
 
 [node name="Alberta-Montana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Alberta")
-to_path = NodePath("../../Montana")
+from_name = &"Alberta"
+to_name = &"Montana"
 
 [node name="Dakota-Minnesota" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Minnesota")
-to_path = NodePath("../../Dakota")
+from_name = &"Minnesota"
+to_name = &"Dakota"
 
 [node name="Dakota-Nebransas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Dakota")
-to_path = NodePath("../../Nebransas")
+from_name = &"Dakota"
+to_name = &"Nebransas"
 
 [node name="Nebransas-Wyoming" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Wyoming")
-to_path = NodePath("../../Nebransas")
+from_name = &"Wyoming"
+to_name = &"Nebransas"
 power_reduction = 1
 
 [node name="Dakota-Wyoming" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Dakota")
-to_path = NodePath("../../Wyoming")
+from_name = &"Dakota"
+to_name = &"Wyoming"
 power_reduction = 1
 
 [node name="Montana-Wyoming" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Montana")
-to_path = NodePath("../../Wyoming")
+from_name = &"Montana"
+to_name = &"Wyoming"
 
 [node name="Idaho-Wyoming" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Idaho")
-to_path = NodePath("../../Wyoming")
+from_name = &"Idaho"
+to_name = &"Wyoming"
 
 [node name="Utah-Wyoming" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Utah")
-to_path = NodePath("../../Wyoming")
+from_name = &"Utah"
+to_name = &"Wyoming"
 
 [node name="Idaho-Utah" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Idaho")
-to_path = NodePath("../../Utah")
+from_name = &"Idaho"
+to_name = &"Utah"
 
 [node name="Arizona-Utah" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arizona")
-to_path = NodePath("../../Utah")
+from_name = &"Arizona"
+to_name = &"Utah"
 
 [node name="Arizona-California" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arizona")
-to_path = NodePath("../../California")
+from_name = &"Arizona"
+to_name = &"California"
 power_reduction = 1
 
 [node name="Arizona-North Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arizona")
-to_path = NodePath("../../North Mexico")
+from_name = &"Arizona"
+to_name = &"North Mexico"
 
 [node name="Baja California-California" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Baja California")
-to_path = NodePath("../../California")
+from_name = &"Baja California"
+to_name = &"California"
 
 [node name="Baja California-Central Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Baja California")
-to_path = NodePath("../../Central Mexico")
+from_name = &"Baja California"
+to_name = &"Central Mexico"
 power_reduction = 1
 
 [node name="Baja California-Hawaii" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Baja California")
-to_path = NodePath("../../Hawaii")
+from_name = &"Baja California"
+to_name = &"Hawaii"
 
 [node name="Galapagos-Hawaii" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Galapagos")
-to_path = NodePath("../../Hawaii")
+from_name = &"Galapagos"
+to_name = &"Hawaii"
 
 [node name="Baja California-North Mexico" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Baja California")
-to_path = NodePath("../../North Mexico")
+from_name = &"Baja California"
+to_name = &"North Mexico"
 power_reduction = 1
 
 [node name="California-Hawaii" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Hawaii")
-to_path = NodePath("../../California")
+from_name = &"Hawaii"
+to_name = &"California"
 
 [node name="Arizona-Nevada" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Arizona")
-to_path = NodePath("../../Nevada")
+from_name = &"Arizona"
+to_name = &"Nevada"
 
 [node name="Idaho-Montana" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Montana")
-to_path = NodePath("../../Idaho")
+from_name = &"Montana"
+to_name = &"Idaho"
 
 [node name="Idaho-Nevada" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nevada")
-to_path = NodePath("../../Idaho")
+from_name = &"Nevada"
+to_name = &"Idaho"
 
 [node name="Idaho-Washington" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Washington")
-to_path = NodePath("../../Idaho")
+from_name = &"Washington"
+to_name = &"Idaho"
 power_reduction = 1
 
 [node name="British Columbia-Idaho" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../British Columbia")
-to_path = NodePath("../../Idaho")
+from_name = &"British Columbia"
+to_name = &"Idaho"
 
 [node name="British Columbia-Washington" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Washington")
-to_path = NodePath("../../British Columbia")
+from_name = &"Washington"
+to_name = &"British Columbia"
 power_reduction = 1
 
 [node name="Oregon-Washington" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Washington")
-to_path = NodePath("../../Oregon")
+from_name = &"Washington"
+to_name = &"Oregon"
 
 [node name="Alaska-Washington" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Washington")
-to_path = NodePath("../../Alaska")
+from_name = &"Washington"
+to_name = &"Alaska"
 power_reduction = 1
 
 [node name="Idaho-Oregon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oregon")
-to_path = NodePath("../../Idaho")
+from_name = &"Oregon"
+to_name = &"Idaho"
 power_reduction = 1
 
 [node name="California-Oregon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oregon")
-to_path = NodePath("../../California")
+from_name = &"Oregon"
+to_name = &"California"
 
 [node name="Nevada-Oregon" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oregon")
-to_path = NodePath("../../Nevada")
+from_name = &"Oregon"
+to_name = &"Nevada"
 power_reduction = 1
 
 [node name="California-Nevada" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nevada")
-to_path = NodePath("../../California")
+from_name = &"Nevada"
+to_name = &"California"
 power_reduction = 1
 
 [node name="Nebransas-Oklahoma" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oklahoma")
-to_path = NodePath("../../Nebransas")
+from_name = &"Oklahoma"
+to_name = &"Nebransas"
 
 [node name="Colorado-Oklahoma" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Oklahoma")
-to_path = NodePath("../../Colorado")
+from_name = &"Oklahoma"
+to_name = &"Colorado"
 power_reduction = 1
 
 [node name="Colorado-Utah" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Utah")
-to_path = NodePath("../../Colorado")
+from_name = &"Utah"
+to_name = &"Colorado"
 
 [node name="Nevada-Utah" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Utah")
-to_path = NodePath("../../Nevada")
+from_name = &"Utah"
+to_name = &"Nevada"
 
 [node name="Colorado-Wyoming" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Wyoming")
-to_path = NodePath("../../Colorado")
+from_name = &"Wyoming"
+to_name = &"Colorado"
 
 [node name="Missouri-Oklahoma" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Missouri")
-to_path = NodePath("../../Oklahoma")
+from_name = &"Missouri"
+to_name = &"Oklahoma"
 
 [node name="Bermuda-Calorinia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Calorinia")
-to_path = NodePath("../../Bermuda")
+from_name = &"Calorinia"
+to_name = &"Bermuda"
 
 [node name="Calorinia-West Marylaware" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Marylaware")
-to_path = NodePath("../../Calorinia")
+from_name = &"West Marylaware"
+to_name = &"Calorinia"
 
 [node name="New York Jersey-West Marylaware" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Marylaware")
-to_path = NodePath("../../New York Jersey")
+from_name = &"West Marylaware"
+to_name = &"New York Jersey"
 
 [node name="Pennsylvania-West Marylaware" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Marylaware")
-to_path = NodePath("../../Pennsylvania")
+from_name = &"West Marylaware"
+to_name = &"Pennsylvania"
 
 [node name="Ohio-West Marylaware" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Marylaware")
-to_path = NodePath("../../Ohio")
+from_name = &"West Marylaware"
+to_name = &"Ohio"
 
 [node name="Kentucky-Ohio" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kentucky")
-to_path = NodePath("../../Ohio")
+from_name = &"Kentucky"
+to_name = &"Ohio"
 
 [node name="Indinoiswa-Kentucky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kentucky")
-to_path = NodePath("../../Indinoiswa")
+from_name = &"Kentucky"
+to_name = &"Indinoiswa"
 
 [node name="Indinoiswa-Wisconsin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Wisconsin")
-to_path = NodePath("../../Indinoiswa")
+from_name = &"Wisconsin"
+to_name = &"Indinoiswa"
 
 [node name="Indinoiswa-Ohio" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Indinoiswa")
-to_path = NodePath("../../Ohio")
+from_name = &"Indinoiswa"
+to_name = &"Ohio"
 
 [node name="Indinoiswa-Michigan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Indinoiswa")
-to_path = NodePath("../../Michigan")
+from_name = &"Indinoiswa"
+to_name = &"Michigan"
 
 [node name="Indinoiswa-Missouri" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Indinoiswa")
-to_path = NodePath("../../Missouri")
+from_name = &"Indinoiswa"
+to_name = &"Missouri"
 
 [node name="Indinoiswa-Minnesota" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Minnesota")
-to_path = NodePath("../../Indinoiswa")
+from_name = &"Minnesota"
+to_name = &"Indinoiswa"
 
 [node name="Indinoiswa-Nebransas" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Indinoiswa")
-to_path = NodePath("../../Nebransas")
+from_name = &"Indinoiswa"
+to_name = &"Nebransas"
 
 [node name="Dakota-Indinoiswa" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Indinoiswa")
-to_path = NodePath("../../Dakota")
+from_name = &"Indinoiswa"
+to_name = &"Dakota"
 
 [node name="Minnesota-Wisconsin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Wisconsin")
-to_path = NodePath("../../Minnesota")
+from_name = &"Wisconsin"
+to_name = &"Minnesota"
 
 [node name="Michigan-Minnesota" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Minnesota")
-to_path = NodePath("../../Michigan")
+from_name = &"Minnesota"
+to_name = &"Michigan"
 
 [node name="Minnesota-Ontario" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Minnesota")
-to_path = NodePath("../../Ontario")
+from_name = &"Minnesota"
+to_name = &"Ontario"
 
 [node name="Michigan-Ohio" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Michigan")
-to_path = NodePath("../../Ohio")
+from_name = &"Michigan"
+to_name = &"Ohio"
 
 [node name="Michigan-Ontario" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Michigan")
-to_path = NodePath("../../Ontario")
+from_name = &"Michigan"
+to_name = &"Ontario"
 
 [node name="Manitoba-Ontario" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Manitoba")
-to_path = NodePath("../../Ontario")
+from_name = &"Manitoba"
+to_name = &"Ontario"
 
 [node name="Manitoba-Nunavut" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Manitoba")
-to_path = NodePath("../../Nunavut")
+from_name = &"Manitoba"
+to_name = &"Nunavut"
 
 [node name="Michigan-Wisconsin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Michigan")
-to_path = NodePath("../../Wisconsin")
+from_name = &"Michigan"
+to_name = &"Wisconsin"
 
 [node name="Kentucky-West Marylaware" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../West Marylaware")
-to_path = NodePath("../../Kentucky")
+from_name = &"West Marylaware"
+to_name = &"Kentucky"
 
 [node name="Ohio-Pennsylvania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ohio")
-to_path = NodePath("../../Pennsylvania")
+from_name = &"Ohio"
+to_name = &"Pennsylvania"
 
 [node name="New York Jersey-Pennsylvania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Pennsylvania")
-to_path = NodePath("../../New York Jersey")
+from_name = &"Pennsylvania"
+to_name = &"New York Jersey"
 
 [node name="New York Jersey-North-East Coast of USA" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North-East Coast of USA")
-to_path = NodePath("../../New York Jersey")
+from_name = &"North-East Coast of USA"
+to_name = &"New York Jersey"
 
 [node name="New York Jersey-Ontario" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ontario")
-to_path = NodePath("../../New York Jersey")
+from_name = &"Ontario"
+to_name = &"New York Jersey"
 
 [node name="New York Jersey-Quebec" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Quebec")
-to_path = NodePath("../../New York Jersey")
+from_name = &"Quebec"
+to_name = &"New York Jersey"
 
 [node name="Quebec-What\'s Baffin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Quebec")
-to_path = NodePath("../../What\'s Baffin")
+from_name = &"Quebec"
+to_name = &"What\'s Baffin"
 
 [node name="North-East Coast of USA-Quebec" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North-East Coast of USA")
-to_path = NodePath("../../Quebec")
+from_name = &"North-East Coast of USA"
+to_name = &"Quebec"
 
 [node name="Bay of Fundy-Quebec" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Bay of Fundy")
-to_path = NodePath("../../Quebec")
+from_name = &"Bay of Fundy"
+to_name = &"Quebec"
 
 [node name="Atlantis-Bermuda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Bermuda")
-to_path = NodePath("../../Atlantis")
+from_name = &"Bermuda"
+to_name = &"Atlantis"
 
 [node name="Bay of Fundy-Bermuda" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Bay of Fundy")
-to_path = NodePath("../../Bermuda")
+from_name = &"Bay of Fundy"
+to_name = &"Bermuda"
 
 [node name="Bay of Fundy-North-East Coast of USA" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North-East Coast of USA")
-to_path = NodePath("../../Bay of Fundy")
+from_name = &"North-East Coast of USA"
+to_name = &"Bay of Fundy"
 
 [node name="Labrador-Quebec" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Labrador")
-to_path = NodePath("../../Quebec")
+from_name = &"Labrador"
+to_name = &"Quebec"
 
 [node name="Labrador-What\'s Baffin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Labrador")
-to_path = NodePath("../../What\'s Baffin")
+from_name = &"Labrador"
+to_name = &"What\'s Baffin"
 
 [node name="Labrador-Newfoundland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Labrador")
-to_path = NodePath("../../Newfoundland")
+from_name = &"Labrador"
+to_name = &"Newfoundland"
 
 [node name="Acores-Newfoundland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Acores")
-to_path = NodePath("../../Newfoundland")
+from_name = &"Acores"
+to_name = &"Newfoundland"
 
 [node name="Acores-Ireland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Acores")
-to_path = NodePath("../../Ireland")
+from_name = &"Acores"
+to_name = &"Ireland"
 
 [node name="Ireland-Newfoundland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Newfoundland")
-to_path = NodePath("../../Ireland")
+from_name = &"Newfoundland"
+to_name = &"Ireland"
 
 [node name="Acores-Canaries" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Acores")
-to_path = NodePath("../../Canaries")
+from_name = &"Acores"
+to_name = &"Canaries"
 
 [node name="Cabo Verde-Northeast Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northeast Brazil")
-to_path = NodePath("../../Cabo Verde")
+from_name = &"Northeast Brazil"
+to_name = &"Cabo Verde"
 
 [node name="Acores-Atlantis" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Acores")
-to_path = NodePath("../../Atlantis")
+from_name = &"Acores"
+to_name = &"Atlantis"
 
 [node name="Atlantis-Windward Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Atlantis")
-to_path = NodePath("../../Windward Islands")
+from_name = &"Atlantis"
+to_name = &"Windward Islands"
 
 [node name="Cabo Verde-Windward Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Windward Islands")
-to_path = NodePath("../../Cabo Verde")
+from_name = &"Windward Islands"
+to_name = &"Cabo Verde"
 
 [node name="Cabo Verde-Canaries" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cabo Verde")
-to_path = NodePath("../../Canaries")
+from_name = &"Cabo Verde"
+to_name = &"Canaries"
 
 [node name="Atlantis-Cabo Verde" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Cabo Verde")
-to_path = NodePath("../../Atlantis")
+from_name = &"Cabo Verde"
+to_name = &"Atlantis"
 
 [node name="Atlantis-Canaries" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Atlantis")
-to_path = NodePath("../../Canaries")
+from_name = &"Atlantis"
+to_name = &"Canaries"
 
 [node name="Bay of Fundy-Newfoundland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Bay of Fundy")
-to_path = NodePath("../../Newfoundland")
+from_name = &"Bay of Fundy"
+to_name = &"Newfoundland"
 
 [node name="Newfoundland-Quebec" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Newfoundland")
-to_path = NodePath("../../Quebec")
+from_name = &"Newfoundland"
+to_name = &"Quebec"
 
 [node name="Ontario-Quebec" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Ontario")
-to_path = NodePath("../../Quebec")
+from_name = &"Ontario"
+to_name = &"Quebec"
 
 [node name="Calorinia-Miss Ala Georgia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Calorinia")
-to_path = NodePath("../../Miss Ala Georgia")
+from_name = &"Calorinia"
+to_name = &"Miss Ala Georgia"
 
 [node name="Hawaii-Japan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../Hawaii")
+from_name = &"Japan"
+to_name = &"Hawaii"
 
 [node name="Guam-Japan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../Guam")
+from_name = &"Japan"
+to_name = &"Guam"
 
 [node name="Japan-Sakhalin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../Sakhalin")
+from_name = &"Japan"
+to_name = &"Sakhalin"
 
 [node name="Japan-Kuril Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../Kuril Islands")
+from_name = &"Japan"
+to_name = &"Kuril Islands"
 
 [node name="Kamchatka-Kuril Islands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kamchatka")
-to_path = NodePath("../../Kuril Islands")
+from_name = &"Kamchatka"
+to_name = &"Kuril Islands"
 
 [node name="Chukotka-Kamchatka" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kamchatka")
-to_path = NodePath("../../Chukotka")
+from_name = &"Kamchatka"
+to_name = &"Chukotka"
 
 [node name="Kamchatka-Magadan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kamchatka")
-to_path = NodePath("../../Magadan")
+from_name = &"Kamchatka"
+to_name = &"Magadan"
 
 [node name="Khabarovsk-Magadan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khabarovsk")
-to_path = NodePath("../../Magadan")
+from_name = &"Khabarovsk"
+to_name = &"Magadan"
 
 [node name="Khabarovsk-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khabarovsk")
-to_path = NodePath("../../Republic of Sakha")
+from_name = &"Khabarovsk"
+to_name = &"Republic of Sakha"
 
 [node name="Magadan-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Republic of Sakha")
-to_path = NodePath("../../Magadan")
+from_name = &"Republic of Sakha"
+to_name = &"Magadan"
 
 [node name="Chukotka-Magadan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Magadan")
-to_path = NodePath("../../Chukotka")
+from_name = &"Magadan"
+to_name = &"Chukotka"
 
 [node name="Japan-Primorsky Krai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../Primorsky Krai")
+from_name = &"Japan"
+to_name = &"Primorsky Krai"
 
 [node name="Primorsky Krai-Sakhalin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Primorsky Krai")
-to_path = NodePath("../../Sakhalin")
+from_name = &"Primorsky Krai"
+to_name = &"Sakhalin"
 
 [node name="Khabarovsk-Primorsky Krai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Primorsky Krai")
-to_path = NodePath("../../Khabarovsk")
+from_name = &"Primorsky Krai"
+to_name = &"Khabarovsk"
 
 [node name="Khabarovsk-Sakhalin" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khabarovsk")
-to_path = NodePath("../../Sakhalin")
+from_name = &"Khabarovsk"
+to_name = &"Sakhalin"
 
 [node name="East China Sea-Japan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../East China Sea")
+from_name = &"Japan"
+to_name = &"East China Sea"
 
 [node name="East China-East China Sea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China")
-to_path = NodePath("../../East China Sea")
+from_name = &"East China"
+to_name = &"East China Sea"
 
 [node name="East China Sea-Taiwan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China Sea")
-to_path = NodePath("../../Taiwan")
+from_name = &"East China Sea"
+to_name = &"Taiwan"
 
 [node name="East China-Taiwan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China")
-to_path = NodePath("../../Taiwan")
+from_name = &"East China"
+to_name = &"Taiwan"
 
 [node name="Hainan-Taiwan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Hainan")
-to_path = NodePath("../../Taiwan")
+from_name = &"Hainan"
+to_name = &"Taiwan"
 
 [node name="Hainan-South Central China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Hainan")
-to_path = NodePath("../../South Central China")
+from_name = &"Hainan"
+to_name = &"South Central China"
 
 [node name="South Central China-Taiwan" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Central China")
-to_path = NodePath("../../Taiwan")
+from_name = &"South Central China"
+to_name = &"Taiwan"
 
 [node name="Japan-South Korea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Japan")
-to_path = NodePath("../../South Korea")
+from_name = &"Japan"
+to_name = &"South Korea"
 
 [node name="East China Sea-South Korea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China Sea")
-to_path = NodePath("../../South Korea")
+from_name = &"East China Sea"
+to_name = &"South Korea"
 
 [node name="North Korea-South Korea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Korea")
-to_path = NodePath("../../South Korea")
+from_name = &"North Korea"
+to_name = &"South Korea"
 
 [node name="North Korea-Northeast China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Korea")
-to_path = NodePath("../../Northeast China")
+from_name = &"North Korea"
+to_name = &"Northeast China"
 
 [node name="Khabarovsk-Northeast China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khabarovsk")
-to_path = NodePath("../../Northeast China")
+from_name = &"Khabarovsk"
+to_name = &"Northeast China"
 
 [node name="Amur-Northeast China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Amur")
-to_path = NodePath("../../Northeast China")
+from_name = &"Amur"
+to_name = &"Northeast China"
 
 [node name="Amur-Irkutsk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Amur")
-to_path = NodePath("../../Irkutsk")
+from_name = &"Amur"
+to_name = &"Irkutsk"
 
 [node name="Irkutsk-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Republic of Sakha")
-to_path = NodePath("../../Irkutsk")
+from_name = &"Republic of Sakha"
+to_name = &"Irkutsk"
 
 [node name="Krasnoyarsk-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Republic of Sakha")
-to_path = NodePath("../../Krasnoyarsk")
+from_name = &"Republic of Sakha"
+to_name = &"Krasnoyarsk"
 
 [node name="Irkutsk-Krasnoyarsk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Krasnoyarsk")
-to_path = NodePath("../../Irkutsk")
+from_name = &"Krasnoyarsk"
+to_name = &"Irkutsk"
 
 [node name="Amur-Republic of Sakha" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Amur")
-to_path = NodePath("../../Republic of Sakha")
+from_name = &"Amur"
+to_name = &"Republic of Sakha"
 
 [node name="Amur-Khabarovsk" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Khabarovsk")
-to_path = NodePath("../../Amur")
+from_name = &"Khabarovsk"
+to_name = &"Amur"
 
 [node name="Northeast China-Primorsky Krai" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Primorsky Krai")
-to_path = NodePath("../../Northeast China")
+from_name = &"Primorsky Krai"
+to_name = &"Northeast China"
 
 [node name="East China-North Korea" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Korea")
-to_path = NodePath("../../East China")
+from_name = &"North Korea"
+to_name = &"East China"
 
 [node name="Amur-North China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North China")
-to_path = NodePath("../../Amur")
+from_name = &"North China"
+to_name = &"Amur"
 
 [node name="North China-Zabaykalsky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North China")
-to_path = NodePath("../../Zabaykalsky")
+from_name = &"North China"
+to_name = &"Zabaykalsky"
 
 [node name="Amur-Zabaykalsky" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Zabaykalsky")
-to_path = NodePath("../../Amur")
+from_name = &"Zabaykalsky"
+to_name = &"Amur"
 
 [node name="East China-Northeast China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China")
-to_path = NodePath("../../Northeast China")
+from_name = &"East China"
+to_name = &"Northeast China"
 
 [node name="East China-North China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China")
-to_path = NodePath("../../North China")
+from_name = &"East China"
+to_name = &"North China"
 
 [node name="East China-South Central China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../East China")
-to_path = NodePath("../../South Central China")
+from_name = &"East China"
+to_name = &"South Central China"
 
 [node name="North China-South Central China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Central China")
-to_path = NodePath("../../North China")
+from_name = &"South Central China"
+to_name = &"North China"
 
 [node name="Northwest China-South Central China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Central China")
-to_path = NodePath("../../Northwest China")
+from_name = &"South Central China"
+to_name = &"Northwest China"
 power_reduction = 1
 
 [node name="North China-Northwest China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northwest China")
-to_path = NodePath("../../North China")
+from_name = &"Northwest China"
+to_name = &"North China"
 power_reduction = 1
 
 [node name="North China-Northeast China" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North China")
-to_path = NodePath("../../Northeast China")
+from_name = &"North China"
+to_name = &"Northeast China"
 
 [node name="New Zealand-Tasmania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tasmania")
-to_path = NodePath("../../New Zealand")
+from_name = &"Tasmania"
+to_name = &"New Zealand"
 
 [node name="Fiji-New Zealand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Fiji")
-to_path = NodePath("../../New Zealand")
+from_name = &"Fiji"
+to_name = &"New Zealand"
 
 [node name="Fiji-Galapagos" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Fiji")
-to_path = NodePath("../../Galapagos")
+from_name = &"Fiji"
+to_name = &"Galapagos"
 
 [node name="New South Wales-New Zealand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New South Wales")
-to_path = NodePath("../../New Zealand")
+from_name = &"New South Wales"
+to_name = &"New Zealand"
 
 [node name="South Australia-Western Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Australia")
-to_path = NodePath("../../Western Australia")
+from_name = &"South Australia"
+to_name = &"Western Australia"
 
 [node name="Maurice-Western Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Maurice")
-to_path = NodePath("../../Western Australia")
+from_name = &"Maurice"
+to_name = &"Western Australia"
 
 [node name="Kerguelen-Western Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kerguelen")
-to_path = NodePath("../../Western Australia")
+from_name = &"Kerguelen"
+to_name = &"Western Australia"
 
 [node name="Northern Australia-South Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Australia")
-to_path = NodePath("../../Northern Australia")
+from_name = &"South Australia"
+to_name = &"Northern Australia"
 
 [node name="Northern Australia-Papua" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Papua")
-to_path = NodePath("../../Northern Australia")
+from_name = &"Papua"
+to_name = &"Northern Australia"
 
 [node name="Queensland-South Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Australia")
-to_path = NodePath("../../Queensland")
+from_name = &"South Australia"
+to_name = &"Queensland"
 
 [node name="New Caledonia-Queensland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Caledonia")
-to_path = NodePath("../../Queensland")
+from_name = &"New Caledonia"
+to_name = &"Queensland"
 
 [node name="New Caledonia-Vanuatu" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Caledonia")
-to_path = NodePath("../../Vanuatu")
+from_name = &"New Caledonia"
+to_name = &"Vanuatu"
 
 [node name="Northern Australia-Queensland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Queensland")
-to_path = NodePath("../../Northern Australia")
+from_name = &"Queensland"
+to_name = &"Northern Australia"
 
 [node name="Northern Australia-Western Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Australia")
-to_path = NodePath("../../Western Australia")
+from_name = &"Northern Australia"
+to_name = &"Western Australia"
 
 [node name="Northern Australia-Timor-Leste" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Northern Australia")
-to_path = NodePath("../../Timor-Leste")
+from_name = &"Northern Australia"
+to_name = &"Timor-Leste"
 
 [node name="Lesser Sunda Islands-Western Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Lesser Sunda Islands")
-to_path = NodePath("../../Western Australia")
+from_name = &"Lesser Sunda Islands"
+to_name = &"Western Australia"
 
 [node name="Tasmania-Victoria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tasmania")
-to_path = NodePath("../../Victoria")
+from_name = &"Tasmania"
+to_name = &"Victoria"
 
 [node name="South Australia-Victoria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Australia")
-to_path = NodePath("../../Victoria")
+from_name = &"South Australia"
+to_name = &"Victoria"
 
 [node name="New South Wales-South Australia" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Australia")
-to_path = NodePath("../../New South Wales")
+from_name = &"South Australia"
+to_name = &"New South Wales"
 
 [node name="New South Wales-Queensland" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Queensland")
-to_path = NodePath("../../New South Wales")
+from_name = &"Queensland"
+to_name = &"New South Wales"
 
 [node name="New South Wales-Victoria" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New South Wales")
-to_path = NodePath("../../Victoria")
+from_name = &"New South Wales"
+to_name = &"Victoria"
 
 [node name="Chilean Antarctic-Neutral Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Neutral Antarctic")
-to_path = NodePath("../../Chilean Antarctic")
+from_name = &"Neutral Antarctic"
+to_name = &"Chilean Antarctic"
 
 [node name="Hanga Roa-Neutral Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Neutral Antarctic")
-to_path = NodePath("../../Hanga Roa")
+from_name = &"Neutral Antarctic"
+to_name = &"Hanga Roa"
 
 [node name="Argentina Antarctic-Chilean Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Argentina Antarctic")
-to_path = NodePath("../../Chilean Antarctic")
+from_name = &"Argentina Antarctic"
+to_name = &"Chilean Antarctic"
 
 [node name="Argentina Antarctic-Norway Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Argentina Antarctic")
-to_path = NodePath("../../Norway Antarctic")
+from_name = &"Argentina Antarctic"
+to_name = &"Norway Antarctic"
 
 [node name="Argentina Antarctic-Falklands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Argentina Antarctic")
-to_path = NodePath("../../Falklands")
+from_name = &"Argentina Antarctic"
+to_name = &"Falklands"
 
 [node name="Argentina Antarctic-Sandwich" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Argentina Antarctic")
-to_path = NodePath("../../Sandwich")
+from_name = &"Argentina Antarctic"
+to_name = &"Sandwich"
 
 [node name="Falklands-Sandwich" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sandwich")
-to_path = NodePath("../../Falklands")
+from_name = &"Sandwich"
+to_name = &"Falklands"
 
 [node name="Australia Antarctic-Norway Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Australia Antarctic")
-to_path = NodePath("../../Norway Antarctic")
+from_name = &"Australia Antarctic"
+to_name = &"Norway Antarctic"
 
 [node name="Norway Antarctic-Sandwich" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Sandwich")
-to_path = NodePath("../../Norway Antarctic")
+from_name = &"Sandwich"
+to_name = &"Norway Antarctic"
 
 [node name="Australia Antarctic-New Zealand Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Australia Antarctic")
-to_path = NodePath("../../New Zealand Antarctic")
+from_name = &"Australia Antarctic"
+to_name = &"New Zealand Antarctic"
 
 [node name="Neutral Antarctic-New Zealand Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Neutral Antarctic")
-to_path = NodePath("../../New Zealand Antarctic")
+from_name = &"Neutral Antarctic"
+to_name = &"New Zealand Antarctic"
 
 [node name="New Zealand-New Zealand Antarctic" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Zealand")
-to_path = NodePath("../../New Zealand Antarctic")
+from_name = &"New Zealand"
+to_name = &"New Zealand Antarctic"
 
 [node name="Hanga Roa-New Zealand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Zealand")
-to_path = NodePath("../../Hanga Roa")
+from_name = &"New Zealand"
+to_name = &"Hanga Roa"
 
 [node name="New Zealand Antarctic-Tasmania" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tasmania")
-to_path = NodePath("../../New Zealand Antarctic")
+from_name = &"Tasmania"
+to_name = &"New Zealand Antarctic"
 
 [node name="New Caledonia-New Zealand" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../New Zealand")
-to_path = NodePath("../../New Caledonia")
+from_name = &"New Zealand"
+to_name = &"New Caledonia"
 
 [node name="Norway Antarctic-South Africa, Lesotho, Eswatini" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Africa, Lesotho, Eswatini")
-to_path = NodePath("../../Norway Antarctic")
+from_name = &"South Africa, Lesotho, Eswatini"
+to_name = &"Norway Antarctic"
 
 [node name="Sandwich-South Africa, Lesotho, Eswatini" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Africa, Lesotho, Eswatini")
-to_path = NodePath("../../Sandwich")
+from_name = &"South Africa, Lesotho, Eswatini"
+to_name = &"Sandwich"
 
 [node name="Australia Antarctic-Madagascar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Madagascar")
-to_path = NodePath("../../Australia Antarctic")
+from_name = &"Madagascar"
+to_name = &"Australia Antarctic"
 
 [node name="Australia Antarctic-Kerguelen" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Kerguelen")
-to_path = NodePath("../../Australia Antarctic")
+from_name = &"Kerguelen"
+to_name = &"Australia Antarctic"
 
 [node name="Kerguelen-Madagascar" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Madagascar")
-to_path = NodePath("../../Kerguelen")
+from_name = &"Madagascar"
+to_name = &"Kerguelen"
 
 [node name="Madagascar-Maurice" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Madagascar")
-to_path = NodePath("../../Maurice")
+from_name = &"Madagascar"
+to_name = &"Maurice"
 
 [node name="Kerguelen-Maurice" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Maurice")
-to_path = NodePath("../../Kerguelen")
+from_name = &"Maurice"
+to_name = &"Kerguelen"
 
 [node name="Chilean Antarctic-Falklands" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Falklands")
-to_path = NodePath("../../Chilean Antarctic")
+from_name = &"Falklands"
+to_name = &"Chilean Antarctic"
 
 [node name="Falklands-Santa Cruz" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Falklands")
-to_path = NodePath("../../Santa Cruz")
+from_name = &"Falklands"
+to_name = &"Santa Cruz"
 
 [node name="Chilean Antarctic-Tierra del Feugo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tierra del Feugo")
-to_path = NodePath("../../Chilean Antarctic")
+from_name = &"Tierra del Feugo"
+to_name = &"Chilean Antarctic"
 
 [node name="South Chile-Tierra del Feugo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Tierra del Feugo")
-to_path = NodePath("../../South Chile")
+from_name = &"Tierra del Feugo"
+to_name = &"South Chile"
 
 [node name="Hanga Roa-South Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Hanga Roa")
-to_path = NodePath("../../South Chile")
+from_name = &"Hanga Roa"
+to_name = &"South Chile"
 
 [node name="Falklands-Tierra del Feugo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Falklands")
-to_path = NodePath("../../Tierra del Feugo")
+from_name = &"Falklands"
+to_name = &"Tierra del Feugo"
 
 [node name="Santa Cruz-Tierra del Feugo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Santa Cruz")
-to_path = NodePath("../../Tierra del Feugo")
+from_name = &"Santa Cruz"
+to_name = &"Tierra del Feugo"
 
 [node name="Chubut-Santa Cruz" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Santa Cruz")
-to_path = NodePath("../../Chubut")
+from_name = &"Santa Cruz"
+to_name = &"Chubut"
 
 [node name="Chubut-South Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Chile")
-to_path = NodePath("../../Chubut")
+from_name = &"South Chile"
+to_name = &"Chubut"
 
 [node name="Santa Cruz-South Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Santa Cruz")
-to_path = NodePath("../../South Chile")
+from_name = &"Santa Cruz"
+to_name = &"South Chile"
 
 [node name="Chubut-Remaining Patagonica" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Remaining Patagonica")
-to_path = NodePath("../../Chubut")
+from_name = &"Remaining Patagonica"
+to_name = &"Chubut"
 
 [node name="Remaining Patagonica-South Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Remaining Patagonica")
-to_path = NodePath("../../South Chile")
+from_name = &"Remaining Patagonica"
+to_name = &"South Chile"
 
 [node name="Central Chile-Remaining Patagonica" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Remaining Patagonica")
-to_path = NodePath("../../Central Chile")
+from_name = &"Remaining Patagonica"
+to_name = &"Central Chile"
 power_reduction = 1
 
 [node name="Central Chile-South Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Chile")
-to_path = NodePath("../../South Chile")
+from_name = &"Central Chile"
+to_name = &"South Chile"
 
 [node name="Central Chile-Hanga Roa" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Chile")
-to_path = NodePath("../../Hanga Roa")
+from_name = &"Central Chile"
+to_name = &"Hanga Roa"
 
 [node name="Buenos Aires-Uruguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Buenos Aires")
-to_path = NodePath("../../Uruguay")
+from_name = &"Buenos Aires"
+to_name = &"Uruguay"
 
 [node name="Buenos Aires-Central Argentina" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Buenos Aires")
-to_path = NodePath("../../Central Argentina")
+from_name = &"Buenos Aires"
+to_name = &"Central Argentina"
 
 [node name="Buenos Aires-Remaining Patagonica" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Buenos Aires")
-to_path = NodePath("../../Remaining Patagonica")
+from_name = &"Buenos Aires"
+to_name = &"Remaining Patagonica"
 
 [node name="Central Argentina-Nuevo Cuyo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nuevo Cuyo")
-to_path = NodePath("../../Central Argentina")
+from_name = &"Nuevo Cuyo"
+to_name = &"Central Argentina"
 
 [node name="Central Chile-Nuevo Cuyo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nuevo Cuyo")
-to_path = NodePath("../../Central Chile")
+from_name = &"Nuevo Cuyo"
+to_name = &"Central Chile"
 power_reduction = 1
 
 [node name="Central Chile-North Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Chile")
-to_path = NodePath("../../Central Chile")
+from_name = &"North Chile"
+to_name = &"Central Chile"
 
 [node name="Hanga Roa-North Chile" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Chile")
-to_path = NodePath("../../Hanga Roa")
+from_name = &"North Chile"
+to_name = &"Hanga Roa"
 
 [node name="North Greater Argentina-Nuevo Cuyo" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nuevo Cuyo")
-to_path = NodePath("../../North Greater Argentina")
+from_name = &"Nuevo Cuyo"
+to_name = &"North Greater Argentina"
 
 [node name="North Chile-North Greater Argentina" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Chile")
-to_path = NodePath("../../North Greater Argentina")
+from_name = &"North Chile"
+to_name = &"North Greater Argentina"
 power_reduction = 1
 
 [node name="Nuevo Cuyo-Remaining Patagonica" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nuevo Cuyo")
-to_path = NodePath("../../Remaining Patagonica")
+from_name = &"Nuevo Cuyo"
+to_name = &"Remaining Patagonica"
 
 [node name="Central Argentina-Remaining Patagonica" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Remaining Patagonica")
-to_path = NodePath("../../Central Argentina")
+from_name = &"Remaining Patagonica"
+to_name = &"Central Argentina"
 
 [node name="Central Argentina-Uruguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Argentina")
-to_path = NodePath("../../Uruguay")
+from_name = &"Central Argentina"
+to_name = &"Uruguay"
 
 [node name="Central Argentina-North Greater Argentina" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Central Argentina")
-to_path = NodePath("../../North Greater Argentina")
+from_name = &"Central Argentina"
+to_name = &"North Greater Argentina"
 
 [node name="North Greater Argentina-Uruguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Greater Argentina")
-to_path = NodePath("../../Uruguay")
+from_name = &"North Greater Argentina"
+to_name = &"Uruguay"
 
 [node name="South Brazil-Uruguay" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../South Brazil")
-to_path = NodePath("../../Uruguay")
+from_name = &"South Brazil"
+to_name = &"Uruguay"
 
 [node name="North Greater Argentina-South Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Greater Argentina")
-to_path = NodePath("../../South Brazil")
+from_name = &"North Greater Argentina"
+to_name = &"South Brazil"
 
 [node name="South Brazil-Southeast Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southeast Brazil")
-to_path = NodePath("../../South Brazil")
+from_name = &"Southeast Brazil"
+to_name = &"South Brazil"
 
 [node name="Northeast Brazil-Southeast Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southeast Brazil")
-to_path = NodePath("../../Northeast Brazil")
+from_name = &"Southeast Brazil"
+to_name = &"Northeast Brazil"
 
 [node name="Center-West Brazil-South Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Center-West Brazil")
-to_path = NodePath("../../South Brazil")
+from_name = &"Center-West Brazil"
+to_name = &"South Brazil"
 
 [node name="Center-West Brazil-Northeast Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Center-West Brazil")
-to_path = NodePath("../../Northeast Brazil")
+from_name = &"Center-West Brazil"
+to_name = &"Northeast Brazil"
 
 [node name="North Brazil-Northeast Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../North Brazil")
-to_path = NodePath("../../Northeast Brazil")
+from_name = &"North Brazil"
+to_name = &"Northeast Brazil"
 
 [node name="Center-West Brazil-North Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Center-West Brazil")
-to_path = NodePath("../../North Brazil")
+from_name = &"Center-West Brazil"
+to_name = &"North Brazil"
 
 [node name="Center-West Brazil-Nortwest Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Center-West Brazil")
-to_path = NodePath("../../Nortwest Brazil")
+from_name = &"Center-West Brazil"
+to_name = &"Nortwest Brazil"
 
 [node name="North Brazil-Nortwest Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Nortwest Brazil")
-to_path = NodePath("../../North Brazil")
+from_name = &"Nortwest Brazil"
+to_name = &"North Brazil"
 
 [node name="Center-West Brazil-Southeast Brazil" type="Line2D" parent="links"]
 script = ExtResource("3_bhcgi")
-from_path = NodePath("../../Southeast Brazil")
-to_path = NodePath("../../Center-West Brazil")
+from_name = &"Southeast Brazil"
+to_name = &"Center-West Brazil"
 
 [node name="Czechoslovakia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_p41mi")
