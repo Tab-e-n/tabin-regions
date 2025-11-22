@@ -1,9 +1,13 @@
-[gd_scene load_steps=47 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=51 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://scripts/game_control.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
 [ext_resource type="Script" path="res://dp/dp_control.gd" id="2_w08l3"]
+[ext_resource type="Script" path="res://dp/dp_normal.gd" id="3_dfqk3"]
+[ext_resource type="Script" path="res://dp/dp_turtle.gd" id="4_kuxfp"]
 [ext_resource type="PackedScene" uid="uid://cpgxwqs1hap0p" path="res://objects/particle_number.tscn" id="4_s5wqb"]
+[ext_resource type="Script" path="res://dp/dp_neural.gd" id="5_3hf1s"]
+[ext_resource type="Script" path="res://dp/dp_dummy.gd" id="6_2rtvp"]
 [ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://sprites/current_power.png" id="6_duti3"]
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="6_hw6d1"]
 [ext_resource type="Texture2D" uid="uid://b5wmm400auwgm" path="res://sprites/pause_button.png" id="7_6wsra"]
@@ -96,6 +100,23 @@ script = ExtResource("1_2axsc")
 
 [node name="AIControler" type="Node" parent="."]
 script = ExtResource("2_w08l3")
+controler_paths = Array[NodePath]([NodePath("Simple"), NodePath("Turtle"), NodePath("Neural"), NodePath("Cheater"), NodePath("Environment")])
+
+[node name="Simple" type="Node" parent="AIControler"]
+script = ExtResource("3_dfqk3")
+
+[node name="Turtle" type="Node" parent="AIControler"]
+script = ExtResource("4_kuxfp")
+
+[node name="Neural" type="Node" parent="AIControler"]
+script = ExtResource("5_3hf1s")
+
+[node name="Cheater" type="Node" parent="AIControler"]
+script = ExtResource("3_dfqk3")
+cheater = true
+
+[node name="Environment" type="Node" parent="AIControler"]
+script = ExtResource("6_2rtvp")
 
 [node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "PILeader", "PICity", "PICapital", "PIRegions", "PIPower", "PIName", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
 z_index = 30

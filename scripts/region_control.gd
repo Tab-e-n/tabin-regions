@@ -18,6 +18,8 @@ signal round_ended
 ## Emitted after the an alignment ends their turn and no unfriendly alignments towards them are left.
 signal game_ended(winner : int)
 
+signal update_textures
+
 
 enum PHASE {
 	NORMAL, 
@@ -243,6 +245,10 @@ const COLOR_TOO_BRIGHT : float = 0.85
 @export var command_callout_color : Color = Color(1, 1, 1, 1)
 
 @export_subgroup("Editor")
+
+@export var update_region_textures : bool = false:
+	set(_update):
+		update_textures.emit()
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
 @export var render_mode : RENDER_MODE = RENDER_MODE.DISABLED
 ## The range visible during render modes. Certain render modes use this to figure out how to color the regions.
@@ -417,6 +423,8 @@ func get_cache(key : String) -> Variant:
 
 
 func _ready():
+	Options.timestamp("RegionControl")
+	
 	if Engine.is_editor_hint():
 		return
 	
@@ -428,6 +436,7 @@ func _ready():
 	
 	if Options.editor:
 		_check_duplicate_connections()
+		Options.timestamp("_check_duplicate_connections", "RegionControl")
 #		check_capital_distance()
 	
 	# -- SETUP --
@@ -457,23 +466,28 @@ func _ready():
 	if save_cache:
 		_load_cache()
 	
+	Options.timestamp("RegionCotrol ready setup", "RegionControl")
+	
 	# -- REGION LINKS --
 	if not region_links:
 		region_links = Node.new()
 		add_child(region_links)
 	
 	_create_region_connections()
+	Options.timestamp("_create_region_connections", "RegionControl")
 	
 	# -- REGION AMOUNTS --
 	region_amount.resize(align_amount - 1)
 	capital_amount.resize(align_amount - 1)
 	
 	_count_up_regions()
+	Options.timestamp("_count_up_regions", "RegionControl")
 	
 	last_turn_region_amount = region_amount.duplicate()
 	
 	# -- CAPITAL DISTANCE --
 	_set_capital_distance()
+	Options.timestamp("_set_capital_distance", "RegionControl")
 	
 	# -- TURN ORDER --
 	var player_alignments : Array[int] = []
@@ -514,6 +528,8 @@ func _ready():
 	
 	current_playing_align = align_play_order[0]
 	
+	Options.timestamp("RegionCotrol ready turn order", "RegionControl")
+	
 	# -- DIGITAL PLAYERS --
 	if not ReplayControl.replay_active:
 		if shuffle_dp:
@@ -531,6 +547,8 @@ func _ready():
 			for alignment in player_alignments:
 				align_controlers[alignment - 1] = DPControl.CONTROLER.USER
 	
+	Options.timestamp("RegionCotrol ready dp", "RegionControl")
+	
 	# -- ALIANCES --
 	if not ReplayControl.replay_active:
 		if alignment_aliances.size() < align_amount:
@@ -541,6 +559,8 @@ func _ready():
 		else:
 			if use_autoaliances:
 				_fill_aliances(autoaliances_divisions_amount)
+	
+	Options.timestamp("RegionCotrol ready aliances", "RegionControl")
 	
 	# -- MISC --
 	penalty_amount.resize(align_amount - 1)
@@ -565,7 +585,11 @@ func _ready():
 	for align in removed_alignments:
 		GameStats.set_stat(align, "placement", "X")
 	
+	Options.timestamp("RegionCotrol ready misc", "RegionControl")
+	
 	_start_turn()
+	
+	Options.timestamp("_start_turn", "RegionControl")
 	
 	# -- VISUAL --
 	if hide_turn_order and game_camera:
@@ -584,6 +608,8 @@ func _ready():
 		center_camera_to_position.emit(center_camera)
 	
 	_save_replay_data.call_deferred()
+	
+	Options.timestamp("RegionCotrol ready", "RegionControl")
 
 
 func _save_replay_data():

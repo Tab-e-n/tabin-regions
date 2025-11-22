@@ -63,8 +63,12 @@ func _process(delta):
 	
 	if Input.is_action_just_pressed("left_click"):
 		if going_network:
+			Options.timestamp("START NETWORK TRAINER")
+			Options.discard_timestamp_sums()
 			get_tree().change_scene_to_file("res://dp/network_trainer.tscn")
 		else:
+			Options.timestamp("START SETUP SCENE")
+			Options.discard_timestamp_sums()
 			get_tree().change_scene_to_file("res://setup_scene.tscn")
 
 

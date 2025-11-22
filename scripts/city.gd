@@ -56,6 +56,9 @@ func _ready():
 	add_child(region_name)
 	
 	_on_power_changed(region.power)
+	
+	if RegionControl.active(region.region_control):
+		Options.timestamp(" -- " + region.name + " city ready", "Regions")
 
 
 func _process(_delta):

@@ -117,6 +117,8 @@ static func get_window_size() -> Vector2:
 
 
 func _ready():
+	Options.timestamp("GameCamera")
+	
 	z_index = 100
 	window_size = GameCamera.get_window_size()
 	
@@ -182,10 +184,13 @@ func _ready():
 	if VisTurnOrder and TurnOrder:
 		VisTurnOrder.button_pressed = TurnOrder.visible
 	
+	Options.timestamp("GameCamera ready", "GameCamera")
 	call_deferred("_deferred_ready")
 
 
 func _deferred_ready():
+	Options.timestamp("GameCamera deferred", "GameCamera")
+	
 	region_control = game_control.region_control as RegionControl
 	
 	for i in region_control.polygon:
@@ -255,6 +260,8 @@ func _deferred_ready():
 	if TurnOrder:
 		TurnOrder.ready_list(region_control)
 		TurnOrder.select_leader(region_control.current_playing_align)
+	
+	Options.timestamp("GameCamera deferred ready", "GameCamera")
 
 
 func _connect_region_control_signals():

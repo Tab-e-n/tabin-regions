@@ -47,11 +47,8 @@ var color_change_time : float = 1.0
 
 
 func _ready():
-	if not texture:
-		texture = preload("res://sprites/region.png")
-	if not material:
-		material = ShaderMaterial.new()
-		material.shader = preload("res://scripts/shader_region.gdshader")
+	if not texture or not material:
+		_on_update_texture()
 	
 	if polygon.size() > 0:
 		var far_left : float = polygon[0].x
@@ -73,14 +70,20 @@ func _ready():
 		var height : float = abs(far_down - far_up)
 		if width == 0.0:
 			width = 1.0
+		else:
+			width = 1.0 / width
 		if height == 0.0:
 			height = 1.0
+		else:
+			height = 1.0 / height
 		
-		var temp_uv : PackedVector2Array = polygon.duplicate()
+		
+		var temp_uv : PackedVector2Array = PackedVector2Array()
+		temp_uv.resize(polygon.size())
 		
 		for i in range(temp_uv.size()):
-			temp_uv[i].x = TEXTURE_SIZE.x * ((polygon[i].x - far_left) / width)
-			temp_uv[i].y = TEXTURE_SIZE.y * ((polygon[i].y - far_up) / height)
+			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * width
+			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
 #			print(temp_uv[i])
 		
 		set_uv(temp_uv)
@@ -89,9 +92,14 @@ func _ready():
 	
 	
 	if Engine.is_editor_hint():
+		if region_control and not region_control.update_textures.is_connected(_on_update_texture):
+			region_control.update_textures.connect(_on_update_texture)
 		return
 	
 	call_deferred("_ready_deferred")
+	
+	if RegionControl.active(region_control):
+		Options.timestamp(" -- " + name + " ready", "Regions")
 
 
 func _ready_deferred():
@@ -109,6 +117,9 @@ func _ready_deferred():
 			region_control.game_control.show_extra_other.connect(city._on_show_extra_other)
 		
 	color_self(false)
+	
+	if RegionControl.active(region_control):
+		Options.timestamp(" -- " + name + " deferred ready", "Regions")
 
 
 func _process(delta):
@@ -408,3 +419,8 @@ func power_color(amount : int, no_zero : bool):
 	var c : float = 1.0 - clampf(amount, 0, region_control.render_range) / region_control.render_range
 	color = Color(c, c, c, 1)
 
+
+func _on_update_texture():
+	texture = preload("res://sprites/region.png")
+	material = ShaderMaterial.new()
+	material.shader = preload("res://scripts/shader_region.gdshader")

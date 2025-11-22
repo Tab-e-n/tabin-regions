@@ -5,27 +5,25 @@ class_name DPControl
 signal timer_has_ended
 
 
-@onready var game_control : GameControl = get_parent()
-@onready var region_control : RegionControl
+enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY, SIZE}
 
 const THINKING_TIMER_DEFAULT : float = 0.5
 const THINKING_TIMER_SPEEDRUN : float = 0.05
 const THINKING_TIMER_NETWORK : float = 0.001
 
+const CONTROLER_NAMES : Array = ["User Controled", "Simple", "Turtle", "Neural", "Cheater", "Environment"]
+
+
+@export var controler_paths : Array[NodePath] = []
+
+
+@onready var game_control : GameControl = get_parent()
+@onready var region_control : RegionControl
+
+
 var thinking_timer : float = THINKING_TIMER_DEFAULT
 
-enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY}
-const CONTROLER_NAMES : Array = ["User Controled", "Simple", "Turtle", "Neural", "Cheater", "Environment"]
-const PACKED_CONTROLERS : Array = [
-	null, # CONTROLER.USER (can be just null)
-	preload("res://dp/dp_normal.gd"), # CONTROLER.DEFAULT
-	preload("res://dp/dp_turtle.gd"), # CONTROLER.TURTLE
-	preload("res://dp/dp_neural.gd"), # CONTROLER.NEURAL
-	preload("res://dp/dp_normal.gd"), # CONTROLER.CHEATER
-	preload("res://dp/dp_dummy.gd") # CONTROLER.DUMMY
-]
-
-
+var controlers : Array[DigitalPlayer] = []
 var current_controler : int
 
 var timer : float = 0
@@ -43,34 +41,36 @@ var CALL_nothing : bool = false
 var CALL_cheat : bool = false
 var CALL_overtake : bool = false
 
-var controlers : Array[DigitalPlayer] = []
-
 var replay_done_action : bool = true
 
 
 func _ready():
+	Options.timestamp("DPCotrol")
+	
 	dp_speedrun_update()
 	
-	game_control.dp_control = self
+	if game_control:
+		game_control.dp_control = self
 	
-	controlers.resize(PACKED_CONTROLERS.size())
-	
-	for i in range(PACKED_CONTROLERS.size()):
-		if PACKED_CONTROLERS[i]:
-			controlers[i] = DigitalPlayer.new()
-			controlers[i].set_script(PACKED_CONTROLERS[i])
-			controlers[i].controler = self
-			add_child(controlers[i])
-	controlers[CONTROLER.CHEATER].cheater = true
-	
+	# Player controler, not handled by dp_control
+	controlers.append(null)
+	# Other controlers
+	for path in controler_paths:
+		var dp : DigitalPlayer = get_node(path) as DigitalPlayer
+		if dp:
+			dp.controler = self
+			controlers.append(dp)
 	
 	timer_has_ended.connect(timer_ended)
 	
 	call_deferred("_ready_deferred")
+	
+	Options.timestamp("DPCotrol ready", "DPCotrol")
 
 
 func _ready_deferred():
-	region_control = game_control.region_control
+	if game_control:
+		region_control = game_control.region_control
 
 
 func _process(delta):
@@ -152,16 +152,21 @@ func think():
 	else:
 		find_owned_regions()
 		
-		match region_control.current_phase:
-			RegionControl.PHASE.NORMAL:
-				if controlers[current_controler].has_method("think_normal"):
-					controlers[current_controler].call("think_normal")
-			RegionControl.PHASE.MOBILIZE:
-				if controlers[current_controler].has_method("think_mobilize"):
-					controlers[current_controler].call("think_mobilize")
-			RegionControl.PHASE.BONUS:
-				if controlers[current_controler].has_method("think_bonus"):
-					controlers[current_controler].call("think_bonus")
+		var dp : DigitalPlayer = controlers[current_controler]
+		if dp:
+			var phase = RegionControl.PHASE.NORMAL
+			if region_control:
+				phase = region_control.current_phase
+			match phase:
+				RegionControl.PHASE.NORMAL:
+					dp.think_normal()
+				RegionControl.PHASE.MOBILIZE:
+					dp.think_mobilize()
+				RegionControl.PHASE.BONUS:
+					dp.think_bonus()
+		else:
+			push_error("Digital player number ", current_controler, " is null, skipping turn")
+			CALL_end_turn = true
 
 
 func timer_ended():

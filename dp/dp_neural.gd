@@ -3,7 +3,7 @@ extends DigitalPlayer
 
 const NET_NAMES : Array[String] = ["attack", "reinforce", "mobilize"]
 const NET_AMOUNT : int = 10
-#const CHECK : int = 0
+const CHECK : int = -1
 
 enum {
 	INPUT_CAPITAL,
@@ -52,13 +52,23 @@ func load_network(id : int, net_type : int) -> Network:
 
 
 func _ready():
+	_ready_network_trainer.call_deferred()
+
+
+func _ready_network_trainer():
 	trainer = controler.game_control as NetworkTrainer
 	if not trainer:
-#		print(CHECK)
-		for i in range(NET_AMOUNT):
-			final_network_attack.append(load_network(i, 0))#CHECK, 0))
-			final_network_reinforce.append(load_network(i, 1))#CHECK, 0))
-			final_network_mobilize.append(load_network(i, 2))#CHECK, 0))
+		if CHECK >= 0:
+			print(CHECK)
+			for i in range(NET_AMOUNT):
+				final_network_attack.append(load_network(CHECK, 0))
+				final_network_reinforce.append(load_network(CHECK, 0))
+				final_network_mobilize.append(load_network(CHECK, 0))
+		else:
+			for i in range(NET_AMOUNT):
+				final_network_attack.append(load_network(i, 0))
+				final_network_reinforce.append(load_network(i, 1))
+				final_network_mobilize.append(load_network(i, 2))
 
 
 func start_turn(align : int):

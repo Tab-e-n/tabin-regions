@@ -1,7 +1,7 @@
 extends DigitalPlayer
 
 
-var cheater : bool = false
+@export var cheater : bool = false
 var cheated : bool = false
 
 

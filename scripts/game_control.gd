@@ -69,6 +69,8 @@ static func set_cursor(cursor : CURSOR):
 
 
 func _ready():
+	Options.timestamp("GameControl")
+	
 	GameControl.set_cursor(CURSOR.NORMAL)
 	
 	if not MapSetup.current_map_name.is_empty():
@@ -82,6 +84,8 @@ func _ready():
 		push_error("No Game Camera present.")
 	if not dp_control:
 		push_error("No Digital Player Control present.")
+	
+	Options.timestamp("GameControl ready", "GameControl")
 
 
 func _input(event : InputEvent):
@@ -295,6 +299,8 @@ func load_map(_map_name : String) -> RegionControl:
 
 ## Tries to load a new map and if it succeeds, replaces the current map with the new one.
 func change_map(new_map_name : String, update_others : bool = true) -> void:
+	Options.timestamp("Call change_map", "GameControl")
+	
 	var new_map : RegionControl = load_map(new_map_name)
 	if new_map:
 		unload_current_map()
@@ -313,6 +319,8 @@ func change_map(new_map_name : String, update_others : bool = true) -> void:
 				dp_control.region_control = region_control
 			
 			ReplayControl.clear_replay()
+	
+	Options.timestamp("Return change_map", "GameControl")
 
 
 func win(align : int):
@@ -328,4 +336,6 @@ func lose(align : int):
 
 
 func leave():
+	Options.timestamp("EXIT MAP")
+	Options.discard_timestamp_sums()
 	get_tree().change_scene_to_file("res://stats.tscn")
