@@ -1,4 +1,4 @@
-[gd_scene load_steps=55 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=57 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://scripts/game_control.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
@@ -39,7 +39,9 @@
 [ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/mask_deny.png" id="24_46d4l"]
 [ext_resource type="StyleBox" uid="uid://cjaabqpgsx47h" path="res://styles/style_label_city_name.tres" id="26_fwuns"]
 [ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/exit_pressed.png" id="27_dp4k2"]
+[ext_resource type="Texture2D" uid="uid://bfewbx0fff1ej" path="res://sprites/stats_button.png" id="30_b4407"]
 [ext_resource type="Texture2D" uid="uid://boyn6qwdwdd1o" path="res://sprites/accept_pressed.png" id="30_yn8sd"]
+[ext_resource type="Texture2D" uid="uid://b6l32clilndhq" path="res://sprites/stats_button_pressed.png" id="31_dpekm"]
 [ext_resource type="Texture2D" uid="uid://dg7vk6rgj3o7c" path="res://sprites/deny_pressed.png" id="33_4nel1"]
 [ext_resource type="PackedScene" uid="uid://ce4hm4rxb7evy" path="res://objects/game_stats_graph.tscn" id="35_2fqve"]
 [ext_resource type="StyleBox" uid="uid://b7dy6x7vi2mcr" path="res://styles/style_empty.tres" id="36_qdefb"]
@@ -422,8 +424,8 @@ offset_top = -144.0
 offset_right = -448.0
 offset_bottom = -80.0
 scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("7_6wsra")
-texture_pressed = ExtResource("20_p63tb")
+texture_normal = ExtResource("30_b4407")
+texture_pressed = ExtResource("31_dpekm")
 
 [node name="player_info" type="Panel" parent="GameCamera/UI"]
 visible = false

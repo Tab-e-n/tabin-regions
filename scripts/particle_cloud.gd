@@ -10,6 +10,9 @@ enum CLOUD_TYPE {
 	SELF_REFERENCE,
 	SNOOZY,
 	BOTCH,
+	KING_OF_THE_CANVAS,
+	GOOBER,
+	ONLY_SECRET_CLOUDS,
 }
 
 const CLOUD_DURATION : float = 64
@@ -22,14 +25,17 @@ const CLOUDS : Array[Texture2D] = [
 	preload("res://sprites/cloud_5.png"),
 	preload("res://sprites/cloud_6.png"),
 	preload("res://sprites/cloud_7.png"),
+	preload("res://sprites/cloud_8.png"),
+	preload("res://sprites/cloud_9.png"),
 ]
-# If you added secret clouds, also update enum in cloud spawner
 const SECRET_CLOUDS : Array[Texture2D] = [
 	preload("res://sprites/cloud_secret_0.png"),
 	preload("res://sprites/cloud_secret_1.png"),
 	preload("res://sprites/cloud_secret_2.png"),
 	preload("res://sprites/cloud_secret_3.png"),
 	preload("res://sprites/cloud_secret_4.png"),
+	preload("res://sprites/cloud_secret_5.png"),
+	preload("res://sprites/cloud_secret_6.png"),
 ]
 
 @export var speed : float = 16
@@ -38,7 +44,7 @@ const SECRET_CLOUDS : Array[Texture2D] = [
 
 
 func _ready():
-	if rare_cloud < -1 or randi_range(0, rarity):
+	if rare_cloud == CLOUD_TYPE.NO_RARE_CLOUDS or randi_range(0, rarity):
 		var r : int = randi_range(0, CLOUDS.size() - 1)
 		texture = CLOUDS[r]
 	elif rare_cloud >= 0 and rare_cloud < SECRET_CLOUDS.size():
