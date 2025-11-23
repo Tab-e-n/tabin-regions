@@ -1,13 +1,8 @@
-extends Node
-class_name DigitalPlayer
-
-
-var controler : DPControl
-var current_alignment : int
+extends _BASE_
 
 
 func start_turn(align : int):
-	current_alignment = align
+	super.start_turn(align)
 
 
 func think_normal():

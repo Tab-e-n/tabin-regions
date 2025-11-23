@@ -134,9 +134,6 @@ func _city_visible() -> bool:
 func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
 	if not _set_power(power + addon_power, 0):
 		return false
-#	if power >= max_power:
-#		return false
-#	power += addon_power
 	GameStats.add_to_stat(reinforce_align, "regions reinforced", 1)
 	reinforced.emit(addon_power)
 	return true
@@ -146,10 +143,7 @@ func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
 func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
 	if not _set_power(power - mobilize_amount):
 		return 0
-#	if power <= 1:
-#		return 0
 	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
-#	power -= mobilize_amount
 	mobilized.emit()
 	return mobilize_amount
 
@@ -245,13 +239,13 @@ func link_attack_power(link : RegionLink) -> int:
 		return 0
 
 
-## Calculates all possible attacks from all connected regions.
+## Sums up all possible attacks from all connected regions.
 func get_adjacent_attack_power() -> Array[int]:
 	var attacks : Array[int] = []
 	attacks.resize(region_control.align_amount)
 	
 	for link in links:
-		var target : Node = link.get_other_region(self)
+		var target : Region = link.get_other_region(self)
 		if target and region_control.alignment_active(target.alignment):
 			attacks[target.alignment] += link_attack_power(link)
 	
@@ -263,7 +257,7 @@ func strongest_enemy_attack(align : int = alignment) -> int:
 	var attacks : Array[int] = get_adjacent_attack_power()
 	var strongest : int = 0
 	for i in range(attacks.size()):
-		if i == align:
+		if region_control.alignment_friendly(align, i):
 			continue
 		if attacks[i] > strongest:
 			strongest = attacks[i]
@@ -288,6 +282,11 @@ func get_alignments_attack_power(align : int) -> int:
 ## The difference between the regions power and an alignments attack
 func attack_power_difference(attack_align : int) -> int:
 	return power - get_alignments_attack_power(attack_align)
+
+
+## Doesn't take into account aliances.
+func worst_power_delta(align : int = alignment) -> int:
+	return power - strongest_enemy_attack(align)
 
 
 ## Recolors the region.

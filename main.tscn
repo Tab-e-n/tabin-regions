@@ -1,4 +1,4 @@
-[gd_scene load_steps=51 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=52 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://scripts/game_control.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" path="res://dp/dp_turtle.gd" id="4_kuxfp"]
 [ext_resource type="PackedScene" uid="uid://cpgxwqs1hap0p" path="res://objects/particle_number.tscn" id="4_s5wqb"]
 [ext_resource type="Script" path="res://dp/dp_neural.gd" id="5_3hf1s"]
+[ext_resource type="Script" path="res://dp/dp_cheater.gd" id="6_0n6wj"]
 [ext_resource type="Script" path="res://dp/dp_dummy.gd" id="6_2rtvp"]
 [ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://sprites/current_power.png" id="6_duti3"]
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="6_hw6d1"]
@@ -112,8 +113,7 @@ script = ExtResource("4_kuxfp")
 script = ExtResource("5_3hf1s")
 
 [node name="Cheater" type="Node" parent="AIControler"]
-script = ExtResource("3_dfqk3")
-cheater = true
+script = ExtResource("6_0n6wj")
 
 [node name="Environment" type="Node" parent="AIControler"]
 script = ExtResource("6_2rtvp")

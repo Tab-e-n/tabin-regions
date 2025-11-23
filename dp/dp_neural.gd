@@ -1,10 +1,6 @@
 extends DigitalPlayer
 
 
-const NET_NAMES : Array[String] = ["attack", "reinforce", "mobilize"]
-const NET_AMOUNT : int = 10
-const CHECK : int = -1
-
 enum {
 	INPUT_CAPITAL,
 	INPUT_POWER,
@@ -15,6 +11,10 @@ enum {
 	INPUT_OWN_ATTACK_POWER,
 	INPUT_PREVIOUS_MOVE,
 }
+
+const NET_NAMES : Array[String] = ["attack", "reinforce", "mobilize"]
+const NET_AMOUNT : int = 10
+const CHECK : int = -1
 
 
 var final_network_attack : Array[Network] = []
@@ -71,15 +71,15 @@ func _ready_network_trainer():
 				final_network_mobilize.append(load_network(i, 2))
 
 
-func start_turn(align : int):
+func start_turn(align : int, soflock_prevention : int = 0):
 	if trainer:
 		network_attack = trainer.get_network_for_align(align, 0)
 		network_reinforce = trainer.get_network_for_align(align, 1)
 		network_mobilize = trainer.get_network_for_align(align, 2)
 	else:
 		if not controler.region_control:
-			# Potential softlock?
-			call_deferred("start_turn", align)
+			if soflock_prevention < 10:
+				start_turn.call_deferred(align, soflock_prevention + 1)
 			return
 		var i : int = controler.region_control.play_order_i % NET_AMOUNT
 		network_attack = final_network_attack[i]
@@ -99,7 +99,7 @@ func think_normal():
 	if trainer:
 		trainer.increment_order_amount(current_alignment)
 	
-	var attack_regions : Array = []
+	var attack_regions : Set = Set.new()
 	var reinforce_regions : Array = []
 	var friendly_regions : Array = controler.get_owned_regions()
 	if controler.aliances_on():
@@ -123,14 +123,14 @@ func think_normal():
 			if not target.incoming_attack(current_alignment, 0, true):
 #				print("cannot attack")
 				continue
-			attack_regions.append(target)
+			attack_regions.add(target)
 	
-	var chosen_attack : Array = choose_using_network(network_attack, attack_regions)
+	var chosen_attack : Array = choose_using_network(network_attack, attack_regions.values())
 	var chosen_reinforce : Array = choose_using_network(network_reinforce, reinforce_regions)
 	if chosen_attack[0] == "" and chosen_reinforce[0] == "":
 		controler.CALL_change_current_phase = true
 	else:
-		if chosen_attack[1] >= chosen_reinforce[1]:
+		if chosen_reinforce[0] == "" or chosen_attack[1] >= chosen_reinforce[1]:
 			controler.selected_capital = chosen_attack[0]
 		else:
 			controler.selected_capital = chosen_reinforce[0]

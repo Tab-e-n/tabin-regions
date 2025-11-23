@@ -30,7 +30,7 @@ var timer : float = 0
 
 var owned_regions : Dictionary = {}
 var current_moves : Dictionary = {}
-var previous_moves : Array = []
+var previous_moves : Set = Set.new()
 
 var selected_capital : String = ""
 
@@ -92,7 +92,7 @@ func _process(delta):
 func reset():
 	owned_regions = {}
 	current_moves = {}
-	previous_moves = []
+	previous_moves.clear()
 	selected_capital = ""
 	reset_CALL()
 	timer = 0
@@ -114,8 +114,8 @@ func start_turn(alignment : int, control : int):
 	
 	if not ReplayControl.replay_active:
 		if current_moves.has(current_align()):
-			previous_moves = current_moves[current_align()].duplicate()
-		current_moves[current_align()] = []
+			current_moves[current_align()].copy_to(previous_moves)
+		current_moves[current_align()] = Set.new()
 		
 		controlers[current_controler].start_turn(alignment)
 	
@@ -197,21 +197,27 @@ func timer_ended():
 		reset_CALL()
 		region_control.overtake_region(selected_capital)
 		if not ReplayControl.replay_active:
-			if not current_moves.has(current_align()):
-				current_moves[current_align()] = []
-			current_moves[current_align()].append(selected_capital)
+			note_region_selection(selected_capital, current_align())
 		should_think = true
 	else:
 		region_control.get_node(selected_capital).action_decided()
 		if not ReplayControl.replay_active:
-			if not current_moves.has(current_align()):
-				current_moves[current_align()] = []
-			current_moves[current_align()].append(selected_capital)
+			note_region_selection(selected_capital, current_align())
 	
 	replay_done_action = true
 	if should_think:
 		think()
 #	print(current_moves)
+
+
+func _add_new_current_moves(alignment : int) -> void:
+	if not current_moves.has(alignment):
+		current_moves[alignment] = Set.new()
+
+
+func note_region_selection(region : StringName, alignment : int) -> void:
+	_add_new_current_moves(alignment)
+	current_moves[alignment].add(region)
 
 
 func reset_CALL():
@@ -232,16 +238,16 @@ func current_align() -> int:
 
 func find_owned_regions(alignment : int = current_align()):
 	owned_regions[alignment] = []
-	for region in region_control.get_children():
-		if not region is Region:
-			continue
+	if not region_control:
+		return
+	for region in region_control.regions.values():
 		if region.alignment != alignment:
 			continue
 		owned_regions[alignment].append(region)
 
 
 func used_region_previously(region_name) -> bool:
-	return previous_moves.has(region_name)
+	return previous_moves.contains(region_name)
 
 
 func get_owned_regions(alignment : int = current_align()) -> Array:
@@ -265,12 +271,11 @@ func get_allied_regions(alignment : int = current_align()) -> Array:
 
 
 func get_region(region_name : String) -> Region:
-	return region_control.get_node(region_name)
+	return region_control.get_region(region_name)
 
 
-func get_current_moves() -> Array:
-	if not current_moves.has(current_align()):
-		current_moves[current_align()] = []
+func get_current_moves() -> Set:
+	_add_new_current_moves(current_align())
 	return current_moves[current_align()].duplicate()
 
 
@@ -286,13 +291,12 @@ func get_bonus_action_amount() -> int:
 	return region_control.bonus_action_amount
 
 
-## TODO: Fix this typo
-func get_alingment_amount() -> int:
+func get_alignment_amount() -> int:
 	return region_control.align_amount
 
 
 func get_capital_amount(alignment : int = current_align()) -> int:
-	return region_control.capital_amount[alignment - 1]
+	return region_control.get_alignment_capitals(alignment)
 
 
 func alignment_friendly(your_align : int, opposing_align : int) -> bool:

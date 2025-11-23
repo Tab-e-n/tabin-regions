@@ -28,6 +28,7 @@ func think_normal():
 	if eligable_regions.size() > 0:
 		controler.selected_capital = eligable_regions[rng.randi_range(0, eligable_regions.size() - 1)].name
 	else:
+		# Fallback behavior
 		for region in controler.get_owned_regions():
 #			print("owned: ", region.name)
 			var in_threat : bool = false
@@ -74,34 +75,34 @@ func think_mobilize():
 	if controler.get_capital_amount() == 0:
 		var no_more_extra : bool = true
 		for region in controler.get_owned_regions():
-			var threat : int = determine_attacks(region)
-			if threat >= 1 and region.power > 1 and not region.name in controler.get_current_moves():
+			var threat : int = region.worst_power_delta()
+			if threat >= 1 and region.power > 1 and not controler.get_current_moves().contains(region.name):
 				controler.selected_capital = region.name
 				no_more_extra = false
 				break
-	#	print("think default mobilize")
 		if no_more_extra:
 			if controler.get_bonus_action_amount() == 0:
 				controler.CALL_end_turn = true
 			else:
 				controler.CALL_change_current_phase = true
 	else:
-		controler.CALL_change_current_phase = true
+		controler.CALL_end_turn = true
 
 
 func calculate_benefit_default(region : Region):
 	var action_amount : int = controler.get_action_amount()
 	var benefit = 0
 	if region.alignment == current_alignment:
-		var threat : int = determine_attacks(region)
-		if threat < -action_amount:
+		var threat : int = region.worst_power_delta()
+		if -threat > action_amount:
 			benefit = -region.power - 1
-		if threat == -action_amount:
+		if -threat == action_amount:
 			if region.is_capital and region.power != region.max_power:
 				benefit += 4
-		if threat >= -action_amount:
-			@warning_ignore("integer_division")
-			benefit += region.power / 2
+		if -threat <= action_amount:
+			benefit += region.power >> 1
+	elif controler.alignment_friendly(current_alignment, region.alignment):
+		benefit = 0
 	else:
 		if region.is_capital:
 			benefit += 5
@@ -111,17 +112,3 @@ func calculate_benefit_default(region : Region):
 	
 #	print(region, ": ", benefit)
 	return benefit
-
-
-func determine_attacks(region : Region):
-	var attacks : Array = []
-	for align in range(controler.get_alingment_amount() - 1):
-		if controler.alignment_friendly(current_alignment, align + 1):
-			continue
-		attacks.append(region.attack_power_difference(align + 1))
-	var biggest_threat : int = attacks.pop_front()
-	for i in attacks:
-		if i < biggest_threat:
-			biggest_threat = i
-#	print(biggest_threat)
-	return biggest_threat
