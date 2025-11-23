@@ -18,17 +18,34 @@ const DEFAULT_STATS : Dictionary = {
 	"regions reinforced" : 0,
 	"capital regions captured" : 0,
 	
-#	"killer alignment" : "",
+	# GRAPH
+	"regions" : 0,
+	"capitals" : 0,
+	"penalties" : 0,
 }
 
+const DEFAULT_GRAPH_STATISTICS : Dictionary = {
+	"regions" : 0,
+	"capitals" : 0,
+	"penalties" : 0,
+}
+
+
 var stats : Array = []
+
+var graph_statistics : Dictionary
+var graph : Array = []
 
 
 func reset_statistics(align_amount):
 	stats.clear()
 	stats.resize(align_amount)
+	graph.clear()
+	graph.resize(align_amount)
 	for i in range(align_amount):
 		stats[i] = DEFAULT_STATS.duplicate()
+		graph[i] = []
+	graph_statistics = DEFAULT_GRAPH_STATISTICS.duplicate()
 
 
 func stat_exists(align : int, key : String) -> bool:
@@ -40,7 +57,12 @@ func stat_exists(align : int, key : String) -> bool:
 	return true
 
 
-func add_to_stat(align : int, key : String, value):
+func create_stat(key : String, initial : Variant) -> void:
+	for align_stats in stats:
+		align_stats[key] = initial
+
+
+func add_to_stat(align : int, key : String, value : Variant) -> void:
 	if not stat_exists(align, key):
 		return
 	if not typeof(stats[align][key]) in [TYPE_FLOAT, TYPE_INT]:
@@ -48,7 +70,7 @@ func add_to_stat(align : int, key : String, value):
 	stats[align][key] += value
 
 
-func set_stat(align : int, key : String, value):
+func set_stat(align : int, key : String, value : Variant) -> void:
 	if not stat_exists(align, key):
 		return
 	stats[align][key] = value
@@ -93,3 +115,23 @@ func save_as_csv(file_name : String):
 		file.store_csv_line(stats_as_strings(i))
 	
 	file.close()
+
+
+func create_graph_stat(stat : String, stat_max : int) -> void:
+	graph_statistics[stat] = stat_max
+	create_stat(stat, 0)
+
+
+func set_graph_max(stat : String, stat_max : int) -> void:
+	graph_statistics[stat] = stat_max
+
+
+func record_graph_column() -> void:
+	if not Options.use_graph:
+		return
+	for i in range(graph.size()):
+		var graph_stats : Dictionary = {}
+		for stat in graph_statistics:
+			graph_stats[stat] = stats[i][stat]
+#		print("recording ", graph_stats)
+		graph[i].append(graph_stats)

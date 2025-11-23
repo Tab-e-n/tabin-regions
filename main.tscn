@@ -1,4 +1,4 @@
-[gd_scene load_steps=52 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=55 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://scripts/game_control.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
@@ -37,9 +37,12 @@
 [ext_resource type="Texture2D" uid="uid://cr8y6h28hxomx" path="res://sprites/pause_button_pressed.png" id="20_p63tb"]
 [ext_resource type="Texture2D" uid="uid://d2ixgtwhalidj" path="res://sprites/mask_accept.png" id="22_f36kt"]
 [ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/mask_deny.png" id="24_46d4l"]
+[ext_resource type="StyleBox" uid="uid://cjaabqpgsx47h" path="res://styles/style_label_city_name.tres" id="26_fwuns"]
 [ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/exit_pressed.png" id="27_dp4k2"]
 [ext_resource type="Texture2D" uid="uid://boyn6qwdwdd1o" path="res://sprites/accept_pressed.png" id="30_yn8sd"]
 [ext_resource type="Texture2D" uid="uid://dg7vk6rgj3o7c" path="res://sprites/deny_pressed.png" id="33_4nel1"]
+[ext_resource type="PackedScene" uid="uid://ce4hm4rxb7evy" path="res://objects/game_stats_graph.tscn" id="35_2fqve"]
+[ext_resource type="StyleBox" uid="uid://b7dy6x7vi2mcr" path="res://styles/style_empty.tres" id="36_qdefb"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wf281"]
 shader = ExtResource("6_hw6d1")
@@ -118,56 +121,58 @@ script = ExtResource("6_0n6wj")
 [node name="Environment" type="Node" parent="AIControler"]
 script = ExtResource("6_2rtvp")
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("UI", "UIHideable", "PauseMenu", "PlayerInfo", "PlayerActions", "AdvanceTurnButton", "AdvanceActionLight", "AdvanceActionDark", "AdvanceMobilizeLight", "AdvanceMobilizeDark", "EndTurnButton", "ForfeitButton", "PauseButton", "LeaveButton", "TurnOrder", "PowerSprite", "PowerAmount", "CurrentTurn", "CurrentAlignment", "CurrentAction", "PhaseInfo", "ReplayPausedLabel", "PILeader", "PICity", "PICapital", "PIRegions", "PIPower", "PIName", "VictoryMessage", "DefeatMessage", "LeaveMessage", "ForfeitMessage", "LeftoverMessage", "CommandCallout", "MouseScroll", "AutoPhase", "FastDP", "ActionChangePart", "VisCapitals", "VisUI", "VisTurnOrder", "TooltipActions", "TooltipPhase", "TooltipEndTurn", "TooltipForfeit")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("ui", "ui_hideable", "pause_menu", "player_info", "player_actions", "advance_turn_button", "advance_action_light", "advance_action_dark", "advance_mobilize_light", "advance_mobilize_dark", "end_turn_button", "forfeit_button", "pause_button", "leave_button", "graph_button", "turn_order", "power_sprite", "power_amount", "current_turn", "current_alignment", "current_action", "phase_info", "replay_paused_label", "stats_graph", "player_info_leader", "player_info_city", "player_info_capital", "player_info_regions", "player_info_power", "player_info_name", "victory_message", "defeat_message", "leave_message", "forfeit_message", "leftover_message", "command_callout", "mouse_scroll", "auto_phase", "fast_dp", "action_change_part", "visible_capitals", "visible_ui", "visible_turn_order", "tooltip_actions", "tooltip_phase", "tooltip_end_turn", "tooltip_forfeit")]
 z_index = 30
 script = ExtResource("1_we6ai")
-UI = NodePath("UI")
-UIHideable = NodePath("UI/Hideable")
-PauseMenu = NodePath("UI/pause")
-PlayerInfo = NodePath("UI/player_info")
-PlayerActions = NodePath("UI/Hideable/PlayerActions")
-MapTintList = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/turn_order")])
-ActionChangeParticle = ExtResource("4_s5wqb")
-AdvanceTurnButton = NodePath("UI/Hideable/PlayerActions/AdvanceTurn")
-AdvanceActionLight = NodePath("UI/Hideable/PlayerActions/action_light")
-AdvanceActionDark = NodePath("UI/Hideable/PlayerActions/action_dark")
-AdvanceMobilizeLight = NodePath("UI/Hideable/PlayerActions/mobilize_light")
-AdvanceMobilizeDark = NodePath("UI/Hideable/PlayerActions/mobilize_dark")
-EndTurnButton = NodePath("UI/Hideable/PlayerActions/EndTurn")
-ForfeitButton = NodePath("UI/Hideable/PlayerActions/Forfeit")
-PauseButton = NodePath("UI/gearbox")
-LeaveButton = NodePath("UI/pause/leave")
-TurnOrder = NodePath("UI/turn_order")
-PowerSprite = NodePath("UI/Hideable/Power")
-PowerAmount = NodePath("UI/Hideable/Power/text")
-CurrentTurn = NodePath("UI/Hideable/Turn")
-CurrentAlignment = NodePath("UI/Hideable/Alignment")
-CurrentAction = NodePath("UI/Hideable/Action")
-PhaseInfo = NodePath("UI/Hideable/PhaseText")
-ReplayPausedLabel = NodePath("UI/Hideable/replay_pause")
-PILeader = NodePath("UI/player_info/Player")
-PICity = NodePath("UI/player_info/City")
-PICapital = NodePath("UI/player_info/Capital")
-PIRegions = NodePath("UI/player_info/CityAmount")
-PIPower = NodePath("UI/player_info/CapitalAmount")
-PIName = NodePath("UI/player_info/Name")
-VictoryMessage = NodePath("UI/win")
-DefeatMessage = NodePath("UI/lose")
-LeaveMessage = NodePath("UI/leave")
-ForfeitMessage = NodePath("UI/forfeit")
-LeftoverMessage = NodePath("UI/leftover")
-CommandCallout = NodePath("UI/command_callout")
-MouseScroll = NodePath("UI/pause/mouse_scroll")
-AutoPhase = NodePath("UI/pause/auto_phase")
-FastDP = NodePath("UI/pause/fast_dp")
-ActionChangePart = NodePath("UI/pause/particles")
-VisCapitals = NodePath("UI/pause/vis_capitals")
-VisUI = NodePath("UI/pause/vis_ui")
-VisTurnOrder = NodePath("UI/pause/vis_turn_order")
-TooltipActions = NodePath("UI/Hideable/Tooltips/Actions")
-TooltipPhase = NodePath("UI/Hideable/Tooltips/Phase")
-TooltipEndTurn = NodePath("UI/Hideable/Tooltips/EndTurn")
-TooltipForfeit = NodePath("UI/Hideable/Tooltips/Forfeit")
+ui = NodePath("UI")
+ui_hideable = NodePath("UI/Hideable")
+pause_menu = NodePath("UI/pause")
+player_info = NodePath("UI/player_info")
+player_actions = NodePath("UI/Hideable/PlayerActions")
+map_tint_list = Array[NodePath]([NodePath("UI/Hideable/Panel"), NodePath("UI/turn_order"), NodePath("UI/pause")])
+action_change_particle = ExtResource("4_s5wqb")
+advance_turn_button = NodePath("UI/Hideable/PlayerActions/AdvanceTurn")
+advance_action_light = NodePath("UI/Hideable/PlayerActions/action_light")
+advance_action_dark = NodePath("UI/Hideable/PlayerActions/action_dark")
+advance_mobilize_light = NodePath("UI/Hideable/PlayerActions/mobilize_light")
+advance_mobilize_dark = NodePath("UI/Hideable/PlayerActions/mobilize_dark")
+end_turn_button = NodePath("UI/Hideable/PlayerActions/EndTurn")
+forfeit_button = NodePath("UI/Hideable/PlayerActions/Forfeit")
+pause_button = NodePath("UI/gearbox")
+leave_button = NodePath("UI/pause/leave")
+graph_button = NodePath("UI/graph_button")
+turn_order = NodePath("UI/turn_order")
+power_sprite = NodePath("UI/Hideable/Power")
+power_amount = NodePath("UI/Hideable/Power/text")
+current_turn = NodePath("UI/Hideable/Turn")
+current_alignment = NodePath("UI/Hideable/Alignment")
+current_action = NodePath("UI/Hideable/Action")
+phase_info = NodePath("UI/Hideable/PhaseText")
+replay_paused_label = NodePath("UI/Hideable/replay_pause")
+stats_graph = NodePath("UI/graph")
+player_info_leader = NodePath("UI/player_info/Player")
+player_info_city = NodePath("UI/player_info/City")
+player_info_capital = NodePath("UI/player_info/Capital")
+player_info_regions = NodePath("UI/player_info/CityAmount")
+player_info_power = NodePath("UI/player_info/CapitalAmount")
+player_info_name = NodePath("UI/player_info/Name")
+victory_message = NodePath("UI/win")
+defeat_message = NodePath("UI/lose")
+leave_message = NodePath("UI/leave")
+forfeit_message = NodePath("UI/forfeit")
+leftover_message = NodePath("UI/leftover")
+command_callout = NodePath("UI/command_callout")
+mouse_scroll = NodePath("UI/pause/mouse_scroll")
+auto_phase = NodePath("UI/pause/auto_phase")
+fast_dp = NodePath("UI/pause/fast_dp")
+action_change_part = NodePath("UI/pause/particles")
+visible_capitals = NodePath("UI/pause/vis_capitals")
+visible_ui = NodePath("UI/pause/vis_ui")
+visible_turn_order = NodePath("UI/pause/vis_turn_order")
+tooltip_actions = NodePath("UI/Hideable/Tooltips/Actions")
+tooltip_phase = NodePath("UI/Hideable/Tooltips/Phase")
+tooltip_end_turn = NodePath("UI/Hideable/Tooltips/EndTurn")
+tooltip_forfeit = NodePath("UI/Hideable/Tooltips/Forfeit")
 
 [node name="UI" type="Control" parent="GameCamera"]
 layout_mode = 3
@@ -385,7 +390,8 @@ offset_right = 1176.0
 offset_bottom = 544.0
 scale = Vector2(0.5, 0.5)
 theme_override_font_sizes/font_size = 32
-text = "REPLAY IS PAUSED. PRESS LEFT CLICK TO UNPAUSE."
+theme_override_styles/normal = ExtResource("26_fwuns")
+text = "REPLAY IS PAUSED. PRESS RIGHT CLICK TO UNPAUSE."
 horizontal_alignment = 1
 vertical_alignment = 1
 
@@ -409,7 +415,18 @@ scale = Vector2(0.5, 0.5)
 texture_normal = ExtResource("7_6wsra")
 texture_pressed = ExtResource("20_p63tb")
 
+[node name="graph_button" type="TextureButton" parent="GameCamera/UI"]
+layout_mode = 0
+offset_left = -512.0
+offset_top = -144.0
+offset_right = -448.0
+offset_bottom = -80.0
+scale = Vector2(0.5, 0.5)
+texture_normal = ExtResource("7_6wsra")
+texture_pressed = ExtResource("20_p63tb")
+
 [node name="player_info" type="Panel" parent="GameCamera/UI"]
+visible = false
 layout_mode = 0
 offset_left = -104.0
 offset_top = -208.0
@@ -464,7 +481,6 @@ vertical_alignment = 1
 clip_text = true
 
 [node name="pause" type="Panel" parent="GameCamera/UI"]
-visible = false
 layout_mode = 0
 offset_left = -448.0
 offset_top = -184.0
@@ -483,65 +499,107 @@ texture_pressed = ExtResource("27_dp4k2")
 
 [node name="mouse_scroll" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 56.0
 offset_right = 432.0
 offset_bottom = 84.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Scrolling camera with mouse"
 
 [node name="auto_phase" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 88.0
 offset_right = 432.0
 offset_bottom = 116.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Automatic phases"
 
 [node name="fast_dp" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 120.0
 offset_right = 432.0
 offset_bottom = 148.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Fast digital players"
 
 [node name="particles" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 152.0
 offset_right = 432.0
 offset_bottom = 180.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Action change particles"
 
 [node name="vis_capitals" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 216.0
 offset_right = 432.0
 offset_bottom = 244.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Capitals visible"
 
 [node name="vis_ui" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 248.0
 offset_right = 432.0
 offset_bottom = 276.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "UI visible"
 
 [node name="vis_turn_order" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 104.0
+offset_left = 112.0
 offset_top = 280.0
 offset_right = 432.0
 offset_bottom = 308.0
 focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Turn order visible"
 
 [node name="keys_title" type="Label" parent="GameCamera/UI/pause"]
@@ -556,7 +614,7 @@ clip_text = true
 
 [node name="keys_title2" type="Label" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 112.0
+offset_left = 104.0
 offset_top = 24.0
 offset_right = 432.0
 offset_bottom = 56.0
@@ -566,7 +624,7 @@ clip_text = true
 
 [node name="keys_title3" type="Label" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 112.0
+offset_left = 104.0
 offset_top = 184.0
 offset_right = 432.0
 offset_bottom = 216.0
@@ -576,7 +634,7 @@ clip_text = true
 
 [node name="keys" type="ScrollContainer" parent="GameCamera/UI/pause"]
 layout_mode = 0
-offset_left = 464.0
+offset_left = 472.0
 offset_top = 56.0
 offset_right = 872.0
 offset_bottom = 312.0
@@ -620,6 +678,14 @@ Ctrl + H  -  Toggle capitals
 Ctrl + U  -  Toggle UI
 Ctrl + T  -  Toggle turn order
 Ctrl + A  -  Toggle action change particles"
+
+[node name="graph" parent="GameCamera/UI" instance=ExtResource("35_2fqve")]
+visible = false
+layout_mode = 0
+offset_left = -384.0
+offset_top = -184.0
+offset_right = 384.0
+offset_bottom = 152.0
 
 [node name="win" type="Label" parent="GameCamera/UI"]
 visible = false

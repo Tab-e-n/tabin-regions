@@ -83,8 +83,10 @@ func think_normal():
 func think_mobilize():
 	var no_more_extra : bool = true
 	for region in controler.get_owned_regions():
-		var threat : int = region.worst_power_delta()
-		if threat >= 1 and region.power > 1 and not controler.get_current_moves().contains(region.name):
+		if region.power <= 1:
+			continue
+		var threat : int = region.strongest_enemy_attack()
+		if threat != region.power and not controler.get_current_moves().contains(region.name):
 			controler.selected_capital = region.name
 			no_more_extra = false
 			break
@@ -113,10 +115,12 @@ func calculate_benefit_default(region : Region):
 			benefit = -region.power - 1
 		else:
 			# Can defend, not as encouraged
-			benefit = region.power >> 1
+			benefit = region.power
 			# Capitals are still good to keep
 			if region.is_capital:
 				benefit -= threat
+			if not region.is_capital or threat <= 1:
+				benefit = benefit >> 1
 		# Self-centered
 		if region.alignment != current_alignment:
 			benefit -= 1

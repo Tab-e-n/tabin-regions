@@ -107,10 +107,10 @@ func _process(delta : float):
 	if inputs_active:
 		if Input.is_action_just_pressed("escape"):
 			if game_camera:
-				if game_camera.LeaveMessage.visible:
+				if game_camera.leave_message.visible:
 					leave()
 					return
-				game_camera.LeaveMessage.visible = true
+				game_camera.leave_message.visible = true
 			else:
 				leave()
 				return
@@ -178,8 +178,8 @@ func _process(delta : float):
 				new_callout("Mouse scrolling active")
 			else:
 				new_callout("Mouse scrolling disabled")
-			if game_camera and game_camera.MouseScroll:
-				game_camera.MouseScroll.button_pressed = Options.mouse_scroll_active
+			if game_camera and game_camera.mouse_scroll:
+				game_camera.mouse_scroll.button_pressed = Options.mouse_scroll_active
 		
 		if Input.is_action_just_pressed("auto_phase"):
 			set_auto_phases(not Options.auto_end_turn_phases)
@@ -187,8 +187,8 @@ func _process(delta : float):
 				new_callout("Phases end when no actions are left")
 			else:
 				new_callout("Phases end only after user input")
-			if game_camera and game_camera.AutoPhase:
-				game_camera.AutoPhase.button_pressed = Options.auto_end_turn_phases
+			if game_camera and game_camera.auto_phase:
+				game_camera.auto_phase.button_pressed = Options.auto_end_turn_phases
 		
 		if Input.is_action_just_pressed("dp_speedrun"):
 			set_dp_speedrun(not Options.dp_speedrun)
@@ -196,8 +196,8 @@ func _process(delta : float):
 				new_callout("Fast Digital Players")
 			else:
 				new_callout("Slow Digital Players")
-			if game_camera and game_camera.FastDP:
-				game_camera.FastDP.button_pressed = Options.dp_speedrun
+			if game_camera and game_camera.fast_dp:
+				game_camera.fast_dp.button_pressed = Options.dp_speedrun
 		
 		if Input.is_action_just_pressed("action_change_particles"):
 			set_action_change_particles(not Options.action_change_particles)
@@ -205,11 +205,11 @@ func _process(delta : float):
 				new_callout("Action change particles on")
 			else:
 				new_callout("Action change particles off")
-			if game_camera and game_camera.ActionChangePart:
-				game_camera.ActionChangePart.button_pressed = Options.action_change_particles
+			if game_camera and game_camera.action_change_part:
+				game_camera.action_change_part.button_pressed = Options.action_change_particles
 		
 		if ReplayControl.replay_active:
-			if Input.is_action_just_pressed("left_click"):
+			if Input.is_action_just_pressed("right_click"):
 				ReplayControl.toggle_pause()
 		
 		if region_control:
@@ -243,8 +243,8 @@ func toggle_cities():
 func set_city_visibility(visibility : bool):
 	if region_control:
 		region_control.cities_visible = visibility
-		if game_camera and game_camera.VisCapitals:
-			game_camera.VisCapitals.set_pressed_no_signal(region_control.cities_visible)
+		if game_camera and game_camera.visible_capitals:
+			game_camera.visible_capitals.set_pressed_no_signal(region_control.cities_visible)
 
 
 ## Sets whether to use mouse camera scrolling or not.

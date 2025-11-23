@@ -1,0 +1,100 @@
+[gd_scene load_steps=5 format=3 uid="uid://ce4hm4rxb7evy"]
+
+[ext_resource type="Script" path="res://scripts/game_stats_graph.gd" id="1_m3nre"]
+[ext_resource type="StyleBox" uid="uid://ciikkahxcqynr" path="res://styles/style_label_pause.tres" id="2_wa4q8"]
+[ext_resource type="PackedScene" uid="uid://cxids1u24cfdb" path="res://objects/dotted_line.tscn" id="3_3w5es"]
+[ext_resource type="StyleBox" uid="uid://ddgip0ob5hfd0" path="res://styles/style_panel_graph_current_value.tres" id="3_yqobi"]
+
+[node name="GameStatsGraph" type="Control" node_paths=PackedStringArray("lines_node")]
+clip_contents = true
+layout_mode = 3
+anchors_preset = 0
+offset_right = 896.0
+offset_bottom = 336.0
+script = ExtResource("1_m3nre")
+lines_node = NodePath("lines")
+
+[node name="bg" type="Panel" parent="."]
+layout_mode = 0
+offset_right = 768.0
+offset_bottom = 336.0
+theme_override_styles/panel = ExtResource("2_wa4q8")
+
+[node name="limit" type="Control" parent="."]
+layout_mode = 3
+anchors_preset = 0
+offset_left = 40.0
+offset_top = 56.0
+offset_right = 728.0
+offset_bottom = 280.0
+
+[node name="value" type="Line2D" parent="."]
+visible = false
+position = Vector2(40, 280)
+points = PackedVector2Array(0, 0, 688, 0)
+width = 2.0
+
+[node name="bg" type="Panel" parent="value"]
+offset_left = -40.0
+offset_top = -16.0
+offset_bottom = 16.0
+theme_override_styles/panel = ExtResource("3_yqobi")
+
+[node name="label" type="Label" parent="value"]
+z_index = 1
+offset_left = -40.0
+offset_top = -16.0
+offset_right = 40.0
+offset_bottom = 48.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+text = " "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="dots" parent="." instance=ExtResource("3_3w5es")]
+position = Vector2(40, 280)
+
+[node name="lines" type="Node2D" parent="."]
+position = Vector2(40, 280)
+
+[node name="name" type="Label" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 1488.0
+offset_bottom = 80.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 48
+text = "ALIGNMENT"
+clip_text = true
+
+[node name="buttons" type="HBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 16.0
+offset_top = 288.0
+offset_right = 1488.0
+offset_bottom = 368.0
+scale = Vector2(0.5, 0.5)
+
+[node name="min" type="Label" parent="."]
+layout_mode = 0
+offset_top = 264.0
+offset_right = 80.0
+offset_bottom = 328.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+text = "0 "
+horizontal_alignment = 2
+vertical_alignment = 1
+
+[node name="max" type="Label" parent="."]
+layout_mode = 0
+offset_top = 40.0
+offset_right = 80.0
+offset_bottom = 104.0
+scale = Vector2(0.5, 0.5)
+theme_override_font_sizes/font_size = 32
+text = "100 "
+horizontal_alignment = 2
+vertical_alignment = 1

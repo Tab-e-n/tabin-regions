@@ -5705,6 +5705,11 @@ script = ExtResource("3_bhcgi")
 from_name = &"Southeast Brazil"
 to_name = &"Center-West Brazil"
 
+[node name="Hanga Roa-Galapagos" type="Line2D" parent="links"]
+script = ExtResource("3_bhcgi")
+from_name = &"Galapagos"
+to_name = &"Hanga Roa"
+
 [node name="Czechoslovakia" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_p41mi")
 position = Vector2(-320, -1160)

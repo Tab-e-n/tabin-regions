@@ -285,7 +285,7 @@ to_name = &"Shuneshka"
 
 [node name="bg" parent="." instance=ExtResource("3_vw0jd")]
 position = Vector2(-7, -22)
-color = Color(0.392157, 0.352941, 0.447059, 1)
+color = Color(0.411765, 0.34902, 0.427451, 1)
 
 [node name="Astoska" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_h7d35")

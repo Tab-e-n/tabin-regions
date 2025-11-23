@@ -1,0 +1,7 @@
+[gd_scene load_steps=2 format=3 uid="uid://cxids1u24cfdb"]
+
+[ext_resource type="Script" path="res://scripts/dotted_line.gd" id="1_rdwnt"]
+
+[node name="dots" type="Line2D"]
+width = 0.0
+script = ExtResource("1_rdwnt")

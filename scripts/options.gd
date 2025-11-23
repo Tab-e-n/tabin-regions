@@ -18,6 +18,8 @@ var auto_end_turn_phases : bool = false
 var action_change_particles : bool = true
 var allowed_directories : Array = []
 
+var use_graph : bool = true
+
 var current_timestamp : int = 0
 var timestamp_sums : Dictionary = {}
 

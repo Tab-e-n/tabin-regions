@@ -466,6 +466,8 @@ func _ready():
 	if save_cache:
 		_load_cache()
 	
+	GameStats.reset_statistics(align_amount)
+	
 	Options.timestamp("RegionCotrol ready setup", "RegionControl")
 	
 	_get_all_regions()
@@ -578,8 +580,6 @@ func _ready():
 	align_names.resize(align_amount)
 	
 	# -- STATS --
-	GameStats.reset_statistics(align_amount)
-	
 	for align in range(align_amount):
 		GameStats.set_stat(align, "align color", align_color[align])
 		if align == 0:
@@ -695,33 +695,40 @@ func _create_region_connections():
 
 
 func _count_up_regions():
+	var sum_regions_amount : int = 0
+	var sum_capitals_amount : int = 0
 	for i in range(align_amount - 1):
 		region_amount[i] = 0
 		capital_amount[i] = 0
-	for node in get_children():
-		var region : Region = node as Region
+	for region in get_all_regions():
 		if not region:
 			continue
+		sum_regions_amount += 1
+		if region.is_capital:
+			sum_capitals_amount += 1
 		if region.alignment == 0 or region.alignment >= align_amount:
 			continue
 		region_amount[region.alignment - 1] += 1
 		if region.is_capital:
 			capital_amount[region.alignment - 1] += 1
+	
+	GameStats.set_graph_max("regions", sum_regions_amount)
+	GameStats.set_graph_max("capitals", sum_capitals_amount)
+	GameStats.set_graph_max("penalties", sum_capitals_amount)
 
 
 func _set_capital_distance():
-	for node in get_children():
-		var region : Region = node as Region
+	for region in get_all_regions():
 		if region:
 			region.distance_from_capital = Region.DISTANCE_CAP
 	
-	for node in get_children():
-		var capital : Region = node as Region
+	for capital in get_all_regions():
 		if not capital or not capital.is_capital:
 			continue
 		capital.distance_from_capital = 0
-		
-		var current_distance : int = 2
+#		print("CAPITAL ", capital.name, " ", capital.distance_from_capital)
+
+		var current_distance : int = 0
 		var remaining_regions : Array[Region] = [capital]
 		var visited : Set = Set.new()
 		visited.add(capital)
@@ -731,11 +738,12 @@ func _set_capital_distance():
 			current_start += 1
 			if not start:
 				continue
+#			print("REGION ", start.name, " ", start.distance_from_capital)
 			
 			if start.distance_from_capital & 1:
-				current_distance += 3
+				current_distance = start.distance_from_capital + 3
 			else:
-				current_distance += 2
+				current_distance = start.distance_from_capital + 2
 			
 			for link in start.links:
 				var region : Region = link.get_other_region(start) as Region
@@ -752,6 +760,8 @@ func _set_capital_distance():
 					
 				elif region.distance_from_capital == current_distance and not visited.contains(region):
 					region.distance_from_capital -= 1
+				
+#				print("-> ", region.name, " ", region.distance_from_capital)
 
 
 func _check_capital_distance():
@@ -884,6 +894,22 @@ func _start_turn():
 		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
 
 
+func _new_round():
+	current_turn += 1
+	
+	for alignment in range(1, align_amount):
+		GameStats.set_stat(alignment, "regions", get_alignment_regions(alignment))
+		GameStats.set_stat(alignment, "capitals", get_alignment_capitals(alignment))
+		GameStats.set_stat(alignment, "penalties", get_alignment_penalties(alignment))
+	
+	round_ended.emit()
+	
+	GameStats.record_graph_column()
+	
+	if game_camera:
+		game_camera.update_graph()
+
+
 func _check_victory():
 	var aliance : int = 0
 	var victory_align : int = 0
@@ -979,6 +1005,15 @@ func get_region(reg_name : StringName) -> Region:
 		return node
 	else:
 		return null
+
+
+func get_all_regions() -> Array[Region]:
+	var all_of_them : Array[Region] = []
+	for region in regions.values():
+		region = region as Region
+		if region:
+			all_of_them.append(region)
+	return all_of_them
 
 
 ## Check if two alignments are allied.
@@ -1195,7 +1230,6 @@ func end_turn(record : bool):
 		play_order_i += 1
 		if play_order_i == align_play_order.size():
 			play_order_i = 0
-			current_turn += 1
 			round_end = true
 		current_playing_align = align_play_order[play_order_i]
 		first_loop = false
@@ -1212,7 +1246,7 @@ func end_turn(record : bool):
 	
 	turn_ended.emit()
 	if round_end:
-		round_ended.emit()
+		_new_round()
 	
 	if record:
 		ReplayControl.record_move.call_deferred(ReplayControl.RECORD_TYPE_FUNCTION, "end_turn")

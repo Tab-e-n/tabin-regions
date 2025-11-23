@@ -112,7 +112,7 @@ func random_leader_indicators(amount : int):
 
 
 func get_leader(alignment : int) -> Sprite2D:
-	return get_node(String.num(alignment))
+	return get_node_or_null(String.num(alignment))
 
 
 func remove_leader(alignment : int):

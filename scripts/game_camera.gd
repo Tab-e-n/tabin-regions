@@ -24,74 +24,76 @@ const PHASE_INFO : Array[String] = [
 ]
 
 
-@export var UI : Control
-@export var UIHideable : Control
-@export var PauseMenu : Control
-@export var PlayerInfo : Control
-@export var PlayerActions : Control
-@export var MapTintList : Array[NodePath]
-@export var ActionChangeParticle : PackedScene
+@export var ui : Control
+@export var ui_hideable : Control
+@export var pause_menu : Control
+@export var player_info : Control
+@export var player_actions : Control
+@export var map_tint_list : Array[NodePath]
+@export var action_change_particle : PackedScene
 
 @export_subgroup("Buttons")
-@export var AdvanceTurnButton : BaseButton
-@export var AdvanceActionLight : Sprite2D
-@export var AdvanceActionDark : Sprite2D
-@export var AdvanceMobilizeLight : Sprite2D
-@export var AdvanceMobilizeDark : Sprite2D
-@export var EndTurnButton : BaseButton
-@export var ForfeitButton : BaseButton
-@export var PauseButton : BaseButton
-@export var LeaveButton : BaseButton
+@export var advance_turn_button : BaseButton
+@export var advance_action_light : Sprite2D
+@export var advance_action_dark : Sprite2D
+@export var advance_mobilize_light : Sprite2D
+@export var advance_mobilize_dark : Sprite2D
+@export var end_turn_button : BaseButton
+@export var forfeit_button : BaseButton
+@export var pause_button : BaseButton
+@export var leave_button : BaseButton
+@export var graph_button : BaseButton
 
 @export_subgroup("Info")
-@export var TurnOrder : AlignmentList
-@export var PowerSprite : TextureRect
-@export var PowerAmount : Label
-@export var CurrentTurn : Label
-@export var CurrentAlignment : Label
-@export var CurrentAction : Label
-@export var PhaseInfo : Label
-@export var ReplayPausedLabel : Label
+@export var turn_order : AlignmentList
+@export var power_sprite : TextureRect
+@export var power_amount : Label
+@export var current_turn : Label
+@export var current_alignment : Label
+@export var current_action : Label
+@export var phase_info : Label
+@export var replay_paused_label : Label
+@export var stats_graph : GameStatsGraph
 
 @export_subgroup("Player Info")
-@export var PILeader : Sprite2D
-@export var PICity : Sprite2D
-@export var PICapital : Sprite2D
-@export var PIRegions : Label
-@export var PIPower : Label
-@export var PIName : Label
+@export var player_info_leader : Sprite2D
+@export var player_info_city : Sprite2D
+@export var player_info_capital : Sprite2D
+@export var player_info_regions : Label
+@export var player_info_power : Label
+@export var player_info_name : Label
 
 @export_subgroup("Messages")
-@export var VictoryMessage : Control
-@export var DefeatMessage : Control
-@export var LeaveMessage : Control
-@export var ForfeitMessage : Control
-@export var LeftoverMessage : Control
-@export var CommandCallout : CommandCallouts
+@export var victory_message : Control
+@export var defeat_message : Control
+@export var leave_message : Control
+@export var forfeit_message : Control
+@export var leftover_message : Control
+@export var command_callout : CommandCallouts
 
 @export_subgroup("Pause Options")
-@export var MouseScroll : BaseButton
-@export var AutoPhase : BaseButton
-@export var FastDP : BaseButton
-@export var ActionChangePart : BaseButton
-@export var VisCapitals : BaseButton
-@export var VisUI : BaseButton
-@export var VisTurnOrder : BaseButton
+@export var mouse_scroll : BaseButton
+@export var auto_phase : BaseButton
+@export var fast_dp : BaseButton
+@export var action_change_part : BaseButton
+@export var visible_capitals : BaseButton
+@export var visible_ui : BaseButton
+@export var visible_turn_order : BaseButton
 
 @export_subgroup("Tooltips")
-@export var TooltipActions : Label
-@export var TooltipPhase : Label
-@export var TooltipEndTurn : Label
-@export var TooltipForfeit : Label
+@export var tooltip_actions : Label
+@export var tooltip_phase : Label
+@export var tooltip_end_turn : Label
+@export var tooltip_forfeit : Label
 
 @onready var game_control : GameControl = get_parent()
 @onready var region_control : RegionControl
 @onready var window_size : Vector2
 
-var farthest_left : int = 0
-var farthest_right : int = 0
-var farthest_up : int = 0
-var farthest_down : int = 0
+var farthest_left : float = 0
+var farthest_right : float = 0
+var farthest_up : float = 0
+var farthest_down : float = 0
 
 var cam_movement_stop : float = PREVENT_CAMERA_MOVEMENT_START
 var next_position : Vector2 = position
@@ -123,69 +125,77 @@ func _ready():
 	window_size = GameCamera.get_window_size()
 	
 	game_control.game_camera = self
-	game_control.command_callout = CommandCallout
+	game_control.command_callout = command_callout
 	
 	zoom_level = ZOOM_START
 	zoom_change(0)
 	
-	if PlayerInfo:
-		PlayerInfo.visible = false
-		if PILeader:
+	if player_info:
+		player_info.visible = false
+		if player_info_leader:
 			var leader : Sprite2D = AlignmentList.make_leader(0)
-			leader.position = PILeader.position
-			leader.scale = PILeader.scale
-			PILeader.queue_free()
-			PlayerInfo.add_child(leader)
-			PILeader = leader
-	if PauseMenu:
-		PauseMenu.visible = false
-	if VictoryMessage:
-		VictoryMessage.visible = false
-	if DefeatMessage:
-		DefeatMessage.visible = false
-	if LeaveMessage:
-		LeaveMessage.visible = false
-	if ForfeitMessage:
-		ForfeitMessage.visible = false
+			leader.position = player_info_leader.position
+			leader.scale = player_info_leader.scale
+			player_info_leader.queue_free()
+			player_info.add_child(leader)
+			player_info_leader = leader
+	if pause_menu:
+		pause_menu.visible = false
+	if victory_message:
+		victory_message.visible = false
+	if defeat_message:
+		defeat_message.visible = false
+	if leave_message:
+		leave_message.visible = false
+	if forfeit_message:
+		forfeit_message.visible = false
+	if stats_graph:
+		stats_graph.visible = false
 	
-	if AdvanceTurnButton:
-		AdvanceTurnButton.pressed.connect(try_advance_turn)
-		AdvanceTurnButton.mouse_entered.connect(show_tooltip.bind(TOOLTIP.PHASE))
-		AdvanceTurnButton.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.PHASE))
-	if EndTurnButton:
-		EndTurnButton.pressed.connect(try_end_turn)
-		EndTurnButton.mouse_entered.connect(show_tooltip.bind(TOOLTIP.END_TURN))
-		EndTurnButton.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.END_TURN))
-	if ForfeitButton:
-		ForfeitButton.pressed.connect(try_forfeit)
-		ForfeitButton.mouse_entered.connect(show_tooltip.bind(TOOLTIP.FORFEIT))
-		ForfeitButton.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.FORFEIT))
-	if PowerAmount:
-		PowerAmount.mouse_entered.connect(show_tooltip.bind(TOOLTIP.ACTIONS))
-		PowerAmount.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.ACTIONS))
-	if TurnOrder:
-		TurnOrder.mouse_entered.connect(_on_turn_order_hovered)
-		TurnOrder.mouse_exited.connect(_on_turn_order_left)
-	if PauseButton:
-		PauseButton.pressed.connect(toggle_pause_menu)
-	if LeaveButton:
-		LeaveButton.pressed.connect(try_leaving)
+	if advance_turn_button:
+		advance_turn_button.pressed.connect(try_advance_turn)
+		advance_turn_button.mouse_entered.connect(show_tooltip.bind(TOOLTIP.PHASE))
+		advance_turn_button.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.PHASE))
+	if end_turn_button:
+		end_turn_button.pressed.connect(try_end_turn)
+		end_turn_button.mouse_entered.connect(show_tooltip.bind(TOOLTIP.END_TURN))
+		end_turn_button.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.END_TURN))
+	if forfeit_button:
+		forfeit_button.pressed.connect(try_forfeit)
+		forfeit_button.mouse_entered.connect(show_tooltip.bind(TOOLTIP.FORFEIT))
+		forfeit_button.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.FORFEIT))
+	if power_amount:
+		power_amount.mouse_entered.connect(show_tooltip.bind(TOOLTIP.ACTIONS))
+		power_amount.mouse_exited.connect(hide_tooltip.bind(TOOLTIP.ACTIONS))
+	if turn_order:
+		turn_order.mouse_entered.connect(_on_turn_order_hovered)
+		turn_order.mouse_exited.connect(_on_turn_order_left)
+	if pause_button:
+		pause_button.pressed.connect(toggle_pause_menu)
+	if graph_button:
+		if Options.use_graph:
+			graph_button.pressed.connect(toggle_graph)
+			stats_graph.update_graph_name()
+		else:
+			graph_button.visible = false
+	if leave_button:
+		leave_button.pressed.connect(try_leaving)
 	
-	if MouseScroll:
-		MouseScroll.button_pressed = Options.mouse_scroll_active
-	if AutoPhase:
-		AutoPhase.button_pressed = Options.auto_end_turn_phases
-	if FastDP:
-		FastDP.button_pressed = Options.dp_speedrun
-	if ActionChangePart:
-		ActionChangePart.button_pressed = Options.action_change_particles
-	if VisUI and UIHideable:
-		VisUI.button_pressed = UIHideable.visible
-	if VisTurnOrder and TurnOrder:
-		VisTurnOrder.button_pressed = TurnOrder.visible
+	if mouse_scroll:
+		mouse_scroll.button_pressed = Options.mouse_scroll_active
+	if auto_phase:
+		auto_phase.button_pressed = Options.auto_end_turn_phases
+	if fast_dp:
+		fast_dp.button_pressed = Options.dp_speedrun
+	if action_change_part:
+		action_change_part.button_pressed = Options.action_change_particles
+	if visible_ui and ui_hideable:
+		visible_ui.button_pressed = ui_hideable.visible
+	if visible_turn_order and turn_order:
+		visible_turn_order.button_pressed = turn_order.visible
 	
+	_deferred_ready.call_deferred()
 	Options.timestamp("GameCamera ready", "GameCamera")
-	call_deferred("_deferred_ready")
 
 
 func _deferred_ready():
@@ -195,38 +205,26 @@ func _deferred_ready():
 	
 	for i in region_control.polygon:
 		if i.x > farthest_right:
-			@warning_ignore("narrowing_conversion")
 			farthest_right = i.x
 		if i.x < farthest_left:
-			@warning_ignore("narrowing_conversion")
 			farthest_left = i.x
 		if i.y > farthest_down:
-			@warning_ignore("narrowing_conversion")
 			farthest_down = i.y
 		if i.y < farthest_up:
-			@warning_ignore("narrowing_conversion")
 			farthest_up = i.y
 	
-	if farthest_right < window_size.x / 2:
-		@warning_ignore("narrowing_conversion")
-		farthest_right = window_size.x / 2
-	if farthest_left > -window_size.x / 2:
-		@warning_ignore("narrowing_conversion")
-		farthest_left = -window_size.x / 2
-	if farthest_down < window_size.y / 2:
-		@warning_ignore("narrowing_conversion")
-		farthest_down = window_size.y / 2
-	if farthest_up > -window_size.y / 2:
-		@warning_ignore("narrowing_conversion")
-		farthest_up = -window_size.y / 2
+	if farthest_right < window_size.x * 0.5:
+		farthest_right = window_size.x * 0.5
+	if farthest_left > -window_size.x * 0.5:
+		farthest_left = -window_size.x * 0.5
+	if farthest_down < window_size.y * 0.5:
+		farthest_down = window_size.y * 0.5
+	if farthest_up > -window_size.y * 0.5:
+		farthest_up = -window_size.y * 0.5
 	
-	@warning_ignore("narrowing_conversion")
 	farthest_right += region_control.offset.x
-	@warning_ignore("narrowing_conversion")
 	farthest_left += region_control.offset.x
-	@warning_ignore("narrowing_conversion")
 	farthest_down += region_control.offset.y
-	@warning_ignore("narrowing_conversion")
 	farthest_up += region_control.offset.y
 	
 #	print(farthest_right, " ",farthest_left, " ",farthest_down, " ",farthest_up,)
@@ -241,25 +239,33 @@ func _deferred_ready():
 		position.y = farthest_up
 	next_position = position
 	
-	if VisCapitals and region_control:
-		VisCapitals.button_pressed = region_control.cities_visible
+	if visible_capitals and region_control:
+		visible_capitals.button_pressed = region_control.cities_visible
 	
 	update_alignment_colored_ui()
 	update_current_action(region_control.current_phase)
 	
-	for path in MapTintList:
+	for path in map_tint_list:
 		get_node(path).self_modulate = region_control.color
 	
-	CommandCallout.default_color = region_control.command_callout_color
+	command_callout.default_color = region_control.command_callout_color
 	
 	_connect_region_control_signals()
 	
 	update_current_turn()
 	update_alignment_label()
 	
-	if TurnOrder:
-		TurnOrder.ready_list(region_control)
-		TurnOrder.select_leader(region_control.current_playing_align)
+	if turn_order:
+		turn_order.ready_list(region_control)
+		turn_order.select_leader(region_control.current_playing_align)
+	
+	if Options.use_graph and stats_graph:
+		stats_graph.make_lines(region_control.align_amount, region_control.align_color)
+		stats_graph.create_stat_button("regions")
+		stats_graph.create_stat_button("capitals")
+		if region_control.apply_penalties:
+			stats_graph.create_stat_button("penalties")
+		stats_graph.tint_bg(region_control.color)
 	
 	Options.timestamp("GameCamera deferred ready", "GameCamera")
 
@@ -285,8 +291,8 @@ func _process(delta):
 	if hovering_turn_order:
 		update_player_info()
 	
-	if ReplayControl.replay_active:
-		ReplayPausedLabel.visible = ReplayControl.paused
+	if replay_paused_label and ReplayControl.replay_active:
+		replay_paused_label.visible = ReplayControl.paused
 	
 	var shake_offset : Vector2 = Vector2(0.0, 0.0)
 	
@@ -319,8 +325,8 @@ func set_ui_shader_parameter(Element : CanvasItem, param : String, value : Varia
 
 func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
 	var move_speed = BASE_MOVE_SPEED
-	if UI:
-		move_speed *= UI.scale.x
+	if ui:
+		move_speed *= ui.scale.x
 	if shift:
 		move_speed *= 2.0
 	if ctrl:
@@ -350,9 +356,9 @@ func zoom_change(amount : int):
 		zoom_level = ZOOM_IN_MAX
 	zoom.x = pow(1.25, zoom_level)
 	zoom.y = zoom.x
-	if UI:
-		UI.scale.x = 1 / zoom.x
-		UI.scale.y = UI.scale.x
+	if ui:
+		ui.scale.x = 1 / zoom.x
+		ui.scale.y = ui.scale.x
 
 
 func reset_zoom():
@@ -400,52 +406,52 @@ func try_forfeit():
 func make_action_changed_particle(amount : int, color : Color) -> void:
 	if not Options.action_change_particles:
 		return
-	if UIHideable and not UIHideable.visible:
+	if ui_hideable and not ui_hideable.visible:
 		return
 	
-	var part = ActionChangeParticle.instantiate()
+	var part = action_change_particle.instantiate()
 	part.text = str(amount)
 	if amount > 0:
 		part.text = "+" + part.text
 	part.position = Vector2(-448, 208)
 	part.color = color
 	
-	UI.add_child(part)
+	ui.add_child(part)
 
 
 func toggle_ui_visible():
-	set_ui_visible(not UIHideable.visible)
+	set_ui_visible(not ui_hideable.visible)
 
 
 func set_ui_visible(visibility : bool):
-	if UIHideable:
-		UIHideable.visible = visibility
-		if VisUI:
-			VisUI.set_pressed_no_signal(visibility)
+	if ui_hideable:
+		ui_hideable.visible = visibility
+		if visible_ui:
+			visible_ui.set_pressed_no_signal(visibility)
 
 
 func toggle_turn_order_visible():
-	if TurnOrder:
-		set_turn_order_visible(not TurnOrder.visible)
+	if turn_order:
+		set_turn_order_visible(not turn_order.visible)
 
 
 func set_turn_order_visible(visibility : bool):
-	if TurnOrder:
-		TurnOrder.visible = visibility
-		if VisTurnOrder:
-			VisTurnOrder.set_pressed_no_signal(TurnOrder.visible)
+	if turn_order:
+		turn_order.visible = visibility
+		if visible_turn_order:
+			visible_turn_order.set_pressed_no_signal(turn_order.visible)
 
 
 func set_player_info_visible(visibility : bool):
-	if PlayerInfo:
-		PlayerInfo.visible = visibility
+	if player_info:
+		player_info.visible = visibility
 
 
 func update_player_info() -> void:
-	if not TurnOrder or not PlayerInfo:
+	if not turn_order or not player_info:
 		return
 	
-	var recent_hovered_player : int = TurnOrder.get_leader_id_from_position(game_control.mouse_position)
+	var recent_hovered_player : int = turn_order.get_leader_id_from_position(game_control.mouse_position)
 	
 	var new_player : bool = false
 	if hovered_player != recent_hovered_player:
@@ -453,165 +459,192 @@ func update_player_info() -> void:
 		new_player = true
 	
 	var player_alignment : int = region_control.get_alignment_from_play_order(hovered_player)
-	var leader : Sprite2D = TurnOrder.get_leader(player_alignment) as Sprite2D
+	var leader : Sprite2D = turn_order.get_leader(player_alignment) as Sprite2D
 	if leader and leader.visible:
 		var color : Color = leader.self_modulate
 		if new_player:
-			AlignmentList.color_leader(PILeader, color)
-			AlignmentList.set_leader_dp(PILeader, leader.frame)
-			PlayerInfo.self_modulate = color
-			PICity.self_modulate = color
-			PICapital.self_modulate = color
-			PIRegions.self_modulate = RegionControl.text_color(color.v)
-			PIPower.self_modulate = RegionControl.text_color(color.v)
-			PIName.text = region_control.get_alignment_name(player_alignment)
+			AlignmentList.color_leader(player_info_leader, color)
+			AlignmentList.set_leader_dp(player_info_leader, leader.frame)
+			player_info.self_modulate = color
+			player_info_city.self_modulate = color
+			player_info_capital.self_modulate = color
+			player_info_regions.self_modulate = RegionControl.text_color(color.v)
+			player_info_power.self_modulate = RegionControl.text_color(color.v)
+			player_info_name.text = region_control.get_alignment_name(player_alignment)
+			if stats_graph:
+				stats_graph.show_certain_line(player_alignment)
 		
-		PIRegions.text = String.num(region_control.get_alignment_regions(player_alignment))
-		PIPower.text = String.num(region_control.get_alignment_capitals(player_alignment))
-		AlignmentList.leader_sweat(PILeader, region_control.get_alignment_capitals(player_alignment) <= 0)
+		player_info_regions.text = String.num(region_control.get_alignment_regions(player_alignment))
+		player_info_power.text = String.num(region_control.get_alignment_capitals(player_alignment))
+		AlignmentList.leader_sweat(player_info_leader, region_control.get_alignment_capitals(player_alignment) <= 0)
 		
 		if region_control.get_alignment_penalties(player_alignment) > 0:
-			PIPower.text += "\n-" + String.num(region_control.get_alignment_penalties(player_alignment))
-		
+			player_info_power.text += "\n-" + String.num(region_control.get_alignment_penalties(player_alignment))
+		if not stats_graph or not stats_graph.visible:
+			set_player_info_visible(true)
 	else:
 		set_player_info_visible(false)
+		if stats_graph:
+			stats_graph.show_lines()
 
 
 func update_alignment_colored_ui():
-	if PlayerActions:
-		PlayerActions.modulate = region_control.get_current_alignment_color()
-		PlayerActions.modulate.a = 1
-		PlayerActions.visible = region_control.is_player_controled and not ReplayControl.replay_active
-		var value : float = PlayerActions.modulate.v
-		set_ui_shader_parameter(AdvanceActionLight, "value", value)
-		set_ui_shader_parameter(AdvanceActionDark, "value", value)
-		set_ui_shader_parameter(AdvanceMobilizeLight, "value", value)
-		set_ui_shader_parameter(AdvanceMobilizeDark, "value", value)
-		set_ui_shader_parameter(EndTurnButton, "value", value)
-		set_ui_shader_parameter(ForfeitButton, "value", value)
-		if CurrentAction:
+	if player_actions:
+		player_actions.modulate = region_control.get_current_alignment_color()
+		player_actions.modulate.a = 1
+		player_actions.visible = region_control.is_player_controled and not ReplayControl.replay_active
+		var value : float = player_actions.modulate.v
+		set_ui_shader_parameter(advance_action_light, "value", value)
+		set_ui_shader_parameter(advance_action_dark, "value", value)
+		set_ui_shader_parameter(advance_mobilize_light, "value", value)
+		set_ui_shader_parameter(advance_mobilize_dark, "value", value)
+		set_ui_shader_parameter(end_turn_button, "value", value)
+		set_ui_shader_parameter(forfeit_button, "value", value)
+		if current_action:
 			if region_control.is_player_controled:
-				CurrentAction.self_modulate = RegionControl.text_color(value)
+				current_action.self_modulate = RegionControl.text_color(value)
 			else:
-				CurrentAction.self_modulate = Color.WHITE
-	if PowerSprite:
-		PowerSprite.self_modulate = region_control.get_current_alignment_color()
-		PowerSprite.self_modulate.a = 1
-		if PowerAmount:
-			PowerAmount.self_modulate = RegionControl.text_color(PowerSprite.self_modulate.v)
+				current_action.self_modulate = Color.WHITE
+	if power_sprite:
+		power_sprite.self_modulate = region_control.get_current_alignment_color()
+		power_sprite.self_modulate.a = 1
+		if power_amount:
+			power_amount.self_modulate = RegionControl.text_color(power_sprite.self_modulate.v)
 
 
 func update_alignment_label():
-	if CurrentAlignment:
-		CurrentAlignment.text = region_control.get_current_alignment_name()
+	if current_alignment:
+		current_alignment.text = region_control.get_current_alignment_name()
 
 
 func update_current_turn():
-	if CurrentTurn:
-		CurrentTurn.text = "Turn " + str(region_control.current_turn)
+	if current_turn:
+		current_turn.text = "Turn " + str(region_control.current_turn)
 
 
 func advance_turn_visual(type : int):
-	if AdvanceActionLight:
-		AdvanceActionLight.visible = type == 0
+	if advance_action_light:
+		advance_action_light.visible = type == 0
 	
-	if AdvanceActionDark:
-		AdvanceActionDark.visible = type == 1
+	if advance_action_dark:
+		advance_action_dark.visible = type == 1
 	
-	if AdvanceMobilizeLight:
-		AdvanceMobilizeLight.visible = type == 2
+	if advance_mobilize_light:
+		advance_mobilize_light.visible = type == 2
 	
-	if AdvanceMobilizeDark:
-		AdvanceMobilizeDark.visible = type == 3
+	if advance_mobilize_dark:
+		advance_mobilize_dark.visible = type == 3
 
 
 func update_current_action(current_phase : int):
-	if CurrentAction:
-		CurrentAction.text = ACTIONS[current_phase]
+	if current_action:
+		current_action.text = ACTIONS[current_phase]
 	if current_phase == RegionControl.PHASE.MOBILIZE:
 		advance_turn_visual(2)
 	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
 		advance_turn_visual(1)
 	else:
 		advance_turn_visual(0)
-	if PhaseInfo:
-		PhaseInfo.text = PHASE_INFO[current_phase]
+	if phase_info:
+		phase_info.text = PHASE_INFO[current_phase]
 
 
 func show_victory_message(alignment : int):
-	if VictoryMessage:
-		VictoryMessage.visible = true
-		VictoryMessage.modulate = region_control.align_color[alignment]
+	if victory_message:
+		victory_message.visible = true
+		victory_message.modulate = region_control.align_color[alignment]
 
 
 func show_defeat_message(alignment : int):
-	if DefeatMessage:
-		DefeatMessage.visible = true
-		DefeatMessage.modulate = region_control.align_color[alignment]
+	if defeat_message:
+		defeat_message.visible = true
+		defeat_message.modulate = region_control.align_color[alignment]
 
 
 func set_leave_message(visibility : bool):
-	if LeaveMessage:
-		LeaveMessage.visible = visibility
+	if leave_message:
+		leave_message.visible = visibility
 
 
 func set_forfeit_message(visibility : bool):
-	if ForfeitMessage:
-		ForfeitMessage.visible = visibility
+	if forfeit_message:
+		forfeit_message.visible = visibility
 
 
 func set_leftover_message(visibility : bool):
-	if LeftoverMessage:
-		LeftoverMessage.visible = visibility
+	if leftover_message:
+		leftover_message.visible = visibility
 
 
 func toggle_pause_menu():
-	set_pause_menu_visible(not PauseMenu.visible)
+	if pause_menu:
+		set_pause_menu_visible(not pause_menu.visible)
+	set_graph_visible(false)
 	set_leave_message(false)
 
 
 func set_pause_menu_visible(visibility : bool):
-	if PauseMenu:
-		PauseMenu.visible = visibility
+	if pause_menu:
+		pause_menu.visible = visibility
 		if game_control:
 			game_control.inputs_active = not visibility
 
 
 func show_tooltip(tooltip : TOOLTIP):
-	TooltipActions.visible = tooltip == TOOLTIP.ACTIONS
-	TooltipPhase.visible = tooltip == TOOLTIP.PHASE
-	TooltipEndTurn.visible = tooltip == TOOLTIP.END_TURN
-	TooltipForfeit.visible = tooltip == TOOLTIP.FORFEIT
+	tooltip_actions.visible = tooltip == TOOLTIP.ACTIONS
+	tooltip_phase.visible = tooltip == TOOLTIP.PHASE
+	tooltip_end_turn.visible = tooltip == TOOLTIP.END_TURN
+	tooltip_forfeit.visible = tooltip == TOOLTIP.FORFEIT
 	disable_camera_movement = true
 
 
 func hide_tooltip(tooltip : TOOLTIP):
 	match tooltip:
 		TOOLTIP.ACTIONS:
-			TooltipActions.visible = false
+			tooltip_actions.visible = false
 		TOOLTIP.PHASE:
-			TooltipPhase.visible = false
+			tooltip_phase.visible = false
 		TOOLTIP.END_TURN:
-			TooltipEndTurn.visible = false
+			tooltip_end_turn.visible = false
 		TOOLTIP.FORFEIT:
-			TooltipForfeit.visible = false
+			tooltip_forfeit.visible = false
 	disable_camera_movement = false
 
 
 func hide_all_tooltips():
-	TooltipActions.visible = false
-	TooltipPhase.visible = false
-	TooltipEndTurn.visible = false
-	TooltipForfeit.visible = false
+	tooltip_actions.visible = false
+	tooltip_phase.visible = false
+	tooltip_end_turn.visible = false
+	tooltip_forfeit.visible = false
 	disable_camera_movement = false
+
+
+func toggle_graph():
+	if stats_graph:
+		set_graph_visible(not stats_graph.visible)
+	set_pause_menu_visible(false)
+	set_leave_message(false)
+
+
+func set_graph_visible(visibility : bool) -> void:
+	if stats_graph:
+		if visibility:
+			stats_graph.show_graph()
+		else:
+			stats_graph.hide_graph()
+
+
+func update_graph():
+	if stats_graph:
+		stats_graph.update_lines()
 
 
 func _on_turn_ended():
 	update_alignment_colored_ui()
 	
-	if TurnOrder:
-		TurnOrder.update_list(region_control)
-		TurnOrder.select_leader(region_control.current_playing_align)
+	if turn_order:
+		turn_order.update_list(region_control)
+		turn_order.select_leader(region_control.current_playing_align)
 	
 	if not region_control.is_player_controled:
 		disable_camera_movement = false
@@ -629,8 +662,8 @@ func _on_turn_phase_changed(current_phase : int):
 
 
 func _on_actions_modified(amount : int) -> void:
-	if PowerAmount:
-		PowerAmount.text = String.num(region_control.get_action_amount())
+	if power_amount:
+		power_amount.text = String.num(region_control.get_action_amount())
 	if amount != 0:
 		make_action_changed_particle(amount, region_control.get_current_alignment_color())
 	if region_control.get_action_amount() == 0:
@@ -639,12 +672,18 @@ func _on_actions_modified(amount : int) -> void:
 
 func _on_turn_order_hovered():
 	hovering_turn_order = true
-	set_player_info_visible(true)
+	if not stats_graph or not stats_graph.visible:
+		set_player_info_visible(true)
+	if stats_graph and region_control:
+		var player_alignment : int = region_control.get_alignment_from_play_order(hovered_player)
+		stats_graph.show_certain_line(player_alignment)
 
 
 func _on_turn_order_left():
 	hovering_turn_order = false
 	set_player_info_visible(false)
+	if stats_graph:
+		stats_graph.show_lines()
 
 
 func _on_leave_confirmed():
