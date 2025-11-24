@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/volcano.gd" id="2_h406j"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_xdpg4"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_5gux2"]
-[ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_owuq4"]
+[ext_resource type="Script" path="res://scripts/region_path.gd" id="3_owuq4"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_ylwec"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_idesc"]
 
@@ -797,34 +797,34 @@ period = 0.5
 
 [node name="VolcanoPath1_1" type="Node" parent="Volcano"]
 script = ExtResource("3_owuq4")
-pathway_strings = Array[String](["Metalist", "Cobid", "Fish", "Aggregate"])
+pathway_region_names = Array[String](["Metalist", "Cobid", "Fish", "Aggregate"])
 chosen_frequency = 2
 
 [node name="VolcanoPath1_2" type="Node" parent="Volcano"]
 script = ExtResource("3_owuq4")
-pathway_strings = Array[String](["Exing", "Rectaless", "Wiggler", "Aggregate"])
+pathway_region_names = Array[String](["Exing", "Rectaless", "Wiggler", "Aggregate"])
 chosen_frequency = 2
 
 [node name="VolcanoPath1_3" type="Node" parent="Volcano"]
 script = ExtResource("3_owuq4")
-pathway_strings = Array[String](["Thrashi", "Beanis", "Adrenalin", "Aggregate"])
+pathway_region_names = Array[String](["Thrashi", "Beanis", "Adrenalin", "Aggregate"])
 chosen_frequency = 2
 
 [node name="VolcanoPath2_1" type="Node" parent="Volcano"]
 script = ExtResource("3_owuq4")
-pathway_strings = Array[String](["Fancy Sheen", "Stone Generator", "Fish", "Aggregate"])
+pathway_region_names = Array[String](["Fancy Sheen", "Stone Generator", "Fish", "Aggregate"])
 chosen_frequency = 2
 chosen_offset = 1
 
 [node name="VolcanoPath2_2" type="Node" parent="Volcano"]
 script = ExtResource("3_owuq4")
-pathway_strings = Array[String](["Blue", "Attacking Vertical", "Wiggler", "Aggregate"])
+pathway_region_names = Array[String](["Blue", "Attacking Vertical", "Wiggler", "Aggregate"])
 chosen_frequency = 2
 chosen_offset = 1
 
 [node name="VolcanoPath2_3" type="Node" parent="Volcano"]
 script = ExtResource("3_owuq4")
-pathway_strings = Array[String](["Tracker", "Firewall", "Adrenalin", "Aggregate"])
+pathway_region_names = Array[String](["Tracker", "Firewall", "Adrenalin", "Aggregate"])
 chosen_frequency = 2
 chosen_offset = 1
 

@@ -6,7 +6,8 @@ const WARNING_NAME : String = "VolcanoWarning"
 
 
 @export var residing_region : Region
-@export var dummy_alignment : int
+@export var dummy_alignment : int = 0
+@export var warning_number : int = 1
 
 @export_subgroup("Screen Shake")
 @export var duration : float = 1.2
@@ -17,7 +18,7 @@ const WARNING_NAME : String = "VolcanoWarning"
 @onready var dp_control : DPControl
 @onready var region_control : RegionControl
 
-var pathways : Array[VolcanoPath] = []
+var pathways : Array[RegionPath] = []
 var active : bool = false
 var iteration : int = 0
 
@@ -46,23 +47,12 @@ func _ready():
 
 func _deferred_ready():
 	for node in get_children():
-		if not node is VolcanoPath:
+		var path : RegionPath = node as RegionPath
+		if not path:
 			continue
-		var path : VolcanoPath = node as VolcanoPath
+		path.ready_pathway(region_control)
+		path.create_warnings(warning_number, region_control.align_color[dummy_alignment])
 		pathways.append(path)
-		for reg_name in path.pathway_strings:
-			var region = region_control.get_region(reg_name)
-			if not region:
-				push_warning("Could not get region ", reg_name)
-				continue
-			path.pathway.append(region)
-			
-			if not region.has_node(WARNING_NAME):
-				var warning : RegionWarning = preload("res://objects/warning.tscn").instantiate() as RegionWarning
-				warning.warning_number = 1
-				warning.name = WARNING_NAME
-				warning.color = region_control.align_color[dummy_alignment]
-				region.add_child(warning)
 	
 	dp_control = region_control.dp_control
 	var controler_id = region_control.align_controlers[dummy_alignment - 1]
@@ -111,14 +101,11 @@ func _think_bonus():
 	
 	var call_end_turn = true
 	for path in pathways:
-		if not path.active:
+		if not path.is_active():
 			continue
 		call_end_turn = false
 		dp_control.CALL_overtake = true
-		dp_control.selected_capital = path.pathway_strings[path.current]
-		path.current += 1
-		if path.current >= path.pathway_strings.size():
-			path.active = false
+		dp_control.selected_capital = path.get_next_region().name
 		break
 	if call_end_turn:
 		dp_control.CALL_end_turn = true
@@ -127,13 +114,8 @@ func _think_bonus():
 
 func activate_pathways():
 	for path in pathways:
-		path.active = ((iteration + path.chosen_offset) % path.chosen_frequency) == 0
-		if not path.active:
-			path.hide_warnings()
-		path.current = 0
-	for path in pathways:
-		if path.active:
-			path.show_warnings()
+		path.activate_iteration(iteration)
+		path.update_warnings()
 	iteration += 1
 
 

@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_r5t6v"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_v7h8x"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_42p2u"]
-[ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_xo7gg"]
+[ext_resource type="Script" path="res://scripts/region_path.gd" id="3_xo7gg"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_lxeuq"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_oj0wk"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_ib1ao"]
@@ -858,40 +858,40 @@ dummy_alignment = 6
 
 [node name="Coastal" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Coastal Spill", "Indent Beach"])
+pathway_region_names = Array[String](["Coastal Spill", "Indent Beach"])
 chosen_frequency = 3
 chosen_offset = 1
 
 [node name="Flat" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Flatline", "Staff Beach", "Pearl Coast", "Sudden Turn"])
+pathway_region_names = Array[String](["Flatline", "Staff Beach", "Pearl Coast", "Sudden Turn"])
 chosen_offset = 2
 
 [node name="Duo1" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Vulcanic Duo", "Slotin", "Mean Zone"])
+pathway_region_names = Array[String](["Vulcanic Duo", "Slotin", "Mean Zone"])
 chosen_frequency = 4
 
 [node name="Duo2" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Vulcanic Duo", "The Grip", "Thumbs"])
+pathway_region_names = Array[String](["Vulcanic Duo", "The Grip", "Thumbs"])
 chosen_frequency = 4
 chosen_offset = 2
 
 [node name="Lake" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Sometimes Lake", "Valley Of Death", "Flatlands"])
+pathway_region_names = Array[String](["Sometimes Lake", "Valley Of Death", "Flatlands"])
 chosen_frequency = 2
 chosen_offset = 1
 
 [node name="Split1" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Doser", "Antlers", "The Other Way", "Lost Tribe"])
+pathway_region_names = Array[String](["Doser", "Antlers", "The Other Way", "Lost Tribe"])
 chosen_frequency = 3
 
 [node name="Split2" type="Node" parent="Volcano"]
 script = ExtResource("3_xo7gg")
-pathway_strings = Array[String](["Twide", "Long Way Home", "Rad Fill", "Lost Tribe"])
+pathway_region_names = Array[String](["Twide", "Long Way Home", "Rad Fill", "Lost Tribe"])
 chosen_frequency = 2
 chosen_offset = 1
 

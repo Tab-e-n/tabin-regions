@@ -3,7 +3,7 @@
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_x2221"]
 [ext_resource type="Script" path="res://scripts/volcano.gd" id="2_80qnr"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_apjgv"]
-[ext_resource type="Script" path="res://scripts/volcano_path.gd" id="3_jh77j"]
+[ext_resource type="Script" path="res://scripts/region_path.gd" id="3_jh77j"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="4_nnhca"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="5_vg1se"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="6_hrv61"]
@@ -463,34 +463,34 @@ dummy_alignment = 3
 
 [node name="start_suprise" type="Node" parent="Volcano"]
 script = ExtResource("3_jh77j")
-pathway_strings = Array[String](["Spilfer", "Braindown", "Thata Town", "Distraction", "Thata Town"])
+pathway_region_names = Array[String](["Spilfer", "Braindown", "Thata Town", "Distraction", "Thata Town"])
 chosen_frequency = 2
 
 [node name="capital_down" type="Node" parent="Volcano"]
 script = ExtResource("3_jh77j")
-pathway_strings = Array[String](["Free Bee", "Barirer", "Braindown", "Shack", "Beginnings", "Starless Night"])
+pathway_region_names = Array[String](["Free Bee", "Barirer", "Braindown", "Shack", "Beginnings", "Starless Night"])
 chosen_frequency = 3
 chosen_offset = 2
 
 [node name="fuck_you" type="Node" parent="Volcano"]
 script = ExtResource("3_jh77j")
-pathway_strings = Array[String](["Astro", "Triada", "Otharder", "Begiah", "Begiah"])
+pathway_region_names = Array[String](["Astro", "Triada", "Otharder", "Begiah", "Begiah"])
 chosen_frequency = 4
 chosen_offset = 2
 
 [node name="bongo" type="Node" parent="Volcano"]
 script = ExtResource("3_jh77j")
-pathway_strings = Array[String](["Ori's Conto", "Astro", "Refraction", "The Catch", "Hello Tower"])
+pathway_region_names = Array[String](["Ori's Conto", "Astro", "Refraction", "The Catch", "Hello Tower"])
 chosen_frequency = 3
 
 [node name="left" type="Node" parent="Volcano"]
 script = ExtResource("3_jh77j")
-pathway_strings = Array[String](["Streak", "Hills of the Damned", "Scrunkler", "Backside"])
+pathway_region_names = Array[String](["Streak", "Hills of the Damned", "Scrunkler", "Backside"])
 chosen_frequency = 2
 
 [node name="right" type="Node" parent="Volcano"]
 script = ExtResource("3_jh77j")
-pathway_strings = Array[String](["Cracks", "Dumb Lake", "Edge", "Backside"])
+pathway_region_names = Array[String](["Cracks", "Dumb Lake", "Edge", "Backside"])
 chosen_frequency = 2
 chosen_offset = 1
 
