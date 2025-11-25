@@ -593,6 +593,8 @@ func _ready():
 	
 	Options.timestamp("RegionCotrol ready misc", "RegionControl")
 	
+	_new_round(true)
+	
 	_start_turn()
 	
 	Options.timestamp("_start_turn", "RegionControl")
@@ -894,15 +896,17 @@ func _start_turn():
 		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
 
 
-func _new_round():
-	current_turn += 1
+func _new_round(_in_ready : bool = false):
 	
 	for alignment in range(1, align_amount):
 		GameStats.set_stat(alignment, "regions", get_alignment_regions(alignment))
 		GameStats.set_stat(alignment, "capitals", get_alignment_capitals(alignment))
 		GameStats.set_stat(alignment, "penalties", get_alignment_penalties(alignment))
 	
-	round_ended.emit()
+	if not _in_ready:
+		current_turn += 1
+		
+		round_ended.emit()
 	
 	GameStats.record_graph_column()
 	

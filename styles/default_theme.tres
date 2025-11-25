@@ -1,16 +1,16 @@
 [gd_resource type="Theme" load_steps=20 format=3 uid="uid://b6vimx6otsqe8"]
 
-[ext_resource type="Texture2D" uid="uid://nhqtqn2rp0d8" path="res://sprites/menu_check_pressed.png" id="1_c8xom"]
+[ext_resource type="Texture2D" uid="uid://nhqtqn2rp0d8" path="res://sprites/ui/menu_check_pressed.png" id="1_c8xom"]
 [ext_resource type="StyleBox" uid="uid://cwj4glreqr6xk" path="res://styles/style_panel_file_dialog.tres" id="1_pjh5u"]
-[ext_resource type="Texture2D" uid="uid://dhfr2qyl07v6l" path="res://sprites/menu_circle_disabled.png" id="2_a1gsd"]
+[ext_resource type="Texture2D" uid="uid://dhfr2qyl07v6l" path="res://sprites/ui/menu_circle_disabled.png" id="2_a1gsd"]
 [ext_resource type="StyleBox" uid="uid://m2cc5cpx0qxw" path="res://styles/style_hslider_grabber_high.tres" id="2_cxi87"]
 [ext_resource type="StyleBox" uid="uid://dnpk6ufkxy45q" path="res://styles/style_hseperator.tres" id="2_geuq5"]
-[ext_resource type="Texture2D" uid="uid://dc5lw5twijlci" path="res://sprites/menu_check.png" id="2_mc6wh"]
+[ext_resource type="Texture2D" uid="uid://dc5lw5twijlci" path="res://sprites/ui/menu_check.png" id="2_mc6wh"]
 [ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://styles/style_panel_map_list.tres" id="2_wc57s"]
 [ext_resource type="StyleBox" uid="uid://cjaabqpgsx47h" path="res://styles/style_label_city_name.tres" id="3_iq2qs"]
 [ext_resource type="StyleBox" uid="uid://bv2ajk7xi2c7x" path="res://styles/style_hslider_slider.tres" id="3_kuauy"]
-[ext_resource type="Texture2D" uid="uid://n52bj3guhwpr" path="res://sprites/menu_circle.png" id="3_u1wal"]
-[ext_resource type="Texture2D" uid="uid://bftdyw7twodc7" path="res://sprites/menu_tick.png" id="4_3bfo4"]
+[ext_resource type="Texture2D" uid="uid://n52bj3guhwpr" path="res://sprites/ui/menu_circle.png" id="3_u1wal"]
+[ext_resource type="Texture2D" uid="uid://bftdyw7twodc7" path="res://sprites/ui/menu_tick.png" id="4_3bfo4"]
 [ext_resource type="StyleBox" uid="uid://s8pger68b5dx" path="res://styles/style_vscrollbar_grabber_high.tres" id="4_qm4kn"]
 [ext_resource type="StyleBox" uid="uid://b68q8mpohg2xa" path="res://styles/style_vscrollbar_grabber_pressed.tres" id="5_ulc73"]
 [ext_resource type="StyleBox" uid="uid://blb1sd30050aw" path="res://styles/style_vscrollbar_scroll.tres" id="6_cvdkg"]
@@ -22,6 +22,7 @@
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0u2yk"]
 
 [resource]
+default_font = ExtResource("10_vqddw")
 AcceptDialog/constants/buttons_separation = 8
 AcceptDialog/styles/panel = ExtResource("1_pjh5u")
 CheckButton/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
@@ -35,7 +36,7 @@ CheckButton/constants/check_v_offset = 0
 CheckButton/constants/h_separation = 0
 CheckButton/constants/outline_size = 0
 CheckButton/font_sizes/font_size = 16
-CheckButton/fonts/font = null
+CheckButton/fonts/font = ExtResource("10_vqddw")
 CheckButton/icons/checked = ExtResource("1_c8xom")
 CheckButton/icons/checked_disabled = null
 CheckButton/icons/checked_disabled_mirrored = null
@@ -91,7 +92,7 @@ ItemList/constants/line_separation = 0
 ItemList/constants/outline_size = 0
 ItemList/constants/v_separation = 0
 ItemList/font_sizes/font_size = 16
-ItemList/fonts/font = null
+ItemList/fonts/font = ExtResource("10_vqddw")
 ItemList/styles/cursor = null
 ItemList/styles/cursor_unfocused = null
 ItemList/styles/focus = null
@@ -107,7 +108,6 @@ Label/constants/shadow_offset_x = 0
 Label/constants/shadow_offset_y = 0
 Label/constants/shadow_outline_size = 0
 Label/font_sizes/font_size = 16
-Label/fonts/font = ExtResource("10_vqddw")
 Label/styles/normal = SubResource("StyleBoxEmpty_0u2yk")
 Panel/styles/panel = ExtResource("2_wc57s")
 TooltipLabel/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
@@ -146,7 +146,7 @@ Window/constants/resize_margin = 0
 Window/constants/title_height = 0
 Window/constants/title_outline_size = 0
 Window/font_sizes/title_font_size = 16
-Window/fonts/title_font = null
+Window/fonts/title_font = ExtResource("10_vqddw")
 Window/icons/close = null
 Window/icons/close_pressed = null
 Window/styles/embedded_border = ExtResource("1_pjh5u")

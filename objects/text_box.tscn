@@ -2,9 +2,9 @@
 
 [ext_resource type="Script" path="res://scripts/text_box.gd" id="1_3ya5g"]
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="1_11prg"]
-[ext_resource type="Texture2D" uid="uid://cro4rr8vwvrhs" path="res://sprites/info.png" id="1_c57oj"]
-[ext_resource type="Texture2D" uid="uid://b0suaxksd6olv" path="res://sprites/info_pressed.png" id="2_a74k6"]
-[ext_resource type="Texture2D" uid="uid://cbl5kq46ifv0m" path="res://sprites/mask_info.png" id="2_xpei1"]
+[ext_resource type="Texture2D" uid="uid://cro4rr8vwvrhs" path="res://sprites/ui/info.png" id="1_c57oj"]
+[ext_resource type="Texture2D" uid="uid://b0suaxksd6olv" path="res://sprites/ui/info_pressed.png" id="2_a74k6"]
+[ext_resource type="Texture2D" uid="uid://cbl5kq46ifv0m" path="res://sprites/ui/mask_info.png" id="2_xpei1"]
 [ext_resource type="StyleBox" uid="uid://dc1w42tfx0dul" path="res://styles/style_label_tutorial.tres" id="5_krdjd"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5rpnn"]

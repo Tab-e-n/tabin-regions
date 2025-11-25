@@ -1,0 +1,8 @@
+[gd_resource type="FontVariation" load_steps=2 format=3 uid="uid://c7kd6s1eq6tp"]
+
+[ext_resource type="FontFile" uid="uid://b2nvs6jdlhylu" path="res://fonts/sirion.ttf" id="1_v3054"]
+
+[resource]
+base_font = ExtResource("1_v3054")
+spacing_top = 4
+spacing_bottom = -2

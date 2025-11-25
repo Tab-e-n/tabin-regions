@@ -9,72 +9,72 @@
 [ext_resource type="Script" path="res://dp/dp_neural.gd" id="5_3hf1s"]
 [ext_resource type="Script" path="res://dp/dp_cheater.gd" id="6_0n6wj"]
 [ext_resource type="Script" path="res://dp/dp_dummy.gd" id="6_2rtvp"]
-[ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://sprites/current_power.png" id="6_duti3"]
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="6_hw6d1"]
-[ext_resource type="Texture2D" uid="uid://b5wmm400auwgm" path="res://sprites/pause_button.png" id="7_6wsra"]
-[ext_resource type="Texture2D" uid="uid://cate3b6eswfv2" path="res://sprites/end_turn.png" id="7_7ft3b"]
-[ext_resource type="Texture2D" uid="uid://btkm6plodij7y" path="res://sprites/advance_phase_action.png" id="7_biihl"]
 [ext_resource type="StyleBox" uid="uid://l8vkqqi4prkx" path="res://styles/style_label_normal_box.tres" id="7_r48wm"]
-[ext_resource type="Texture2D" uid="uid://cfysyu40pa2b1" path="res://sprites/advance_phase_action_pressed.png" id="8_2xsaj"]
-[ext_resource type="Texture2D" uid="uid://3uf3acu0wy42" path="res://sprites/forfeit.png" id="8_chkrk"]
 [ext_resource type="PackedScene" uid="uid://dt0hijbeupo" path="res://objects/command_callout.tscn" id="8_gv3dv"]
-[ext_resource type="Texture2D" uid="uid://dsmqlawfghh0" path="res://sprites/mask_advance_phase_action.png" id="8_mwboh"]
 [ext_resource type="Script" path="res://scripts/alignment_list.gd" id="8_y476x"]
-[ext_resource type="Texture2D" uid="uid://iax63f215c2f" path="res://sprites/mask_end_turn.png" id="9_63gm5"]
-[ext_resource type="Texture2D" uid="uid://b83fxlgeqmrwf" path="res://sprites/turn_order_players.png" id="9_gke1b"]
-[ext_resource type="Texture2D" uid="uid://fpyi1jb6io6d" path="res://sprites/advance_phase_mobilize.png" id="9_onswv"]
 [ext_resource type="Texture2D" uid="uid://c2duva1ycjs8u" path="res://sprites/city.png" id="10_5d75i"]
-[ext_resource type="Texture2D" uid="uid://dqt3bjx5tp2eh" path="res://sprites/advance_phase_mobilize_pressed.png" id="10_en7qc"]
-[ext_resource type="Texture2D" uid="uid://bh0sjq1vbftjk" path="res://sprites/mask_forfeit.png" id="11_1122e"]
-[ext_resource type="Texture2D" uid="uid://bmuju6jsfeg28" path="res://sprites/mask_advance_phase_mobilize.png" id="11_ay5pf"]
 [ext_resource type="Texture2D" uid="uid://66jp7txq175w" path="res://sprites/capital.png" id="11_i48c4"]
-[ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://sprites/exit.png" id="12_st2cf"]
-[ext_resource type="Texture2D" uid="uid://cdp7iv8w22bhk" path="res://sprites/end_turn_pressed.png" id="13_ac8mv"]
-[ext_resource type="Texture2D" uid="uid://o3quctecgypg" path="res://sprites/forfeit_pressed.png" id="16_5cdry"]
+[ext_resource type="Texture2D" uid="uid://dsmqlawfghh0" path="res://sprites/ui/mask_advance_phase_action.png" id="13_cy44h"]
+[ext_resource type="Texture2D" uid="uid://btkm6plodij7y" path="res://sprites/ui/advance_phase_action.png" id="14_3qekq"]
+[ext_resource type="Texture2D" uid="uid://cfysyu40pa2b1" path="res://sprites/ui/advance_phase_action_pressed.png" id="15_g05dn"]
 [ext_resource type="StyleBox" uid="uid://ciikkahxcqynr" path="res://styles/style_label_pause.tres" id="16_ixm5t"]
-[ext_resource type="Texture2D" uid="uid://dm2nl24gy8gxh" path="res://sprites/accept.png" id="17_0hp27"]
-[ext_resource type="Texture2D" uid="uid://ex66wqntm5fi" path="res://sprites/deny.png" id="18_mtr1x"]
-[ext_resource type="Texture2D" uid="uid://cr8y6h28hxomx" path="res://sprites/pause_button_pressed.png" id="20_p63tb"]
-[ext_resource type="Texture2D" uid="uid://d2ixgtwhalidj" path="res://sprites/mask_accept.png" id="22_f36kt"]
-[ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/mask_deny.png" id="24_46d4l"]
+[ext_resource type="Texture2D" uid="uid://bmuju6jsfeg28" path="res://sprites/ui/mask_advance_phase_mobilize.png" id="16_yxyrd"]
+[ext_resource type="Texture2D" uid="uid://fpyi1jb6io6d" path="res://sprites/ui/advance_phase_mobilize.png" id="17_m5srt"]
+[ext_resource type="Texture2D" uid="uid://dqt3bjx5tp2eh" path="res://sprites/ui/advance_phase_mobilize_pressed.png" id="18_j1k70"]
+[ext_resource type="Texture2D" uid="uid://iax63f215c2f" path="res://sprites/ui/mask_end_turn.png" id="19_j4ak8"]
+[ext_resource type="Texture2D" uid="uid://cate3b6eswfv2" path="res://sprites/ui/end_turn.png" id="20_2m6le"]
+[ext_resource type="Texture2D" uid="uid://cdp7iv8w22bhk" path="res://sprites/ui/end_turn_pressed.png" id="21_4a6pn"]
+[ext_resource type="Texture2D" uid="uid://bh0sjq1vbftjk" path="res://sprites/ui/mask_forfeit.png" id="22_m8nv8"]
+[ext_resource type="Texture2D" uid="uid://3uf3acu0wy42" path="res://sprites/ui/forfeit.png" id="23_rkqyd"]
+[ext_resource type="Texture2D" uid="uid://o3quctecgypg" path="res://sprites/ui/forfeit_pressed.png" id="24_q7d1w"]
+[ext_resource type="Texture2D" uid="uid://jb8ugdvfra1h" path="res://sprites/ui/current_power.png" id="25_e0d4t"]
 [ext_resource type="StyleBox" uid="uid://cjaabqpgsx47h" path="res://styles/style_label_city_name.tres" id="26_fwuns"]
-[ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/exit_pressed.png" id="27_dp4k2"]
-[ext_resource type="Texture2D" uid="uid://bfewbx0fff1ej" path="res://sprites/stats_button.png" id="30_b4407"]
-[ext_resource type="Texture2D" uid="uid://boyn6qwdwdd1o" path="res://sprites/accept_pressed.png" id="30_yn8sd"]
-[ext_resource type="Texture2D" uid="uid://b6l32clilndhq" path="res://sprites/stats_button_pressed.png" id="31_dpekm"]
-[ext_resource type="Texture2D" uid="uid://dg7vk6rgj3o7c" path="res://sprites/deny_pressed.png" id="33_4nel1"]
+[ext_resource type="Texture2D" uid="uid://b35v3qqg5ywn1" path="res://sprites/ui/small_pause_button.png" id="28_umvkb"]
+[ext_resource type="Texture2D" uid="uid://bef5i7ykleuic" path="res://sprites/ui/small_pause_button_pressed.png" id="29_80u7f"]
+[ext_resource type="Texture2D" uid="uid://6h8nwbhhyxnj" path="res://sprites/ui/small_graph_button.png" id="30_mn5l4"]
+[ext_resource type="Texture2D" uid="uid://cmxd8ydea2bk5" path="res://sprites/ui/small_graph_button_pressed.png" id="31_48oxo"]
+[ext_resource type="Texture2D" uid="uid://b83fxlgeqmrwf" path="res://sprites/dp/turn_order_players.png" id="33_f7x66"]
 [ext_resource type="PackedScene" uid="uid://ce4hm4rxb7evy" path="res://objects/game_stats_graph.tscn" id="35_2fqve"]
+[ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://sprites/ui/exit.png" id="36_o3w04"]
 [ext_resource type="StyleBox" uid="uid://b7dy6x7vi2mcr" path="res://styles/style_empty.tres" id="36_qdefb"]
+[ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/ui/exit_pressed.png" id="37_rjn50"]
+[ext_resource type="Texture2D" uid="uid://d2ixgtwhalidj" path="res://sprites/ui/mask_accept.png" id="40_rbxn4"]
+[ext_resource type="Texture2D" uid="uid://dm2nl24gy8gxh" path="res://sprites/ui/accept.png" id="41_o5qd5"]
+[ext_resource type="Texture2D" uid="uid://boyn6qwdwdd1o" path="res://sprites/ui/accept_pressed.png" id="42_rggwd"]
+[ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/ui/mask_deny.png" id="43_76dhe"]
+[ext_resource type="Texture2D" uid="uid://ex66wqntm5fi" path="res://sprites/ui/deny.png" id="44_k8r1b"]
+[ext_resource type="Texture2D" uid="uid://dg7vk6rgj3o7c" path="res://sprites/ui/deny_pressed.png" id="45_3jgkt"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wf281"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("8_mwboh")
+shader_parameter/mask = ExtResource("13_cy44h")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5f6i5"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("8_mwboh")
+shader_parameter/mask = ExtResource("13_cy44h")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8eq5u"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("11_ay5pf")
+shader_parameter/mask = ExtResource("16_yxyrd")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nnp6g"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("11_ay5pf")
+shader_parameter/mask = ExtResource("16_yxyrd")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_731gk"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("9_63gm5")
+shader_parameter/mask = ExtResource("19_j4ak8")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8i6ds"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("11_1122e")
+shader_parameter/mask = ExtResource("22_m8nv8")
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_opdnj"]
 draw_center = false
@@ -84,22 +84,22 @@ border_color = Color(1, 1, 1, 0)
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l4hw3"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("22_f36kt")
+shader_parameter/mask = ExtResource("40_rbxn4")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fbdoa"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("24_46d4l")
+shader_parameter/mask = ExtResource("43_76dhe")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rh36y"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("22_f36kt")
+shader_parameter/mask = ExtResource("40_rbxn4")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lcdv6"]
 shader = ExtResource("6_hw6d1")
 shader_parameter/value = 0.0
-shader_parameter/mask = ExtResource("24_46d4l")
+shader_parameter/mask = ExtResource("43_76dhe")
 
 [node name="GameControler" type="Node2D"]
 script = ExtResource("1_2axsc")
@@ -254,24 +254,24 @@ offset_bottom = 648.0
 visible = false
 material = SubResource("ShaderMaterial_wf281")
 position = Vector2(584, 48)
-texture = ExtResource("7_biihl")
+texture = ExtResource("14_3qekq")
 
 [node name="action_dark" type="Sprite2D" parent="GameCamera/UI/Hideable/PlayerActions"]
 material = SubResource("ShaderMaterial_5f6i5")
 position = Vector2(584, 48)
-texture = ExtResource("8_2xsaj")
+texture = ExtResource("15_g05dn")
 
 [node name="mobilize_light" type="Sprite2D" parent="GameCamera/UI/Hideable/PlayerActions"]
 visible = false
 material = SubResource("ShaderMaterial_8eq5u")
 position = Vector2(584, 48)
-texture = ExtResource("9_onswv")
+texture = ExtResource("17_m5srt")
 
 [node name="mobilize_dark" type="Sprite2D" parent="GameCamera/UI/Hideable/PlayerActions"]
 visible = false
 material = SubResource("ShaderMaterial_nnp6g")
 position = Vector2(584, 48)
-texture = ExtResource("10_en7qc")
+texture = ExtResource("18_j1k70")
 
 [node name="AdvanceTurn" type="TextureButton" parent="GameCamera/UI/Hideable/PlayerActions"]
 layout_mode = 0
@@ -287,8 +287,8 @@ offset_left = 840.0
 offset_top = 16.0
 offset_right = 904.0
 offset_bottom = 80.0
-texture_normal = ExtResource("7_7ft3b")
-texture_pressed = ExtResource("13_ac8mv")
+texture_normal = ExtResource("20_2m6le")
+texture_pressed = ExtResource("21_4a6pn")
 
 [node name="Forfeit" type="TextureButton" parent="GameCamera/UI/Hideable/PlayerActions"]
 material = SubResource("ShaderMaterial_8i6ds")
@@ -297,8 +297,8 @@ offset_left = 920.0
 offset_top = 16.0
 offset_right = 984.0
 offset_bottom = 80.0
-texture_normal = ExtResource("8_chkrk")
-texture_pressed = ExtResource("16_5cdry")
+texture_normal = ExtResource("23_rkqyd")
+texture_pressed = ExtResource("24_q7d1w")
 
 [node name="Tooltips" type="Control" parent="GameCamera/UI/Hideable"]
 anchors_preset = 0
@@ -370,7 +370,7 @@ offset_left = 88.0
 offset_top = 536.0
 offset_right = 184.0
 offset_bottom = 632.0
-texture = ExtResource("6_duti3")
+texture = ExtResource("25_e0d4t")
 
 [node name="text" type="Label" parent="GameCamera/UI/Hideable/Power"]
 layout_mode = 0
@@ -401,7 +401,7 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = -512.0
 offset_top = -312.0
-offset_right = -448.0
+offset_right = 512.0
 offset_bottom = -216.0
 pivot_offset = Vector2(0, 96)
 theme_override_styles/panel = ExtResource("16_ixm5t")
@@ -411,21 +411,19 @@ script = ExtResource("8_y476x")
 layout_mode = 0
 offset_left = -512.0
 offset_top = -184.0
-offset_right = -448.0
-offset_bottom = -120.0
-scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("7_6wsra")
-texture_pressed = ExtResource("20_p63tb")
+offset_right = -480.0
+offset_bottom = -152.0
+texture_normal = ExtResource("28_umvkb")
+texture_pressed = ExtResource("29_80u7f")
 
 [node name="graph_button" type="TextureButton" parent="GameCamera/UI"]
 layout_mode = 0
 offset_left = -512.0
 offset_top = -144.0
-offset_right = -448.0
-offset_bottom = -80.0
-scale = Vector2(0.5, 0.5)
-texture_normal = ExtResource("30_b4407")
-texture_pressed = ExtResource("31_dpekm")
+offset_right = -480.0
+offset_bottom = -112.0
+texture_normal = ExtResource("30_mn5l4")
+texture_pressed = ExtResource("31_48oxo")
 
 [node name="player_info" type="Panel" parent="GameCamera/UI"]
 visible = false
@@ -438,7 +436,7 @@ theme_override_styles/panel = ExtResource("7_r48wm")
 
 [node name="Player" type="Sprite2D" parent="GameCamera/UI/player_info"]
 position = Vector2(104, 48)
-texture = ExtResource("9_gke1b")
+texture = ExtResource("33_f7x66")
 hframes = 6
 
 [node name="City" type="Sprite2D" parent="GameCamera/UI/player_info"]
@@ -496,8 +494,8 @@ offset_left = 24.0
 offset_top = 24.0
 offset_right = 88.0
 offset_bottom = 88.0
-texture_normal = ExtResource("12_st2cf")
-texture_pressed = ExtResource("27_dp4k2")
+texture_normal = ExtResource("36_o3w04")
+texture_pressed = ExtResource("37_rjn50")
 
 [node name="mouse_scroll" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
@@ -736,8 +734,8 @@ offset_left = 48.0
 offset_top = 96.0
 offset_right = 96.0
 offset_bottom = 144.0
-texture_normal = ExtResource("17_0hp27")
-texture_pressed = ExtResource("30_yn8sd")
+texture_normal = ExtResource("41_o5qd5")
+texture_pressed = ExtResource("42_rggwd")
 
 [node name="no" type="TextureButton" parent="GameCamera/UI/leave"]
 modulate = Color(1, 0.717647, 0.698039, 1)
@@ -747,8 +745,8 @@ offset_left = 128.0
 offset_top = 96.0
 offset_right = 176.0
 offset_bottom = 144.0
-texture_normal = ExtResource("18_mtr1x")
-texture_pressed = ExtResource("33_4nel1")
+texture_normal = ExtResource("44_k8r1b")
+texture_pressed = ExtResource("45_3jgkt")
 
 [node name="forfeit" type="Label" parent="GameCamera/UI"]
 visible = false
@@ -772,8 +770,8 @@ offset_left = 48.0
 offset_top = 96.0
 offset_right = 96.0
 offset_bottom = 144.0
-texture_normal = ExtResource("17_0hp27")
-texture_pressed = ExtResource("30_yn8sd")
+texture_normal = ExtResource("41_o5qd5")
+texture_pressed = ExtResource("42_rggwd")
 
 [node name="no" type="TextureButton" parent="GameCamera/UI/forfeit"]
 modulate = Color(1, 0.717647, 0.698039, 1)
@@ -783,8 +781,8 @@ offset_left = 128.0
 offset_top = 96.0
 offset_right = 176.0
 offset_bottom = 144.0
-texture_normal = ExtResource("18_mtr1x")
-texture_pressed = ExtResource("33_4nel1")
+texture_normal = ExtResource("44_k8r1b")
+texture_pressed = ExtResource("45_3jgkt")
 
 [node name="leftover" type="Label" parent="GameCamera/UI"]
 visible = false
@@ -809,8 +807,8 @@ offset_left = 80.0
 offset_top = 136.0
 offset_right = 128.0
 offset_bottom = 184.0
-texture_normal = ExtResource("17_0hp27")
-texture_pressed = ExtResource("30_yn8sd")
+texture_normal = ExtResource("41_o5qd5")
+texture_pressed = ExtResource("42_rggwd")
 
 [node name="no" type="TextureButton" parent="GameCamera/UI/leftover"]
 modulate = Color(1, 0.717647, 0.698039, 1)
@@ -820,8 +818,8 @@ offset_left = 160.0
 offset_top = 136.0
 offset_right = 208.0
 offset_bottom = 184.0
-texture_normal = ExtResource("18_mtr1x")
-texture_pressed = ExtResource("33_4nel1")
+texture_normal = ExtResource("44_k8r1b")
+texture_pressed = ExtResource("45_3jgkt")
 
 [connection signal="toggled" from="GameCamera/UI/pause/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="GameCamera/UI/pause/auto_phase" to="." method="set_auto_phases"]

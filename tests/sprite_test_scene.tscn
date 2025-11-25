@@ -1,0 +1,46 @@
+[gd_scene load_steps=2 format=3 uid="uid://dqxbc3x3nwv1m"]
+
+[sub_resource type="GDScript" id="GDScript_arc18"]
+script/source = "extends Node2D
+
+
+const DIRECTORY : String = \"res://sprites/ui/\"
+
+@onready var sprites : Node2D = $sprites
+
+var display_name : String = \"\"
+
+
+func _ready():
+	var directory = DirAccess.open(DIRECTORY)
+	var sprite_offset : int = 0
+	for file in directory.get_files():
+		var texture : Texture2D = load(DIRECTORY + file) as Texture2D
+		if texture:
+			var sprite : TextureRect = TextureRect.new()
+			sprite.name = file
+			sprite.position.x = sprite_offset
+			sprite.texture = texture
+			sprite.mouse_entered.connect(_set_display_name.bind(file))
+			sprites.add_child(sprite)
+			sprite_offset += texture.get_width() + 8
+
+
+func _process(delta):
+	if Input.is_action_pressed(\"left\"):
+		sprites.position.x += delta * 600
+	if Input.is_action_pressed(\"right\"):
+		sprites.position.x -= delta * 600
+	if Input.is_action_just_pressed(\"left_click\"):
+		print(display_name)
+
+
+func _set_display_name(display : String) -> void:
+	display_name = display
+"
+
+[node name="SpriteTestScene" type="Node2D"]
+script = SubResource("GDScript_arc18")
+
+[node name="sprites" type="Node2D" parent="."]
+position = Vector2(64, 64)

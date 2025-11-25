@@ -2,11 +2,11 @@ extends Panel
 class_name AlignmentList
 
 
-const PLAY_ORDER_SCREEN_BORDER_GAP : float = 64
 const PLAY_ORDER_SPACING : float = 48
+const PLAY_ORDER_SPACING_DIV : float = 1 / PLAY_ORDER_SPACING
 const PLAY_ORDER_VERTICAL_OFFSET : float = 44
-const PLAY_ORDER_MAX_SIZE : float = 1024
 
+@onready var max_size : float = size.x
 
 var selector : Sprite2D = null
 
@@ -16,11 +16,11 @@ var count : int = 0
 static func make_leader(alignment : int) -> Sprite2D:
 	var leader : Sprite2D = Sprite2D.new()
 	leader.name = String.num(alignment)
-	leader.texture = preload("res://sprites/turn_order_players.png")
+	leader.texture = preload("res://sprites/dp/turn_order_players.png")
 	leader.hframes = DPControl.CONTROLER.SIZE
 	leader.z_index = 1
 	var new_sweat : Sprite2D = Sprite2D.new()
-	new_sweat.texture = preload("res://sprites/leader_sweat.png")
+	new_sweat.texture = preload("res://sprites/dp/leader_sweat.png")
 	new_sweat.position = Vector2(-16, -16)
 	new_sweat.name = "sweat"
 	new_sweat.visible = false
@@ -84,8 +84,8 @@ static func leader_sweat(leader : Sprite2D, sweating : bool):
 	leader.get_node("sweat").visible = sweating
 
 
-func get_leader_id_from_position(pos : Vector2) -> int:
-	var alignment : int = int((pos.x - PLAY_ORDER_SCREEN_BORDER_GAP) / (PLAY_ORDER_SPACING * scale.x))
+func _get_leader_id(local_pos : float) -> int:
+	var alignment : int = int(local_pos * PLAY_ORDER_SPACING_DIV)
 	if alignment >= count:
 		alignment = count - 1
 	if alignment < 0:
@@ -93,9 +93,17 @@ func get_leader_id_from_position(pos : Vector2) -> int:
 	return alignment
 
 
+func get_leader_id_from_mouse() -> int:
+	return _get_leader_id(get_local_mouse_position().x)
+
+
+func get_leader_id_from_position(pos : Vector2) -> int:
+	return _get_leader_id((pos.x - global_position.x) / scale.x)
+
+
 func add_leader(pos : int, alignment : int) -> Sprite2D:
 	var leader : Sprite2D = AlignmentList.make_leader(alignment)
-	leader.position.x = PLAY_ORDER_SPACING / 2 + PLAY_ORDER_SPACING * pos
+	leader.position.x = PLAY_ORDER_SPACING * 0.5 + PLAY_ORDER_SPACING * pos
 	leader.position.y = PLAY_ORDER_VERTICAL_OFFSET
 	add_child(leader)
 	return leader
@@ -104,8 +112,8 @@ func add_leader(pos : int, alignment : int) -> Sprite2D:
 func random_leader_indicators(amount : int):
 	for i in range(amount):
 		var leader : Sprite2D = Sprite2D.new()
-		leader.texture = preload("res://sprites/align_picker_random.png")
-		leader.position.x = PLAY_ORDER_SPACING / 2 + PLAY_ORDER_SPACING * i
+		leader.texture = preload("res://sprites/dp/align_picker_random.png")
+		leader.position.x = PLAY_ORDER_SPACING * 0.5 + PLAY_ORDER_SPACING * i
 		leader.position.y = PLAY_ORDER_VERTICAL_OFFSET
 		leader.z_index = 0
 		add_child(leader)
@@ -125,18 +133,22 @@ func remove_leader(alignment : int):
 func select_leader(alignment : int):
 	if not selector:
 		selector = Sprite2D.new()
-		selector.texture = preload("res://sprites/leader_outline.png")
+		selector.texture = preload("res://sprites/dp/leader_outline.png")
 		selector.z_index = 0
 		add_child(selector)
 	selector.position = get_leader(alignment).position
+
+
+func valid_leader(alignment : int) -> bool:
+	return alignment >= 0 and alignment < count
 
 
 func set_align_list_size(i : int):
 	count = i
 	size.x = PLAY_ORDER_SPACING * i
 #	print(size)
-	if size.x > PLAY_ORDER_MAX_SIZE:
-		scale.x = PLAY_ORDER_MAX_SIZE / size.x
+	if size.x > max_size:
+		scale.x = max_size / size.x
 		scale.y = scale.x
 
 

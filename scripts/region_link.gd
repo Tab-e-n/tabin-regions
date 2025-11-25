@@ -122,19 +122,55 @@ func _make_label() -> void:
 	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	label.z_index = 11
-	label.size = LABEL_SIZE_BASE
+#	label.size = LABEL_SIZE_BASE
+	label.add_theme_stylebox_override("normal", preload("res://styles/style_label_city_name.tres"))
 	var region_control : RegionControl = _get_region_control()
 	if region_control:
 		label.scale *= region_control.city_size
-		label_size *= region_control.city_size
+#		label_size *= region_control.city_size
 	add_child(label)
 
 
-func _set_cutoff_label(close : Region, far : Region) -> void:
+func _update_label_text() -> void:
+	if disabled:
+		label.text = "X"
+	elif power_reduction > 0:
+		label.text = "-" + str(power_reduction)
+	else:
+		label.text = ""
+	
+	if is_cutoff:
+		if from_side:
+			_set_cutoff_label_text(from, to)
+		else:
+			_set_cutoff_label_text(to, from)
+
+
+func _set_cutoff_label_text(close : Region, far : Region) -> void:
 	if not close or not far:
 		return
+	if label.text.is_empty():
+		label.text = far.name
+	else:
+		label.text = far.name + " (" + label.text + ")"
+
+
+func _update_label_position() -> void:
+	label_size = label.size * label.scale
+	if is_cutoff:
+		if from_side:
+			_set_cutoff_label_position(from, to)
+		else:
+			_set_cutoff_label_position(to, from)
+	elif from and to:
+		label.position = (to.position + from.position - label_size) * 0.5
+
+
+func _set_cutoff_label_position(close : Region, far : Region) -> void:
+	if not close or not far:
+		return
+	label_size = label.size * label.scale
 	label.position = far.position * 0.25 + close.position * 0.75 - label_size * 0.5
-	label.text = far.name + " " + label.text
 
 
 func _get_region_name(path : NodePath) -> String:
@@ -193,20 +229,8 @@ func update_label():
 	if label and should_have_label():
 		label.visible = true
 		
-		if disabled:
-			label.text = "[X]"
-		elif power_reduction > 0:
-			label.text = "(-" + str(power_reduction) + ")"
-		else:
-			label.text = ""
-		
-		if is_cutoff:
-			if from_side:
-				_set_cutoff_label(from, to)
-			else:
-				_set_cutoff_label(to, from)
-		elif from and to:
-			label.position = (to.position + from.position - label_size) * 0.5
+		_update_label_text()
+		_update_label_position.call_deferred()
 	elif label:
 		label.visible = false
 

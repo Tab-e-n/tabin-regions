@@ -451,7 +451,7 @@ func update_player_info() -> void:
 	if not turn_order or not player_info:
 		return
 	
-	var recent_hovered_player : int = turn_order.get_leader_id_from_position(game_control.mouse_position)
+	var recent_hovered_player : int = turn_order.get_leader_id_from_mouse()
 	
 	var new_player : bool = false
 	if hovered_player != recent_hovered_player:

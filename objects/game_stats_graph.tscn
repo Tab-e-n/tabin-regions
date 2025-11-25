@@ -35,6 +35,7 @@ points = PackedVector2Array(0, 0, 688, 0)
 width = 2.0
 
 [node name="bg" type="Panel" parent="value"]
+z_index = 1
 offset_left = -40.0
 offset_top = -16.0
 offset_bottom = 16.0

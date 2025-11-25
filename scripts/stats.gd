@@ -2,20 +2,25 @@ extends Node2D
 
 
 @onready var window_size : Vector2 = get_viewport_rect().size
+@onready var columbs : Node2D = $columbs
+@onready var graph : GameStatsGraph = $graph
+@onready var graph_align_list : AlignmentList = $graph_alignments
+
+@onready var farthest_left : float = columbs.position.x
+@onready var farthest_right : float = columbs.position.x
 
 
-const farthest_left : int = 576
-
-
-var farthest_right : int = 576
 var input_delay : bool = true
+
+var hovering_alignments : bool = false
+var hovered_player : int = 0
 
 
 func _ready():
 	GameControl.set_cursor(GameControl.CURSOR.NORMAL)
 	
 	# bad code inbound
-	var pos : int = 1
+	var pos : int = 0
 	var size : int = GameStats.stats.size()
 	for placement in range(size + 1):
 		for stats in GameStats.stats:
@@ -25,15 +30,38 @@ func _ready():
 			else:
 				place_text = String.num(placement)
 			if stats["placement"] == place_text:
-#				print(stats)
 				new_stats_panel(stats, pos)
 				pos += 1
 	
-	var columb_amount : int = pos#GameStats.stats.size() + 1
+	var columb_amount : int = pos
+#	print(pos)
 	
-	if columb_amount > 6:
-		farthest_right += (columb_amount - 6) * 192
+	if columb_amount > 5:
+		farthest_left -= (columb_amount - 5) * 192
 		$buttons/expo1.visible = true
+	
+	if Options.use_graph:
+		graph_align_list.set_align_list_size(size)
+		
+		var align_color : Array[Color] = []
+		
+		for i in range(size):
+			var leader : Sprite2D = graph_align_list.add_leader(i, i)
+			AlignmentList.set_leader_dp(leader, GameStats.stats[i]["controler"])
+			align_color.append(GameStats.stats[i]["align color"])
+			AlignmentList.color_leader(leader, align_color[i])
+		
+		graph.make_lines(size, align_color)
+		graph.create_stat_button("regions")
+		graph.create_stat_button("capitals")
+		graph.create_stat_button("penalties")
+		graph.update_graph_name()
+		graph.update_lines()
+	else:
+		$buttons/graph.visible = false
+		$buttons/stats.visible = false
+	graph.visible = false
+	graph_align_list.visible = false
 
 
 func new_stats_panel(stats : Dictionary, pos : int):
@@ -44,17 +72,17 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	panel.modulate = stats["align color"]
 	panel.position.x = 192 * pos
 	
-	$columbs.add_child(panel)
+	columbs.add_child(panel)
 	
 	var sprite : Sprite2D = Sprite2D.new()
 	
-	sprite.texture = preload("res://sprites/capital_highres.png")
+	sprite.texture = preload("res://sprites/ui/capital_highres.png")
 	sprite.scale = Vector2(0.45, 0.45)
 	sprite.position.x = 192 * pos + 32
 	sprite.position.y = 32
 	sprite.modulate = stats["align color"]
 	
-	$columbs.add_child(sprite)
+	columbs.add_child(sprite)
 	
 	var label : Label = Label.new()
 	label.position.x = 192 * pos
@@ -65,7 +93,7 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	label.text = stats["placement"]
 	label.self_modulate = RegionControl.text_color(stats["align color"].v)
 	
-	$columbs.add_child(label)
+	columbs.add_child(label)
 	
 	var columb : Label = Label.new()
 	
@@ -88,7 +116,7 @@ func new_stats_panel(stats : Dictionary, pos : int):
 	columb.text += "\nregions reinforced:\n" + String.num(stats["regions reinforced"])
 	columb.text += "\ncapital regions captured:\n" + String.num(stats["capital regions captured"])
 	
-	$columbs.add_child(columb)
+	columbs.add_child(columb)
 
 
 func _physics_process(delta):
@@ -103,13 +131,24 @@ func _physics_process(delta):
 		move_speed *= 2.0
 	
 	if mouse_position.x > window_size.x - 64 or Input.is_action_pressed("right"):
-		$cam.position.x += move_speed
-		if $cam.position.x > farthest_right:
-			$cam.position.x = farthest_right
+		columbs.position.x -= move_speed
+		if columbs.position.x < farthest_left:
+			columbs.position.x = farthest_left
 	if mouse_position.x < 64 or Input.is_action_pressed("left"):
-		$cam.position.x -= move_speed
-		if $cam.position.x < farthest_left:
-			$cam.position.x = farthest_left
+		columbs.position.x += move_speed
+		if columbs.position.x > farthest_right:
+			columbs.position.x = farthest_right
+	
+	if hovering_alignments:
+		var recent_hovered_player : int = graph_align_list.get_leader_id_from_mouse()
+		
+		var new_player : bool = false
+		if hovered_player != recent_hovered_player:
+			hovered_player = recent_hovered_player
+			new_player = true
+		
+		if new_player:
+			graph.show_certain_line(hovered_player)
 
 
 func _on_csv_pressed():
@@ -127,3 +166,23 @@ func _on_replay_pressed():
 func leave():
 	get_tree().change_scene_to_file("res://setup_scene.tscn")
 
+
+func _show_stats():
+	columbs.visible = true
+	graph.visible = false
+	graph_align_list.visible = false
+
+
+func _show_graph():
+	columbs.visible = false
+	graph.visible = true
+	graph_align_list.visible = true
+
+
+func _on_graph_alignments_mouse_entered():
+	hovering_alignments = true
+
+
+func _on_graph_alignments_mouse_exited():
+	hovering_alignments = false
+	graph.show_lines()

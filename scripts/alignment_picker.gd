@@ -49,15 +49,8 @@ func _process(_delta):
 		Options.timestamp("EXIT ALIGN PICKER", "")
 		get_tree().change_scene_to_file("res://setup_scene.tscn")
 	
-	var mouse_position = get_viewport().get_mouse_position()
-	
 	if hovering_available:
-		var hovered_player : int = (mouse_position.x - AlignmentList.PLAY_ORDER_SCREEN_BORDER_GAP) / (AlignmentList.PLAY_ORDER_SPACING * available.scale.x)
-		
-		if hovered_player >= align_size:
-			hovered_player = align_size - 1
-		if hovered_player < 0:
-			hovered_player = 0
+		var hovered_player : int = available.get_leader_id_from_mouse()
 		
 		if hovered_player < current_map.align_names.size():
 			$text_name.text = current_map.align_names[hovered_player + 1]
@@ -68,12 +61,7 @@ func _process(_delta):
 		$text_name.text = ""
 	
 	if hovering_players:
-		var hovered_player : int = (mouse_position.x - AlignmentList.PLAY_ORDER_SCREEN_BORDER_GAP) / (AlignmentList.PLAY_ORDER_SPACING * players.scale.x)
-		
-		if hovered_player >= MapSetup.player_amount:
-			hovered_player = MapSetup.player_amount - 1
-		if hovered_player < 0:
-			hovered_player = 0
+		var hovered_player : int = players.get_leader_id_from_mouse()
 		
 		if Input.is_action_just_pressed("left_click"):
 			remove_align(hovered_player)

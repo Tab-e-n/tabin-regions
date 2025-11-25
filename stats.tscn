@@ -1,85 +1,128 @@
-[gd_scene load_steps=9 format=3 uid="uid://dl73eme14hwup"]
+[gd_scene load_steps=15 format=3 uid="uid://dl73eme14hwup"]
 
 [ext_resource type="Script" path="res://scripts/stats.gd" id="1_4gg3l"]
 [ext_resource type="StyleBox" uid="uid://l8vkqqi4prkx" path="res://styles/style_label_normal_box.tres" id="1_8movm"]
-[ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://sprites/exit.png" id="2_y6cxs"]
-[ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/exit_pressed.png" id="4_cccmx"]
-[ext_resource type="Texture2D" uid="uid://c23kwcfws5x1n" path="res://sprites/save_replay.png" id="4_ur71k"]
-[ext_resource type="Texture2D" uid="uid://xcmnmdhs5hkk" path="res://sprites/save_stats.png" id="5_48gpa"]
-[ext_resource type="Texture2D" uid="uid://bkom1i7ofdhg2" path="res://sprites/save_stats_pressed.png" id="6_mfpb2"]
-[ext_resource type="Texture2D" uid="uid://mbmk666gc1gh" path="res://sprites/save_replay_pressed.png" id="8_ckspg"]
+[ext_resource type="Script" path="res://scripts/alignment_list.gd" id="2_6i1de"]
+[ext_resource type="PackedScene" uid="uid://ce4hm4rxb7evy" path="res://objects/game_stats_graph.tscn" id="2_cpjjq"]
+[ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://sprites/ui/exit.png" id="3_wi6uj"]
+[ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/ui/exit_pressed.png" id="4_6u4ca"]
+[ext_resource type="Texture2D" uid="uid://bwptkxgcx04km" path="res://sprites/ui/small_stats_button.png" id="5_vwyf2"]
+[ext_resource type="Texture2D" uid="uid://ie6332bl3dt3" path="res://sprites/ui/small_stats_button_pressed.png" id="6_s3cxn"]
+[ext_resource type="Texture2D" uid="uid://xcmnmdhs5hkk" path="res://sprites/ui/save_stats.png" id="7_6v5tw"]
+[ext_resource type="Texture2D" uid="uid://6h8nwbhhyxnj" path="res://sprites/ui/small_graph_button.png" id="7_8n24k"]
+[ext_resource type="Texture2D" uid="uid://bkom1i7ofdhg2" path="res://sprites/ui/save_stats_pressed.png" id="8_65hqi"]
+[ext_resource type="Texture2D" uid="uid://cmxd8ydea2bk5" path="res://sprites/ui/small_graph_button_pressed.png" id="8_e7ome"]
+[ext_resource type="Texture2D" uid="uid://c23kwcfws5x1n" path="res://sprites/ui/save_replay.png" id="9_sbjsb"]
+[ext_resource type="Texture2D" uid="uid://mbmk666gc1gh" path="res://sprites/ui/save_replay_pressed.png" id="10_k7ox8"]
 
 [node name="Stats" type="Node2D"]
 script = ExtResource("1_4gg3l")
 
 [node name="columbs" type="Node2D" parent="."]
+position = Vector2(192, 0)
+
+[node name="graph_alignments" type="Panel" parent="."]
+offset_left = 256.0
+offset_top = 96.0
+offset_right = 1088.0
+offset_bottom = 192.0
+script = ExtResource("2_6i1de")
+
+[node name="graph" parent="." instance=ExtResource("2_cpjjq")]
+offset_left = 288.0
+offset_top = 208.0
+offset_right = 1056.0
+offset_bottom = 544.0
 
 [node name="buttons" type="Panel" parent="."]
 modulate = Color(0.933333, 0.933333, 0.933333, 1)
+offset_top = -8.0
 offset_right = 192.0
-offset_bottom = 640.0
+offset_bottom = 664.0
 theme_override_styles/panel = ExtResource("1_8movm")
 
 [node name="leave" type="TextureButton" parent="buttons"]
 modulate = Color(0.933333, 0.933333, 0.933333, 1)
 layout_mode = 0
 offset_left = 32.0
-offset_top = 32.0
+offset_top = 40.0
 offset_right = 96.0
-offset_bottom = 96.0
-texture_normal = ExtResource("2_y6cxs")
-texture_pressed = ExtResource("4_cccmx")
+offset_bottom = 104.0
+texture_normal = ExtResource("3_wi6uj")
+texture_pressed = ExtResource("4_6u4ca")
+
+[node name="stats" type="TextureButton" parent="buttons"]
+modulate = Color(0.933333, 0.933333, 0.933333, 1)
+layout_mode = 0
+offset_left = 128.0
+offset_top = 32.0
+offset_right = 160.0
+offset_bottom = 64.0
+texture_normal = ExtResource("5_vwyf2")
+texture_pressed = ExtResource("6_s3cxn")
+
+[node name="graph" type="TextureButton" parent="buttons"]
+modulate = Color(0.933333, 0.933333, 0.933333, 1)
+layout_mode = 0
+offset_left = 128.0
+offset_top = 80.0
+offset_right = 160.0
+offset_bottom = 112.0
+texture_normal = ExtResource("7_8n24k")
+texture_pressed = ExtResource("8_e7ome")
 
 [node name="csv" type="TextureButton" parent="buttons"]
 modulate = Color(0.933333, 0.933333, 0.933333, 1)
 layout_mode = 0
 offset_left = 32.0
-offset_top = 352.0
+offset_top = 360.0
 offset_right = 160.0
-offset_bottom = 480.0
-texture_normal = ExtResource("5_48gpa")
-texture_pressed = ExtResource("6_mfpb2")
+offset_bottom = 488.0
+texture_normal = ExtResource("7_6v5tw")
+texture_pressed = ExtResource("8_65hqi")
 
 [node name="replay" type="TextureButton" parent="buttons"]
 modulate = Color(0.933333, 0.933333, 0.933333, 1)
 layout_mode = 0
 offset_left = 32.0
-offset_top = 480.0
+offset_top = 488.0
 offset_right = 160.0
-offset_bottom = 608.0
-texture_normal = ExtResource("4_ur71k")
-texture_pressed = ExtResource("8_ckspg")
+offset_bottom = 616.0
+texture_normal = ExtResource("9_sbjsb")
+texture_pressed = ExtResource("10_k7ox8")
 
 [node name="expo1" type="Label" parent="buttons"]
 visible = false
 layout_mode = 0
 offset_left = 16.0
-offset_top = 104.0
+offset_top = 120.0
 offset_right = 176.0
-offset_bottom = 192.0
+offset_bottom = 184.0
 text = "Hover your cursor
 over the edges of
 the screen to move."
+horizontal_alignment = 1
 clip_text = true
 
 [node name="expo2" type="Label" parent="buttons"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 200.0
+offset_top = 208.0
 offset_right = 176.0
-offset_bottom = 344.0
-text = "Saved statistics are
-stored in your
+offset_bottom = 352.0
+text = "Saved statistics
+are stored in your
 Appdata folder under
 /Roaming/TRegions."
+horizontal_alignment = 1
 clip_text = true
 
 [node name="save" type="Label" parent="buttons"]
 layout_mode = 0
 offset_left = 16.0
-offset_top = 296.0
+offset_top = 304.0
 offset_right = 176.0
-offset_bottom = 344.0
+offset_bottom = 352.0
 horizontal_alignment = 1
 vertical_alignment = 2
 clip_text = true
@@ -87,6 +130,10 @@ clip_text = true
 [node name="cam" type="Camera2D" parent="."]
 position = Vector2(576, 320)
 
+[connection signal="mouse_entered" from="graph_alignments" to="." method="_on_graph_alignments_mouse_entered"]
+[connection signal="mouse_exited" from="graph_alignments" to="." method="_on_graph_alignments_mouse_exited"]
 [connection signal="pressed" from="buttons/leave" to="." method="leave"]
+[connection signal="pressed" from="buttons/stats" to="." method="_show_stats"]
+[connection signal="pressed" from="buttons/graph" to="." method="_show_graph"]
 [connection signal="pressed" from="buttons/csv" to="." method="_on_csv_pressed"]
 [connection signal="pressed" from="buttons/replay" to="." method="_on_replay_pressed"]
