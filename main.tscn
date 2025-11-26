@@ -7,8 +7,8 @@
 [ext_resource type="Script" path="res://dp/dp_turtle.gd" id="4_kuxfp"]
 [ext_resource type="PackedScene" uid="uid://cpgxwqs1hap0p" path="res://objects/particle_number.tscn" id="4_s5wqb"]
 [ext_resource type="Script" path="res://dp/dp_neural.gd" id="5_3hf1s"]
-[ext_resource type="Script" path="res://dp/dp_cheater.gd" id="6_0n6wj"]
 [ext_resource type="Script" path="res://dp/dp_dummy.gd" id="6_2rtvp"]
+[ext_resource type="Script" path="res://dp/dp_smart.gd" id="6_etgsh"]
 [ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="6_hw6d1"]
 [ext_resource type="StyleBox" uid="uid://l8vkqqi4prkx" path="res://styles/style_label_normal_box.tres" id="7_r48wm"]
 [ext_resource type="PackedScene" uid="uid://dt0hijbeupo" path="res://objects/command_callout.tscn" id="8_gv3dv"]
@@ -118,7 +118,7 @@ script = ExtResource("4_kuxfp")
 script = ExtResource("5_3hf1s")
 
 [node name="Cheater" type="Node" parent="AIControler"]
-script = ExtResource("6_0n6wj")
+script = ExtResource("6_etgsh")
 
 [node name="Environment" type="Node" parent="AIControler"]
 script = ExtResource("6_2rtvp")

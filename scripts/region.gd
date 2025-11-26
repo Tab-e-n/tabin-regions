@@ -284,9 +284,35 @@ func attack_power_difference(attack_align : int) -> int:
 	return power - get_alignments_attack_power(attack_align)
 
 
-## Doesn't take into account aliances.
 func worst_power_delta(align : int = alignment) -> int:
 	return power - strongest_enemy_attack(align)
+
+
+func highest_single_power() -> int:
+	var highest : int = 0
+	for link in links:
+		var region : Region = link.get_other_region(self)
+		var p = region.power + link.power_reduction
+		if region and p > highest:
+			highest = p
+	return highest
+
+
+func next_to_capital() -> bool:
+	for link in links:
+		var region : Region = link.get_other_region(self)
+		if region and region.is_capital:
+			return true
+	return false
+
+
+func next_to_enemy() -> bool:
+	for link in links:
+		var region : Region = link.get_other_region(self)
+		if region and not region_control.alignment_friendly(alignment, region.alignment):
+			if region_control.alignment_active(region.alignment):
+				return true
+	return false
 
 
 ## Recolors the region.

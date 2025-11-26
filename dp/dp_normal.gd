@@ -118,7 +118,7 @@ func calculate_benefit_default(region : Region):
 			benefit = region.power
 			# Capitals are still good to keep
 			if region.is_capital:
-				benefit -= threat
+				benefit += 4
 			if not region.is_capital or threat <= 1:
 				benefit = benefit >> 1
 		# Self-centered
