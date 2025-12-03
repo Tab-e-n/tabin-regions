@@ -268,7 +268,10 @@ func dp_selected_pos():
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nSIMPLETON"
 		DPControl.CONTROLER.NEURAL:
 			dp_cursor.position.x = $tintable_ui/diff/dp_neural.position.x
-			$tintable_ui/diff/opponent.text = "OPPONENT:\nTHINKER"
+			$tintable_ui/diff/opponent.text = "OPPONENT:\nOVERTHINKER"
+		DPControl.CONTROLER.SMARTIE:
+			dp_cursor.position.x = $tintable_ui/diff/dp_smartie.position.x
+			$tintable_ui/diff/opponent.text = "OPPONENT:\nBOOKWYRM"
 		DPControl.CONTROLER.CHEATER:
 			dp_cursor.position.x = $tintable_ui/diff/dp_cheater.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nCHEATER"
@@ -291,6 +294,11 @@ func _on_dp_neural_pressed():
 
 func _on_dp_cheater_pressed():
 	MapSetup.default_digital_player = DPControl.CONTROLER.CHEATER
+	dp_selected_pos()
+
+
+func _on_dp_smartie_pressed():
+	MapSetup.default_digital_player = DPControl.CONTROLER.SMARTIE
 	dp_selected_pos()
 
 

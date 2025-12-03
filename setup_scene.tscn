@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://didhhghxmey0r"]
+[gd_scene load_steps=31 format=3 uid="uid://didhhghxmey0r"]
 
 [ext_resource type="Script" path="res://scripts/setup_scene.gd" id="1_f6cc2"]
 [ext_resource type="Texture2D" uid="uid://cci2sp743u6hi" path="res://sprites/dp/dp_selected.png" id="2_1q3y1"]
@@ -16,6 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://lbt7xqph68pb" path="res://sprites/ui/remove_pressed.png" id="6_ckrtw"]
 [ext_resource type="Texture2D" uid="uid://c23kwcfws5x1n" path="res://sprites/ui/save_replay.png" id="8_jp1fi"]
 [ext_resource type="Texture2D" uid="uid://fo6lu5lqw04d" path="res://sprites/ui/next_pressed.png" id="10_qo64o"]
+[ext_resource type="Texture2D" uid="uid://bdhc82g82oksd" path="res://sprites/dp/dp_neuron_real.png" id="12_grw8r"]
 [ext_resource type="Texture2D" uid="uid://mbmk666gc1gh" path="res://sprites/ui/save_replay_pressed.png" id="12_jfhey"]
 [ext_resource type="Texture2D" uid="uid://dmfov6gdj5eub" path="res://sprites/ui/advance_pressed.png" id="14_pdvw5"]
 [ext_resource type="StyleBox" uid="uid://ciikkahxcqynr" path="res://styles/style_label_pause.tres" id="17_tni5w"]
@@ -203,11 +204,19 @@ offset_right = 984.0
 offset_bottom = 192.0
 texture_normal = ExtResource("3_g3ljl")
 
-[node name="dp_cheater" type="TextureButton" parent="tintable_ui/diff"]
+[node name="dp_smartie" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
 offset_left = 1000.0
 offset_top = 96.0
 offset_right = 1096.0
+offset_bottom = 192.0
+texture_normal = ExtResource("12_grw8r")
+
+[node name="dp_cheater" type="TextureButton" parent="tintable_ui/diff"]
+layout_mode = 0
+offset_left = 1112.0
+offset_top = 96.0
+offset_right = 1208.0
 offset_bottom = 192.0
 texture_normal = ExtResource("5_qe1ei")
 
@@ -345,6 +354,7 @@ filters = PackedStringArray("*.json")
 [connection signal="pressed" from="tintable_ui/diff/dp_turtle" to="." method="_on_dp_turtle_pressed"]
 [connection signal="pressed" from="tintable_ui/diff/dp_default" to="." method="_on_dp_default_pressed"]
 [connection signal="pressed" from="tintable_ui/diff/dp_neural" to="." method="_on_dp_neural_pressed"]
+[connection signal="pressed" from="tintable_ui/diff/dp_smartie" to="." method="_on_dp_smartie_pressed"]
 [connection signal="pressed" from="tintable_ui/diff/dp_cheater" to="." method="_on_dp_cheater_pressed"]
 [connection signal="pressed" from="tintable_ui/next_menu" to="." method="_on_next_menu_pressed"]
 [connection signal="pressed" from="tintable_ui/replay" to="." method="_on_replay_pressed"]

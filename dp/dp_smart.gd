@@ -1,7 +1,7 @@
 extends DigitalPlayer
 
 
-enum PRIORITY {
+enum BENEFIT {
 	# lowest
 	BAD = -1,
 	INDECISIVE,
@@ -18,6 +18,16 @@ enum PRIORITY {
 	REINFORCE_SAVING_CAPITAL,
 	CAPTURE_CAPITAL,
 	# highest
+}
+enum PRIORITY {
+	INDECISIVE,
+	REINFORCE_CAPITAL_DISTANCE,
+	REINFORCE_MAX_POWER,
+	MAX_POWER,
+	CAPITAL_DISTANCE,
+	LOWEST_ATTACK,
+	POWER,
+	CAPITAL,
 }
 
 
@@ -40,15 +50,17 @@ func start_turn(align : int):
 			cheat_amount += 1
 
 
-func choose_regions(benefit_func : Callable, regions : Array) -> String:
+func choose_regions(benefit_func : Callable, tiebreak_func : Callable, regions : Array) -> String:
 	if regions.size() == 0:
 		return ""
 	
 	var priorities : Dictionary = {}
 	for region in regions:
-		priorities[region] = PRIORITY.INDECISIVE
+		priorities[region] = BENEFIT.INDECISIVE
 	for region in regions:
 		priorities[region] = benefit_func.call(region, priorities)
+	
+	# print(priorities)
 	
 	var highest_benefit : int = 0
 	var results : Array[Region] = []
@@ -59,13 +71,16 @@ func choose_regions(benefit_func : Callable, regions : Array) -> String:
 		elif priorities[region] == highest_benefit:
 			results.append(region)
 	
+	# print(results)
+	
 	var chosen : Region = null
 	if highest_benefit >= 0:
 		if results.size() == 1:
 			chosen = results[0]
 		elif results.size() > 1:
-			# TODO: Tie brakes here
-			chosen = results[randi_range(0, results.size() - 1)]
+			chosen = tiebreak_func.call(results)
+	
+	# print(chosen)
 	
 	if chosen:
 		return chosen.name
@@ -75,51 +90,51 @@ func choose_regions(benefit_func : Callable, regions : Array) -> String:
 func set_linked_priority(region : Region, priorities : Dictionary, priority : int) -> void:
 	for link in region.links:
 		var target : Region = link.get_other_region(region)
-		if priorities.has(target) and priorities[target] != PRIORITY.BAD:
+		if priorities.has(target) and priorities[target] != BENEFIT.BAD:
 			priorities[target] = max(priorities[target], priority)
 
 
 func calculate_priority(region : Region, priorities : Dictionary, phase_bonus : bool) -> int:
 	var action_amount : int = controler.get_action_amount()
-	var priority : int = PRIORITY.INDECISIVE
+	var priority : int = BENEFIT.INDECISIVE
 	if controler.alignment_friendly(current_alignment, region.alignment):
 		var threat : int = region.worst_power_delta()
 		var in_threat : bool = -threat > 0
 		var saveable : bool = -threat <= action_amount
 		var bonus_saveable : bool = saveable or not phase_bonus
-		var capturable : bool = region.highest_single_power() + 2 <= action_amount
-		var next_to_capital : bool = region.next_to_capital()
+		var capturable : bool = region.outgoing_power_delta() + 2 <= action_amount
+		var next_to_unaligned_capital : bool = region.next_to_unaligned_capital()
 		var next_to_enemy : bool = region.next_to_enemy()
-		priority = PRIORITY.REINFORCE
+		priority = BENEFIT.REINFORCE
 		if not saveable:
-			priority = PRIORITY.BAD
+			priority = BENEFIT.BAD
 		elif in_threat and region.is_capital:
-			priority = PRIORITY.REINFORCE_SAVING_CAPITAL
-		if next_to_capital:
+			priority = BENEFIT.REINFORCE_SAVING_CAPITAL
+		if next_to_unaligned_capital:
 			if capturable and bonus_saveable:
-				priority = max(priority, PRIORITY.REINFORCE_CAPITAL_ADJACENT_CAPTURE)
+				priority = max(priority, BENEFIT.REINFORCE_CAPITAL_ADJACENT_CAPTURE)
 			elif not saveable:
-				priority = PRIORITY.BAD
-				set_linked_priority(region, priorities, PRIORITY.REINFORCE_HIGH_ATTACK_CAPITAL)
+				priority = BENEFIT.BAD
+				set_linked_priority(region, priorities, BENEFIT.REINFORCE_HIGH_ATTACK_CAPITAL)
 			else:
-				priority = max(priority, PRIORITY.REINFORCE_CAPITAL_ADJACENT)
+				priority = max(priority, BENEFIT.REINFORCE_CAPITAL_ADJACENT)
 		if in_threat and saveable:
-				priority = max(priority, PRIORITY.REINFORCE_SAVING)
+				priority = max(priority, BENEFIT.REINFORCE_SAVING)
 		elif next_to_enemy:
 			if capturable and bonus_saveable:
-				priority = max(priority, PRIORITY.REINFORCE_ENEMY_ADJACENT_CAPTURE)
+				priority = max(priority, BENEFIT.REINFORCE_ENEMY_ADJACENT_CAPTURE)
 			elif not saveable:
-				priority = PRIORITY.BAD
-				set_linked_priority(region, priorities, PRIORITY.REINFORCE_HIGH_ATTACK_NEIGHBOR)
+				priority = BENEFIT.BAD
+				set_linked_priority(region, priorities, BENEFIT.REINFORCE_HIGH_ATTACK_NEIGHBOR)
 			else:
-				priority = max(priority, PRIORITY.REINFORCE_ENEMY_ADJACENT)
+				priority = max(priority, BENEFIT.REINFORCE_ENEMY_ADJACENT)
 	else:
 		if region.is_capital:
-			priority = PRIORITY.CAPTURE_CAPITAL
+			priority = BENEFIT.CAPTURE_CAPITAL
 		elif controler.alignment_inactive(region.alignment):
-			priority = PRIORITY.CAPTURE_NEUTRAL
+			priority = BENEFIT.CAPTURE_NEUTRAL
 		else:
-			priority = PRIORITY.CAPTURE_ENEMY
+			priority = BENEFIT.CAPTURE_ENEMY
 	
 #	print(region, ": ", benefit)
 	return priority
@@ -134,7 +149,90 @@ func calculate_priority_bonus(region : Region, priorities : Dictionary) -> int:
 
 
 func calculate_benefit_mobilize(region : Region, _regions):
-	return 0 if region.worst_power_delta() == 0 else 1
+	var action_amount : int = controler.get_action_amount()
+	var threat : int = region.worst_power_delta()
+	if -threat > action_amount:
+		return 1
+	if -threat == action_amount:
+		return 0
+	var capture_power : int = region.outgoing_power_delta()
+	if capture_power == -1:
+		return 0
+	return 1
+
+
+func _tiebreak_capital(region : Region) -> int:
+	if region.is_capital:
+		if region.alignment == current_alignment:
+			return 2
+		return 1
+	return 0
+
+
+func _tiebreak_power(region : Region) -> int:
+	if region.alignment == current_alignment:
+		return region.power << 1 + 1
+	return region.power << 1
+
+
+func _tiebreak_lowest_attack(region : Region) -> int:
+	var capture_power : int = -region.outgoing_power_delta()
+	if region.alignment == current_alignment:
+		return capture_power << 1 + 1
+	return capture_power << 1
+
+
+func _tiebreak_capital_distance(region : Region) -> int:
+	if region.alignment == current_alignment:
+		return -region.distance_from_capital << 1 + 1
+	return -region.distance_from_capital << 1
+
+
+func _tiebreak_max_power(region : Region) -> int:
+	if region.alignment == current_alignment:
+		return region.max_power << 1 + 1
+	return region.max_power << 1
+
+
+func tiebreak_normal(regs : Array[Region]) -> Region:
+	var regions : Array[Region] = regs.duplicate()
+	var results : Array[Region] = []
+	
+	for criterion in [
+				_tiebreak_capital,
+				_tiebreak_power,
+				_tiebreak_lowest_attack,
+				_tiebreak_capital_distance,
+				_tiebreak_max_power
+			]:
+		var fitness : int = 0
+		var first_set : bool = true
+		for region in regions:
+			var rf : int = criterion.call(region)
+			if controler.used_region_previously(region):
+				rf -= 1
+			if first_set or rf > fitness:
+				results = [region]
+				fitness = rf
+				first_set = false
+			elif rf == fitness:
+				results.append(region)
+		
+		if results.is_empty():
+			return null
+		elif results.size() == 1:
+			return results[0]
+		
+		regions = results.duplicate()
+		results.clear()
+		
+	return results[randi_range(0, results.size() - 1)]
+
+
+func tiebreak_mobilize(regions: Array[Region]) -> Region:
+	if regions.size() > 0:
+		return regions[0]
+	return null
 
 
 func think_normal():
@@ -161,7 +259,7 @@ func think_normal():
 		for region in allied_regions:
 			regions.add(region)
 	
-	var choice : String = choose_regions(calculate_priority_normal, regions.values())
+	var choice : String = choose_regions(calculate_priority_normal, tiebreak_normal, regions.values())
 	if choice.is_empty():
 		controler.CALL_change_current_phase = true
 	else:
@@ -177,7 +275,7 @@ func think_mobilize():
 		if region.power > 1:
 			regions.add(region)
 	
-	var choice : String = choose_regions(calculate_benefit_mobilize, regions.values())
+	var choice : String = choose_regions(calculate_benefit_mobilize, tiebreak_mobilize, regions.values())
 	
 	if choice.is_empty():
 		if controler.get_bonus_action_amount() == 0:

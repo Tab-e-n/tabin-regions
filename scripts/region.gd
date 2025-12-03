@@ -280,7 +280,7 @@ func get_alignments_attack_power(align : int) -> int:
 
 
 ## The difference between the regions power and an alignments attack
-func attack_power_difference(attack_align : int) -> int:
+func attack_power_delta(attack_align : int) -> int:
 	return power - get_alignments_attack_power(attack_align)
 
 
@@ -288,20 +288,33 @@ func worst_power_delta(align : int = alignment) -> int:
 	return power - strongest_enemy_attack(align)
 
 
-func highest_single_power() -> int:
-	var highest : int = 0
+func outgoing_power_delta(align : int = alignment) -> int:
+	var closest : int = 0
+	var first_value : bool = true
 	for link in links:
 		var region : Region = link.get_other_region(self)
-		var p = region.power + link.power_reduction
-		if region and p > highest:
-			highest = p
-	return highest
+		if region:
+			var pow_diff : int = region.attack_power_delta(align)
+			if pow_diff > 0:
+				continue
+			if first_value or pow_diff > closest:
+				closest = pow_diff
+				first_value = false
+	return closest
 
 
 func next_to_capital() -> bool:
 	for link in links:
 		var region : Region = link.get_other_region(self)
 		if region and region.is_capital:
+			return true
+	return false
+
+
+func next_to_unaligned_capital(align : int = alignment) -> bool:
+	for link in links:
+		var region : Region = link.get_other_region(self)
+		if region and region.is_capital and region.alignment != align:
 			return true
 	return false
 

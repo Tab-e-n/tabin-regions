@@ -5,13 +5,13 @@ class_name DPControl
 signal timer_has_ended
 
 
-enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY, SIZE}
+enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY, SMARTIE, SIZE}
 
 const THINKING_TIMER_DEFAULT : float = 0.5
 const THINKING_TIMER_SPEEDRUN : float = 0.05
 const THINKING_TIMER_NETWORK : float = 0.001
 
-const CONTROLER_NAMES : Array = ["User Controled", "Simple", "Turtle", "Neural", "Cheater", "Environment"]
+const CONTROLER_NAMES : Array = ["User Controled", "Simpleton", "Turtle", "Overthinker", "Cheater", "Environment", "Bookwyrm"]
 
 
 @export var controler_paths : Array[NodePath] = []

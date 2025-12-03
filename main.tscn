@@ -106,7 +106,7 @@ script = ExtResource("1_2axsc")
 
 [node name="AIControler" type="Node" parent="."]
 script = ExtResource("2_w08l3")
-controler_paths = Array[NodePath]([NodePath("Simple"), NodePath("Turtle"), NodePath("Neural"), NodePath("Cheater"), NodePath("Environment")])
+controler_paths = Array[NodePath]([NodePath("Simple"), NodePath("Turtle"), NodePath("Neural"), NodePath("Cheater"), NodePath("Environment"), NodePath("Smartie")])
 
 [node name="Simple" type="Node" parent="AIControler"]
 script = ExtResource("3_dfqk3")
@@ -119,9 +119,13 @@ script = ExtResource("5_3hf1s")
 
 [node name="Cheater" type="Node" parent="AIControler"]
 script = ExtResource("6_etgsh")
+cheater = true
 
 [node name="Environment" type="Node" parent="AIControler"]
 script = ExtResource("6_2rtvp")
+
+[node name="Smartie" type="Node" parent="AIControler"]
+script = ExtResource("6_etgsh")
 
 [node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("ui", "ui_hideable", "pause_menu", "player_info", "player_actions", "advance_turn_button", "advance_action_light", "advance_action_dark", "advance_mobilize_light", "advance_mobilize_dark", "end_turn_button", "forfeit_button", "pause_button", "leave_button", "graph_button", "turn_order", "power_sprite", "power_amount", "current_turn", "current_alignment", "current_action", "phase_info", "replay_paused_label", "stats_graph", "player_info_leader", "player_info_city", "player_info_capital", "player_info_regions", "player_info_power", "player_info_name", "victory_message", "defeat_message", "leave_message", "forfeit_message", "leftover_message", "command_callout", "mouse_scroll", "auto_phase", "fast_dp", "action_change_part", "visible_capitals", "visible_ui", "visible_turn_order", "tooltip_actions", "tooltip_phase", "tooltip_end_turn", "tooltip_forfeit")]
 z_index = 30
