@@ -130,14 +130,15 @@ func _physics_process(delta):
 	if Input.is_action_pressed("shift"):
 		move_speed *= 2.0
 	
-	if mouse_position.x > window_size.x - 64 or Input.is_action_pressed("right"):
-		columbs.position.x -= move_speed
-		if columbs.position.x < farthest_left:
-			columbs.position.x = farthest_left
-	if mouse_position.x < 64 or Input.is_action_pressed("left"):
-		columbs.position.x += move_speed
-		if columbs.position.x > farthest_right:
-			columbs.position.x = farthest_right
+	if columbs.visible:
+		if mouse_position.x > window_size.x - 64 or Input.is_action_pressed("right"):
+			columbs.position.x -= move_speed
+			if columbs.position.x < farthest_left:
+				columbs.position.x = farthest_left
+		if mouse_position.x < 64 or Input.is_action_pressed("left"):
+			columbs.position.x += move_speed
+			if columbs.position.x > farthest_right:
+				columbs.position.x = farthest_right
 	
 	if hovering_alignments:
 		var recent_hovered_player : int = graph_align_list.get_leader_id_from_mouse()

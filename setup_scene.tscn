@@ -16,7 +16,7 @@
 [ext_resource type="Texture2D" uid="uid://lbt7xqph68pb" path="res://sprites/ui/remove_pressed.png" id="6_ckrtw"]
 [ext_resource type="Texture2D" uid="uid://c23kwcfws5x1n" path="res://sprites/ui/save_replay.png" id="8_jp1fi"]
 [ext_resource type="Texture2D" uid="uid://fo6lu5lqw04d" path="res://sprites/ui/next_pressed.png" id="10_qo64o"]
-[ext_resource type="Texture2D" uid="uid://bdhc82g82oksd" path="res://sprites/dp/dp_neuron_real.png" id="12_grw8r"]
+[ext_resource type="Texture2D" uid="uid://brn02o1hdlpr0" path="res://sprites/dp/dp_smart.png" id="12_31vfn"]
 [ext_resource type="Texture2D" uid="uid://mbmk666gc1gh" path="res://sprites/ui/save_replay_pressed.png" id="12_jfhey"]
 [ext_resource type="Texture2D" uid="uid://dmfov6gdj5eub" path="res://sprites/ui/advance_pressed.png" id="14_pdvw5"]
 [ext_resource type="StyleBox" uid="uid://ciikkahxcqynr" path="res://styles/style_label_pause.tres" id="17_tni5w"]
@@ -165,58 +165,57 @@ offset_bottom = 40.0
 
 [node name="opponent" type="Label" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 536.0
+offset_left = 544.0
 offset_top = 112.0
-offset_right = 656.0
+offset_right = 688.0
 offset_bottom = 176.0
 theme_override_constants/line_spacing = 0
 theme_override_font_sizes/font_size = 20
 text = "OPPONENT:"
-horizontal_alignment = 1
 
 [node name="cursor" type="Sprite2D" parent="tintable_ui/diff"]
-position = Vector2(664, 96)
+position = Vector2(704, 96)
 texture = ExtResource("2_1q3y1")
 centered = false
 offset = Vector2(-4, -4)
 
 [node name="dp_turtle" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 664.0
+offset_left = 704.0
 offset_top = 96.0
-offset_right = 760.0
+offset_right = 768.0
 offset_bottom = 192.0
 texture_normal = ExtResource("2_wi0e8")
 
 [node name="dp_default" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 776.0
+offset_left = 784.0
 offset_top = 96.0
-offset_right = 872.0
+offset_right = 848.0
 offset_bottom = 192.0
 texture_normal = ExtResource("2_qggyn")
 
 [node name="dp_neural" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 888.0
+offset_left = 864.0
 offset_top = 96.0
-offset_right = 984.0
+offset_right = 928.0
 offset_bottom = 192.0
 texture_normal = ExtResource("3_g3ljl")
 
 [node name="dp_smartie" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 1000.0
+offset_left = 944.0
 offset_top = 96.0
-offset_right = 1096.0
+offset_right = 1008.0
 offset_bottom = 192.0
-texture_normal = ExtResource("12_grw8r")
+texture_normal = ExtResource("12_31vfn")
 
 [node name="dp_cheater" type="TextureButton" parent="tintable_ui/diff"]
 layout_mode = 0
-offset_left = 1112.0
+offset_left = 1024.0
 offset_top = 96.0
-offset_right = 1208.0
+offset_right = 1088.0
 offset_bottom = 192.0
 texture_normal = ExtResource("5_qe1ei")
 

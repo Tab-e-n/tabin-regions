@@ -6,7 +6,7 @@ var current_map : RegionControl
 var maps : Array
 
 enum {MENU_LORE, MENU_ALIGNMENTS, MENU_DIFFICULTY}
-var current_menu : int = 0
+var current_menu : int = MENU_LORE
 
 
 @onready var tintable_ui : Node2D = $tintable_ui
@@ -45,6 +45,10 @@ func _ready():
 	MapSetup.preset_alignments.clear()
 	
 	ReplayControl.clear_replay()
+	
+	map_lore.visible = true
+	map_options.visible = false
+	map_dp.visible = false
 
 
 func _process(_delta):
