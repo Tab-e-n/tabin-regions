@@ -4,12 +4,12 @@
 [ext_resource type="Script" path="res://scripts/volcano.gd" id="2_80qnr"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_apjgv"]
 [ext_resource type="Script" path="res://scripts/region_path.gd" id="3_jh77j"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="4_nnhca"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="4_nnhca"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="5_vg1se"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="6_hrv61"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="7_xuuy6"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="8_e3o4j"]
-[ext_resource type="PackedScene" uid="uid://bpg1qqih5uvvn" path="res://objects/particle_spawner_thunder_cloud.tscn" id="10_t58dp"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/game/particle_spawner_cloud.tscn" id="8_e3o4j"]
+[ext_resource type="PackedScene" uid="uid://bpg1qqih5uvvn" path="res://objects/game/particle_spawner_thunder_cloud.tscn" id="10_t58dp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gelkj"]
 shader = ExtResource("5_vg1se")

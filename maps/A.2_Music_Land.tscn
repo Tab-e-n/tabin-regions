@@ -2,10 +2,10 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_eipre"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_6sw3n"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_ispv8"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_ispv8"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_nmcrs"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_obvay"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="4_4cclr"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/game/particle_spawner_cloud.tscn" id="4_4cclr"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_dq7yi"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qvp02"]

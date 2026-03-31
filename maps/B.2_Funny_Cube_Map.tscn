@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_o5nxe"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_fdsg1"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_hx3e2"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_hx3e2"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_fkek4"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_fo4k4"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_6l5qv"]

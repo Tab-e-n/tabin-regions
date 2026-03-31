@@ -4,7 +4,7 @@
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_btpod"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_dqqgq"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_wejfr"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="3_85qsw"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/game/particle_spawner_cloud.tscn" id="3_85qsw"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_v2anp"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wa8sq"]

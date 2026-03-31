@@ -3,4 +3,4 @@
 [node name="bg" type="Polygon2D"]
 z_index = -10
 color = Color(0.364706, 0.364706, 0.439216, 1)
-polygon = PackedVector2Array(-6400, -6400, 6400, -6400, 6400, 6400, -6400, 6400)
+polygon = PackedVector2Array(-12800, -12800, 12800, -12800, 12800, 12800, -12800, 12800)

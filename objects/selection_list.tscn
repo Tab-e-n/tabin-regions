@@ -1,0 +1,66 @@
+[gd_scene load_steps=5 format=3 uid="uid://g8hj7dax3yvv"]
+
+[ext_resource type="Script" path="res://scripts/selection_list.gd" id="1_pekuv"]
+[ext_resource type="StyleBox" uid="uid://cyll56fcff0as" path="res://styles/selection_list_panel.tres" id="2_kcfjq"]
+[ext_resource type="StyleBox" uid="uid://blb1sd30050aw" path="res://styles/style_vscrollbar_scroll.tres" id="3_h0qg4"]
+[ext_resource type="StyleBox" uid="uid://b5bdk85iaks2y" path="res://styles/selection_list_scrollbar_grabber.tres" id="4_u0s3p"]
+
+[node name="SelectionList" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 128.0
+offset_bottom = 128.0
+script = ExtResource("1_pekuv")
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -8.0
+offset_top = -8.0
+offset_right = 8.0
+offset_bottom = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = ExtResource("2_kcfjq")
+
+[node name="HBoxContainer" type="Control" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 8.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Items" type="VBoxContainer" parent="HBoxContainer"]
+layout_mode = 2
+anchor_right = 1.0
+offset_left = 8.0
+offset_right = -24.0
+offset_bottom = 128.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 0
+
+[node name="ScrollBar" type="VScrollBar" parent="HBoxContainer"]
+custom_minimum_size = Vector2(16, 0)
+layout_mode = 2
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -16.0
+grow_horizontal = 0
+grow_vertical = 2
+theme_override_styles/scroll = ExtResource("3_h0qg4")
+theme_override_styles/scroll_focus = ExtResource("3_h0qg4")
+theme_override_styles/grabber = ExtResource("4_u0s3p")
+theme_override_styles/grabber_highlight = ExtResource("4_u0s3p")
+theme_override_styles/grabber_pressed = ExtResource("4_u0s3p")
+max_value = 10.0
+page = 5.0
+
+[connection signal="value_changed" from="HBoxContainer/ScrollBar" to="." method="_on_scroll_bar_value_changed"]

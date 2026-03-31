@@ -1,6 +1,6 @@
 [gd_scene load_steps=20 format=3 uid="uid://k4q8f7exoir3"]
 
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="1_6ql58"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="1_6ql58"]
 [ext_resource type="Script" path="res://scripts/logo.gd" id="1_se211"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_m54rg"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_johd2"]

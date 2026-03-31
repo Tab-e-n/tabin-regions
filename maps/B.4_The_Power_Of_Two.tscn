@@ -1,12 +1,12 @@
 [gd_scene load_steps=36 format=3 uid="uid://bnhsptx5od5fj"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_k6mpi"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_4ouwy"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_4ouwy"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_if42c"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_nqpph"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_tmliv"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_dvsv0"]
-[ext_resource type="PackedScene" uid="uid://clyxj3ntdq610" path="res://objects/particle_spawner_elec.tscn" id="6_iduh8"]
+[ext_resource type="PackedScene" uid="uid://clyxj3ntdq610" path="res://objects/game/particle_spawner_elec.tscn" id="6_iduh8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nvuyg"]
 shader = ExtResource("3_tmliv")

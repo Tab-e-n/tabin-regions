@@ -1,7 +1,7 @@
 [gd_scene load_steps=53 format=3 uid="uid://b5e50h5e6gdhb"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_uesdv"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_8417d"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_8417d"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_icm7t"]
 [ext_resource type="Script" path="res://scripts/group_animator.gd" id="3_30dxk"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_sjke4"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_utbs8"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_lrdcx"]
 [ext_resource type="Texture2D" uid="uid://dle6ea0julea4" path="res://sprites/bg.tres" id="6_unaru"]
-[ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/particle_spawner_star.tscn" id="9_yt4ke"]
+[ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/game/particle_spawner_star.tscn" id="9_yt4ke"]
 
 [sub_resource type="GDScript" id="GDScript_63lwb"]
 script/source = "extends Node

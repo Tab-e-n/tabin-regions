@@ -2,11 +2,11 @@
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_ftrmb"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_f46vk"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_grkru"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_grkru"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_33jrj"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_1i7l7"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_kqyr5"]
-[ext_resource type="PackedScene" uid="uid://b08758y8g0dsv" path="res://objects/particle_spawner_spiral.tscn" id="6_dyrx8"]
+[ext_resource type="PackedScene" uid="uid://b08758y8g0dsv" path="res://objects/game/particle_spawner_spiral.tscn" id="6_dyrx8"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_k57xu"]
 shader = ExtResource("3_33jrj")

@@ -1,12 +1,12 @@
 [gd_scene load_steps=37 format=3 uid="uid://dbe0ce2e77hwl"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_slecj"]
-[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/map_background.tscn" id="2_ov01q"]
+[ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_ov01q"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_v6bnm"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_cnpms"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_6leky"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_bcj2m"]
-[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/particle_spawner_cloud.tscn" id="6_8co7j"]
+[ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/game/particle_spawner_cloud.tscn" id="6_8co7j"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xnxyd"]
 shader = ExtResource("3_cnpms")

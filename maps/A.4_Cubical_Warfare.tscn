@@ -5,7 +5,7 @@
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_o7h0u"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_xu4he"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_742cs"]
-[ext_resource type="PackedScene" uid="uid://clyxj3ntdq610" path="res://objects/particle_spawner_elec.tscn" id="5_8ifk1"]
+[ext_resource type="PackedScene" uid="uid://clyxj3ntdq610" path="res://objects/game/particle_spawner_elec.tscn" id="5_8ifk1"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvoby"]
 shader = ExtResource("2_xu4he")
