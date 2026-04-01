@@ -1,6 +1,7 @@
-[gd_scene load_steps=2 format=3 uid="uid://y6l3rjei7g52"]
+[gd_scene load_steps=3 format=3 uid="uid://y6l3rjei7g52"]
 
 [ext_resource type="StyleBox" uid="uid://cyrb3avj0w7tg" path="res://styles/menu_no_tab_label.tres" id="1_lcr0d"]
+[ext_resource type="Script" path="res://scripts/menu_replays.gd" id="1_rvhcc"]
 
 [node name="replays" type="Control"]
 layout_mode = 3
@@ -9,12 +10,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_rvhcc")
+metadata/_edit_horizontal_guides_ = [608.0]
 
 [node name="TEMP2" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = ExtResource("1_lcr0d")

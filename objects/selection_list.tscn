@@ -1,7 +1,7 @@
 [gd_scene load_steps=5 format=3 uid="uid://g8hj7dax3yvv"]
 
 [ext_resource type="Script" path="res://scripts/selection_list.gd" id="1_pekuv"]
-[ext_resource type="StyleBox" uid="uid://cyll56fcff0as" path="res://styles/selection_list_panel.tres" id="2_kcfjq"]
+[ext_resource type="StyleBox" uid="uid://cyll56fcff0as" path="res://styles/menu_panel.tres" id="2_lrai5"]
 [ext_resource type="StyleBox" uid="uid://blb1sd30050aw" path="res://styles/style_vscrollbar_scroll.tres" id="3_h0qg4"]
 [ext_resource type="StyleBox" uid="uid://b5bdk85iaks2y" path="res://styles/selection_list_scrollbar_grabber.tres" id="4_u0s3p"]
 
@@ -23,7 +23,7 @@ offset_right = 8.0
 offset_bottom = 8.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_styles/panel = ExtResource("2_kcfjq")
+theme_override_styles/panel = ExtResource("2_lrai5")
 
 [node name="HBoxContainer" type="Control" parent="."]
 clip_contents = true

@@ -7,24 +7,6 @@ TODO
 
  - Tabs
 
-# Maps Tab
-
- - Selection list for map
- - Start map button
- - Map preview
-
- - Map title
- - Map description
- - Map option selection
-   * Leaders
-   * Players
-   * Aliances
- - DP selection
-
- - Changing map directory
- - Adding directory + warning about unsafety
- - Removing directory
-
 # Replays Tab
 
  - Selection list for replays

@@ -157,7 +157,6 @@ max_value = 1.0
 value = 1.0
 
 [node name="diff" type="Control" parent="tintable_ui"]
-visible = false
 layout_mode = 3
 anchors_preset = 0
 offset_right = 40.0

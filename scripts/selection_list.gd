@@ -1,4 +1,5 @@
 extends Control
+class_name SelectionList
 
 
 signal item_selected(item: Control)
@@ -10,6 +11,7 @@ const SELECTION_ITEM_SIZE: float = 20.0
 
 
 var item_count: int = 0
+var selected_item: Button = null
 
 @onready var page: float = size.y / SELECTION_ITEM_SIZE
 @onready var items: Control = $HBoxContainer/Items
@@ -24,7 +26,7 @@ func _ready():
 func add_item(value: String) -> void:
 	var item: Button = PACKED_ITEM.instantiate() as Button
 	item.text = value
-	item.pressed.connect(_item_toggled.bind(item))
+	item.toggled.connect(_item_toggled.bind(item))
 	items.add_child(item)
 	
 	item_count += 1
@@ -36,7 +38,12 @@ func remove_item() -> void:
 
 
 func clear() -> void:
-	pass
+	for node in items.get_children():
+		items.remove_child(node)
+		node.queue_free()
+	
+	item_count = 0
+	reset_scrollbar()
 
 
 func reset_scrollbar() -> void:
@@ -49,6 +56,9 @@ func reset_scrollbar() -> void:
 
 func _item_toggled(pressed: bool, item: Control) -> void:
 	if pressed:
+		if selected_item:
+			selected_item.set_pressed_no_signal(false)
+		selected_item = item
 		item_selected.emit(item)
 	else:
 		item_deselected.emit(item)

@@ -82,6 +82,7 @@ layout_mode = 2
 size_flags_vertical = 3
 
 [node name="no_select_msg" type="Label" parent="middle"]
+z_index = -200
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -105,9 +106,11 @@ grow_vertical = 2
 layout_mode = 1
 
 [node name="replays" parent="middle/menus" instance=ExtResource("4_ewqpl")]
+visible = false
 layout_mode = 1
 
 [node name="options" parent="middle/menus" instance=ExtResource("5_iawia")]
+visible = false
 layout_mode = 1
 
 [connection signal="toggled" from="top/tabs/maps" to="." method="_on_tab_toggled"]

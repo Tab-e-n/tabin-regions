@@ -1,5 +1,6 @@
-[gd_scene load_steps=2 format=3 uid="uid://baequxmb1xdwc"]
+[gd_scene load_steps=3 format=3 uid="uid://baequxmb1xdwc"]
 
+[ext_resource type="Script" path="res://scripts/menu_options.gd" id="1_imfoe"]
 [ext_resource type="StyleBox" uid="uid://cyrb3avj0w7tg" path="res://styles/menu_no_tab_label.tres" id="1_pmxno"]
 
 [node name="options" type="Control"]
@@ -9,12 +10,15 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_imfoe")
+metadata/_edit_horizontal_guides_ = [608.0]
 
 [node name="TEMP3" type="Label" parent="."]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
+offset_bottom = -32.0
 grow_horizontal = 2
 grow_vertical = 2
 theme_override_styles/normal = ExtResource("1_pmxno")

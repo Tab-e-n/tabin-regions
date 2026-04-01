@@ -1,9 +1,10 @@
-[gd_scene load_steps=5 format=3 uid="uid://t2528ie7ag6n"]
+[gd_scene load_steps=6 format=3 uid="uid://t2528ie7ag6n"]
 
 [ext_resource type="PackedScene" uid="uid://cnxb64453xeqg" path="res://maps/A.2_Title_Map.tscn" id="1_dr8vy"]
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_wam5a"]
 [ext_resource type="Texture2D" uid="uid://bdhc82g82oksd" path="res://sprites/dp/dp_neuron_real.png" id="4_m1j5c"]
 [ext_resource type="PackedScene" uid="uid://ib7qg43imr83" path="res://objects/moving_polygon.tscn" id="4_xrc6d"]
+[ext_resource type="Texture2D" uid="uid://dhrc3btey56el" path="res://sprites/ui/exchange.png" id="5_mseuf"]
 
 [node name="title" type="Node2D"]
 script = ExtResource("1_wam5a")
@@ -469,5 +470,15 @@ offset_right = 112.0
 offset_bottom = 624.0
 texture_normal = ExtResource("4_m1j5c")
 
+[node name="new_menu" type="TextureButton" parent="."]
+visible = false
+offset_left = 120.0
+offset_top = 544.0
+offset_right = 184.0
+offset_bottom = 608.0
+texture_normal = ExtResource("5_mseuf")
+
 [connection signal="mouse_entered" from="network" to="." method="_on_network_mouse_entered"]
 [connection signal="mouse_exited" from="network" to="." method="_on_network_mouse_exited"]
+[connection signal="mouse_entered" from="new_menu" to="." method="_on_new_menu_mouse_entered"]
+[connection signal="mouse_exited" from="new_menu" to="." method="_on_new_menu_mouse_exited"]

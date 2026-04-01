@@ -13,6 +13,7 @@ var current_align : int = 1
 
 
 var going_network : bool = false
+var going_new_menu : bool = false
 
 @onready var title_color : Color = $title.color
 @onready var prev_color : Color = title_color
@@ -33,6 +34,7 @@ func _ready():
 	
 	if Options.editor:
 		$network.visible = true
+		$new_menu.visible = true
 	
 	curr_color = $title.align_color[alignments[current_align]]
 
@@ -66,6 +68,10 @@ func _process(delta):
 			Options.discard_timestamp_sums()
 			Options.timestamp("START NETWORK TRAINER", "")
 			get_tree().change_scene_to_file("res://dp/network_trainer.tscn")
+		elif going_new_menu:
+			Options.discard_timestamp_sums()
+			Options.timestamp("START NEW MENU", "")
+			get_tree().change_scene_to_file("res://menu.tscn")
 		else:
 			Options.discard_timestamp_sums()
 			Options.timestamp("START SETUP SCENE", "")
@@ -78,3 +84,11 @@ func _on_network_mouse_entered():
 
 func _on_network_mouse_exited():
 	going_network = false
+
+
+func _on_new_menu_mouse_entered():
+	going_new_menu = true
+
+
+func _on_new_menu_mouse_exited():
+	going_new_menu = false
