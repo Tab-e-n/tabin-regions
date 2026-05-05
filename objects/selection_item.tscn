@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cr7oq31uvitcd"]
+[gd_scene load_steps=4 format=3 uid="uid://cr7oq31uvitcd"]
 
-[ext_resource type="StyleBox" uid="uid://b7dy6x7vi2mcr" path="res://styles/style_empty.tres" id="1_cpfwr"]
+[ext_resource type="StyleBox" uid="uid://b42bqv6tnjhee" path="res://styles/selection_list_item_pressed.tres" id="2_p6jfb"]
 [ext_resource type="StyleBox" uid="uid://b8mlhi58s8c3" path="res://styles/selection_list_item.tres" id="2_uew5n"]
+[ext_resource type="Script" path="res://scripts/selection_list_item.gd" id="3_7nbsw"]
 
 [node name="SelectionItem" type="Button"]
 custom_minimum_size = Vector2(0, 20)
@@ -11,12 +12,13 @@ focus_mode = 0
 theme_override_colors/font_color = Color(0.835294, 0.835294, 0.878431, 1)
 theme_override_colors/font_pressed_color = Color(0.258824, 0.258824, 0.313726, 1)
 theme_override_font_sizes/font_size = 16
-theme_override_styles/normal = ExtResource("1_cpfwr")
-theme_override_styles/hover = ExtResource("1_cpfwr")
-theme_override_styles/pressed = ExtResource("2_uew5n")
-theme_override_styles/disabled = ExtResource("1_cpfwr")
-theme_override_styles/focus = ExtResource("1_cpfwr")
+theme_override_styles/normal = ExtResource("2_uew5n")
+theme_override_styles/hover = ExtResource("2_uew5n")
+theme_override_styles/pressed = ExtResource("2_p6jfb")
+theme_override_styles/disabled = ExtResource("2_uew5n")
+theme_override_styles/focus = ExtResource("2_uew5n")
 toggle_mode = true
 text = "ITEM"
 alignment = 0
 clip_text = true
+script = ExtResource("3_7nbsw")

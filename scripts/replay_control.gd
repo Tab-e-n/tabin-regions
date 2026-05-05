@@ -3,7 +3,11 @@ extends Node
 
 const NOTHING_MOVE = [1, "nothing"]
 
-enum {RECORD_TYPE_REGION, RECORD_TYPE_FUNCTION, RECORD_TYPE_OVERTAKE}
+enum {
+	RECORD_TYPE_REGION,
+	RECORD_TYPE_FUNCTION,
+	RECORD_TYPE_OVERTAKE,
+}
 
 
 var replay_active : bool = false

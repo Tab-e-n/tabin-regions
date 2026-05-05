@@ -19,7 +19,7 @@ func attacks_position(is_capital : bool) -> void:
 func update_attacks(colors : Array[Color], values : Array[int]) -> void:
 	attacks.clear()
 	if colors.size() != values.size():
-		push_warning("Incorrectly inputted RegionAttacks colors or values.")
+		push_warning("Incorrectly inputted RegionDescription colors or values.")
 		return
 	
 	var text : String = ""

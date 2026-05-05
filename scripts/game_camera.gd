@@ -203,15 +203,11 @@ func _deferred_ready():
 	
 	region_control = game_control.region_control as RegionControl
 	
-	for i in region_control.polygon:
-		if i.x > farthest_right:
-			farthest_right = i.x
-		if i.x < farthest_left:
-			farthest_left = i.x
-		if i.y > farthest_down:
-			farthest_down = i.y
-		if i.y < farthest_up:
-			farthest_up = i.y
+	var bounds: Vector4 = region_control.map_bounds()
+	farthest_right = bounds.x
+	farthest_left = bounds.y
+	farthest_down = bounds.z
+	farthest_up = bounds.w
 	
 	if farthest_right < window_size.x * 0.5:
 		farthest_right = window_size.x * 0.5

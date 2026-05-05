@@ -1,1 +1,1 @@
-extends Control
+extends MenuScene

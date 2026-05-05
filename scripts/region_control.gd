@@ -23,7 +23,7 @@ signal game_ended(winner : int)
 enum PHASE {
 	NORMAL, 
 	MOBILIZE, 
-	BONUS
+	BONUS,
 }
 ## Modes for power_gain_penalties.
 enum APPLY_PENALTIES {
@@ -32,7 +32,7 @@ enum APPLY_PENALTIES {
 	## Penalties will be applied based on how many capitals the alignment has.
 	CURRENT_CAPITAL,
 	## Penalties will be applied based on how many capitals the alignment had the previous turn.
-	PREVIOUS_CAPITAL
+	PREVIOUS_CAPITAL,
 }
 ## What category the map is.
 enum SETUP_TAG {
@@ -43,7 +43,7 @@ enum SETUP_TAG {
 	## Maps with no human players.
 	BOT_BATTLE,
 	## Curated experiences meant to teach the player in some way.
-	GUIDE
+	GUIDE,
 }
 ## Labels that tell the player how experienced with the game they have to be to play this map.
 ## There are some guidelines you should follow when choosing a maps complexity.
@@ -79,7 +79,7 @@ enum SETUP_COMPLEXITY {
 	## Map that is nolonger simple regional warfare.
 	## I doubt an official map will ever go here.
 	## (R.)
-	ROCKET_SCIENCE
+	ROCKET_SCIENCE,
 }
 enum RENDER_MODE {
 	## Regions will be white.
@@ -93,7 +93,7 @@ enum RENDER_MODE {
 	## Regions will be green if the're a capital, red if not.
 	CAPITAL,
 	## Colors the regions based on their position.
-	POSITION
+	POSITION,
 }
 
 const LAST_PHASE : PHASE = PHASE.BONUS
@@ -266,7 +266,7 @@ const COLOR_TOO_BRIGHT : float = 0.85
 ## When set to true, RegionControl wil not do anything on its own.
 ## This is intended to be used by other scenes, not RegionControl itself.
 @export var dummy : bool = false
-## A node that will hold all RegionLink.
+## A node that will hold all RegionLinks.
 @export var region_links : Node = null
 ## Holds the links of all regions. When the map is readying, RegionControl will attempt to make every link in this array.
 ## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
@@ -601,7 +601,7 @@ func _ready():
 	Options.timestamp("_start_turn", "RegionControl")
 	
 	# -- VISUAL --
-	if hide_turn_order and game_camera:
+	if hide_turn_order and not use_aliances and game_camera:
 		game_camera.set_turn_order_visible(false)
 	
 	if snap_camera_to_first_align_capital:
@@ -1295,6 +1295,34 @@ func action_done(region_name : String, amount : int = 1):
 	
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()
+
+
+func map_bounds() -> Vector4:
+	var bounds: Vector4 = Vector4.ZERO
+	for point in polygon:
+		if point.x > bounds.x:
+			bounds.x = point.x
+		if point.x < bounds.y:
+			bounds.y = point.x
+		if point.y > bounds.z:
+			bounds.z = point.y
+		if point.y < bounds.w:
+			bounds.w = point.y
+	return bounds
+
+
+func map_size(bounds: Vector4 = Vector4.ZERO) -> Vector2:
+	if bounds == Vector4.ZERO:
+		bounds = map_bounds()
+	
+	return Vector2(bounds.x - bounds.y, bounds.z - bounds.w)
+
+
+func map_center_offset(bounds: Vector4 = Vector4.ZERO) -> Vector2:
+	if bounds == Vector4.ZERO:
+		bounds = map_bounds()
+	
+	return Vector2(bounds.x + bounds.y, bounds.z + bounds.w) * 0.5
 
 
 func update_textures():

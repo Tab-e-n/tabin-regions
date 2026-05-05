@@ -70,6 +70,16 @@ func load_options():
 		return false
 
 
+func allow_directory(dir : String):
+	allowed_directories.append(dir)
+	save_options()
+
+
+func disallow_directory(index : int):
+	allowed_directories.remove_at(index)
+	save_options()
+
+
 func _print_timestamp(timestamp_name : String, duration : float) -> void:
 	print(timestamp_name, " : ", duration)
 

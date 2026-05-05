@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dneybbcxl420n"]
+[gd_scene load_steps=29 format=3 uid="uid://dneybbcxl420n"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_fhy2h"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_bnykq"]
@@ -6,17 +6,6 @@
 [ext_resource type="StyleBox" uid="uid://dc1w42tfx0dul" path="res://styles/style_label_tutorial.tres" id="2_j6kmh"]
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_yfigv"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_5siwf"]
-
-[sub_resource type="GDScript" id="GDScript_sn1dp"]
-script/source = "extends Polygon2D
-
-
-func _ready():
-	if get_parent().dummy:
-		visible = true
-	else:
-		queue_free()
-"
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tdcrq"]
 shader = ExtResource("2_ewhbl")
@@ -325,23 +314,6 @@ to_name = &"Forgotten Capital"
 script = ExtResource("2_yfigv")
 from_name = &"Greenland"
 to_name = &"Green Hill"
-
-[node name="spoilerwall" type="Polygon2D" parent="."]
-visible = false
-z_index = 1
-color = Color(0.192157, 0.192157, 0.266667, 1)
-polygon = PackedVector2Array(2048, -1536, 2048, 1536, -2048, 1536, -2048, -1536)
-script = SubResource("GDScript_sn1dp")
-
-[node name="tut" type="Label" parent="spoilerwall"]
-offset_left = -512.0
-offset_top = -40.0
-offset_right = 709.0
-offset_bottom = 51.0
-theme_override_font_sizes/font_size = 64
-text = "TUTORIAL FOR THE VIDEO GAME, WOW!"
-horizontal_alignment = 1
-vertical_alignment = 1
 
 [node name="intro" type="Label" parent="."]
 offset_left = -168.0

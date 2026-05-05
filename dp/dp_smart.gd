@@ -225,7 +225,9 @@ func tiebreak_normal(regs : Array[Region]) -> Region:
 		
 		regions = results.duplicate()
 		results.clear()
-		
+	
+	if results.is_empty():
+		return null
 	return results[randi_range(0, results.size() - 1)]
 
 
