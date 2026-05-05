@@ -37,7 +37,7 @@ func update_attacks(colors : Array[Color], values : Array[int]) -> void:
 
 func update_name(region : Region):
 	region_name.text = region.name + " (" + str(region.max_power) + ")"
-	if Options.editor:
+	if Options.capital_distance_visible:
 		region_name.text += " (" + str(region.distance_from_capital) + ")"
 	region_name.size = region_name.get_theme_font("font").get_string_size(region_name.text, HORIZONTAL_ALIGNMENT_CENTER, -1, 32) * region_name.scale
 	region_name.position = region_name.size * Vector2(-0.5, -1.0) * region_name.scale

@@ -28,10 +28,10 @@ signal power_changed(power : int)
 @export_subgroup("Cosmetic")
 ## When true, region links made through RegionControl.connections will update their position when the region moves.
 @export var kinetic : bool = false
-
-@export_subgroup("Editor")
 ## Hides the capital if set to true.
 @export var hide_capital : bool = false
+
+@export_subgroup("Editor")
 @export var links : Array[RegionLink] = []
 @export var update_polygon : bool = false:
 	set(_update):
@@ -43,10 +43,10 @@ signal power_changed(power : int)
 @onready var city : City
 
 
-var tool_render_mode : int = RegionControl.RENDER_MODE.ALIGNMENT
 var distance_from_capital : int = DISTANCE_CAP
+var capital_id : int = -1
 
-var color_change_time : float = 1.0
+var _color_change_time : float = 1.0
 
 
 func _ready():
@@ -85,8 +85,7 @@ func _ready_deferred():
 
 func _process(delta):
 	if Engine.is_editor_hint() and region_control:
-		tool_render_mode = region_control.render_mode
-		match(tool_render_mode):
+		match(region_control.render_mode):
 			RegionControl.RENDER_MODE.DISABLED:
 				color = Color(1, 1, 1, 1)
 			RegionControl.RENDER_MODE.ALIGNMENT:
@@ -107,10 +106,10 @@ func _process(delta):
 				color = Color(col1, col2, 0.5, 1)
 	
 	if not Engine.is_editor_hint():
-		if color_change_time < 1.0:
-			color_change_time += delta * COLOR_CHANGE_SPEED
-			if color_change_time < 1.0:
-				material.set_shader_parameter("n", color_change_time)
+		if _color_change_time < 1.0:
+			_color_change_time += delta * COLOR_CHANGE_SPEED
+			if _color_change_time < 1.0:
+				material.set_shader_parameter("n", _color_change_time)
 			else:
 				material.set_shader_parameter("changing_color", false)
 
@@ -334,7 +333,7 @@ func color_self(animate : bool = true, backup_color : Color = color):
 		material.set_shader_parameter("changing_color", true)
 		material.set_shader_parameter("n", 0)
 		material.set_shader_parameter("previous_color", color)
-		color_change_time = 0.0
+		_color_change_time = 0.0
 	if region_control:
 		color = region_control.align_color[alignment]
 	else:

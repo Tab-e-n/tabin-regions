@@ -488,9 +488,10 @@ func _ready():
 	capital_amount.resize(align_amount - 1)
 	
 	_count_up_regions()
-	Options.timestamp("_count_up_regions", "RegionControl")
 	
 	last_turn_region_amount = region_amount.duplicate()
+	
+	Options.timestamp("_count_up_regions", "RegionControl")
 	
 	# -- CAPITAL DISTANCE --
 	_set_capital_distance()
@@ -720,50 +721,43 @@ func _count_up_regions():
 
 
 func _set_capital_distance():
+	var queue: Array[Region] = []
+	var capital_id: int = 1
 	for region in get_all_regions():
 		if region:
-			region.distance_from_capital = Region.DISTANCE_CAP
-	
-	for capital in get_all_regions():
-		if not capital or not capital.is_capital:
-			continue
-		capital.distance_from_capital = 0
-#		print("CAPITAL ", capital.name, " ", capital.distance_from_capital)
-
-		var current_distance : int = 0
-		var remaining_regions : Array[Region] = [capital]
-		var visited : Set = Set.new()
-		visited.add(capital)
-		var current_start : int = 0
-		while current_start < remaining_regions.size():
-			var start : Region = remaining_regions[current_start] as Region
-			current_start += 1
-			if not start:
-				continue
-#			print("REGION ", start.name, " ", start.distance_from_capital)
-			
-			if start.distance_from_capital & 1:
-				current_distance = start.distance_from_capital + 3
+			if region.is_capital:
+				region.distance_from_capital = 0
+				region.capital_id = capital_id
+				capital_id += 1
+				queue.append(region)
 			else:
-				current_distance = start.distance_from_capital + 2
+				region.distance_from_capital = Region.DISTANCE_CAP
+				region.capital_id = -1  # No capital assigned
+	
+	while not queue.is_empty():
+		var next_queue: Array[Region] = []
+		
+		for parent in queue:
+			var child_distance : int = parent.distance_from_capital + 2 + (parent.distance_from_capital & 1)
+			capital_id = parent.capital_id
 			
-			for link in start.links:
-				var region : Region = link.get_other_region(start) as Region
-				if not region or region.distance_from_capital < current_distance:
-					continue
-				if region.is_capital:
-					region.distance_from_capital = 0
-					
-				elif region.distance_from_capital > current_distance:
-					region.distance_from_capital = current_distance
-					if not visited.contains(region):
-						remaining_regions.append(region)
-						visited.add(region)
-					
-				elif region.distance_from_capital == current_distance and not visited.contains(region):
-					region.distance_from_capital -= 1
+#			print("REGION ", parent.name, " ", parent.distance_from_capital)
+			
+			for link in parent.links:
+				var child : Region = link.get_other_region(parent) as Region
 				
-#				print("-> ", region.name, " ", region.distance_from_capital)
+				if not child or child.distance_from_capital < child_distance:
+					continue
+				
+				if child.distance_from_capital > child_distance:
+					child.distance_from_capital = child_distance
+					child.capital_id = capital_id
+					next_queue.append(child)
+				elif child.distance_from_capital == child_distance and child.capital_id != capital_id:
+					child.distance_from_capital -= 1
+					child.capital_id = 0  # Capital distance tie
+		
+		queue = next_queue
 
 
 func _check_capital_distance():

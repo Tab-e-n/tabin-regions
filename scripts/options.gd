@@ -16,6 +16,7 @@ var dp_speedrun : bool = false
 var mouse_scroll_active : bool = true
 var auto_end_turn_phases : bool = false
 var action_change_particles : bool = true
+var capital_distance_visible : bool = false
 var allowed_directories : Array = []
 
 var use_graph : bool = true
@@ -40,6 +41,7 @@ func save_options():
 		"mouse_scroll_active" : mouse_scroll_active,
 		"auto_end_turn_phases" : auto_end_turn_phases,
 		"action_change_particles" : action_change_particles,
+		"capital_distance_visible" : capital_distance_visible,
 		"allowed_directories" : allowed_directories,
 	}
 	
