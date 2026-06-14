@@ -4,49 +4,53 @@ extends Polygon2D
 class_name Region
 
 
-const TEXTURE_SIZE : Vector2 = Vector2(128, 128)
-const DISTANCE_CAP : int = 0b1111_1111_1111_1111
-const COLOR_CHANGE_SPEED : float = 2.4
+const TEXTURE_SIZE: Vector2 = Vector2(128, 128)
+const DISTANCE_CAP: int = 0b1111_1111_1111_1111
+const COLOR_CHANGE_SPEED: float = 2.4
 
 
 signal captured()
-signal changed_alignment(alignment : int)
-signal reinforced(amount : int)
+signal changed_alignment(alignment: int)
+signal reinforced(amount: int)
 signal mobilized()
-signal power_changed(power : int)
+signal power_changed(power: int)
 
 
 ## Which alignment owns the region. Alignment 0 is neutral.
-@export var alignment : int = 0
+@export var alignment: int = 0
 ## Current power of the region.
-@export var power : int = 1
+@export var power: int = 1
 ## The maximum power of the region. When reinforcing the region, region will not gain more power than the max power.
-@export var max_power : int = 5
+@export var max_power: int = 5
 ## Whether the region is a capital or not. Capitals give players extra actions.
-@export var is_capital : bool = false
+@export var is_capital: bool = false
+
+@export var captureable: bool = true
+@export var reinforceable: bool = true
+@export var mobilizable: bool = true
 
 @export_subgroup("Cosmetic")
 ## When true, region links made through RegionControl.connections will update their position when the region moves.
-@export var kinetic : bool = false
+@export var kinetic: bool = false
 ## Hides the capital if set to true.
-@export var hide_capital : bool = false
+@export var hide_capital: bool = false
 
 @export_subgroup("Editor")
-@export var links : Array[RegionLink] = []
-@export var update_polygon : bool = false:
+@export var links: Array[RegionLink] = []
+@export var update_polygon: bool = false:
 	set(_update):
 		_recalculate_polygon()
 
 
-@onready var region_control : RegionControl = get_parent() as RegionControl
+@onready var region_control: RegionControl = get_parent() as RegionControl
 
-@onready var city : City
+@onready var city: City
 
 
-var distance_from_capital : int = DISTANCE_CAP
-var capital_id : int = -1
+var distance_from_capital: int = DISTANCE_CAP
+var capital_id: int = -1
 
-var _color_change_time : float = 1.0
+var _color_change_time: float = 1.0
 
 
 func _ready():
@@ -114,7 +118,7 @@ func _process(delta):
 				material.set_shader_parameter("changing_color", false)
 
 
-func _set_power(value : int, minimum : int = 1) -> bool:
+func _set_power(value: int, minimum: int = 1) -> bool:
 	if value < minimum or value > max_power:
 		return false
 	power = value
@@ -123,14 +127,28 @@ func _set_power(value : int, minimum : int = 1) -> bool:
 
 
 func _city_visible() -> bool:
-	var cities_visible : bool = true
+	var cities_visible: bool = true
 	if region_control:
 		cities_visible = region_control.cities_visible
 	return not hide_capital and cities_visible 
 
 
+func set_captureable(value: bool) -> void:
+	captureable = value
+
+
+func set_reinforceable(value: bool) -> void:
+	reinforceable = value
+
+
+func set_mobilizable(value: bool) -> void:
+	mobilizable = value
+
+
 ## Attempts to reinforce the region.
-func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
+func reinforce(reinforce_align: int = alignment, addon_power: int = 1, force: bool = false):
+	if not reinforceable and not force:
+		return false
 	if not _set_power(power + addon_power, 0):
 		return false
 	GameStats.add_to_stat(reinforce_align, "regions reinforced", 1)
@@ -139,7 +157,9 @@ func reinforce(reinforce_align : int = alignment, addon_power : int = 1):
 
 
 ## Attempts to mobilize on the region.
-func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
+func mobilize(mobilize_align: int = alignment, mobilize_amount: int = 1, force: bool = false):
+	if not mobilizable and not force:
+		return 0
 	if not _set_power(power - mobilize_amount):
 		return 0
 	GameStats.add_to_stat(mobilize_align, "units mobilized", mobilize_amount)
@@ -148,9 +168,11 @@ func mobilize(mobilize_align : int = alignment, mobilize_amount : int = 1):
 
 
 ## Attempts to capture the region.
-func incoming_attack(attack_align : int, attack_power : int = 0, test_only : bool = false):
+func incoming_attack(attack_align: int, attack_power: int = 0, test_only: bool = false, force: bool = false):
+	if not captureable and not force:
+		return false
 	attack_power += get_alignments_attack_power(attack_align)
-	if incoming_attack_captures(attack_power):
+	if incoming_attack_captures(attack_power, force):
 		if test_only:
 			return true
 		GameStats.add_to_stat(attack_align, "enemy units removed", power)
@@ -177,12 +199,12 @@ func change_alignment(align : int, recolor_self : bool = true):
 
 
 ## Captures the region for the overtaker, regardless of the state the region is in.
-func overtake(overtaker : int = region_control.current_playing_align):
+func overtake(overtaker: int = region_control.current_playing_align):
 	city_particle(false)
 	if region_control.alignment_friendly(overtaker, alignment):
-		reinforce(overtaker)
+		reinforce(overtaker, 1, true)
 	else:
-		incoming_attack(overtaker, max_power + 1)
+		incoming_attack(overtaker, max_power + 1, false, true)
 
 
 ## Changes the max power of the region.
@@ -221,6 +243,8 @@ func action_decided(amount_requested: int = 1) -> bool:
 
 ## Checks if a region of the attackers alignment is connected to the current region.
 func alignment_can_attack(attack_align : int) -> bool:
+	if not captureable:
+		return false
 	for link in links:
 		var region : Region = link.get_other_region(self)
 		if region and region.alignment == attack_align:
@@ -263,8 +287,8 @@ func strongest_enemy_attack(align : int = alignment) -> int:
 
 
 ## Checks if attack power is enough to capture the region.
-func incoming_attack_captures(attack_power : int) -> bool:
-	return attack_power > power
+func incoming_attack_captures(attack_power: int, force: bool = false) -> bool:
+	return (captureable or force) and attack_power > power
 
 
 ## Get the attack power of a specific alignment.
@@ -378,20 +402,25 @@ func update_cursor():
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 			
 		elif region_control.alignment_friendly(region_control.current_playing_align, alignment):
-			GameControl.set_cursor(GameControl.CURSOR.SHIELD)
+			if reinforceable:
+				GameControl.set_cursor(GameControl.CURSOR.SHIELD)
+			else:
+				GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
-		else:
+		elif captureable:
 			GameControl.set_cursor(GameControl.CURSOR.SWORD)
-			
+		else:
+			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+		
 	elif region_control.current_phase == RegionControl.PHASE.MOBILIZE:
-		if region_control.current_playing_align == alignment and power > 1:
+		if mobilizable and region_control.current_playing_align == alignment and power > 1:
 			GameControl.set_cursor(GameControl.CURSOR.HAND)
 			
 		else:
 			GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
 		
 	else:
-		GameControl.set_cursor(GameControl.CURSOR.BLOCKED)
+		GameControl.set_cursor(GameControl.CURSOR.NORMAL)
 
 
 func _on_capital_pressed():

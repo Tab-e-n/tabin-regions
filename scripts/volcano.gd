@@ -10,10 +10,11 @@ const WARNING_NAME : String = "VolcanoWarning"
 ## Region that will be used to decide when the volcano erupts.
 ## The volcano will add 1 power to it's residing region every turn.
 ## When at max power, the volcano erupts and the region is set back to 1 power.
+## Residing region should be a capital.
 @export var residing_region : Region
 ## The alignment used by the volcano. Should have DPDummy.
 @export var dummy_alignment : int = 0
-## Makes warnings that show up appear further from the city.
+## Makes warnings appear further from the city.
 ## Useful if multiple disasters are present, so their warnings don't overlap.
 @export var warning_number : int = 1
 
@@ -117,6 +118,7 @@ func _think_mobilize():
 		shake_screen()
 	else:
 		dp_control.selected_capital = residing_region.name
+		dp_control.selected_amount = residing_region.power - 1
 
 
 func _think_bonus():

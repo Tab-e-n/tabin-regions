@@ -142,6 +142,7 @@ func think():
 			elif type == ReplayControl.RecordType.OVERTAKE:
 				selected_capital = action
 				CALL_overtake = true
+			
 			elif type == ReplayControl.RecordType.VOLCANO:
 				CALL_nothing = true
 				match(action):
@@ -149,6 +150,11 @@ func think():
 						region_control.volcanos[selected_amount].shake_screen()
 			elif type == ReplayControl.RecordType.TORNADO:
 				CALL_nothing = true
+				if action.is_empty():
+					region_control.tornados[selected_amount].deactivate()
+				else:
+					region_control.tornados[selected_amount].take_region(region_control.get_region(action), thinking_timer - 0.01)
+			
 			else:
 				match(action):
 					"forfeit":
