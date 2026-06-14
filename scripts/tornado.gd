@@ -5,6 +5,9 @@ class_name Tornado
 const WARNING_NAME: String = "TornadoWarning"
 
 
+## Trigger region should be a capital. Only exists so RegionControl doesn't get confused,
+## and think that the dummy alignment is eliminated
+@export var trigger_region: Region
 ## The alignment used by the tornado. Should have DPDummy.
 @export var dummy_alignment: int = 0
 ## Makes warnings appear further from the city.
@@ -88,6 +91,14 @@ func _start_tornado_turn():
 	if controler.current_alignment != dummy_alignment:
 		return
 	
+	if trigger_region and trigger_region.alignment != dummy_alignment:
+		dp_control.CALL_forfeit = true
+		for path in pathways:
+			path.deactivate()
+			path.update_warnings()
+		reset_tornados()
+		return
+	
 	var should_active_paths: bool = true
 	for path in pathways:
 		if path.is_active():
@@ -103,7 +114,7 @@ func _start_tornado_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.CALL_end_turn:
+	if dp_control.CALL_end_turn or dp_control.CALL_forfeit:
 		return
 	if not active:
 		dp_control.CALL_end_turn = true
@@ -134,7 +145,8 @@ func _think_normal():
 		disabled_regions[current_path] = region
 	else:
 		dp_control.CALL_nothing = true
-		particle.deactivate()
+		if particle.deactivate():
+			ReplayControl.record_move(ReplayControl.RecordType.TORNADO, "", particle.tornado_id)
 	
 	current_path += 1
 
@@ -149,11 +161,7 @@ func _think_bonus():
 	_think_normal()
 
 
-func activate_pathways():
-	for path in pathways:
-		path.activate_iteration(iteration)
-		path.update_warnings()
-	
+func reset_tornados():
 	for particle in particles:
 		if particle.deactivate():
 			ReplayControl.record_move(ReplayControl.RecordType.TORNADO, "", particle.tornado_id)
@@ -161,5 +169,13 @@ func activate_pathways():
 	for region in disabled_regions:
 		if region:
 			region.set_captureable(true)
+
+
+func activate_pathways():
+	for path in pathways:
+		path.activate_iteration(iteration)
+		path.update_warnings()
+	
+	reset_tornados()
 	
 	iteration += 1

@@ -1,4 +1,4 @@
-[gd_scene load_steps=30 format=3 uid="uid://dbyyx668v0pfy"]
+[gd_scene load_steps=29 format=3 uid="uid://dbyyx668v0pfy"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_r2yyu"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_37ei2"]
@@ -8,12 +8,6 @@
 [ext_resource type="Script" path="res://scripts/region_path.gd" id="4_5w72b"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_vs1ln"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_mrgeq"]
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tt5d4"]
-shader = ExtResource("3_otni5")
-shader_parameter/changing_color = false
-shader_parameter/n = 0.0
-shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rleug"]
 shader = ExtResource("3_otni5")
@@ -144,12 +138,13 @@ align_amount = 4
 random_player_align_range = 2
 max_player_amount = 2
 use_preset_alignments = true
-preset_alignments = Array[int]([0, 0, 0, 4])
+preset_alignments = Array[int]([0, 0, 3])
 custom_dp_setup = Array[int]([0, 0, 5])
+alignment_aliances = Array[int]([0, 0, 0, -1])
 complexity = 3
-lore = "Icy wonderland, currently besieged by a tornado!"
+lore = "Icy wonderland, with 2 mortal enemies and a grumpy tornado wizard."
 align_color = Array[Color]([Color(0.803922, 0.843137, 0.933333, 1), Color(0.235294, 0.486275, 0.772549, 1), Color(0.231373, 0.529412, 0.54902, 1), Color(0.478431, 0.588235, 0.658824, 1)])
-align_names = Array[String](["Frost Land", "Trixie", "Chira", "Tornado"])
+align_names = Array[String](["Frost Land", "Trixie", "Chira", "Yore"])
 color_bg_according_to_alignment = false
 render_mode = 1
 region_links = NodePath("links")
@@ -373,8 +368,9 @@ script = ExtResource("2_e27es")
 from_name = &"Last Sighting"
 to_name = &"Grunchy"
 
-[node name="Tornado" type="Node" parent="."]
+[node name="Tornado" type="Node" parent="." node_paths=PackedStringArray("trigger_region")]
 script = ExtResource("3_dicti")
+trigger_region = NodePath("../Yore")
 dummy_alignment = 3
 
 [node name="RegionPath" type="Node" parent="Tornado"]
@@ -382,36 +378,26 @@ script = ExtResource("4_5w72b")
 pathway_region_names = Array[String](["Spiral Start", "TCorn", "Pincher", "Duck Song", "Stormer"])
 chosen_frequency = 1
 
+[node name="RegionPath2" type="Node" parent="Tornado"]
+script = ExtResource("4_5w72b")
+pathway_region_names = Array[String](["Mantled", "Boathire", "Yains"])
+chosen_frequency = 1
+
 [node name="bg" parent="." instance=ExtResource("2_37ei2")]
 color = Color(0.521569, 0.572549, 0.698039, 1)
-
-[node name="TornadoCapital" type="Polygon2D" parent="."]
-material = SubResource("ShaderMaterial_tt5d4")
-position = Vector2(0, -512)
-color = Color(0.478431, 0.588235, 0.658824, 1)
-texture = ExtResource("4_vs1ln")
-script = ExtResource("5_mrgeq")
-alignment = 3
-is_capital = true
-captureable = null
-reinforceable = null
-mobilizable = null
-hide_capital = true
 
 [node name="Yore" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_rleug")
 position = Vector2(0, -232)
-color = Color(0.803922, 0.843137, 0.933333, 1)
+color = Color(0.478431, 0.588235, 0.658824, 1)
 texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-72, -8, -32, -48, -16, -88, -8, -128, 0, -144, 8, -128, 24, -80, 48, -40, 80, -16, 88, 8, 72, 24, 32, 40, -16, 32, -48, 32, -88, 24, -88, 0)
 uv = PackedVector2Array(11.6364, 94.6087, 40.7273, 66.7826, 52.3636, 38.9565, 58.1818, 11.1304, 64, 0, 69.8182, 11.1304, 81.4545, 44.5217, 98.9091, 72.3478, 122.182, 89.0435, 128, 105.739, 116.364, 116.87, 87.2727, 128, 52.3636, 122.435, 29.0909, 122.435, 0, 116.87, 0, 100.174)
 script = ExtResource("5_mrgeq")
+alignment = 3
 power = 3
 max_power = 7
 is_capital = true
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Yains" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xk42j")
@@ -422,9 +408,6 @@ polygon = PackedVector2Array(136, -8, 80, 32, 80, 64, 24, 72, -80, 56, -96, 24, 
 uv = PackedVector2Array(124.343, 56.8889, 98.7429, 92.4444, 98.7429, 120.889, 73.1429, 128, 25.6, 113.778, 18.2857, 85.3333, 0, 64, 10.9714, 28.4444, 36.5714, 28.4444, 58.5143, 0, 87.7714, 0, 113.371, 28.4444, 128, 42.6667)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Boathire" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5l5nt")
@@ -435,9 +418,6 @@ polygon = PackedVector2Array(-72, -48, -16, -32, 48, -40, 88, -32, 128, -32, 144
 uv = PackedVector2Array(8.25806, 0, 37.1613, 14.2222, 70.1936, 7.11111, 90.8387, 14.2222, 111.484, 14.2222, 119.742, 21.3333, 119.742, 56.8889, 94.9677, 49.7778, 82.5806, 49.7778, 82.5806, 85.3333, 107.355, 92.4444, 123.871, 99.5556, 128, 128, 99.0968, 128, 74.3226, 113.778, 49.5484, 128, 33.0323, 99.5556, 53.6774, 92.4444, 70.1936, 85.3333, 70.1936, 49.7778, 33.0323, 56.8889, 0, 35.5556)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Mantled" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_tgnhc")
@@ -448,9 +428,6 @@ texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-96, 48, -96, 8, -64, 8, -24, -8, 0, -32, -8, -72, -40, -96, -64, -120, -32, -128, 32, -120, 72, -96, 120, -96, 144, -40, 120, -24, 136, 8, 96, 16, 88, 56, 56, 72, -8, 72, -56, 56)
 uv = PackedVector2Array(0, 112.64, 0, 87.04, 17.0667, 87.04, 38.4, 76.8, 51.2, 61.44, 46.9333, 35.84, 29.8667, 20.48, 17.0667, 5.12, 34.1333, 0, 68.2667, 5.12, 89.6, 20.48, 115.2, 20.48, 128, 56.32, 115.2, 66.56, 123.733, 87.04, 102.4, 92.16, 98.1333, 117.76, 81.0667, 128, 46.9333, 128, 21.3333, 117.76)
 script = ExtResource("5_mrgeq")
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Stormer" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xmvjr")
@@ -461,9 +438,6 @@ polygon = PackedVector2Array(-104, 8, -72, -16, -32, -16, 0, -40, 64, -32, 112, 
 uv = PackedVector2Array(0, 38.4, 18.963, 19.2, 42.6667, 19.2, 61.6296, 0, 99.5556, 6.4, 128, 44.8, 109.037, 70.4, 109.037, 96, 75.8519, 102.4, 52.1481, 102.4, 37.9259, 128, 9.48148, 121.6, 4.74074, 102.4, 18.963, 89.6)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Duck Song" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_p6lqs")
@@ -473,9 +447,6 @@ texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-104, -88, -32, -64, 48, -64, 104, -80, 120, -112, 136, -128, 192, -112, 248, -80, 296, -80, 296, -16, 216, 0, 160, -8, 104, 8, 64, 56, -40, 56, -80, 16, -80, -24)
 uv = PackedVector2Array(0, 27.8261, 23.04, 44.5217, 48.64, 44.5217, 66.56, 33.3913, 71.68, 11.1304, 76.8, 0, 94.72, 11.1304, 112.64, 33.3913, 128, 33.3913, 128, 77.913, 102.4, 89.0435, 84.48, 83.4783, 66.56, 94.6087, 53.76, 128, 20.48, 128, 7.68, 100.174, 7.68, 72.3478)
 script = ExtResource("5_mrgeq")
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Pincher" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_h4pgf")
@@ -486,9 +457,6 @@ polygon = PackedVector2Array(104, -80, 40, -80, -8, -96, -56, -80, -96, -48, -15
 uv = PackedVector2Array(120.471, 12.8, 90.3529, 12.8, 67.7647, 0, 45.1765, 12.8, 26.3529, 38.4, 0, 57.6, 26.3529, 83.2, 48.9412, 115.2, 67.7647, 128, 86.5882, 115.2, 94.1176, 96, 128, 96, 128, 32)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="TCorn" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_fo5fy")
@@ -499,9 +467,6 @@ polygon = PackedVector2Array(128, 48, 88, 8, 32, 32, 8, 0, 72, -24, 16, -48, -16
 uv = PackedVector2Array(128, 73.1429, 110.222, 50.2857, 85.3333, 64, 74.6667, 45.7143, 103.111, 32, 78.2222, 18.2857, 64, 0, 39.1111, 9.14286, 32, 41.1429, 46.2222, 59.4286, 64, 50.2857, 74.6667, 68.5714, 49.7778, 82.2857, 32, 96, 7.11111, 91.4286, 0, 114.286, 32, 128, 64, 118.857, 85.3333, 105.143, 113.778, 91.4286)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Spiral Start" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_d84fb")
@@ -512,9 +477,6 @@ polygon = PackedVector2Array(168, 144, 184, 112, 144, 104, 120, 72, 80, 40, 104,
 uv = PackedVector2Array(119.742, 119.742, 128, 103.226, 107.355, 99.0968, 94.9677, 82.5806, 74.3226, 66.0645, 86.7097, 41.2903, 61.9355, 28.9032, 78.4516, 4.12903, 66.0645, 0, 49.5484, 24.7742, 28.9032, 20.6452, 4.12903, 41.2903, 0, 70.1936, 12.3871, 82.5806, 4.12903, 99.0968, 37.1613, 111.484, 61.9355, 128, 61.9355, 119.742, 90.8387, 111.484, 82.5806, 99.0968, 61.9355, 86.7097, 45.4194, 90.8387, 49.5484, 103.226, 57.8064, 99.0968, 49.5484, 107.355, 37.1613, 90.8387, 45.4194, 82.5806, 66.0645, 78.4516, 90.8387, 90.8387)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Hilltua" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_svwam")
@@ -525,9 +487,6 @@ polygon = PackedVector2Array(104, 8, 64, -32, 72, -56, 40, -88, -32, -112, -80, 
 uv = PackedVector2Array(128, 73.8462, 104.296, 49.2308, 109.037, 34.4615, 90.0741, 14.7692, 47.4074, 0, 18.963, 14.7692, 4.74074, 39.3846, 14.2222, 64, 0, 73.8462, 4.74074, 98.4615, 66.3704, 128, 75.8519, 103.385, 109.037, 108.308, 128, 98.4615, 99.5556, 88.6154, 66.3704, 83.6923, 52.1481, 68.9231, 52.1481, 29.5385, 37.9259, 24.6154, 33.1852, 19.6923, 47.4074, 14.7692, 66.3704, 19.6923, 71.1111, 29.5385, 66.3704, 29.5385, 66.3704, 68.9231, 80.5926, 73.8462, 104.296, 68.9231)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Bulby" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_f2gh6")
@@ -537,9 +496,6 @@ texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(160, 0, 112, 40, 64, 16, 48, -56, 0, -112, -48, -112, -72, -96, -112, -96, -128, -56, -80, -16, -64, 24, -16, 56, 48, 64, 88, 88, 104, 64, 160, 48, 176, 16)
 uv = PackedVector2Array(121.263, 71.68, 101.053, 97.28, 80.8421, 81.92, 74.1053, 35.84, 53.8947, 0, 33.6842, 0, 23.5789, 10.24, 6.73684, 10.24, 0, 35.84, 20.2105, 61.44, 26.9474, 87.04, 47.1579, 107.52, 74.1053, 112.64, 90.9474, 128, 97.6842, 112.64, 121.263, 102.4, 128, 81.92)
 script = ExtResource("5_mrgeq")
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Big Trix" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_svyrs")
@@ -553,9 +509,6 @@ alignment = 1
 power = 2
 max_power = 4
 is_capital = true
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Just" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_h378q")
@@ -565,9 +518,6 @@ texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-104, -48, -56, -16, -48, 48, -88, 104, -152, 112, -144, 184, -56, 192, 16, 136, 48, 80, 120, 56, 184, 88, 176, 16, 80, -16, -24, -64)
 uv = PackedVector2Array(18.2857, 8, 36.5714, 24, 39.619, 56, 24.381, 84, 0, 88, 3.04762, 124, 36.5714, 128, 64, 100, 76.1905, 72, 103.619, 60, 128, 76, 124.952, 40, 88.381, 24, 48.7619, 0)
 script = ExtResource("5_mrgeq")
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Circle Within" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_3ehw0")
@@ -578,9 +528,6 @@ polygon = PackedVector2Array(-104, -8, -64, -56, -16, -72, 40, -56, 88, -24, 96,
 uv = PackedVector2Array(0, 51.2, 25.6, 12.8, 56.32, 0, 92.16, 12.8, 122.88, 38.4, 128, 83.2, 102.4, 121.6, 66.56, 128, 30.72, 115.2, 5.12, 83.2)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Oberon" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_mk7c0")
@@ -591,9 +538,6 @@ polygon = PackedVector2Array(-120, -32, -136, -8, -168, 8, -136, 16, -112, 32, -
 uv = PackedVector2Array(20.2105, 45.7143, 13.4737, 73.1429, 0, 91.4286, 13.4737, 100.571, 23.5789, 118.857, 50.5263, 128, 94.3158, 128, 128, 118.857, 117.895, 91.4286, 114.526, 45.7143, 70.7368, 45.7143, 53.8947, 0, 53.8947, 45.7143)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="ChiChink" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_dqwsq")
@@ -607,9 +551,6 @@ alignment = 2
 power = 2
 max_power = 4
 is_capital = true
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Chomix" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_xdlbj")
@@ -620,9 +561,6 @@ polygon = PackedVector2Array(-80, -56, -48, -24, -56, 24, -80, 56, -24, 96, 32, 
 uv = PackedVector2Array(0, 17.4545, 25.6, 40.7273, 19.2, 75.6364, 0, 98.9091, 44.8, 128, 89.6, 116.364, 115.2, 75.6364, 115.2, 52.3636, 128, 23.2727, 64, 0, 6.4, 0)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Grunchy" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_prinr")
@@ -632,20 +570,16 @@ texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-48, -64, -48, -48, -80, -16, -72, 32, -40, 40, -8, 40, -8, 64, 24, 80, 40, 64, 72, 56, 96, 56, 88, -16, 120, -24, 120, -56, 16, -56)
 uv = PackedVector2Array(20.48, 0, 20.48, 14.2222, 0, 42.6667, 5.12, 85.3333, 25.6, 92.4444, 46.08, 92.4444, 46.08, 113.778, 66.56, 128, 76.8, 113.778, 97.28, 106.667, 112.64, 106.667, 107.52, 42.6667, 128, 35.5556, 128, 7.11111, 61.44, 7.11111)
 script = ExtResource("5_mrgeq")
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Treegony" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_kfpge")
 position = Vector2(-392, 104)
+color = Color(0.803922, 0.843137, 0.933333, 1)
 texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-24, 48, -16, -8, -32, -24, -56, -24, -32, -32, -40, -40, -24, -32, -8, -16, 0, -40, -8, -48, 0, -56, 0, -48, 8, -40, 24, -48, 8, -32, 8, -16, 24, -24, 8, -8, 16, 8, 32, -8, 48, -8, 32, 0, 24, 16, 40, 16, 16, 24, 24, 48, 64, 48, 80, 0, 40, -48, 96, -64, 136, -8, 112, 64, 72, 96, -24, 96, -56, 56, -120, 32, -88, -24, -88, -56, -72, -88, -16, -64, -56, -48, -72, -24, -56, 24)
+uv = PackedVector2Array(48, 94.6087, 52, 55.6522, 44, 44.5217, 32, 44.5217, 44, 38.9565, 40, 33.3913, 48, 38.9565, 56, 50.087, 60, 33.3913, 56, 27.8261, 60, 22.2609, 60, 27.8261, 64, 33.3913, 72, 27.8261, 64, 38.9565, 64, 50.087, 72, 44.5217, 64, 55.6522, 68, 66.7826, 76, 55.6522, 84, 55.6522, 76, 61.2174, 72, 72.3478, 80, 72.3478, 68, 77.913, 72, 94.6087, 92, 94.6087, 100, 61.2174, 80, 27.8261, 108, 16.6957, 128, 55.6522, 116, 105.739, 96, 128, 48, 128, 32, 100.174, 0, 83.4783, 16, 44.5217, 16, 22.2609, 24, 0, 52, 16.6957, 32, 27.8261, 24, 44.5217, 32, 77.913)
 script = ExtResource("5_mrgeq")
 max_power = 6
-captureable = null
-reinforceable = null
-mobilizable = null
 
 [node name="Last Sighting" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_n1ad4")
@@ -653,8 +587,6 @@ position = Vector2(-152, 128)
 color = Color(0.803922, 0.843137, 0.933333, 1)
 texture = ExtResource("4_vs1ln")
 polygon = PackedVector2Array(-136, -88, -96, -32, 0, 24, -40, 24, -56, 56, -16, 96, 16, 104, 16, 64, 72, 72, 80, 112, 96, 112, 88, 56, 120, 32, 120, 8, 72, -8, 16, -32, -32, -72, -88, -104)
+uv = PackedVector2Array(0, 9.48148, 20, 42.6667, 68, 75.8519, 48, 75.8519, 40, 94.8148, 60, 118.519, 76, 123.259, 76, 99.5556, 104, 104.296, 108, 128, 116, 128, 112, 94.8148, 128, 80.5926, 128, 66.3704, 104, 56.8889, 76, 42.6667, 52, 18.963, 24, 0)
 script = ExtResource("5_mrgeq")
 max_power = 4
-captureable = null
-reinforceable = null
-mobilizable = null

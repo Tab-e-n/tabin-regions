@@ -35,6 +35,11 @@ func activate() -> void:
 	active = true
 
 
+func deactivate() -> void:
+	current = 0
+	active = false
+
+
 func activate_iteration(iteration : int) -> void:
 	if ((iteration + chosen_offset) % chosen_frequency) == 0:
 		activate()

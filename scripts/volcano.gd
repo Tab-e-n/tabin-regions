@@ -87,6 +87,13 @@ func _start_volcano_turn():
 	if controler.current_alignment != dummy_alignment:
 		return
 	
+	if residing_region.alignment != dummy_alignment:
+		dp_control.CALL_forfeit = true
+		for path in pathways:
+			path.deactivate()
+			path.update_warnings()
+		return
+	
 	if residing_region.power == residing_region.max_power:
 		dp_control.CALL_change_current_phase = true
 	
@@ -96,7 +103,7 @@ func _start_volcano_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.CALL_change_current_phase:
+	if dp_control.CALL_change_current_phase or dp_control.CALL_forfeit:
 		return
 	if not active:
 		dp_control.CALL_end_turn = true
@@ -111,6 +118,8 @@ func _think_normal():
 
 func _think_mobilize():
 	if controler.current_alignment != dummy_alignment:
+		return
+	if dp_control.CALL_forfeit:
 		return
 	
 	if residing_region.power == 1:
