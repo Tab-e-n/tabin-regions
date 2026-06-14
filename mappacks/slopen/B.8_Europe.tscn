@@ -1,0 +1,1017 @@
+[gd_scene load_steps=41 format=3 uid="uid://ylrkfjg6bq1f"]
+
+[ext_resource type="Script" path="res://scripts/region_control.gd" id="1_q8gs5"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_pc5dw"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_rdpy8"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_8bj4a"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="5_3i6no"]
+
+[sub_resource type="GDScript" id="GDScript_v4ljr"]
+script/source = "extends Node
+
+
+func _ready():
+	Options.timestamp(\"Starting Ready\")
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_p41mi"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0ptxw"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_sulup"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j2uv8"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tolxg"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ppf83"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lnlmu"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_vgn3r"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mgsl0"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xx231"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_513ge"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_7yd52"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bnoqo"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ltp8h"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ay5jw"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_wnn5h"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bx85b"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_shkdn"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_etadl"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_iinj7"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_e0128"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8or2r"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_dmplw"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_k75i1"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_bfrn6"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cy8sb"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_t4h7i"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_xjqpm"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_6isa4"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ssnt6"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v4wio"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ugn8r"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_3mob5"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_a3olv"]
+shader = ExtResource("3_rdpy8")
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[node name="RegionControl" type="Polygon2D" node_paths=PackedStringArray("region_links")]
+color = Color(0.521569, 0.521569, 0.603922, 1)
+polygon = PackedVector2Array(-3200, -1848, 3200, -1848, 3200, 1848, -3200, 1848)
+script = ExtResource("1_q8gs5")
+lock_align_amount = false
+align_amount = 9
+complexity = 2
+lore = "Euro-centrism"
+align_color = Array[Color]([Color(0.384314, 0.341176, 0.458824, 1), Color(0.211765, 0.552941, 0.380392, 1), Color(0.537255, 0.152941, 0.658824, 1), Color(0.772549, 0.921569, 0.74902, 1), Color(0.815686, 0.623529, 0.0823529, 1), Color(0.694118, 0.466667, 0.788235, 1), Color(0.478431, 0.054902, 0.262745, 1), Color(0.333333, 0.415686, 0.635294, 1), Color(0.509804, 0.513726, 0.529412, 1)])
+align_names = Array[String](["Other", "Ireland", "Turkey", "Iceland", "Balkan", "DACH", "Spaintugal", "Nordic States", "Russia"])
+city_size = 0.75
+render_mode = 1
+render_range = 60.0
+region_links = NodePath("links")
+
+[node name="Node" type="Node" parent="."]
+script = SubResource("GDScript_v4ljr")
+
+[node name="links" type="Node" parent="."]
+
+[node name="Portugal-Acores" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Acores"
+to_name = &"Portugal"
+
+[node name="Ireland-Acores" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Acores"
+to_name = &"Ireland"
+
+[node name="Ireland-Britain" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Britain"
+to_name = &"Ireland"
+
+[node name="Britain-Iceland" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Britain"
+to_name = &"Iceland"
+
+[node name="Norway-Iceland" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Norway"
+to_name = &"Iceland"
+
+[node name="Britain-Netherlands, Belgium" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Britain"
+to_name = &"Netherlands, Belgium"
+
+[node name="France-Britain" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Britain"
+to_name = &"France"
+
+[node name="France-Netherlands, Belgium" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Netherlands, Belgium"
+to_name = &"France"
+
+[node name="Denmark-Netherlands, Belgium" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Netherlands, Belgium"
+to_name = &"Denmark"
+
+[node name="Germany-Netherlands, Belgium" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Netherlands, Belgium"
+to_name = &"Germany"
+
+[node name="Germany-France" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Germany"
+to_name = &"France"
+
+[node name="France-Switzerland" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Switzerland"
+to_name = &"France"
+
+[node name="Germany-Switzerland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Switzerland"
+to_name = &"Germany"
+
+[node name="Germany-Denmark" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Denmark"
+to_name = &"Germany"
+
+[node name="Sweden-Denmark" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Denmark"
+to_name = &"Sweden"
+
+[node name="Norway-Sweden" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Norway"
+to_name = &"Sweden"
+
+[node name="Karelia, Murmansk-Norway" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Norway"
+to_name = &"Karelia, Murmansk"
+
+[node name="Finland-Norway" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Norway"
+to_name = &"Finland"
+
+[node name="Svalbard-Norway" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Norway"
+to_name = &"Svalbard"
+
+[node name="Finland-Sweden" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Finland"
+to_name = &"Sweden"
+
+[node name="Karelia, Murmansk-Finland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Finland"
+to_name = &"Karelia, Murmansk"
+
+[node name="Arkhangelsk-Karelia, Murmansk" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Arkhangelsk"
+to_name = &"Karelia, Murmansk"
+
+[node name="Arkhangelsk-Northwest Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Arkhangelsk"
+to_name = &"Northwest Russia"
+
+[node name="Central Russia-Northwest Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Central Russia"
+to_name = &"Northwest Russia"
+
+[node name="Central Russia-Ukraine" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Central Russia"
+to_name = &"Ukraine"
+
+[node name="Southern Russia-Ukraine" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Southern Russia"
+to_name = &"Ukraine"
+
+[node name="Southern Russia-Ukraine2" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Southern Russia"
+to_name = &"Black Sea"
+
+[node name="Ukraine-Black Sea" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Black Sea"
+to_name = &"Ukraine"
+
+[node name="Central Russia-Southern Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Central Russia"
+to_name = &"Southern Russia"
+
+[node name="Belarus-Northwest Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Belarus"
+to_name = &"Northwest Russia"
+
+[node name="Belarus-Central Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Belarus"
+to_name = &"Central Russia"
+
+[node name="Belarus-Ukraine" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Belarus"
+to_name = &"Ukraine"
+
+[node name="Karelia, Murmansk-Northwest Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Northwest Russia"
+to_name = &"Karelia, Murmansk"
+
+[node name="Estonia, Latvia, Lithuania-Finland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Finland"
+to_name = &"Estonia, Latvia, Lithuania"
+
+[node name="Estonia, Latvia, Lithuania-Northwest Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Northwest Russia"
+to_name = &"Estonia, Latvia, Lithuania"
+
+[node name="Belarus-Estonia, Latvia, Lithuania" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Belarus"
+to_name = &"Estonia, Latvia, Lithuania"
+
+[node name="Finland-Northwest Russia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Finland"
+to_name = &"Northwest Russia"
+
+[node name="Norway-Denmark" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Denmark"
+to_name = &"Norway"
+
+[node name="Germany-Czechoslovakia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Czechoslovakia"
+to_name = &"Germany"
+
+[node name="Germany-Poland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Poland"
+to_name = &"Germany"
+
+[node name="Austria-Switzerland" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Switzerland"
+to_name = &"Austria"
+
+[node name="Germany-Austria" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Germany"
+to_name = &"Austria"
+
+[node name="Austria-Czechoslovakia" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Czechoslovakia"
+to_name = &"Austria"
+
+[node name="Czechoslovakia-Balkan" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Czechoslovakia"
+to_name = &"Balkan"
+
+[node name="Czechoslovakia-Ukraine" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Czechoslovakia"
+to_name = &"Ukraine"
+
+[node name="Czechoslovakia-Poland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Czechoslovakia"
+to_name = &"Poland"
+
+[node name="Estonia, Latvia, Lithuania-Poland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Estonia, Latvia, Lithuania"
+to_name = &"Poland"
+
+[node name="Belarus-Poland" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Belarus"
+to_name = &"Poland"
+
+[node name="Poland-Ukraine" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Ukraine"
+to_name = &"Poland"
+
+[node name="Austria-Balkan" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Balkan"
+to_name = &"Austria"
+
+[node name="Balkan-Black Sea" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Balkan"
+to_name = &"Black Sea"
+
+[node name="Balkan-Greece" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Balkan"
+to_name = &"Greece"
+
+[node name="Mediterranean Sea-Greece" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Mediterranean Sea"
+to_name = &"Greece"
+
+[node name="Mediterranean Sea-Turkey" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Mediterranean Sea"
+to_name = &"Turkey"
+
+[node name="Mediterranean Sea-Black Sea" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Mediterranean Sea"
+to_name = &"Black Sea"
+
+[node name="Greece-Black Sea" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Black Sea"
+to_name = &"Greece"
+
+[node name="Turkey-Greece" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Turkey"
+to_name = &"Greece"
+
+[node name="Turkey-Black Sea" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Turkey"
+to_name = &"Black Sea"
+
+[node name="Romania-Balkan" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Balkan"
+to_name = &"Romania"
+
+[node name="Romania-Black Sea" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Black Sea"
+to_name = &"Romania"
+
+[node name="Romania-Ukraine" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Ukraine"
+to_name = &"Romania"
+
+[node name="Austria-Italy" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Italy"
+to_name = &"Austria"
+power_reduction = 1
+
+[node name="Italy-Switzerland" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Switzerland"
+to_name = &"Italy"
+power_reduction = 1
+
+[node name="France-Italy" type="Line2D" parent="links"]
+points = PackedVector2Array(-416, -952)
+script = ExtResource("2_pc5dw")
+from_name = &"Italy"
+to_name = &"France"
+power_reduction = 1
+
+[node name="Portugal-Spain" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Spain"
+to_name = &"Portugal"
+
+[node name="Tyrrhenian Sea-Spain" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Spain"
+to_name = &"Tyrrhenian Sea"
+
+[node name="Tyrrhenian Sea-France" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"France"
+to_name = &"Tyrrhenian Sea"
+
+[node name="Tyrrhenian Sea-Italy" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Italy"
+to_name = &"Tyrrhenian Sea"
+
+[node name="Italy-Balkan" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Italy"
+to_name = &"Balkan"
+
+[node name="Italy-Mediterranean Sea" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Italy"
+to_name = &"Mediterranean Sea"
+
+[node name="Tyrrhenian Sea-Italy4" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Italy"
+to_name = &"Greece"
+
+[node name="Tyrrhenian Sea-Mediterranean Sea" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Mediterranean Sea"
+to_name = &"Tyrrhenian Sea"
+
+[node name="France-Spain" type="Line2D" parent="links"]
+script = ExtResource("2_pc5dw")
+from_name = &"Spain"
+to_name = &"France"
+
+[node name="Czechoslovakia" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_p41mi")
+position = Vector2(-320, -1160)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-40, -8, -16, 32, 0, 32, 16, 16, 48, 24, 48, 40, 64, 48, 72, 40, 96, 40, 104, 32, 128, 32, 144, 16, 120, 8, 72, 8, 24, -24, -8, -24)
+uv = PackedVector2Array(0, 28.4444, 16.6957, 99.5556, 27.8261, 99.5556, 38.9565, 71.1111, 61.2174, 85.3333, 61.2174, 113.778, 72.3478, 128, 77.913, 113.778, 94.6087, 113.778, 100.174, 99.5556, 116.87, 99.5556, 128, 71.1111, 111.304, 56.8889, 77.913, 56.8889, 44.5217, 0, 22.2609, 0)
+script = ExtResource("5_3i6no")
+power = 3
+max_power = 4
+is_capital = true
+
+[node name="Switzerland" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_0ptxw")
+position = Vector2(-424, -1096)
+color = Color(0.694118, 0.466667, 0.788235, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-40, 8, -16, 24, 0, 16, 24, 16, 40, 8, 24, 0, 16, -16, -16, -16)
+uv = PackedVector2Array(0, 76.8, 38.4, 128, 64, 102.4, 102.4, 102.4, 128, 76.8, 102.4, 51.2, 89.6, 0, 38.4, 0)
+script = ExtResource("5_3i6no")
+alignment = 5
+max_power = 3
+is_capital = true
+
+[node name="Germany" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_sulup")
+position = Vector2(-392, -1200)
+color = Color(0.694118, 0.466667, 0.788235, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-48, 88, 48, 88, 56, 72, 32, 32, 64, 16, 80, 16, 80, -8, 64, -24, 64, -40, 56, -56, 16, -48, 0, -64, -24, -64, -32, -40, -56, -40, -56, -8, -72, 16, -64, 48, -40, 64)
+uv = PackedVector2Array(20.2105, 128, 101.053, 128, 107.789, 114.526, 87.5789, 80.8421, 114.526, 67.3684, 128, 67.3684, 128, 47.1579, 114.526, 33.6842, 114.526, 20.2105, 107.789, 6.73684, 74.1053, 13.4737, 60.6316, 0, 40.4211, 0, 33.6842, 20.2105, 13.4737, 20.2105, 13.4737, 47.1579, 0, 67.3684, 6.73684, 94.3158, 26.9474, 107.789)
+script = ExtResource("5_3i6no")
+alignment = 5
+
+[node name="Denmark" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_j2uv8")
+position = Vector2(-408, -1288)
+color = Color(0.333333, 0.415686, 0.635294, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-8, 24, -16, 16, -16, -8, 0, -24, 16, -32, 24, -16, 16, 0, 32, 8, 40, 0, 56, 8, 48, 24, 32, 24, 16, 8, 16, 24)
+uv = PackedVector2Array(14.2222, 128, 0, 109.714, 0, 54.8571, 28.4444, 18.2857, 56.8889, 0, 71.1111, 36.5714, 56.8889, 73.1429, 85.3333, 91.4286, 99.5556, 73.1429, 128, 91.4286, 113.778, 128, 85.3333, 128, 56.8889, 91.4286, 56.8889, 128)
+script = ExtResource("5_3i6no")
+alignment = 7
+max_power = 4
+
+[node name="Sweden" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_tolxg")
+position = Vector2(-296, -1416)
+color = Color(0.333333, 0.415686, 0.635294, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-56, 128, -40, 136, -24, 128, -8, 128, 8, 104, 8, 72, 40, 48, 16, 24, 16, 8, 32, -16, 72, -40, 72, -56, 96, -72, 104, -96, 88, -120, 56, -128, 40, -120, 16, -120, -8, -104, -8, -88, -32, -72, -40, -40, -56, -32, -72, -16, -72, 8, -56, 16, -80, 72, -64, 88, -72, 104, -56, 112)
+uv = PackedVector2Array(16.6957, 124.121, 27.8261, 128, 38.9565, 124.121, 50.087, 124.121, 61.2174, 112.485, 61.2174, 96.9697, 83.4783, 85.3333, 66.7826, 73.697, 66.7826, 65.9394, 77.913, 54.303, 105.739, 42.6667, 105.739, 34.9091, 122.435, 27.1515, 128, 15.5152, 116.87, 3.87879, 94.6087, 0, 83.4783, 3.87879, 66.7826, 3.87879, 50.087, 11.6364, 50.087, 19.3939, 33.3913, 27.1515, 27.8261, 42.6667, 16.6957, 46.5455, 5.56522, 54.303, 5.56522, 65.9394, 16.6957, 69.8182, 0, 96.9697, 11.1304, 104.727, 5.56522, 112.485, 16.6957, 116.364)
+script = ExtResource("5_3i6no")
+alignment = 7
+max_power = 4
+is_capital = true
+
+[node name="Norway" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ppf83")
+position = Vector2(-344, -1520)
+color = Color(0.333333, 0.415686, 0.635294, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-32, 176, -40, 152, -48, 168, -64, 168, -72, 184, -96, 192, -112, 184, -112, 168, -120, 144, -120, 112, -88, 96, -72, 80, -40, 80, -32, 48, -16, 48, -8, 24, 8, 8, 24, 0, 32, -8, 16, -16, 32, -24, 40, -16, 48, -32, 64, -32, 72, -40, 80, -56, 96, -40, 104, -48, 128, -48, 128, -56, 152, -64, 160, -56, 176, -56, 200, -64, 216, -56, 240, -40, 224, -32, 216, -16, 208, -40, 176, -40, 168, -16, 136, -16, 104, -24, 88, -16, 64, -16, 40, 0, 40, 16, 16, 32, 8, 64, -8, 72, -24, 88, -24, 112, -8, 120)
+uv = PackedVector2Array(31.2889, 120, 28.4444, 108, 25.6, 116, 19.9111, 116, 17.0667, 124, 8.53333, 128, 2.84444, 124, 2.84444, 116, 0, 104, 0, 88, 11.3778, 80, 17.0667, 72, 28.4444, 72, 31.2889, 56, 36.9778, 56, 39.8222, 44, 45.5111, 36, 51.2, 32, 54.0444, 28, 48.3556, 24, 54.0444, 20, 56.8889, 24, 59.7333, 16, 65.4222, 16, 68.2667, 12, 71.1111, 4, 76.8, 12, 79.6444, 8, 88.1778, 8, 88.1778, 4, 96.7111, 0, 99.5556, 4, 105.244, 4, 113.778, 0, 119.467, 4, 128, 12, 122.311, 16, 119.467, 24, 116.622, 12, 105.244, 12, 102.4, 24, 91.0222, 24, 79.6444, 20, 73.9556, 24, 65.4222, 24, 56.8889, 32, 56.8889, 40, 48.3556, 48, 45.5111, 64, 39.8222, 68, 34.1333, 76, 34.1333, 88, 39.8222, 92)
+script = ExtResource("5_3i6no")
+alignment = 7
+max_power = 4
+
+[node name="Svalbard" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_lnlmu")
+position = Vector2(-312, -1712)
+color = Color(0.772549, 0.921569, 0.74902, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-72, -16, -56, 0, -32, 0, -32, 16, -16, 16, 0, 32, 24, 8, 24, -8, 40, -8, 56, 16, 72, 24, 96, 16, 80, 8, 56, -8, 64, -16, 88, -8, 112, -16, 136, -32, 104, -32, 80, -40, 56, -32, 48, -40, 16, -32, -8, -24, -24, -24, -40, -16, -48, -24)
+uv = PackedVector2Array(0, 42.6667, 9.84615, 71.1111, 24.6154, 71.1111, 24.6154, 99.5556, 34.4615, 99.5556, 44.3077, 128, 59.0769, 85.3333, 59.0769, 56.8889, 68.9231, 56.8889, 78.7692, 99.5556, 88.6154, 113.778, 103.385, 99.5556, 93.5385, 85.3333, 78.7692, 56.8889, 83.6923, 42.6667, 98.4615, 56.8889, 113.231, 42.6667, 128, 14.2222, 108.308, 14.2222, 93.5385, 0, 78.7692, 14.2222, 73.8462, 0, 54.1538, 14.2222, 39.3846, 28.4444, 29.5385, 28.4444, 19.6923, 42.6667, 14.7692, 28.4444)
+script = ExtResource("5_3i6no")
+alignment = 3
+power = 0
+max_power = 3
+
+[node name="Finland" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_vgn3r")
+position = Vector2(-144, -1472)
+color = Color(0.333333, 0.415686, 0.635294, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-56, -16, -40, -24, -32, -8, -24, 0, -48, 16, -80, 40, -80, 56, -72, 72, -72, 88, -56, 96, -48, 104, -24, 104, -8, 96, 32, 96, 32, 80, 48, 72, 72, 48, 64, 32, 48, 8, 40, 0, 40, -24, 32, -32, 40, -48, 16, -64, 8, -88, -24, -88, -32, -64, -64, -64, -48, -40)
+uv = PackedVector2Array(20.2105, 48, 33.6842, 42.6667, 40.4211, 53.3333, 47.1579, 58.6667, 26.9474, 69.3333, 0, 85.3333, 0, 96, 6.73684, 106.667, 6.73684, 117.333, 20.2105, 122.667, 26.9474, 128, 47.1579, 128, 60.6316, 122.667, 94.3158, 122.667, 94.3158, 112, 107.789, 106.667, 128, 90.6667, 121.263, 80, 107.789, 64, 101.053, 58.6667, 101.053, 42.6667, 94.3158, 37.3333, 101.053, 26.6667, 80.8421, 16, 74.1053, 0, 47.1579, 0, 40.4211, 16, 13.4737, 16, 26.9474, 32)
+script = ExtResource("5_3i6no")
+alignment = 7
+max_power = 4
+
+[node name="Karelia, Murmansk" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_mgsl0")
+position = Vector2(-48, -1488)
+color = Color(0.509804, 0.513726, 0.529412, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-48, 88, -32, 96, -32, 88, -16, 80, 16, 112, 32, 104, 32, 96, 16, 80, 32, 72, 32, 64, 24, 56, 32, 48, 40, 56, 40, 72, 56, 88, 64, 80, 48, 64, 40, 48, 48, 32, 32, 32, 16, 16, 16, 0, 8, -8, -8, -8, -24, -24, -16, -24, 0, -16, 48, -8, 64, 0, 80, 0, 96, -8, 104, -16, 104, -32, 88, -40, 72, -40, 48, -56, 8, -64, -16, -64, -32, -72, -56, -72, -72, -64, -80, -48, -56, -32, -64, -16, -56, -8, -56, 16, -48, 24, -32, 48, -24, 64)
+uv = PackedVector2Array(22.2609, 111.304, 33.3913, 116.87, 33.3913, 111.304, 44.5217, 105.739, 66.7826, 128, 77.913, 122.435, 77.913, 116.87, 66.7826, 105.739, 77.913, 100.174, 77.913, 94.6087, 72.3478, 89.0435, 77.913, 83.4783, 83.4783, 89.0435, 83.4783, 100.174, 94.6087, 111.304, 100.174, 105.739, 89.0435, 94.6087, 83.4783, 83.4783, 89.0435, 72.3478, 77.913, 72.3478, 66.7826, 61.2174, 66.7826, 50.087, 61.2174, 44.5217, 50.087, 44.5217, 38.9565, 33.3913, 44.5217, 33.3913, 55.6522, 38.9565, 89.0435, 44.5217, 100.174, 50.087, 111.304, 50.087, 122.435, 44.5217, 128, 38.9565, 128, 27.8261, 116.87, 22.2609, 105.739, 22.2609, 89.0435, 11.1304, 61.2174, 5.56522, 44.5217, 5.56522, 33.3913, 0, 16.6957, 0, 5.56522, 5.56522, 0, 16.6957, 16.6957, 27.8261, 11.1304, 38.9565, 16.6957, 44.5217, 16.6957, 61.2174, 22.2609, 66.7826, 33.3913, 83.4783, 38.9565, 94.6087)
+script = ExtResource("5_3i6no")
+alignment = 8
+power = 0
+max_power = 3
+
+[node name="Poland" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_xx231")
+position = Vector2(-240, -1216)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-88, -24, -80, -24, -24, -56, -8, -40, 16, -48, 32, -32, 56, -40, 72, -24, 72, 0, 64, 8, 72, 16, 88, 40, 64, 56, 64, 72, 40, 64, -8, 64, -56, 32, -72, 32, -72, 8, -88, -8)
+uv = PackedVector2Array(0, 32, 5.81818, 32, 46.5455, 0, 58.1818, 16, 75.6364, 8, 87.2727, 24, 104.727, 16, 116.364, 32, 116.364, 56, 110.545, 64, 116.364, 72, 128, 96, 110.545, 112, 110.545, 128, 93.0909, 120, 58.1818, 120, 23.2727, 88, 11.6364, 88, 11.6364, 64, 0, 48)
+script = ExtResource("5_3i6no")
+max_power = 4
+
+[node name="France" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_513ge")
+position = Vector2(-528, -1088)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(16, 88, 16, 72, 24, 64, 48, 64, 56, 72, 72, 72, 88, 56, 72, 40, 88, 16, 64, 0, 88, -24, 96, -48, 72, -64, 0, -96, -40, -64, -64, -64, -64, -48, -120, -48, -120, -24, -104, -16, -88, -16, -64, 24, -72, 64, -64, 80, -32, 80, -16, 88)
+uv = PackedVector2Array(80.5926, 128, 80.5926, 116.87, 85.3333, 111.304, 99.5556, 111.304, 104.296, 116.87, 113.778, 116.87, 123.259, 105.739, 113.778, 94.6087, 123.259, 77.913, 109.037, 66.7826, 123.259, 50.087, 128, 33.3913, 113.778, 22.2609, 71.1111, 0, 47.4074, 22.2609, 33.1852, 22.2609, 33.1852, 33.3913, 0, 33.3913, 0, 50.087, 9.48148, 55.6522, 18.963, 55.6522, 33.1852, 83.4783, 28.4444, 111.304, 33.1852, 122.435, 52.1481, 122.435, 61.6296, 128)
+script = ExtResource("5_3i6no")
+max_power = 4
+
+[node name="Netherlands, Belgium" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_7yd52")
+position = Vector2(-488, -1216)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(32, 64, -40, 32, -24, 24, -8, 24, -8, 8, 0, -8, 16, -8, 32, -24, 40, -24, 40, 8, 24, 32)
+uv = PackedVector2Array(115.2, 128, 0, 81.4545, 25.6, 69.8182, 51.2, 69.8182, 51.2, 46.5455, 64, 23.2727, 89.6, 23.2727, 115.2, 0, 128, 0, 128, 46.5455, 102.4, 81.4545)
+script = ExtResource("5_3i6no")
+max_power = 4
+
+[node name="Italy" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_bnoqo")
+position = Vector2(-352, -1008)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+offset = Vector2(352, 1008)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-456, -1048, -440, -1032, -424, -1032, -416, -1040, -392, -1032, -384, -1008, -336, -968, -328, -968, -296, -944, -280, -928, -296, -912, -320, -904, -344, -912, -352, -904, -336, -880, -312, -872, -296, -880, -296, -896, -288, -904, -264, -928, -272, -944, -264, -952, -248, -936, -240, -952, -288, -976, -288, -984, -312, -992, -328, -1024, -352, -1032, -352, -1064, -336, -1064, -336, -1088, -352, -1088, -360, -1096, -376, -1096, -384, -1088, -400, -1080, -424, -1080, -440, -1072)
+uv = PackedVector2Array(0, 27.4286, 9.48148, 36.5714, 18.963, 36.5714, 23.7037, 32, 37.9259, 36.5714, 42.6667, 50.2857, 71.1111, 73.1429, 75.8519, 73.1429, 94.8148, 86.8571, 104.296, 96, 94.8148, 105.143, 80.5926, 109.714, 66.3704, 105.143, 61.6296, 109.714, 71.1111, 123.429, 85.3333, 128, 94.8148, 123.429, 94.8148, 114.286, 99.5556, 109.714, 113.778, 96, 109.037, 86.8571, 113.778, 82.2857, 123.259, 91.4286, 128, 82.2857, 99.5556, 68.5714, 99.5556, 64, 85.3333, 59.4286, 75.8519, 41.1429, 61.6296, 36.5714, 61.6296, 18.2857, 71.1111, 18.2857, 71.1111, 4.57143, 61.6296, 4.57143, 56.8889, 0, 47.4074, 0, 42.6667, 4.57143, 33.1852, 9.14286, 18.963, 9.14286, 9.48148, 13.7143)
+script = ExtResource("5_3i6no")
+max_power = 4
+
+[node name="Austria" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ltp8h")
+position = Vector2(-360, -1104)
+color = Color(0.694118, 0.466667, 0.788235, 1)
+offset = Vector2(360, 1104)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-272, -1120, -288, -1088, -352, -1088, -360, -1096, -376, -1096, -384, -1088, -400, -1096, -408, -1112, -344, -1112, -336, -1128, -320, -1128, -304, -1144, -272, -1136)
+uv = PackedVector2Array(128, 54.8571, 112.941, 128, 52.7059, 128, 45.1765, 109.714, 30.1176, 109.714, 22.5882, 128, 7.52941, 109.714, 0, 73.1429, 60.2353, 73.1429, 67.7647, 36.5714, 82.8235, 36.5714, 97.8824, 0, 128, 18.2857)
+script = ExtResource("5_3i6no")
+alignment = 5
+power = 0
+max_power = 3
+
+[node name="Spain" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ay5jw")
+position = Vector2(-640, -944)
+color = Color(0.478431, 0.054902, 0.262745, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-80, -88, 40, -80, 48, -64, 80, -64, 96, -56, 128, -56, 104, -24, 88, -24, 56, 8, 64, 32, 16, 72, -24, 72, -40, 88, -72, 64, -64, 40, -64, 0, -48, -40, -96, -64)
+uv = PackedVector2Array(9.14286, 0, 77.7143, 5.81818, 82.2857, 17.4545, 100.571, 17.4545, 109.714, 23.2727, 128, 23.2727, 114.286, 46.5455, 105.143, 46.5455, 86.8571, 69.8182, 91.4286, 87.2727, 64, 116.364, 41.1429, 116.364, 32, 128, 13.7143, 110.545, 18.2857, 93.0909, 18.2857, 64, 27.4286, 34.9091, 0, 17.4545)
+script = ExtResource("5_3i6no")
+alignment = 6
+max_power = 4
+
+[node name="Portugal" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_wnn5h")
+position = Vector2(-728, -944)
+color = Color(0.478431, 0.054902, 0.262745, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(16, 64, -16, 56, -8, 40, -16, 32, -8, -16, -8, -64, 40, -40, 24, 0, 24, 40)
+uv = PackedVector2Array(73.1429, 128, 0, 120, 18.2857, 104, 0, 96, 18.2857, 48, 18.2857, 0, 128, 24, 91.4286, 64, 91.4286, 104)
+script = ExtResource("5_3i6no")
+alignment = 6
+max_power = 4
+is_capital = true
+
+[node name="Acores" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_bx85b")
+position = Vector2(-1088, -912)
+color = Color(0.478431, 0.054902, 0.262745, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-80, -16, 64, 32, 40, 24, 56, 16, 56, 8, 40, 8, 40, 24, -8, 8, 8, 0, 8, -8, 24, -8, 8, -16, -8, -8, -16, 0, -8, 8, -56, -8, -48, -16, -56, -24, -56, -16)
+uv = PackedVector2Array(0, 18.2857, 128, 128, 106.667, 109.714, 120.889, 91.4286, 120.889, 73.1429, 106.667, 73.1429, 106.667, 109.714, 64, 73.1429, 78.2222, 54.8571, 78.2222, 36.5714, 92.4444, 36.5714, 78.2222, 18.2857, 64, 36.5714, 56.8889, 54.8571, 64, 73.1429, 21.3333, 36.5714, 28.4444, 18.2857, 21.3333, 0, 21.3333, 18.2857)
+script = ExtResource("5_3i6no")
+alignment = 6
+max_power = 3
+
+[node name="Britain" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_shkdn")
+position = Vector2(-592, -1216)
+color = Color(0.211765, 0.552941, 0.380392, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-64, 56, -48, 48, 48, 32, 40, 16, 56, 8, 48, -8, 32, -8, 32, -32, 0, -64, -24, -72, 8, -96, 0, -112, -24, -104, -24, -128, -48, -112, -64, -120, -80, -104, -64, -96, -56, -72, -40, -64, -48, -48, -24, -48, -24, -16, -40, -16, -56, 16, -24, 24, -48, 32)
+uv = PackedVector2Array(15.0588, 128, 30.1176, 122.435, 120.471, 111.304, 112.941, 100.174, 128, 94.6087, 120.471, 83.4783, 105.412, 83.4783, 105.412, 66.7826, 75.2941, 44.5217, 52.7059, 38.9565, 82.8235, 22.2609, 75.2941, 11.1304, 52.7059, 16.6957, 52.7059, 0, 30.1176, 11.1304, 15.0588, 5.56522, 0, 16.6957, 15.0588, 22.2609, 22.5882, 38.9565, 37.6471, 44.5217, 30.1176, 55.6522, 52.7059, 55.6522, 52.7059, 77.913, 37.6471, 77.913, 22.5882, 100.174, 52.7059, 105.739, 30.1176, 111.304)
+script = ExtResource("5_3i6no")
+alignment = 1
+
+[node name="Ireland" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_etadl")
+position = Vector2(-696, -1232)
+color = Color(0.211765, 0.552941, 0.380392, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-40, 32, -16, 40, -8, 32, 32, 16, 32, -16, 40, -24, 40, -48, 0, -24, -24, -24, -24, 0, -16, 8, -40, 16)
+uv = PackedVector2Array(0, 116.364, 38.4, 128, 51.2, 116.364, 115.2, 93.0909, 115.2, 46.5455, 128, 34.9091, 128, 0, 64, 34.9091, 25.6, 34.9091, 25.6, 69.8182, 38.4, 81.4545, 0, 93.0909)
+script = ExtResource("5_3i6no")
+alignment = 1
+max_power = 4
+is_capital = true
+
+[node name="Iceland" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_iinj7")
+position = Vector2(-816, -1464)
+color = Color(0.772549, 0.921569, 0.74902, 1)
+offset = Vector2(816, 1464)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-872, -1456, -856, -1448, -856, -1440, -832, -1432, -800, -1448, -744, -1464, -744, -1480, -768, -1504, -800, -1488, -832, -1488, -856, -1480, -864, -1504, -880, -1496, -896, -1480, -888, -1472, -872, -1480)
+uv = PackedVector2Array(20.2105, 85.3333, 33.6842, 99.5556, 33.6842, 113.778, 53.8947, 128, 80.8421, 99.5556, 128, 71.1111, 128, 42.6667, 107.789, 0, 80.8421, 28.4444, 53.8947, 28.4444, 33.6842, 42.6667, 26.9474, 0, 13.4737, 14.2222, 0, 42.6667, 6.73684, 56.8889, 20.2105, 42.6667)
+script = ExtResource("5_3i6no")
+alignment = 3
+power = 0
+max_power = 3
+
+[node name="Belarus" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_e0128")
+position = Vector2(-104, -1240)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-72, 32, -64, 24, -64, 0, -32, -8, -24, -40, 0, -48, 32, -48, 48, -40, 64, -8, 80, 0, 64, 8, 64, 32, 48, 48, -64, 40)
+uv = PackedVector2Array(0, 106.667, 6.73684, 96, 6.73684, 64, 33.6842, 53.3333, 40.4211, 10.6667, 60.6316, 0, 87.5789, 0, 101.053, 10.6667, 114.526, 53.3333, 128, 64, 114.526, 74.6667, 114.526, 106.667, 101.053, 128, 6.73684, 117.333)
+script = ExtResource("5_3i6no")
+max_power = 3
+
+[node name="Estonia, Latvia, Lithuania" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_8or2r")
+position = Vector2(-168, -1312)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-16, 56, -40, 64, -56, 48, -48, 40, -48, -8, -32, -16, -8, 0, 8, -16, -16, -32, -32, -24, -32, -40, -16, -40, 0, -48, 48, -48, 48, -8, 64, 24, 40, 32, 32, 64, 0, 72)
+uv = PackedVector2Array(42.6667, 110.933, 17.0667, 119.467, 0, 102.4, 8.53333, 93.8667, 8.53333, 42.6667, 25.6, 34.1333, 51.2, 51.2, 68.2667, 34.1333, 42.6667, 17.0667, 25.6, 25.6, 25.6, 8.53333, 42.6667, 8.53333, 59.7333, 0, 110.933, 0, 110.933, 42.6667, 128, 76.8, 102.4, 85.3333, 93.8667, 119.467, 59.7333, 128)
+script = ExtResource("5_3i6no")
+max_power = 4
+
+[node name="Ukraine" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_dmplw")
+position = Vector2(8, -1136)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-200, 8, -184, -8, -184, -24, -160, -40, -176, -64, -64, -56, -48, -72, -8, -72, 8, -56, 40, -32, 72, -32, 80, -24, 104, -24, 112, -8, 112, 16, 88, 40, 24, 56, -8, 56, -24, 40, -48, 56, -64, 40, -64, 32, -88, 8, -120, 8, -128, 16, -184, 16)
+uv = PackedVector2Array(0, 80, 6.5641, 64, 6.5641, 48, 16.4103, 32, 9.84615, 8, 55.7949, 16, 62.359, 0, 78.7692, 0, 85.3333, 16, 98.4615, 40, 111.59, 40, 114.872, 48, 124.718, 48, 128, 64, 128, 88, 118.154, 112, 91.8974, 128, 78.7692, 128, 72.2051, 112, 62.359, 128, 55.7949, 112, 55.7949, 104, 45.9487, 80, 32.8205, 80, 29.5385, 88, 6.5641, 88)
+script = ExtResource("5_3i6no")
+max_power = 4
+
+[node name="Romania" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_k75i1")
+position = Vector2(-136, -1080)
+color = Color(0.815686, 0.623529, 0.0823529, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-40, -40, 16, -40, 40, -32, 64, 0, 56, 16, 72, 32, 64, 56, 40, 40, 32, 48, -32, 56, -40, 32, -56, 32, -72, 0)
+uv = PackedVector2Array(28.4444, 0, 78.2222, 0, 99.5556, 10.6667, 120.889, 53.3333, 113.778, 74.6667, 128, 96, 120.889, 128, 99.5556, 106.667, 92.4444, 117.333, 35.5556, 128, 28.4444, 96, 14.2222, 96, 0, 53.3333)
+script = ExtResource("5_3i6no")
+alignment = 4
+power = 0
+max_power = 4
+
+[node name="Balkan" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_bfrn6")
+position = Vector2(-240, -1048)
+color = Color(0.815686, 0.623529, 0.0823529, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-96, -40, -96, -16, -88, -16, -64, 24, -40, 32, -8, 48, 16, 72, 24, 112, 40, 88, 80, 72, 104, 72, 120, 80, 128, 80, 136, 72, 168, 56, 168, 24, 144, 8, 136, 16, 72, 24, 64, 0, 48, 0, 32, -32, 64, -72, 48, -80, 24, -80, 16, -72, -8, -72, -16, -64, -32, -72, -48, -40)
+uv = PackedVector2Array(0, 26.6667, 0, 42.6667, 3.87879, 42.6667, 15.5152, 69.3333, 27.1515, 74.6667, 42.6667, 85.3333, 54.303, 101.333, 58.1818, 128, 65.9394, 112, 85.3333, 101.333, 96.9697, 101.333, 104.727, 106.667, 108.606, 106.667, 112.485, 101.333, 128, 90.6667, 128, 69.3333, 116.364, 58.6667, 112.485, 64, 81.4545, 69.3333, 77.5758, 53.3333, 69.8182, 53.3333, 62.0606, 32, 77.5758, 5.33333, 69.8182, 0, 58.1818, 0, 54.303, 5.33333, 42.6667, 5.33333, 38.7879, 10.6667, 31.0303, 5.33333, 23.2727, 26.6667)
+script = ExtResource("5_3i6no")
+alignment = 4
+power = 2
+max_power = 4
+
+[node name="Mediterranean Sea" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_cy8sb")
+position = Vector2(-232, -832)
+color = Color(0.537255, 0.152941, 0.658824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(256, 8, 272, 0, 272, -8, 288, -16, 272, -16, 248, -8, 248, 0)
+uv = PackedVector2Array(25.6, 128, 76.8, 85.3333, 76.8, 42.6667, 128, 0, 76.8, 0, 0, 42.6667, 0, 85.3333)
+script = ExtResource("5_3i6no")
+alignment = 2
+
+[node name="Tyrrhenian Sea" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_t4h7i")
+position = Vector2(-448, -952)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(24, 32, 32, 32, 48, 16, 56, -8, 40, -24, 40, -32, 48, -40, 48, -48, 40, -56, 24, -48, 24, -32, 40, -24, 40, -16, 24, -8)
+uv = PackedVector2Array(0, 128, 32, 128, 96, 104.727, 128, 69.8182, 64, 46.5455, 64, 34.9091, 96, 23.2727, 96, 11.6364, 64, 0, 0, 11.6364, 0, 34.9091, 64, 46.5455, 64, 58.1818, 0, 69.8182)
+script = ExtResource("5_3i6no")
+
+[node name="Greece" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_xjqpm")
+position = Vector2(-176, -928)
+color = Color(0.815686, 0.623529, 0.0823529, 1)
+offset = Vector2(16, 16)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-56, -24, -48, -8, -32, -8, -24, 0, -48, 0, -40, 8, -24, 16, -24, 32, -16, 32, -8, 40, -4, 43, 3, 47, 4, 38, 8, 40, 17, 76, 16, 80, 32, 80, 48, 80, 64, 72, 48, 64, 32, 72, 16, 72, 9, 44, 8, 24, -8, 8, -8, 0, 0, 8, 16, 24, 24, 16, 40, 16, 24, 0, 8, -8, 8, -16, -8, -40, 16, -32, 24, -40, 32, -56, 56, -56, 64, -48, 80, -48, 96, -64, 88, -80, 56, -64, 48, -56, 40, -56, 24, -64, 0, -64, -40, -48)
+uv = PackedVector2Array(0, 44.8, 6.73684, 57.6, 20.2105, 57.6, 26.9474, 64, 6.73684, 64, 13.4737, 70.4, 26.9474, 76.8, 26.9474, 89.6, 33.6842, 89.6, 40.4211, 96, 43.7895, 98.4, 49.6842, 101.6, 50.5263, 94.4, 53.8947, 96, 61.4737, 124.8, 60.6316, 128, 74.1053, 128, 87.5789, 128, 101.053, 121.6, 87.5789, 115.2, 74.1053, 121.6, 60.6316, 121.6, 54.7368, 99.2, 53.8947, 83.2, 40.4211, 70.4, 40.4211, 64, 47.1579, 70.4, 60.6316, 83.2, 67.3684, 76.8, 80.8421, 76.8, 67.3684, 64, 53.8947, 57.6, 53.8947, 51.2, 40.4211, 32, 60.6316, 38.4, 67.3684, 32, 74.1053, 19.2, 94.3158, 19.2, 101.053, 25.6, 114.526, 25.6, 128, 12.8, 121.263, 0, 94.3158, 12.8, 87.5789, 19.2, 80.8421, 19.2, 67.3684, 12.8, 47.1579, 12.8, 13.4737, 25.6)
+script = ExtResource("5_3i6no")
+alignment = 4
+power = 0
+max_power = 3
+
+[node name="Turkey" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_6isa4")
+position = Vector2(64, -928)
+color = Color(0.537255, 0.152941, 0.658824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-184, -16, -160, 0, -160, 16, -144, 48, -128, 56, -104, 56, -96, 64, -72, 56, -40, 72, -8, 56, 24, 56, 56, 48, 80, 56, 96, 48, 128, 48, 136, 40, 168, 40, 160, 16, 160, -8, 144, -24, 144, -48, 104, -56, 88, -40, 32, -40, -16, -64, -56, -64, -80, -40, -128, -48, -136, -40, -112, -32, -120, -16, -144, -24, -160, -24)
+uv = PackedVector2Array(0, 45.1765, 8.72727, 60.2353, 8.72727, 75.2941, 14.5455, 105.412, 20.3636, 112.941, 29.0909, 112.941, 32, 120.471, 40.7273, 112.941, 52.3636, 128, 64, 112.941, 75.6364, 112.941, 87.2727, 105.412, 96, 112.941, 101.818, 105.412, 113.455, 105.412, 116.364, 97.8824, 128, 97.8824, 125.091, 75.2941, 125.091, 52.7059, 119.273, 37.6471, 119.273, 15.0588, 104.727, 7.52941, 98.9091, 22.5882, 78.5455, 22.5882, 61.0909, 0, 46.5455, 0, 37.8182, 22.5882, 20.3636, 15.0588, 17.4545, 22.5882, 26.1818, 30.1176, 23.2727, 45.1765, 14.5455, 37.6471, 8.72727, 37.6471)
+script = ExtResource("5_3i6no")
+alignment = 2
+is_capital = true
+
+[node name="Black Sea" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ssnt6")
+position = Vector2(-8, -1024)
+color = Color(0.384314, 0.341176, 0.458824, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-112, -96, -104, -104, -72, -104, -48, -80, -48, -72, -32, -56, 40, -56, 56, -40, 32, -16, 16, -32, 8, -56, -32, -56, -56, -24, -72, -40, -64, -56, -88, -88)
+uv = PackedVector2Array(0, 11.6364, 6.09524, 0, 30.4762, 0, 48.7619, 34.9091, 48.7619, 46.5455, 60.9524, 69.8182, 115.81, 69.8182, 128, 93.0909, 109.714, 128, 97.5238, 104.727, 91.4286, 69.8182, 60.9524, 69.8182, 42.6667, 116.364, 30.4762, 93.0909, 36.5714, 69.8182, 18.2857, 23.2727)
+script = ExtResource("5_3i6no")
+
+[node name="Southern Russia" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_v4wio")
+position = Vector2(176, -1120)
+color = Color(0.509804, 0.513726, 0.529412, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-40, 96, -72, 80, -96, 64, -96, 56, -80, 40, -80, 32, -72, 24, -72, 16, -56, 0, -56, -24, -64, -40, -56, -40, -48, -48, -48, -64, -40, -72, 8, -72, 24, -64, 64, -56, 56, -48, 56, -8, 96, 16, 96, 32, 112, 40, 104, 48, 88, 56, 80, 72, 48, 64, 0, 48, -24, 48, -40, 56, -32, 64, -32, 80)
+uv = PackedVector2Array(34.4615, 128, 14.7692, 115.81, 0, 103.619, 0, 97.5238, 9.84615, 85.3333, 9.84615, 79.2381, 14.7692, 73.1429, 14.7692, 67.0476, 24.6154, 54.8571, 24.6154, 36.5714, 19.6923, 24.381, 24.6154, 24.381, 29.5385, 18.2857, 29.5385, 6.09524, 34.4615, 0, 64, 0, 73.8462, 6.09524, 98.4615, 12.1905, 93.5385, 18.2857, 93.5385, 48.7619, 118.154, 67.0476, 118.154, 79.2381, 128, 85.3333, 123.077, 91.4286, 113.231, 97.5238, 108.308, 109.714, 88.6154, 103.619, 59.0769, 91.4286, 44.3077, 91.4286, 34.4615, 97.5238, 39.3846, 103.619, 39.3846, 115.81)
+script = ExtResource("5_3i6no")
+alignment = 8
+max_power = 4
+
+[node name="Central Russia" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_ugn8r")
+position = Vector2(80, -1256)
+color = Color(0.509804, 0.513726, 0.529412, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(64, 64, 72, 32, 56, 16, 56, -8, 40, -16, 56, -32, 56, -48, 64, -48, 88, -72, 112, -72, 128, -88, 120, -112, 104, -96, 40, -96, 24, -88, 24, -80, 8, -80, -8, -88, -24, -88, -32, -80, -48, -88, -64, -80, -72, -80, -80, -72, -96, -72, -104, -56, -144, -48, -128, -32, -136, -24, -120, 8, -104, 16, -120, 24, -120, 48, -80, 48, -64, 64, -32, 88, 0, 88, 8, 96, 40, 96, 48, 88, 48, 72, 56, 64)
+uv = PackedVector2Array(97.8824, 108.308, 101.647, 88.6154, 94.1176, 78.7692, 94.1176, 64, 86.5882, 59.0769, 94.1176, 49.2308, 94.1176, 39.3846, 97.8824, 39.3846, 109.176, 24.6154, 120.471, 24.6154, 128, 14.7692, 124.235, 0, 116.706, 9.84615, 86.5882, 9.84615, 79.0588, 14.7692, 79.0588, 19.6923, 71.5294, 19.6923, 64, 14.7692, 56.4706, 14.7692, 52.7059, 19.6923, 45.1765, 14.7692, 37.6471, 19.6923, 33.8824, 19.6923, 30.1176, 24.6154, 22.5882, 24.6154, 18.8235, 34.4615, 0, 39.3846, 7.52941, 49.2308, 3.76471, 54.1538, 11.2941, 73.8462, 18.8235, 78.7692, 11.2941, 83.6923, 11.2941, 98.4615, 30.1176, 98.4615, 37.6471, 108.308, 52.7059, 123.077, 67.7647, 123.077, 71.5294, 128, 86.5882, 128, 90.3529, 123.077, 90.3529, 113.231, 94.1176, 108.308)
+script = ExtResource("5_3i6no")
+alignment = 8
+max_power = 4
+is_capital = true
+
+[node name="Northwest Russia" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_3mob5")
+position = Vector2(-40, -1352)
+color = Color(0.509804, 0.513726, 0.529412, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-80, -8, -56, -16, -40, -16, -48, -24, -72, -24, -72, -40, -56, -48, -40, -40, -24, -16, 8, -24, 24, -32, 40, -32, 48, -48, 56, -40, 56, -32, 80, -16, 160, -16, 168, -24, 232, -24, 240, -16, 224, 0, 160, 0, 144, 8, 144, 16, 128, 16, 112, 8, 96, 8, 88, 16, 72, 8, 56, 16, 48, 16, 40, 24, 24, 24, 16, 40, -24, 48, -8, 64, -16, 72, -32, 64, -64, 64, -80, 32)
+uv = PackedVector2Array(0, 42.6667, 9.6, 34.1333, 16, 34.1333, 12.8, 25.6, 3.2, 25.6, 3.2, 8.53333, 9.6, 0, 16, 8.53333, 22.4, 34.1333, 35.2, 25.6, 41.6, 17.0667, 48, 17.0667, 51.2, 0, 54.4, 8.53333, 54.4, 17.0667, 64, 34.1333, 96, 34.1333, 99.2, 25.6, 124.8, 25.6, 128, 34.1333, 121.6, 51.2, 96, 51.2, 89.6, 59.7333, 89.6, 68.2667, 83.2, 68.2667, 76.8, 59.7333, 70.4, 59.7333, 67.2, 68.2667, 60.8, 59.7333, 54.4, 68.2667, 51.2, 68.2667, 48, 76.8, 41.6, 76.8, 38.4, 93.8667, 22.4, 102.4, 28.8, 119.467, 25.6, 128, 19.2, 119.467, 6.4, 119.467, 0, 85.3333)
+script = ExtResource("5_3i6no")
+alignment = 8
+power = 0
+max_power = 4
+
+[node name="Arkhangelsk" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_a3olv")
+position = Vector2(80, -1432)
+color = Color(0.509804, 0.513726, 0.529412, 1)
+texture = ExtResource("4_8bj4a")
+polygon = PackedVector2Array(-72, 32, -64, 40, -64, 48, -40, 64, 40, 64, 48, 56, 112, 56, 120, 64, 128, 48, 120, 40, 120, 32, 112, 16, 104, 24, 104, 32, 96, 32, 80, 24, 88, 16, 72, 0, 40, -8, 48, -16, 120, -16, 120, -24, 88, -40, 72, -40, 72, -32, 64, -32, 24, -48, 24, -64, -8, -64, -16, -56, -32, -56, -32, -48, -24, -32, -24, -24, -40, -32, -64, -40, -80, -40, -80, -32, -56, -24, -56, -16, -80, -24, -88, -8, -80, 8, -64, 24)
+uv = PackedVector2Array(9.48148, 96, 14.2222, 104, 14.2222, 112, 28.4444, 128, 75.8519, 128, 80.5926, 120, 118.519, 120, 123.259, 128, 128, 112, 123.259, 104, 123.259, 96, 118.519, 80, 113.778, 88, 113.778, 96, 109.037, 96, 99.5556, 88, 104.296, 80, 94.8148, 64, 75.8519, 56, 80.5926, 48, 123.259, 48, 123.259, 40, 104.296, 24, 94.8148, 24, 94.8148, 32, 90.0741, 32, 66.3704, 16, 66.3704, 0, 47.4074, 0, 42.6667, 8, 33.1852, 8, 33.1852, 16, 37.9259, 32, 37.9259, 40, 28.4444, 32, 14.2222, 24, 4.74074, 24, 4.74074, 32, 18.963, 40, 18.963, 48, 4.74074, 40, 0, 56, 4.74074, 72, 14.2222, 88)
+script = ExtResource("5_3i6no")
+alignment = 8
+power = 0
+max_power = 3
+
+[node name="Mountains0" type="Line2D" parent="."]
+position = Vector2(-432, -1088)
+points = PackedVector2Array(-24, 48, -32, 40, -32, 24, -24, 16, -8, 16, 0, 8, 24, 8, 40, 0, 64, 0, 72, -8, 80, -8, 96, 0)
+default_color = Color(0.247059, 0.247059, 0.247059, 1)

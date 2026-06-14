@@ -27,11 +27,18 @@ const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)
 @export var generate_name : bool = false:
 	set(_u):
 		_generate_name()
+		generate_name = false
 
 @export var disabled : bool = false
 @export var power_reduction : int = 0
 
 @export var kinetic : bool = false
+
+@export_subgroup("Dev")
+@export var show_if_obsolete : bool = false:
+	set(_u):
+		_show_if_obsolete()
+		show_if_obsolete = false
 
 
 @onready var from : Region
@@ -187,6 +194,15 @@ func _generate_name() -> void:
 		name = to_name + "-" + from_name
 	else:
 		name = from_name + "-" + to_name
+
+
+func _show_if_obsolete() -> void:
+	var parent: Node = self
+	while parent != null and (parent as RegionControl) == null:
+		parent = parent.get_parent()
+	if not parent.get_node(str(from_name)) or not parent.get_node(str(to_name)):
+		add_point(Vector2(128, 128))
+		add_point(Vector2(512, 512))
 
 
 func get_other_region(region : Region) -> Region:
