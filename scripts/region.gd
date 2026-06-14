@@ -35,6 +35,8 @@ signal power_changed(power: int)
 ## Hides the capital if set to true.
 @export var hide_capital: bool = false
 
+@export var neutral_color: int = -1
+
 @export_subgroup("Editor")
 @export var links: Array[RegionLink] = []
 @export var update_polygon: bool = false:
@@ -93,7 +95,9 @@ func _process(delta):
 			RegionControl.RENDER_MODE.DISABLED:
 				color = Color(1, 1, 1, 1)
 			RegionControl.RENDER_MODE.ALIGNMENT:
-				color = region_control.align_color[alignment]
+				color = region_control.get_alignment_color(alignment, neutral_color)
+			RegionControl.RENDER_MODE.NEUTRAL_COLOR:
+				color = region_control.get_neutral_color(neutral_color)
 			RegionControl.RENDER_MODE.POWER:
 				power_color(power, false)
 			RegionControl.RENDER_MODE.MAX_POWER:
@@ -351,14 +355,14 @@ func next_to_enemy() -> bool:
 
 
 ## Recolors the region.
-func color_self(animate : bool = true, backup_color : Color = color):
+func color_self(animate: bool = true, backup_color: Color = color):
 	if(animate):
 		material.set_shader_parameter("changing_color", true)
 		material.set_shader_parameter("n", 0)
 		material.set_shader_parameter("previous_color", color)
 		_color_change_time = 0.0
 	if region_control:
-		color = region_control.align_color[alignment]
+		color = region_control.get_alignment_color(alignment, neutral_color)
 	else:
 		color = backup_color
 	if city:

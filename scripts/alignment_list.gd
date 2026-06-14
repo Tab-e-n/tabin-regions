@@ -161,7 +161,7 @@ func ready_list(region_control : RegionControl):
 		leader.frame = region_control.align_controlers[play_order[i] - 1]
 		if region_control.use_aliances:
 			AlignmentList.add_aliance_to_leader(leader, region_control.alignment_aliances[play_order[i]])
-		AlignmentList.color_leader(leader, region_control.align_color[play_order[i]])
+		AlignmentList.color_leader(leader, region_control.get_alignment_color(play_order[i]))
 
 
 func clear_list():

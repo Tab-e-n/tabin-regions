@@ -86,6 +86,8 @@ enum RENDER_MODE {
 	DISABLED,
 	## Regions will be colored based on their alignment.
 	ALIGNMENT,
+	## Regions will be colored based on their color they have when neutral.
+	NEUTRAL_COLOR,
 	## Will color regions based on the regions current power. Darker regions have more power.
 	POWER,
 	## Will color regions based on the regions maximum power. Darker regions have a higher max.
@@ -223,25 +225,26 @@ const COLOR_TOO_BRIGHT : float = 0.85
 		Color("eda75b"), # sandstorm
 		Color("2e5949"), # dark green
 ]
+@export var neutral_colors: Array[Color] = []
 ## Names of alignments. Includes the name of the neutral alignment, at index 0.
-@export var align_names : Array[String] = []
+@export var align_names: Array[String] = []
 ## Determines what message gets show at the end of the game.
 ## When set to 0 or lower, map will always show a victory message.
 ## When set to a positive integer, map will show a victory message only if an alignment of the same number wins, else it will show defeat.
 ## If aliances are turned on, this check applies to aliances and not to individual alignments.
-@export var main_character : int = 0
+@export var main_character: int = 0
 ## When set to true, the RegionControl will color itself based on which alignment is currently playing.
-@export var color_bg_according_to_alignment : bool = true
+@export var color_bg_according_to_alignment: bool = true
 ## Controls the scale of cities. Smaller cities will make the map feel larger, without it taking up more space.
-@export var city_size : float = 1
+@export var city_size: float = 1
 ## When starting the map, the camera will snap to a capital of the starting alignment.
-@export var snap_camera_to_first_align_capital : bool = true
+@export var snap_camera_to_first_align_capital: bool = true
 ## When set to true, the turn order will start invisible.
-@export var hide_turn_order : bool = false
+@export var hide_turn_order: bool = false
 ## When false, regions will not spawn particles.
-@export var spawn_particles : bool = true
+@export var spawn_particles: bool = true
 ## What color does the text in the command callout have.
-@export var command_callout_color : Color = Color(1, 1, 1, 1)
+@export var command_callout_color: Color = Color(1, 1, 1, 1)
 
 @export_subgroup("Editor")
 
@@ -584,7 +587,7 @@ func _ready():
 	
 	# -- STATS --
 	for align in range(align_amount):
-		GameStats.set_stat(align, "align color", align_color[align])
+		GameStats.set_stat(align, "align color", get_alignment_color(align))
 		if align == 0:
 			GameStats.set_stat(align, "controler", DPControl.CONTROLER.DUMMY)
 		else:
@@ -874,7 +877,7 @@ func _start_turn():
 	_modify_action_amount(0)
 	
 	if color_bg_according_to_alignment:
-		var bg_color_tinted : Color = bg_color + align_color[current_playing_align] * Color(0.25, 0.25, 0.25)
+		var bg_color_tinted : Color = bg_color + get_alignment_color(current_playing_align) * Color(0.25, 0.25, 0.25)
 		if Options.dp_speedrun:
 			if align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER:
 				color = bg_color_tinted
@@ -1115,7 +1118,20 @@ func has_enough_actions(needed : int = 1) -> bool:
 	return true
 
 
-func get_alignment_color(alignment : int) -> Color:
+func get_neutral_color(neutral: int) -> Color:
+	# Requesting neutral colors
+	if neutral >= 0 and neutral < neutral_colors.size():
+		# Special neutral color
+		return neutral_colors[neutral]
+	# Default neutral color
+	if align_color.size() == 0:
+		return Color.WHITE
+	return align_color[0]
+
+
+func get_alignment_color(alignment: int, neutral: int = -1) -> Color:
+	if align_color.size() == 0 or alignment <= 0 or alignment >= align_color.size():
+		return get_neutral_color(neutral)
 	return align_color[alignment]
 
 
@@ -1163,7 +1179,7 @@ func show_region_description(region : Region, singleton : bool = true) -> Region
 	for alignment in range(adjanced.size()):
 		if alignment == 0 or adjanced[alignment] == 0:
 			continue
-		colors.append(align_color[alignment]) 
+		colors.append(get_alignment_color(alignment)) 
 		power.append(adjanced[alignment])
 	
 	description.scale = Vector2(city_size, city_size);

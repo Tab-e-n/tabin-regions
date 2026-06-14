@@ -548,13 +548,13 @@ func update_current_action(current_phase : int):
 func show_victory_message(alignment : int):
 	if victory_message:
 		victory_message.visible = true
-		victory_message.modulate = region_control.align_color[alignment]
+		victory_message.modulate = region_control.get_alignment_color(alignment)
 
 
 func show_defeat_message(alignment : int):
 	if defeat_message:
 		defeat_message.visible = true
-		defeat_message.modulate = region_control.align_color[alignment]
+		defeat_message.modulate = region_control.get_alignment_color(alignment)
 
 
 func set_leave_message(visibility : bool):

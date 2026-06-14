@@ -67,7 +67,7 @@ func _deferred_ready():
 		if not path:
 			continue
 		path.ready_pathway(region_control)
-		path.create_warnings(warning_number, region_control.align_color[dummy_alignment])
+		path.create_warnings(warning_number, region_control.get_alignment_color(dummy_alignment))
 		pathways.append(path)
 	
 	dp_control = region_control.dp_control

@@ -319,7 +319,8 @@ align_amount = 4
 complexity = 2
 lore = "This map is based on another game i made.
 Gosh, I love stealing from myself! :D"
-align_color = Array[Color]([Color(0.12549, 0.227451, 0.12549, 1), Color(0.866667, 0.219608, 0.219608, 1), Color(0.968627, 0.858824, 0.858824, 1), Color(0.882353, 0.501961, 0.172549, 1), Color(0.196078, 0.180392, 0.180392, 1)])
+align_color = Array[Color]([Color(0.12549, 0.227451, 0.12549, 1), Color(0.866667, 0.219608, 0.219608, 1), Color(0.968627, 0.858824, 0.858824, 1), Color(0.882353, 0.501961, 0.172549, 1)])
+neutral_colors = Array[Color]([Color(0.196078, 0.180392, 0.180392, 1)])
 align_names = Array[String](["Field", "The Cross", "The Start", "The Speedup", "Road"])
 render_mode = 1
 region_links = NodePath("links")
@@ -905,6 +906,7 @@ uv = PackedVector2Array(0, 93.0909, 0, 128, 64, 128, 64, 104.727, 73.1429, 75.63
 script = ExtResource("6_yqfju")
 alignment = 2
 is_capital = true
+neutral_color = 0
 
 [node name="Distraction" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_squm7")
@@ -933,6 +935,7 @@ polygon = PackedVector2Array(-128, -32, -72, 32, -64, 24, -32, 32, -24, 40, -16,
 uv = PackedVector2Array(0, 23.2727, 26.3529, 69.8182, 30.1176, 64, 45.1765, 69.8182, 48.9412, 75.6364, 52.7059, 69.8182, 60.2353, 64, 64, 75.6364, 56.4706, 75.6364, 52.7059, 69.8182, 48.9412, 75.6364, 52.7059, 81.4545, 48.9412, 98.9091, 79.0588, 110.545, 116.706, 128, 120.471, 104.727, 128, 87.2727, 105.412, 34.9091, 90.3529, 40.7273, 86.5882, 40.7273, 64, 11.6364, 37.6471, 0, 11.2941, 5.81818)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Noodle Finish" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_5tq36")
@@ -943,6 +946,7 @@ polygon = PackedVector2Array(-168, -16, -104, -16, -56, -8, -24, -32, -24, -48, 
 uv = PackedVector2Array(0, 30.1176, 25.6, 30.1176, 44.8, 37.6471, 57.6, 15.0588, 57.6, 0, 96, 22.5882, 118.4, 37.6471, 115.2, 45.1765, 115.2, 52.7059, 118.4, 60.2353, 118.4, 67.7647, 128, 128, 105.6, 128, 102.4, 97.8824, 86.4, 75.2941, 64, 67.7647, 48, 90.3529, 22.4, 82.8235, 0, 52.7059)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Ooooh" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_sxaky")
@@ -1016,6 +1020,7 @@ polygon = PackedVector2Array(-64, 48, 40, 72, 40, 56, 48, 40, 40, -32, 48, -64, 
 uv = PackedVector2Array(0, 105.412, 118.857, 128, 118.857, 112.941, 128, 97.8824, 118.857, 30.1176, 128, 0, 64, 0, 64, 15.0588, 9.14286, 75.2941)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Turn Out" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ll4s4")
@@ -1026,6 +1031,7 @@ polygon = PackedVector2Array(-88, -72, 24, -48, 48, -24, 80, -8, 64, 96, -16, 72
 uv = PackedVector2Array(0, 0, 85.3333, 18.2857, 103.619, 36.5714, 128, 48.7619, 115.81, 128, 54.8571, 109.714, 18.2857, 67.0476, 0, 30.4762)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="That Tree" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_lk5m0")
@@ -1056,6 +1062,7 @@ uv = PackedVector2Array(14.2222, 104, 35.5556, 104, 28.4444, 128, 85.3333, 128, 
 script = ExtResource("6_yqfju")
 alignment = 1
 is_capital = true
+neutral_color = 0
 
 [node name="Road Diamond" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_y257g")
@@ -1066,6 +1073,7 @@ polygon = PackedVector2Array(-48, -8, 0, 80, 56, 8, 8, -80, -8, -88)
 uv = PackedVector2Array(0, 60.9524, 59.0769, 128, 128, 73.1429, 68.9231, 6.09524, 49.2308, 0)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Looper" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_7u5ks")
@@ -1076,6 +1084,7 @@ polygon = PackedVector2Array(-88, 16, -32, 48, 40, 32, 104, -24, 120, -48, 48, -
 uv = PackedVector2Array(0, 97.8824, 34.4615, 128, 78.7692, 112.941, 118.154, 60.2353, 128, 37.6471, 83.6923, 0, 78.7692, 15.0588, 54.1538, 37.6471, 44.3077, 45.1765, 29.5385, 37.6471)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Outer Shell" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_ruxx2")
@@ -1114,6 +1123,7 @@ polygon = PackedVector2Array(-88, 56, -24, 56, -24, 40, -8, 32, 72, 48, 96, 48, 
 uv = PackedVector2Array(0, 128, 39.3846, 128, 39.3846, 106.667, 49.2308, 96, 98.4615, 117.333, 113.231, 117.333, 128, 0, 98.4615, 0, 59.0769, 21.3333, 44.3077, 21.3333, 19.6923, 32, 4.92308, 74.6667)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Vacuum" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_a03b3")
@@ -1151,6 +1161,7 @@ polygon = PackedVector2Array(-24, 80, 56, 120, 72, 88, 48, 0, 8, -64, -72, -104,
 uv = PackedVector2Array(54.8571, 105.143, 115.81, 128, 128, 109.714, 109.714, 59.4286, 79.2381, 22.8571, 18.2857, 0, 0, 45.7143, 36.5714, 59.4286, 54.8571, 82.2857, 60.9524, 73.1429, 60.9524, 68.5714, 73.1429, 77.7143, 67.0476, 82.2857, 67.0476, 86.8571, 54.8571, 82.2857, 60.9524, 100.571)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Snail\'s Paste" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_53s7g")
@@ -1179,6 +1190,7 @@ polygon = PackedVector2Array(-56, 64, 8, 80, 48, -72, -16, -72)
 uv = PackedVector2Array(0, 114.526, 78.7692, 128, 128, 0, 49.2308, 0)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Pinnacle" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nlt6u")
@@ -1199,6 +1211,7 @@ polygon = PackedVector2Array(48, -40, -24, -88, -40, -64, -40, -32, -64, -32, -5
 uv = PackedVector2Array(71.68, 34.9091, 25.6, 0, 15.36, 17.4545, 15.36, 40.7273, 0, 40.7273, 5.12, 87.2727, 46.08, 116.364, 76.8, 128, 107.52, 116.364, 102.4, 98.9091, 128, 81.4545, 81.92, 40.7273, 76.8, 46.5455, 66.56, 40.7273)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Moai" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_gihgr")
@@ -1227,6 +1240,7 @@ polygon = PackedVector2Array(88, -48, 104, 40, 56, 96, -24, 40, -32, 32, -104, -
 uv = PackedVector2Array(118.154, 23.2727, 128, 87.2727, 98.4615, 128, 49.2308, 87.2727, 44.3077, 81.4545, 0, 46.5455, 14.7692, 29.0909, 19.6923, 0, 68.9231, 17.4545, 64, 46.5455, 78.7692, 58.1818, 64, 58.1818, 59.0769, 64, 59.0769, 69.8182, 59.0769, 69.8182, 54.1538, 69.8182, 49.2308, 75.6364, 49.2308, 81.4545, 54.1538, 87.2727, 59.0769, 81.4545, 59.0769, 75.6364, 64, 69.8182, 68.9231, 69.8182, 68.9231, 64, 68.9231, 58.1818, 83.6923, 58.1818, 93.5385, 34.9091)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Tri Slip" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_pvjeh")
@@ -1255,6 +1269,7 @@ polygon = PackedVector2Array(-32, 72, 48, 96, 56, 72, 48, 0, 16, -64, -56, -104,
 uv = PackedVector2Array(49.7778, 112.64, 120.889, 128, 128, 112.64, 120.889, 66.56, 92.4444, 25.6, 28.4444, 0, 14.2222, 0, 0, 51.2, 7.11111, 51.2, 35.5556, 66.56, 49.7778, 87.04)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Oil Spill" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_hpl46")
@@ -1265,6 +1280,7 @@ polygon = PackedVector2Array(-48, 64, -96, 0, -88, -8, -80, -8, -80, 8, -64, 8, 
 uv = PackedVector2Array(32, 128, 0, 49.2308, 5.33333, 39.3846, 10.6667, 39.3846, 10.6667, 59.0769, 21.3333, 59.0769, 21.3333, 68.9231, 32, 59.0769, 21.3333, 49.2308, 16, 29.5385, 10.6667, 39.3846, 5.33333, 39.3846, 21.3333, 19.6923, 69.3333, 0, 128, 9.84615, 117.333, 108.308, 58.6667, 108.308, 42.6667, 118.154)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Stick" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_m0taf")
@@ -1312,6 +1328,7 @@ uv = PackedVector2Array(0, 87.5789, 15.0588, 0, 45.1765, 6.73684, 45.1765, 26.94
 script = ExtResource("6_yqfju")
 alignment = 3
 is_capital = true
+neutral_color = 0
 
 [node name="Drift Prep" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_nnps5")
@@ -1322,6 +1339,7 @@ polygon = PackedVector2Array(-64, -40, -64, -24, -80, 0, -112, 0, -128, 16, -112
 uv = PackedVector2Array(46.5455, 23.2727, 46.5455, 34.9091, 34.9091, 52.3636, 11.6364, 52.3636, 0, 64, 11.6364, 69.8182, 34.9091, 64, 98.9091, 128, 122.182, 98.9091, 128, 64, 122.182, 29.0909, 122.182, 11.6364, 81.4545, 0, 75.6364, 17.4545, 69.8182, 23.2727, 58.1818, 23.2727, 52.3636, 29.0909)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="Figly Filler" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_wnnl3")
@@ -1350,6 +1368,7 @@ polygon = PackedVector2Array(-88, 32, -88, -80, 0, -48, 32, -56, 112, 24, 72, 48
 uv = PackedVector2Array(0, 99.5556, 0, 0, 56.32, 28.4444, 76.8, 21.3333, 128, 92.4444, 102.4, 113.778, 51.2, 128, 15.36, 106.667, 15.36, 92.4444, 25.6, 99.5556, 25.6, 92.4444, 15.36, 85.3333, 15.36, 92.4444, 15.36, 106.667)
 script = ExtResource("6_yqfju")
 alignment = 4
+neutral_color = 0
 
 [node name="blockade 1" type="Line2D" parent="."]
 points = PackedVector2Array(272, -160, 336, -152, 376, -144, 400, -120, 416, -88, 408, -72)

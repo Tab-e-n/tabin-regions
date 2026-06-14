@@ -45,12 +45,15 @@ func _ready():
 
 
 func _deferred_ready():
+	var color = region_control.get_alignment_color(dummy_alignment)
+	
 	for node in get_children():
 		if not (node as RegionPath):
 			continue
 		
-		var particle: ParticleTornado = particle_tornado.instantiate()
+		var particle: ParticleTornado = particle_tornado.instantiate() as ParticleTornado
 		particle.tornado_id = region_control.tornados.size()
+		particle.modulate = color
 		region_control.add_child(particle)
 		region_control.tornados.append(particle)
 		particles.append(particle)
@@ -63,7 +66,7 @@ func _deferred_ready():
 		if not path:
 			continue
 		path.ready_pathway(region_control)
-		path.create_warnings(warning_number, region_control.align_color[dummy_alignment])
+		path.create_warnings(warning_number, color)
 		pathways.append(path)
 		
 		disabled_regions.append(null)
