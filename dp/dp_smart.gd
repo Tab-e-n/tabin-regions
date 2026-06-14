@@ -60,7 +60,7 @@ func choose_regions(benefit_func : Callable, tiebreak_func : Callable, regions :
 	for region in regions:
 		priorities[region] = benefit_func.call(region, priorities)
 	
-	# print(priorities)
+#	print(priorities)
 	
 	var highest_benefit : int = 0
 	var results : Array[Region] = []
@@ -71,7 +71,7 @@ func choose_regions(benefit_func : Callable, tiebreak_func : Callable, regions :
 		elif priorities[region] == highest_benefit:
 			results.append(region)
 	
-	# print(results)
+#	print(results)
 	
 	var chosen : Region = null
 	if highest_benefit >= 0:
@@ -80,7 +80,7 @@ func choose_regions(benefit_func : Callable, tiebreak_func : Callable, regions :
 		elif results.size() > 1:
 			chosen = tiebreak_func.call(results)
 	
-	# print(chosen)
+#	print(chosen)
 	
 	if chosen:
 		return chosen.name
@@ -198,6 +198,8 @@ func tiebreak_normal(regs : Array[Region]) -> Region:
 	var regions : Array[Region] = regs.duplicate()
 	var results : Array[Region] = []
 	
+#	print("TIEBREAK: ", regions)
+	
 	for criterion in [
 				_tiebreak_capital,
 				_tiebreak_power,
@@ -218,6 +220,8 @@ func tiebreak_normal(regs : Array[Region]) -> Region:
 			elif rf == fitness:
 				results.append(region)
 		
+#		print("STEP: ", results)
+		
 		if results.is_empty():
 			return null
 		elif results.size() == 1:
@@ -226,9 +230,9 @@ func tiebreak_normal(regs : Array[Region]) -> Region:
 		regions = results.duplicate()
 		results.clear()
 	
-	if results.is_empty():
+	if regions.is_empty():
 		return null
-	return results[randi_range(0, results.size() - 1)]
+	return regions[randi_range(0, results.size() - 1)]
 
 
 func tiebreak_mobilize(regions: Array[Region]) -> Region:

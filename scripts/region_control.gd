@@ -308,6 +308,8 @@ var current_placement : int = 0
 var penalty_amount : Array = []
 
 var region_description : RegionDescription = null
+var volcanos: Array[Volcano] = []
+var tornados: Array = []
 
 
 static func active(region_control : RegionControl) -> bool:
@@ -1210,7 +1212,7 @@ func change_current_phase():
 	if call_end_turn:
 		end_turn(false)
 	
-	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "change_current_phase")
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "change_current_phase")
 
 
 ## Ends the current players turn.
@@ -1247,7 +1249,7 @@ func end_turn(record : bool):
 		_new_round()
 	
 	if record:
-		ReplayControl.record_move.call_deferred(ReplayControl.RECORD_TYPE_FUNCTION, "end_turn")
+		ReplayControl.record_move.call_deferred(ReplayControl.RecordType.FUNCTION, "end_turn")
 
 
 ## Makes the current player forfeit, turning their regions neutral.
@@ -1256,31 +1258,30 @@ func forfeit():
 	
 	end_turn(false)
 	
-	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "forfeit")
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "forfeit")
 
 
 ## Gives the current player an extra action.
-func add_action():
-	_modify_action_amount(1)
-	ReplayControl.record_move(ReplayControl.RECORD_TYPE_FUNCTION, "add_action")
+func add_action(amount: int = 1):
+	_modify_action_amount(amount)
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "add_action", amount)
 
 
 ## Captures a region for the current player, regardless of the state the region is in.
-func overtake_region(region_name : String):
+func overtake_region(region_name: String):
 	var region : Region = get_region(region_name)
 	if region:
 		region.overtake()
-		ReplayControl.record_move(ReplayControl.RECORD_TYPE_OVERTAKE, region_name)
+		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name)
 
 
 ## Called after a region is pressed.
-func action_done(region_name : String, amount : int = 1):
-	var auto_end_phase : bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
+func action_done(region_name: String, amount: int = 1):
+	var auto_end_phase: bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
 	
 	if current_phase == PHASE.MOBILIZE:
 		_modify_action_amount(amount)
-		for i in range(amount):
-			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
+		ReplayControl.record_move(ReplayControl.RecordType.REGION, region_name, amount)
 		return
 	
 	if _modify_action_amount(-amount):
@@ -1290,8 +1291,7 @@ func action_done(region_name : String, amount : int = 1):
 		elif current_phase == PHASE.BONUS:
 			stat = "bonus actions done"
 		GameStats.add_to_stat(current_playing_align, stat, amount)
-		for i in range(amount):
-			ReplayControl.record_move(ReplayControl.RECORD_TYPE_REGION, region_name)
+		ReplayControl.record_move(ReplayControl.RecordType.REGION, region_name, amount)
 	
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()

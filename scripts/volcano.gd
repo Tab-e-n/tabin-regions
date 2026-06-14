@@ -1,12 +1,20 @@
 extends Node
+## Volcano is a game object that periodically explodes and turns regions neutral.
+## Volcanos act like pseudo-players.
 class_name Volcano
 
 
 const WARNING_NAME : String = "VolcanoWarning"
 
 
+## Region that will be used to decide when the volcano erupts.
+## The volcano will add 1 power to it's residing region every turn.
+## When at max power, the volcano erupts and the region is set back to 1 power.
 @export var residing_region : Region
+## The alignment used by the volcano. Should have DPDummy.
 @export var dummy_alignment : int = 0
+## Makes warnings that show up appear further from the city.
+## Useful if multiple disasters are present, so their warnings don't overlap.
 @export var warning_number : int = 1
 
 @export_subgroup("Screen Shake")
@@ -18,15 +26,14 @@ const WARNING_NAME : String = "VolcanoWarning"
 @onready var dp_control : DPControl
 @onready var region_control : RegionControl
 
-var pathways : Array[RegionPath] = []
-var active : bool = false
-var iteration : int = 0
+var pathways: Array[RegionPath] = []
+var active: bool = false
+var iteration: int = 0
+var volcano_id: int = 0
 
 
 func _ready():
-	if ReplayControl.replay_active:
-		queue_free()
-		return
+	
 	region_control = get_parent() as RegionControl
 	if not region_control:
 		push_warning("Volcano could not find region control, thus it is not functional.")
@@ -35,12 +42,20 @@ func _ready():
 	if region_control.dummy:
 		queue_free()
 		return
+	
+	volcano_id = region_control.volcanos.size()
+	region_control.volcanos.append(self)
+	
+	if ReplayControl.replay_active:
+		return
+	
 	if not residing_region:
 		push_warning("Volcano could not find residing region, thus it is not functional.")
 		queue_free()
 		return
 	
 	region_control.turn_ended.connect(_start_volcano_turn)
+	
 	_deferred_ready.call_deferred()
 	activate_pathways.call_deferred()
 
@@ -67,6 +82,16 @@ func _deferred_ready():
 	controler.thinking_mobilize.connect(_think_mobilize)
 
 
+func _start_volcano_turn():
+	if controler.current_alignment != dummy_alignment:
+		return
+	
+	if residing_region.power == residing_region.max_power:
+		dp_control.CALL_change_current_phase = true
+	
+	active = true
+
+
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
@@ -89,8 +114,7 @@ func _think_mobilize():
 	
 	if residing_region.power == 1:
 		dp_control.CALL_change_current_phase = true
-		if region_control.game_camera:
-			region_control.game_camera.shake_camera(duration, amplitude, period)
+		shake_screen()
 	else:
 		dp_control.selected_capital = residing_region.name
 
@@ -119,12 +143,7 @@ func activate_pathways():
 	iteration += 1
 
 
-func _start_volcano_turn():
-	if controler.current_alignment != dummy_alignment:
-		return
-	
-	if residing_region.power == residing_region.max_power:
-		dp_control.CALL_change_current_phase = true
-#		print("Volcano Busted")
-	
-	active = true
+func shake_screen():
+	if region_control.game_camera:
+		ReplayControl.record_move(ReplayControl.RecordType.VOLCANO, "shake_screen", volcano_id)
+		region_control.game_camera.shake_camera(duration, amplitude, period)

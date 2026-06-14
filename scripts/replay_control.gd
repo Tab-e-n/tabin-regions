@@ -1,18 +1,20 @@
 extends Node
 
 
-const NOTHING_MOVE = [1, "nothing"]
+const NOTHING_MOVE = [1, "nothing", 0]
 
-enum {
-	RECORD_TYPE_REGION,
-	RECORD_TYPE_FUNCTION,
-	RECORD_TYPE_OVERTAKE,
+enum RecordType {
+	REGION,
+	FUNCTION,
+	OVERTAKE,
+	VOLCANO,
+	TORNADO,
 }
 
 
 var replay_active : bool = false
 
-var replay : Dictionary = {}
+var replay : Array = []
 var current_replay_pos : int = 0
 
 var replay_play_order : Array = []
@@ -36,20 +38,21 @@ func clear_replay():
 	replay_active = false
 
 
-func record_move(type : int, action : String):
+func record_move(type: int, action: String, amount: int = 1):
 	if not replay_active:
-		replay[str(current_replay_pos)] = [type, action]
-		current_replay_pos += 1
-#		print([type, action])
+		replay.append([type, action, amount])
+#		current_replay_pos += 1
+#		print(type, " ", action, " ", amount)
 
 
 func get_next_move():
 	if paused:
 		return NOTHING_MOVE
-	if current_replay_pos < replay.keys().size():
-		var next_move = replay[str(current_replay_pos)]
+	if current_replay_pos < replay.size():
+		var next_move = replay[current_replay_pos]
 		current_replay_pos += 1
 #		print(current_replay_pos)
+#		print(type, " ", action, " ", amount)
 		return next_move
 	else:
 		return NOTHING_MOVE
@@ -59,7 +62,7 @@ func toggle_pause():
 	paused = not paused
 
 
-func save_replay(replay_name : String):
+func save_replay(replay_name: String):
 	var replay_save : Dictionary = {
 		"game_version" : Options.version,
 		"replay_dir" : MapSetup.current_directory,

@@ -33,6 +33,7 @@ var current_moves : Dictionary = {}
 var previous_moves : Set = Set.new()
 
 var selected_capital : String = ""
+var selected_amount: int = 1
 
 var CALL_change_current_phase : bool = false
 var CALL_end_turn : bool = false
@@ -131,14 +132,25 @@ func think():
 		if replay_done_action:
 			replay_done_action = false
 			var next_move = ReplayControl.get_next_move()
+			var type: int = next_move[0]
+			var action: String = next_move[1]
+			selected_amount = next_move[2]
+			
 #			print(current_alignment, " ", next_move)
-			if next_move[0] == ReplayControl.RECORD_TYPE_REGION:
-				selected_capital = next_move[1]
-			elif next_move[0] == ReplayControl.RECORD_TYPE_OVERTAKE:
-				selected_capital = next_move[1]
+			if type == ReplayControl.RecordType.REGION:
+				selected_capital = action
+			elif type == ReplayControl.RecordType.OVERTAKE:
+				selected_capital = action
 				CALL_overtake = true
+			elif type == ReplayControl.RecordType.VOLCANO:
+				CALL_nothing = true
+				match(action):
+					"shake_screen":
+						region_control.volcanos[selected_amount].shake_screen()
+			elif type == ReplayControl.RecordType.TORNADO:
+				CALL_nothing = true
 			else:
-				match(next_move[1]):
+				match(action):
 					"forfeit":
 						CALL_forfeit = true
 					"end_turn":
@@ -151,6 +163,7 @@ func think():
 						CALL_cheat = true
 	else:
 		find_owned_regions()
+		selected_amount = 1
 		
 		var dp : DigitalPlayer = controlers[current_controler]
 		if dp:
@@ -191,7 +204,7 @@ func timer_ended():
 		should_think = region_control.current_phase != RegionControl.PHASE.NORMAL
 	elif CALL_cheat:
 		reset_CALL()
-		region_control.add_action()
+		region_control.add_action(selected_amount)
 		should_think = true
 	elif CALL_overtake:
 		reset_CALL()
@@ -200,7 +213,7 @@ func timer_ended():
 			note_region_selection(selected_capital, current_align())
 		should_think = true
 	else:
-		region_control.get_node(selected_capital).action_decided()
+		region_control.get_region(selected_capital).action_decided(selected_amount)
 		if not ReplayControl.replay_active:
 			note_region_selection(selected_capital, current_align())
 	
@@ -215,7 +228,7 @@ func _add_new_current_moves(alignment : int) -> void:
 		current_moves[alignment] = Set.new()
 
 
-func note_region_selection(region : StringName, alignment : int) -> void:
+func note_region_selection(region: StringName, alignment: int) -> void:
 	_add_new_current_moves(alignment)
 	current_moves[alignment].add(region)
 

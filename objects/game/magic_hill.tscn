@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://co3hhhxk78pol"]
+
+[ext_resource type="Script" path="res://scripts/magic_hill.gd" id="1_54fwd"]
+
+[node name="MagicHill" type="Node"]
+script = ExtResource("1_54fwd")

@@ -193,10 +193,9 @@ func set_max_power(new_max : int, reduce_power : bool = true):
 	city.update_region_name()
 
 
-func action_decided() -> bool:
+func action_decided(amount_requested: int = 1) -> bool:
 	if region_control.current_phase == RegionControl.PHASE.MOBILIZE:
 		if region_control.current_playing_align == alignment:
-			var amount_requested = 1
 			if Input.is_action_pressed("shift") and region_control.is_player_controled:
 				amount_requested = power - 1
 			var amount_gotten = mobilize(alignment, amount_requested)

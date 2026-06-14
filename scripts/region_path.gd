@@ -5,6 +5,9 @@ class_name RegionPath
 @export var pathway_region_names : Array[String] = []
 
 @export_subgroup("Disasters")
+## When a disaster activates, it chooses which paths to use.
+## Chosen frequency determines how many activations need to happen until this path gets chosen.
+## At frequency 1 the path will be chosen every time.
 @export var chosen_frequency : int = 5
 @export var chosen_offset : int = 0
 
@@ -27,9 +30,18 @@ func is_active() -> bool:
 	return active
 
 
-func reset() -> void:
+func activate() -> void:
 	current = 0
 	active = true
+
+
+func activate_iteration(iteration : int) -> void:
+	if ((iteration + chosen_offset) % chosen_frequency) == 0:
+		activate()
+
+
+func get_regions() -> Array[Region]:
+	return pathway
 
 
 func get_next_region() -> Region:
@@ -40,11 +52,6 @@ func get_next_region() -> Region:
 	if current >= pathway.size():
 		active = false
 	return region
-
-
-func activate_iteration(iteration : int) -> void:
-	reset()
-	active = ((iteration + chosen_offset) % chosen_frequency) == 0
 
 
 func create_warnings(warning_number : int, warning_color : Color) -> void:

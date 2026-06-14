@@ -1,4 +1,4 @@
-[gd_scene load_steps=38 format=3 uid="uid://xlu4wp5m8phb"]
+[gd_scene load_steps=39 format=3 uid="uid://xlu4wp5m8phb"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_qwc4r"]
 [ext_resource type="Script" path="res://scripts/region.gd" id="2_iirrf"]
@@ -6,46 +6,9 @@
 [ext_resource type="Script" path="res://scripts/region_link.gd" id="2_vpjj4"]
 [ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="3_lcno6"]
 [ext_resource type="PackedScene" uid="uid://dcd50lc8r7cxq" path="res://objects/game/particle_spawner_cloud.tscn" id="3_t7voh"]
+[ext_resource type="Script" path="res://scripts/magic_hill.gd" id="3_xn8ej"]
 [ext_resource type="PackedScene" uid="uid://blowvq5h3r2t5" path="res://objects/game/particle_spawner_star.tscn" id="4_7praj"]
-
-[sub_resource type="GDScript" id="GDScript_xu8xq"]
-script/source = "extends Node
-
-
-var turn : int
-
-@onready var control : RegionControl = get_parent()
-@onready var magic : Region = control.get_node(\"Magic Hill\")
-@onready var earth : Region = control.get_node(\"Earth\")
-@onready var water : Region = control.get_node(\"Water\")
-@onready var wind : Region = control.get_node(\"Wind\")
-@onready var fire : Region = control.get_node(\"Fire\")
-
-
-func _ready():
-	turn = control.current_turn
-
-
-func _physics_process(_delta):
-	if control.dummy:
-		return
-	if turn != control.current_turn:
-		var decreased : bool = false
-		if magic.power == magic.max_power:
-			magic.power = 1
-			decreased = true
-			earth.reinforce(0)
-			earth.city_particle(false)
-			water.reinforce(0)
-			water.city_particle(false)
-			wind.reinforce(0)
-			wind.city_particle(false)
-			fire.reinforce(0)
-			fire.city_particle(false)
-		magic.reinforce(0)
-		magic.city_particle(decreased)
-		turn = control.current_turn
-"
+[ext_resource type="Script" path="res://scripts/region_path.gd" id="4_eav8r"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jgnft"]
 shader = ExtResource("2_rt6om")
@@ -516,8 +479,14 @@ script = ExtResource("2_vpjj4")
 from_name = &"Groundma"
 to_name = &"Sand"
 
-[node name="Magic Hill Mechanic" type="Node" parent="."]
-script = SubResource("GDScript_xu8xq")
+[node name="Magic Hill Mechanics" type="Node" parent="." node_paths=PackedStringArray("residing_region", "magic_path")]
+script = ExtResource("3_xn8ej")
+residing_region = NodePath("../Magic Hill")
+magic_path = NodePath("RegionPath")
+
+[node name="RegionPath" type="Node" parent="Magic Hill Mechanics"]
+script = ExtResource("4_eav8r")
+pathway_region_names = Array[String](["Earth", "Water", "Wind", "Fire"])
 
 [node name="Magic Hill" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_jgnft")

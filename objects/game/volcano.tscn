@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://c2sxepioj02ng"]
+
+[ext_resource type="Script" path="res://scripts/volcano.gd" id="1_jvlmv"]
+
+[node name="Volcano" type="Node"]
+script = ExtResource("1_jvlmv")

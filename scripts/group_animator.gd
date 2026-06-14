@@ -1,4 +1,6 @@
 extends Node2D
+## GroupAnimator is a helper class for animating regions.
+## Made for the "Final Frontiers" map.
 class_name GroupAnimator
 
 
@@ -21,6 +23,7 @@ func _ready():
 func update_object_positions():
 	for pairs in keys:
 		pairs[1].global_position = pairs[0].global_position
+
 
 func update_object_scale():
 	for pairs in keys:
