@@ -157,7 +157,7 @@ const COLOR_TOO_BRIGHT : float = 0.85
 ## The default digital player the map uses. Uses the CONTROLER from 'DPControl'.
 ## Default, Turtle, Neural and Cheater are all accessible in the setup scene.
 ## The Dummy DP does nothing, expecting to be controled by the map.
-@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy", "Smartie") var default_digital_player : int = DPControl.CONTROLER.DEFAULT
+@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy", "Smartie") var default_digital_player: int = DPControl.CONTROLER.USER
 ## List of digital players the individual alignments use. Excludes aligment 0.
 ## 0 gets overriden during map setup, 1-5 force a specific alignment to be controled by a specific digital player.
 @export var custom_dp_setup : Array[int] = []

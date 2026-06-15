@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://d2h1gvvcp58e1"]
+[gd_scene load_steps=11 format=3 uid="uid://d2h1gvvcp58e1"]
 
 [ext_resource type="Script" path="res://scripts/menu.gd" id="1_qwrye"]
 [ext_resource type="StyleBox" uid="uid://cxjg1uu1jxe27" path="res://styles/menu_tabs_panel.tres" id="2_fsnol"]
@@ -9,6 +9,7 @@
 [ext_resource type="StyleBox" uid="uid://b3s2lnxaxptp5" path="res://styles/menu_tabs_button_hover.tres" id="4_ufy0q"]
 [ext_resource type="StyleBox" uid="uid://bhqomdrirxcjp" path="res://styles/menu_tabs_button_pressed.tres" id="5_escr3"]
 [ext_resource type="PackedScene" uid="uid://baequxmb1xdwc" path="res://menus/options.tscn" id="5_iawia"]
+[ext_resource type="PackedScene" uid="uid://cbt282jrbubml" path="res://menus/packs.tscn" id="7_chaj1"]
 
 [node name="menu" type="VBoxContainer" node_paths=PackedStringArray("tabs", "menus")]
 anchors_preset = 15
@@ -112,6 +113,10 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+
+[node name="packs" parent="middle/menus" instance=ExtResource("7_chaj1")]
+visible = false
+layout_mode = 1
 
 [node name="maps" parent="middle/menus" instance=ExtResource("3_hskgm")]
 layout_mode = 1

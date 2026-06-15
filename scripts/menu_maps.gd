@@ -189,7 +189,7 @@ func update_presets() -> void:
 	update_slider_players()
 	update_slider_aliances()
 	
-	update_dp_selection()
+	update_dp_selection.call_deferred()
 
 
 func update_map_info() -> void:
@@ -248,9 +248,10 @@ func set_dp_disabled(disabled: bool) -> void:
 		DPControl.CONTROLER.SMARTIE : dp_button_bookwyrm,
 		DPControl.CONTROLER.CHEATER : dp_button_cheater,
 	}
+	
 	for dp in buttons:
 		buttons[dp].disabled = disabled
-		buttons[dp].visible = not disabled or MapSetup.default_digital_player == dp
+		buttons[dp].visible = not disabled or (current_map and current_map.default_digital_player == dp)
 	
 	dp_selector.visible = not disabled
 
