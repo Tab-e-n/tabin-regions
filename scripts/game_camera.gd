@@ -505,7 +505,7 @@ func update_alignment_colored_ui():
 				current_action.self_modulate = Color.WHITE
 	if power_sprite:
 		var color: Color = Color.WHITE
-		if not Options.should_limit_flashing():
+		if region_control.is_player_controled or not Options.should_limit_flashing():
 			color = region_control.get_current_alignment_color()
 		power_sprite.self_modulate = color
 		power_sprite.self_modulate.a = 1

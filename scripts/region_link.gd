@@ -201,7 +201,7 @@ func _show_if_obsolete() -> void:
 	while parent != null and (parent as RegionControl) == null:
 		parent = parent.get_parent()
 	if not parent.get_node(str(from_name)) or not parent.get_node(str(to_name)):
-		add_point(Vector2(128, 128))
+		add_point(Vector2(256, 256))
 		add_point(Vector2(512, 512))
 
 

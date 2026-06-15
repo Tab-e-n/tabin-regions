@@ -48,7 +48,7 @@ enum SETUP_TAG {
 ## Labels that tell the player how experienced with the game they have to be to play this map.
 ## There are some guidelines you should follow when choosing a maps complexity.
 enum SETUP_COMPLEXITY {
-	## Map that uses custom gimmicks or non-default gameplay objects.
+	## Non-binary map.
 	## (U.)
 	UNSPECIFIED,
 	## Maps that are intended to be played by newbies.
@@ -65,7 +65,7 @@ enum SETUP_COMPLEXITY {
 	## (C.)
 	INTERMEDIATE,
 	## Map to push average players into harder territories. /
-	## Features a few custom gimmicks.
+	## Features at max a few custom gimmicks.
 	## (D.)
 	ADVANCED,
 	## Map for players seeking a more involved experience than the regular game. /
@@ -73,7 +73,7 @@ enum SETUP_COMPLEXITY {
 	## (E.)
 	DIFFICULT,
 	## Map pushing the limits of the game. /
-	## Features a loads of custom gimmicks.
+	## Features loads of custom gimmicks.
 	## (F.)
 	EXTREME,
 	## Map that is nolonger simple regional warfare.
@@ -290,8 +290,8 @@ var current_playing_align : int = 1
 var align_play_order : Array = []
 var play_order_i : int = 0
 
-var align_controlers : Array = []
-var is_player_controled : bool
+var align_controlers: Array = []
+var is_player_controled: bool
 
 var regions : Dictionary = {}
 var region_amount : Array[int] = []
@@ -879,7 +879,7 @@ func _start_turn():
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + get_alignment_color(current_playing_align) * Color(0.25, 0.25, 0.25)
 		if Options.should_limit_flashing():
-			if align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER:
+			if turn_is_player_turn():
 				color = bg_color_tinted
 			else:
 				color = bg_color
@@ -889,7 +889,7 @@ func _start_turn():
 	if ReplayControl.replay_active:
 		is_player_controled = false
 	else:
-		is_player_controled = align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER
+		is_player_controled = turn_is_player_turn()
 	
 	if not is_player_controled and dp_control:
 		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
@@ -1130,7 +1130,9 @@ func get_neutral_color(neutral: int) -> Color:
 
 
 func get_alignment_color(alignment: int, neutral: int = -1) -> Color:
-	if align_color.size() == 0 or alignment <= 0 or alignment >= align_color.size():
+	if align_color.size() == 0 or alignment < 0 or alignment >= align_color.size():
+		return Color.WHITE
+	if alignment == 0:
 		return get_neutral_color(neutral)
 	return align_color[alignment]
 
@@ -1311,6 +1313,10 @@ func action_done(region_name: String, amount: int = 1):
 	
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()
+
+
+func turn_is_player_turn() -> bool:
+	return align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER
 
 
 func map_bounds() -> Vector4:
