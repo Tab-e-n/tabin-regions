@@ -72,13 +72,14 @@ const PHASE_INFO : Array[String] = [
 @export var command_callout : CommandCallouts
 
 @export_subgroup("Pause Options")
-@export var mouse_scroll : BaseButton
-@export var auto_phase : BaseButton
-@export var fast_dp : BaseButton
-@export var action_change_part : BaseButton
-@export var visible_capitals : BaseButton
-@export var visible_ui : BaseButton
-@export var visible_turn_order : BaseButton
+@export var dp_speed: Range
+@export var mouse_scroll: BaseButton
+@export var auto_phase: BaseButton
+@export var fast_dp: BaseButton
+@export var action_change_part: BaseButton
+@export var visible_capitals: BaseButton
+@export var visible_ui: BaseButton
+@export var visible_turn_order: BaseButton
 
 @export_subgroup("Tooltips")
 @export var tooltip_actions : Label
@@ -187,6 +188,7 @@ func _ready():
 		auto_phase.button_pressed = Options.auto_end_turn_phases
 	if fast_dp:
 		fast_dp.button_pressed = Options.dp_speedrun
+	set_dp_speed_slider(Options.dp_think_timer)
 	if action_change_part:
 		action_change_part.button_pressed = Options.action_change_particles
 	if visible_ui and ui_hideable:
@@ -502,7 +504,10 @@ func update_alignment_colored_ui():
 			else:
 				current_action.self_modulate = Color.WHITE
 	if power_sprite:
-		power_sprite.self_modulate = region_control.get_current_alignment_color()
+		var color: Color = Color.WHITE
+		if not Options.should_limit_flashing():
+			color = region_control.get_current_alignment_color()
+		power_sprite.self_modulate = color
 		power_sprite.self_modulate.a = 1
 		if power_amount:
 			power_amount.self_modulate = RegionControl.text_color(power_sprite.self_modulate.v)
@@ -584,6 +589,12 @@ func set_pause_menu_visible(visibility : bool):
 		pause_menu.visible = visibility
 		if game_control:
 			game_control.inputs_active = not visibility
+
+
+func set_dp_speed_slider(options_value: float) -> void:
+	if dp_speed:
+		var value: float = (options_value - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN)
+		dp_speed.set_value_no_signal(1.0 - value)
 
 
 func show_tooltip(tooltip : TOOLTIP):

@@ -878,7 +878,7 @@ func _start_turn():
 	
 	if color_bg_according_to_alignment:
 		var bg_color_tinted : Color = bg_color + get_alignment_color(current_playing_align) * Color(0.25, 0.25, 0.25)
-		if Options.dp_speedrun:
+		if Options.should_limit_flashing():
 			if align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER:
 				color = bg_color_tinted
 			else:

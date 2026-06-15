@@ -5,9 +5,6 @@ var current_map : RegionControl
 
 var maps : Array
 
-enum {MENU_LORE, MENU_ALIGNMENTS, MENU_DIFFICULTY}
-var current_menu : int = MENU_LORE
-
 
 @onready var tintable_ui : Node2D = $tintable_ui
 

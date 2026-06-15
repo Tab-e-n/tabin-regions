@@ -166,7 +166,8 @@ align_amount = 6
 remove_capitals_with_alignments = false
 complexity = 1
 lore = "Made with a group of playtesters when we were discussing the game."
-align_color = Array[Color]([Color(0.984314, 0.968627, 0.94902, 1), Color(0.788235, 0.94902, 0.764706, 1), Color(0.992157, 0.858824, 0.862745, 1), Color(0.960784, 0.92549, 0.631373, 1), Color(0.745098, 0.894118, 0.898039, 1), Color(0.870588, 0.807843, 0.964706, 1), Color(0.764706, 0.690196, 0.603922, 1)])
+align_color = Array[Color]([Color(0.984314, 0.968627, 0.94902, 1), Color(0.788235, 0.94902, 0.764706, 1), Color(0.992157, 0.858824, 0.862745, 1), Color(0.960784, 0.92549, 0.631373, 1), Color(0.745098, 0.894118, 0.898039, 1), Color(0.870588, 0.807843, 0.964706, 1)])
+neutral_colors = Array[Color]([Color(0.764706, 0.690196, 0.603922, 1)])
 align_names = Array[String](["Archipelago", "Splats", "Lovers", "Pups", "Boaters", "Sheelis"])
 color_bg_according_to_alignment = false
 command_callout_color = Color(0, 0, 0, 1)
@@ -597,10 +598,10 @@ texture = ExtResource("5_nbo8u")
 polygon = PackedVector2Array(32, 40, 8, 32, -16, 40, -24, 56, -40, 48, -40, 24, -72, 0, -48, -24, -16, -40, 24, -48, 56, -56, 56, -24, 40, 0, 40, 24)
 uv = PackedVector2Array(104, 109.714, 80, 100.571, 56, 109.714, 48, 128, 32, 118.857, 32, 91.4286, 0, 64, 24, 36.5714, 56, 18.2857, 96, 9.14286, 128, 0, 128, 36.5714, 112, 64, 112, 91.4286)
 script = ExtResource("6_4210l")
-alignment = 6
 power = 3
 max_power = 3
 is_capital = true
+neutral_color = 0
 
 [node name="Cracked Earth" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_c6db8")

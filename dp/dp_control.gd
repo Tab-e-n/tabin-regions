@@ -7,48 +7,51 @@ signal timer_has_ended
 
 enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY, SMARTIE, SIZE}
 
-const THINKING_TIMER_DEFAULT : float = 0.5
-const THINKING_TIMER_SPEEDRUN : float = 0.05
-const THINKING_TIMER_NETWORK : float = 0.001
+const THINKING_TIMER_MAX: float = 0.75
+const THINKING_TIMER_DEFAULT: float = 0.505
+const THINKING_TIMER_MIN: float = 0.05
 
-const CONTROLER_NAMES : Array = ["User Controled", "Simpleton", "Turtle", "Overthinker", "Cheater", "Environment", "Bookwyrm"]
+const THINKING_TIMER_SPEEDRUN: float = 0.05
+const THINKING_TIMER_NETWORK: float = 0.001
 
-
-@export var controler_paths : Array[NodePath] = []
-
-
-@onready var game_control : GameControl = get_parent()
-@onready var region_control : RegionControl
+const CONTROLER_NAMES: Array = ["User Controled", "Simpleton", "Turtle", "Overthinker", "Cheater", "Environment", "Bookwyrm"]
 
 
-var thinking_timer : float = THINKING_TIMER_DEFAULT
+@export var controler_paths: Array[NodePath] = []
 
-var controlers : Array[DigitalPlayer] = []
-var current_controler : int
 
-var timer : float = 0
+@onready var game_control: GameControl = get_parent()
+@onready var region_control: RegionControl
 
-var owned_regions : Dictionary = {}
-var current_moves : Dictionary = {}
-var previous_moves : Set = Set.new()
+
+var thinking_timer: float = THINKING_TIMER_DEFAULT
+
+var controlers: Array[DigitalPlayer] = []
+var current_controler: int
+
+var timer: float = 0
+
+var owned_regions: Dictionary = {}
+var current_moves: Dictionary = {}
+var previous_moves: Set = Set.new()
 
 var selected_capital : String = ""
 var selected_amount: int = 1
 
-var CALL_change_current_phase : bool = false
-var CALL_end_turn : bool = false
-var CALL_forfeit : bool = false
-var CALL_nothing : bool = false
-var CALL_cheat : bool = false
-var CALL_overtake : bool = false
+var CALL_change_current_phase: bool = false
+var CALL_end_turn: bool = false
+var CALL_forfeit: bool = false
+var CALL_nothing: bool = false
+var CALL_cheat: bool = false
+var CALL_overtake: bool = false
 
-var replay_done_action : bool = true
+var replay_done_action: bool = true
 
 
 func _ready():
 	Options.timestamp("DPCotrol")
 	
-	dp_speedrun_update()
+	thinking_timer_update()
 	
 	if game_control:
 		game_control.dp_control = self
@@ -57,7 +60,7 @@ func _ready():
 	controlers.append(null)
 	# Other controlers
 	for path in controler_paths:
-		var dp : DigitalPlayer = get_node(path) as DigitalPlayer
+		var dp: DigitalPlayer = get_node(path) as DigitalPlayer
 		if dp:
 			dp.controler = self
 			controlers.append(dp)
@@ -74,7 +77,7 @@ func _ready_deferred():
 		region_control = game_control.region_control
 
 
-func _process(delta):
+func _process(delta: float):
 	if not RegionControl.active(region_control):
 		return
 	
@@ -90,6 +93,24 @@ func _process(delta):
 		timer_has_ended.emit()
 
 
+func reset_CALL() -> bool:
+	var r = (
+		CALL_forfeit or
+		CALL_end_turn or
+		CALL_change_current_phase or
+		CALL_nothing or
+		CALL_cheat or
+		CALL_overtake
+	)
+	CALL_forfeit = false
+	CALL_end_turn = false
+	CALL_change_current_phase = false
+	CALL_nothing = false
+	CALL_cheat = false
+	CALL_overtake = false
+	return r
+
+
 func reset():
 	owned_regions = {}
 	current_moves = {}
@@ -99,13 +120,13 @@ func reset():
 	timer = 0
 
 
-func dp_speedrun_update():
+func thinking_timer_update():
 	if game_control is NetworkTrainer:
 		thinking_timer = THINKING_TIMER_NETWORK
 	elif Options.dp_speedrun:
 		thinking_timer = THINKING_TIMER_SPEEDRUN
 	else:
-		thinking_timer = THINKING_TIMER_DEFAULT
+		thinking_timer = Options.dp_think_timer
 
 
 func start_turn(alignment : int, control : int):
@@ -123,55 +144,67 @@ func start_turn(alignment : int, control : int):
 	call_deferred("think")
 
 
+func replay():
+	if not replay_done_action:
+		return
+	replay_done_action = false
+	
+	var next_move = ReplayControl.get_next_move()
+	var type: ReplayControl.RecordType = next_move[0]
+	var action: String = next_move[1]
+	var amount: int = next_move[2]
+	
+#			print(current_alignment, " ", next_move)
+	if type == ReplayControl.RecordType.REGION:
+		selected_capital = action
+		selected_amount = amount
+	elif type == ReplayControl.RecordType.OVERTAKE:
+		selected_capital = action
+		selected_amount = amount
+		CALL_overtake = true
+	
+	elif type == ReplayControl.RecordType.FUNCTION:
+		match(action):
+			"forfeit":
+				CALL_forfeit = true
+			"end_turn":
+				CALL_end_turn = true
+			"change_current_phase":
+				CALL_change_current_phase = true
+			"nothing":
+				CALL_nothing = true
+			"add_action":
+				CALL_cheat = true
+	
+	elif type == ReplayControl.RecordType.VOLCANO:
+		CALL_nothing = true
+		match(action):
+			"shake_screen":
+				region_control.volcanos[amount].shake_screen()
+	elif type == ReplayControl.RecordType.TORNADO:
+		CALL_nothing = true
+		if action.is_empty():
+			region_control.tornados[amount].deactivate()
+		else:
+			region_control.tornados[amount].take_region(region_control.get_region(action), thinking_timer)
+	
+	else:
+		push_warning("Unrecognized replay move: ", type, " ", action, " ", amount)
+		CALL_nothing = true
+
+
 func think():
 #	print("think")
 	
 	timer = thinking_timer
 	
 	if ReplayControl.replay_active:
-		if replay_done_action:
-			replay_done_action = false
-			var next_move = ReplayControl.get_next_move()
-			var type: int = next_move[0]
-			var action: String = next_move[1]
-			selected_amount = next_move[2]
-			
-#			print(current_alignment, " ", next_move)
-			if type == ReplayControl.RecordType.REGION:
-				selected_capital = action
-			elif type == ReplayControl.RecordType.OVERTAKE:
-				selected_capital = action
-				CALL_overtake = true
-			
-			elif type == ReplayControl.RecordType.VOLCANO:
-				CALL_nothing = true
-				match(action):
-					"shake_screen":
-						region_control.volcanos[selected_amount].shake_screen()
-			elif type == ReplayControl.RecordType.TORNADO:
-				CALL_nothing = true
-				if action.is_empty():
-					region_control.tornados[selected_amount].deactivate()
-				else:
-					region_control.tornados[selected_amount].take_region(region_control.get_region(action), thinking_timer - 0.01)
-			
-			else:
-				match(action):
-					"forfeit":
-						CALL_forfeit = true
-					"end_turn":
-						CALL_end_turn = true
-					"change_current_phase":
-						CALL_change_current_phase = true
-					"nothing":
-						CALL_nothing = true
-					"add_action":
-						CALL_cheat = true
+		replay()
 	else:
 		find_owned_regions()
 		selected_amount = 1
 		
-		var dp : DigitalPlayer = controlers[current_controler]
+		var dp: DigitalPlayer = controlers[current_controler]
 		if dp:
 			var phase = RegionControl.PHASE.NORMAL
 			if region_control:
@@ -193,38 +226,41 @@ func timer_ended():
 	if ReplayControl.replay_active and replay_done_action:
 		think()
 		return
-	var should_think : bool = true
+	
+	var should_continue: bool = true
+	
 	if CALL_nothing:
 		reset_CALL()
-	elif CALL_forfeit:
-		reset_CALL()
+	
+	if CALL_forfeit:
 		region_control.forfeit()
-		should_think = false
-	elif CALL_end_turn:
-		reset_CALL()
+		should_continue = false
+	
+	if CALL_end_turn:
 		region_control.end_turn(true)
-		should_think = false
-	elif CALL_change_current_phase:
-		reset_CALL()
+		should_continue = false
+	
+	if CALL_change_current_phase:
 		region_control.change_current_phase()
-		should_think = region_control.current_phase != RegionControl.PHASE.NORMAL
-	elif CALL_cheat:
-		reset_CALL()
+		should_continue = region_control.current_phase != RegionControl.PHASE.NORMAL
+	
+	if CALL_cheat:
 		region_control.add_action(selected_amount)
-		should_think = true
-	elif CALL_overtake:
-		reset_CALL()
+		should_continue = true
+	
+	if CALL_overtake:
 		region_control.overtake_region(selected_capital)
 		if not ReplayControl.replay_active:
 			note_region_selection(selected_capital, current_align())
-		should_think = true
-	else:
+		should_continue = true
+	
+	if not reset_CALL():
 		region_control.get_region(selected_capital).action_decided(selected_amount)
 		if not ReplayControl.replay_active:
 			note_region_selection(selected_capital, current_align())
 	
 	replay_done_action = true
-	if should_think:
+	if should_continue:
 		think()
 #	print(current_moves)
 
@@ -237,15 +273,6 @@ func _add_new_current_moves(alignment : int) -> void:
 func note_region_selection(region: StringName, alignment: int) -> void:
 	_add_new_current_moves(alignment)
 	current_moves[alignment].add(region)
-
-
-func reset_CALL():
-	CALL_forfeit = false
-	CALL_end_turn = false
-	CALL_change_current_phase = false
-	CALL_nothing = false
-	CALL_cheat = false
-	CALL_overtake = false
 
 
 func current_align() -> int:

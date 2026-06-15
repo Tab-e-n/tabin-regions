@@ -1,28 +1,29 @@
 extends Node
 
 
-const SAVEFILE : String = "user://OPTIONS.json"
+const SAVEFILE: String = "user://OPTIONS.json"
 
-const TIMESTAMPS_ACTIVE : bool = false
+const TIMESTAMPS_ACTIVE: bool = false
 # 0 Will let through anything
-const TIMESTAMP_THRESHOLD : float = 0.001
+const TIMESTAMP_THRESHOLD: float = 0.001
 
 
-var version : String = "v2.0.0"
-var replay_compatible_versions : Array[String] = [version]
-var editor : bool = OS.has_feature("editor")
+var version: String = "v2.0.0"
+var replay_compatible_versions: Array[String] = [version]
+var editor: bool = OS.has_feature("editor")
 
-var dp_speedrun : bool = false
-var mouse_scroll_active : bool = true
-var auto_end_turn_phases : bool = false
-var action_change_particles : bool = true
-var capital_distance_visible : bool = false
-var allowed_directories : Array = []
+var dp_speedrun: bool = false
+var dp_think_timer: float = DPControl.THINKING_TIMER_DEFAULT
+var mouse_scroll_active: bool = true
+var auto_end_turn_phases: bool = false
+var action_change_particles: bool = true
+var capital_distance_visible: bool = false
+var allowed_directories: Array = []
 
-var use_graph : bool = true
+var use_graph: bool = true
 
-var current_timestamp : int = 0
-var timestamp_sums : Dictionary = {}
+var current_timestamp: int = 0
+var timestamp_sums: Dictionary = {}
 
 
 func _ready():
@@ -35,9 +36,14 @@ func _physics_process(_delta):
 		get_tree().quit()
 
 
+func should_limit_flashing() -> bool:
+	return dp_speedrun or dp_think_timer <= 0.35
+
+
 func save_options():
 	var options : Dictionary = {
 		"dp_speedrun" : dp_speedrun,
+		"dp_think_timer" : dp_think_timer,
 		"mouse_scroll_active" : mouse_scroll_active,
 		"auto_end_turn_phases" : auto_end_turn_phases,
 		"action_change_particles" : action_change_particles,

@@ -2,21 +2,21 @@
 
 [ext_resource type="Texture2D" uid="uid://nhqtqn2rp0d8" path="res://sprites/ui/menu_check_pressed.png" id="1_c8xom"]
 [ext_resource type="StyleBox" uid="uid://cwj4glreqr6xk" path="res://styles/style_panel_file_dialog.tres" id="1_pjh5u"]
-[ext_resource type="Texture2D" uid="uid://dhfr2qyl07v6l" path="res://sprites/ui/menu_circle_disabled.png" id="2_a1gsd"]
-[ext_resource type="StyleBox" uid="uid://m2cc5cpx0qxw" path="res://styles/style_hslider_grabber_high.tres" id="2_cxi87"]
 [ext_resource type="StyleBox" uid="uid://dnpk6ufkxy45q" path="res://styles/style_hseperator.tres" id="2_geuq5"]
 [ext_resource type="Texture2D" uid="uid://dc5lw5twijlci" path="res://sprites/ui/menu_check.png" id="2_mc6wh"]
 [ext_resource type="StyleBox" uid="uid://ba8gr0be1lomg" path="res://styles/style_panel_map_list.tres" id="2_wc57s"]
 [ext_resource type="StyleBox" uid="uid://cjaabqpgsx47h" path="res://styles/style_label_city_name.tres" id="3_iq2qs"]
-[ext_resource type="StyleBox" uid="uid://bv2ajk7xi2c7x" path="res://styles/style_hslider_slider.tres" id="3_kuauy"]
-[ext_resource type="Texture2D" uid="uid://n52bj3guhwpr" path="res://sprites/ui/menu_circle.png" id="3_u1wal"]
 [ext_resource type="Texture2D" uid="uid://bftdyw7twodc7" path="res://sprites/ui/menu_tick.png" id="4_3bfo4"]
 [ext_resource type="StyleBox" uid="uid://s8pger68b5dx" path="res://styles/style_vscrollbar_grabber_high.tres" id="4_qm4kn"]
 [ext_resource type="StyleBox" uid="uid://b68q8mpohg2xa" path="res://styles/style_vscrollbar_grabber_pressed.tres" id="5_ulc73"]
 [ext_resource type="StyleBox" uid="uid://blb1sd30050aw" path="res://styles/style_vscrollbar_scroll.tres" id="6_cvdkg"]
+[ext_resource type="Texture2D" uid="uid://c77v2fbwwaldm" path="res://sprites/ui/pause_grabber.png" id="7_1wmiv"]
+[ext_resource type="Texture2D" uid="uid://b1op3567qsjl6" path="res://sprites/ui/pause_grabber_disabled.png" id="8_napus"]
 [ext_resource type="StyleBox" uid="uid://crwlkegnfaves" path="res://styles/style_label_align_picker.tres" id="9_06fqa"]
 [ext_resource type="StyleBox" uid="uid://cfywtanitvfwf" path="res://styles/style_itemlist_selected.tres" id="10_fp7nr"]
+[ext_resource type="StyleBox" uid="uid://c7yewttcn850e" path="res://styles/style_hslider_grabberbg_outline.tres" id="10_m40kd"]
 [ext_resource type="FontFile" uid="uid://doby6lr01xt8m" path="res://fonts/Fredoka-Medium.ttf" id="10_vqddw"]
+[ext_resource type="StyleBox" uid="uid://cnviqaigva1ec" path="res://styles/style_hslider_slider_outline.tres" id="11_uxud3"]
 [ext_resource type="StyleBox" uid="uid://clkv4kfblv13o" path="res://styles/style_tooltip.tres" id="11_xgoml"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_0u2yk"]
@@ -75,13 +75,13 @@ HScrollBar/styles/scroll_focus = null
 HSeparator/constants/separation = 0
 HSeparator/styles/separator = ExtResource("2_geuq5")
 HSlider/constants/grabber_offset = 0
-HSlider/icons/grabber = ExtResource("3_u1wal")
-HSlider/icons/grabber_disabled = ExtResource("2_a1gsd")
-HSlider/icons/grabber_highlight = ExtResource("3_u1wal")
+HSlider/icons/grabber = ExtResource("7_1wmiv")
+HSlider/icons/grabber_disabled = ExtResource("8_napus")
+HSlider/icons/grabber_highlight = ExtResource("7_1wmiv")
 HSlider/icons/tick = ExtResource("4_3bfo4")
-HSlider/styles/grabber_area = ExtResource("2_cxi87")
-HSlider/styles/grabber_area_highlight = ExtResource("2_cxi87")
-HSlider/styles/slider = ExtResource("3_kuauy")
+HSlider/styles/grabber_area = ExtResource("10_m40kd")
+HSlider/styles/grabber_area_highlight = ExtResource("10_m40kd")
+HSlider/styles/slider = ExtResource("11_uxud3")
 ItemList/colors/font_color = Color(0.933333, 0.933333, 0.933333, 1)
 ItemList/colors/font_outline_color = Color(0, 0, 0, 1)
 ItemList/colors/font_selected_color = Color(0, 0, 0, 1)

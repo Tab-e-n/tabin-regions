@@ -1,4 +1,4 @@
-[gd_scene load_steps=57 format=3 uid="uid://ckbitpcqxs5ao"]
+[gd_scene load_steps=60 format=3 uid="uid://ckbitpcqxs5ao"]
 
 [ext_resource type="Script" path="res://scripts/game_control.gd" id="1_2axsc"]
 [ext_resource type="Script" path="res://scripts/game_camera.gd" id="1_we6ai"]
@@ -39,8 +39,11 @@
 [ext_resource type="Texture2D" uid="uid://bht6umkfovrvf" path="res://sprites/ui/exit.png" id="36_o3w04"]
 [ext_resource type="StyleBox" uid="uid://b7dy6x7vi2mcr" path="res://styles/style_empty.tres" id="36_qdefb"]
 [ext_resource type="Texture2D" uid="uid://oc3ekqthmxfl" path="res://sprites/ui/exit_pressed.png" id="37_rjn50"]
+[ext_resource type="StyleBox" uid="uid://cnviqaigva1ec" path="res://styles/style_hslider_slider_outline.tres" id="39_d7kho"]
+[ext_resource type="Texture2D" uid="uid://c77v2fbwwaldm" path="res://sprites/ui/pause_grabber.png" id="39_e1cuf"]
 [ext_resource type="Texture2D" uid="uid://d2ixgtwhalidj" path="res://sprites/ui/mask_accept.png" id="40_rbxn4"]
 [ext_resource type="Texture2D" uid="uid://dm2nl24gy8gxh" path="res://sprites/ui/accept.png" id="41_o5qd5"]
+[ext_resource type="StyleBox" uid="uid://c7yewttcn850e" path="res://styles/style_hslider_grabberbg_outline.tres" id="41_ppl3g"]
 [ext_resource type="Texture2D" uid="uid://boyn6qwdwdd1o" path="res://sprites/ui/accept_pressed.png" id="42_rggwd"]
 [ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/ui/mask_deny.png" id="43_76dhe"]
 [ext_resource type="Texture2D" uid="uid://ex66wqntm5fi" path="res://sprites/ui/deny.png" id="44_k8r1b"]
@@ -127,7 +130,7 @@ script = ExtResource("6_2rtvp")
 [node name="Smartie" type="Node" parent="AIControler"]
 script = ExtResource("6_etgsh")
 
-[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("ui", "ui_hideable", "pause_menu", "player_info", "player_actions", "advance_turn_button", "advance_action_light", "advance_action_dark", "advance_mobilize_light", "advance_mobilize_dark", "end_turn_button", "forfeit_button", "pause_button", "leave_button", "graph_button", "turn_order", "power_sprite", "power_amount", "current_turn", "current_alignment", "current_action", "phase_info", "replay_paused_label", "stats_graph", "player_info_leader", "player_info_city", "player_info_capital", "player_info_regions", "player_info_power", "player_info_name", "victory_message", "defeat_message", "leave_message", "forfeit_message", "leftover_message", "command_callout", "mouse_scroll", "auto_phase", "fast_dp", "action_change_part", "visible_capitals", "visible_ui", "visible_turn_order", "tooltip_actions", "tooltip_phase", "tooltip_end_turn", "tooltip_forfeit")]
+[node name="GameCamera" type="Camera2D" parent="." node_paths=PackedStringArray("ui", "ui_hideable", "pause_menu", "player_info", "player_actions", "advance_turn_button", "advance_action_light", "advance_action_dark", "advance_mobilize_light", "advance_mobilize_dark", "end_turn_button", "forfeit_button", "pause_button", "leave_button", "graph_button", "turn_order", "power_sprite", "power_amount", "current_turn", "current_alignment", "current_action", "phase_info", "replay_paused_label", "stats_graph", "player_info_leader", "player_info_city", "player_info_capital", "player_info_regions", "player_info_power", "player_info_name", "victory_message", "defeat_message", "leave_message", "forfeit_message", "leftover_message", "command_callout", "dp_speed", "mouse_scroll", "auto_phase", "fast_dp", "action_change_part", "visible_capitals", "visible_ui", "visible_turn_order", "tooltip_actions", "tooltip_phase", "tooltip_end_turn", "tooltip_forfeit")]
 z_index = 30
 script = ExtResource("1_we6ai")
 ui = NodePath("UI")
@@ -168,6 +171,7 @@ leave_message = NodePath("UI/leave")
 forfeit_message = NodePath("UI/forfeit")
 leftover_message = NodePath("UI/leftover")
 command_callout = NodePath("UI/command_callout")
+dp_speed = NodePath("UI/pause/dp_speed")
 mouse_scroll = NodePath("UI/pause/mouse_scroll")
 auto_phase = NodePath("UI/pause/auto_phase")
 fast_dp = NodePath("UI/pause/fast_dp")
@@ -501,12 +505,54 @@ offset_bottom = 88.0
 texture_normal = ExtResource("36_o3w04")
 texture_pressed = ExtResource("37_rjn50")
 
-[node name="mouse_scroll" type="CheckButton" parent="GameCamera/UI/pause"]
+[node name="fast_dp" type="CheckButton" parent="GameCamera/UI/pause"]
+visible = false
 layout_mode = 0
 offset_left = 112.0
 offset_top = 56.0
 offset_right = 432.0
-offset_bottom = 84.0
+offset_bottom = 88.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("36_qdefb")
+theme_override_styles/pressed = ExtResource("36_qdefb")
+theme_override_styles/disabled = ExtResource("36_qdefb")
+theme_override_styles/hover = ExtResource("36_qdefb")
+theme_override_styles/hover_pressed = ExtResource("36_qdefb")
+theme_override_styles/focus = ExtResource("36_qdefb")
+text = "Fast digital players"
+
+[node name="dp_speed_label" type="Label" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 56.0
+offset_right = 288.0
+offset_bottom = 88.0
+text = "Digital player speed"
+vertical_alignment = 1
+
+[node name="dp_speed" type="HSlider" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 288.0
+offset_top = 56.0
+offset_right = 424.0
+offset_bottom = 88.0
+focus_mode = 0
+theme_override_icons/grabber = ExtResource("39_e1cuf")
+theme_override_icons/grabber_highlight = ExtResource("39_e1cuf")
+theme_override_icons/grabber_disabled = ExtResource("39_e1cuf")
+theme_override_styles/slider = ExtResource("39_d7kho")
+theme_override_styles/grabber_area = ExtResource("41_ppl3g")
+theme_override_styles/grabber_area_highlight = ExtResource("41_ppl3g")
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="mouse_scroll" type="CheckButton" parent="GameCamera/UI/pause"]
+layout_mode = 0
+offset_left = 112.0
+offset_top = 88.0
+offset_right = 432.0
+offset_bottom = 120.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("36_qdefb")
 theme_override_styles/pressed = ExtResource("36_qdefb")
@@ -519,9 +565,9 @@ text = "Scrolling camera with mouse"
 [node name="auto_phase" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 112.0
-offset_top = 88.0
+offset_top = 120.0
 offset_right = 432.0
-offset_bottom = 116.0
+offset_bottom = 152.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("36_qdefb")
 theme_override_styles/pressed = ExtResource("36_qdefb")
@@ -531,27 +577,12 @@ theme_override_styles/hover_pressed = ExtResource("36_qdefb")
 theme_override_styles/focus = ExtResource("36_qdefb")
 text = "Automatic phases"
 
-[node name="fast_dp" type="CheckButton" parent="GameCamera/UI/pause"]
-layout_mode = 0
-offset_left = 112.0
-offset_top = 120.0
-offset_right = 432.0
-offset_bottom = 148.0
-focus_mode = 0
-theme_override_styles/normal = ExtResource("36_qdefb")
-theme_override_styles/pressed = ExtResource("36_qdefb")
-theme_override_styles/disabled = ExtResource("36_qdefb")
-theme_override_styles/hover = ExtResource("36_qdefb")
-theme_override_styles/hover_pressed = ExtResource("36_qdefb")
-theme_override_styles/focus = ExtResource("36_qdefb")
-text = "Fast digital players"
-
 [node name="particles" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0
 offset_left = 112.0
 offset_top = 152.0
 offset_right = 432.0
-offset_bottom = 180.0
+offset_bottom = 184.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("36_qdefb")
 theme_override_styles/pressed = ExtResource("36_qdefb")
@@ -566,7 +597,7 @@ layout_mode = 0
 offset_left = 112.0
 offset_top = 216.0
 offset_right = 432.0
-offset_bottom = 244.0
+offset_bottom = 248.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("36_qdefb")
 theme_override_styles/pressed = ExtResource("36_qdefb")
@@ -581,7 +612,7 @@ layout_mode = 0
 offset_left = 112.0
 offset_top = 248.0
 offset_right = 432.0
-offset_bottom = 276.0
+offset_bottom = 280.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("36_qdefb")
 theme_override_styles/pressed = ExtResource("36_qdefb")
@@ -596,7 +627,7 @@ layout_mode = 0
 offset_left = 112.0
 offset_top = 280.0
 offset_right = 432.0
-offset_bottom = 308.0
+offset_bottom = 312.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("36_qdefb")
 theme_override_styles/pressed = ExtResource("36_qdefb")
@@ -825,9 +856,10 @@ offset_bottom = 184.0
 texture_normal = ExtResource("44_k8r1b")
 texture_pressed = ExtResource("45_3jgkt")
 
+[connection signal="toggled" from="GameCamera/UI/pause/fast_dp" to="." method="set_dp_speedrun"]
+[connection signal="value_changed" from="GameCamera/UI/pause/dp_speed" to="." method="set_dp_think_timer"]
 [connection signal="toggled" from="GameCamera/UI/pause/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="GameCamera/UI/pause/auto_phase" to="." method="set_auto_phases"]
-[connection signal="toggled" from="GameCamera/UI/pause/fast_dp" to="." method="set_dp_speedrun"]
 [connection signal="toggled" from="GameCamera/UI/pause/particles" to="." method="set_action_change_particles"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_capitals" to="." method="set_city_visibility"]
 [connection signal="toggled" from="GameCamera/UI/pause/vis_ui" to="GameCamera" method="set_ui_visible"]

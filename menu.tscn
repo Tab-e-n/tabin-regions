@@ -44,6 +44,17 @@ grow_horizontal = 2
 grow_vertical = 2
 theme_override_constants/separation = 0
 
+[node name="packs" type="Button" parent="top/tabs"]
+layout_mode = 2
+focus_mode = 0
+theme_override_colors/font_color = Color(0.835294, 0.835294, 0.878431, 1)
+theme_override_colors/font_pressed_color = Color(0.203922, 0.203922, 0.25098, 1)
+theme_override_styles/normal = ExtResource("3_m3suk")
+theme_override_styles/hover = ExtResource("4_ufy0q")
+theme_override_styles/pressed = ExtResource("5_escr3")
+toggle_mode = true
+text = "PACKS"
+
 [node name="maps" type="Button" parent="top/tabs"]
 layout_mode = 2
 focus_mode = 0
@@ -113,6 +124,7 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
-[connection signal="toggled" from="top/tabs/maps" to="." method="_on_tab_toggled"]
-[connection signal="toggled" from="top/tabs/replays" to="." method="_on_tab_toggled"]
-[connection signal="toggled" from="top/tabs/options" to="." method="_on_tab_toggled"]
+[connection signal="toggled" from="top/tabs/packs" to="." method="_on_tab_toggled" binds= ["packs"]]
+[connection signal="toggled" from="top/tabs/maps" to="." method="_on_tab_toggled" binds= ["maps"]]
+[connection signal="toggled" from="top/tabs/replays" to="." method="_on_tab_toggled" binds= ["replays"]]
+[connection signal="toggled" from="top/tabs/options" to="." method="_on_tab_toggled" binds= ["options"]]

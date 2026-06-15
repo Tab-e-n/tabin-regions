@@ -195,7 +195,7 @@ func _process(delta : float):
 			if Options.dp_speedrun:
 				new_callout("Fast Digital Players")
 			else:
-				new_callout("Slow Digital Players")
+				new_callout("Regular Digital Players")
 			if game_camera and game_camera.fast_dp:
 				game_camera.fast_dp.button_pressed = Options.dp_speedrun
 		
@@ -248,25 +248,32 @@ func set_city_visibility(visibility : bool):
 
 
 ## Sets whether to use mouse camera scrolling or not.
-func set_mouse_scroll(scrolling : bool):
+func set_mouse_scroll(scrolling: bool):
 	Options.mouse_scroll_active = scrolling
 
 
 ## Sets whether to use automatic phases or not.
-func set_auto_phases(auto : bool):
+func set_auto_phases(auto: bool):
 	Options.auto_end_turn_phases = auto
 
 
 ## Sets whether to use digital player speedrun or not.
-func set_dp_speedrun(speedy : bool):
+func set_dp_speedrun(speedy: bool):
 	Options.dp_speedrun = speedy
 	if dp_control:
-		dp_control.dp_speedrun_update()
+		dp_control.thinking_timer_update()
 
 
 ## Sets whether to show action change particles or not.
-func set_action_change_particles(active : bool):
+func set_action_change_particles(active: bool):
 	Options.action_change_particles = active
+
+
+## Sets the thinking speed of digital players. 0.0 is fastest, 1.0 is slowest.
+func set_dp_think_timer(value: float):
+	Options.dp_think_timer = DPControl.THINKING_TIMER_MIN + (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN) * (1.0 - value) 
+	Options.dp_speedrun = false
+	dp_control.thinking_timer_update()
 
 
 ## Makes a new command callout.
