@@ -64,7 +64,7 @@ func toggle_pause():
 
 func save_replay(replay_name: String):
 	var replay_save : Dictionary = {
-		"game_version" : Options.version,
+		"game_version" : Options.VERSION,
 		"replay_dir" : MapSetup.current_directory,
 		"replay_map" : MapSetup.current_map_name,
 		"replay_play_order" : replay_play_order,
@@ -76,13 +76,13 @@ func save_replay(replay_name: String):
 	}
 	
 	
-	if FileAccess.file_exists("user://REPLAY " + replay_name + ".json"):
+	if FileAccess.file_exists("user://" + replay_name + ".replay"):
 		var i : int = 1
-		while FileAccess.file_exists("user://REPLAY " + replay_name + " " + str(i) + ".json"):
+		while FileAccess.file_exists("user://" + replay_name + " " + str(i) + ".replay"):
 			i += 1
 		replay_name += " " + str(i)
 	
-	var file = FileAccess.open("user://REPLAY " + replay_name + ".json", FileAccess.WRITE)
+	var file = FileAccess.open("user://" + replay_name + ".replay", FileAccess.WRITE)
 	
 	file.store_string(JSON.stringify(replay_save))
 	
@@ -102,7 +102,7 @@ func load_replay(replay_name : String):
 		
 		if not replay_save.has("game_version"):
 			return false
-		if replay_save["game_version"] not in Options.replay_compatible_versions:
+		if replay_save["game_version"] not in Options.REPLAY_COMPATIBLE_VERSIONS:
 			return false
 		
 		MapSetup.current_directory = replay_save["replay_dir"]

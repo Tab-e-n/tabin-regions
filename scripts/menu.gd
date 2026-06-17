@@ -1,22 +1,6 @@
 extends Control
+class_name MenuControl
 
-
-"""
-
-TODO
-
- - Tabs
-
-# Replays Tab
-
- - Selection list for replays
- - Start replay
-
-# Options Tab
-
- - Access to things in pause menu
-
-"""
 
 @export var tabs: Control = null
 @export var menus: Control = null
@@ -31,12 +15,18 @@ func _ready():
 	
 	ReplayControl.clear_replay()
 	
-	change_tab("maps")
+	for node in menus.get_children():
+		var menu: MenuScene = node as MenuScene
+		if menu:
+			menu.menu_control = self
+	
+	change_tab(Options.last_tab)
 
 
 func _process(_delta):
 	# TODO: Should title be part of the menu aswell? or remain a seperate scene?
 	if Input.is_action_just_pressed("escape"):
+		Options.save_options()
 		Options.discard_timestamp_sums()
 		Options.timestamp("START TITLE", "")
 		get_tree().change_scene_to_file("res://title.tscn")
@@ -50,9 +40,13 @@ func change_tab(tab: String) -> void:
 	
 	for node in menus.get_children():
 		var menu: MenuScene = node as MenuScene
-		if menu:
-			menu.visible = menu.name == tab
+		if menu and menu.name == tab:
+			menu.visible = true
 			menu._start()
+		else:
+			menu.visible = false
+	
+	Options.last_tab = tab
 
 
 func _on_tab_toggled(pressed: bool, tab: String) -> void:

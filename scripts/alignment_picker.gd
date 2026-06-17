@@ -47,7 +47,7 @@ func _process(_delta):
 	if Input.is_action_just_pressed("escape"):
 		Options.discard_timestamp_sums()
 		Options.timestamp("EXIT ALIGN PICKER", "")
-		get_tree().change_scene_to_file("res://setup_scene.tscn")
+		get_tree().change_scene_to_file("res://menu.tscn")
 	
 	if hovering_available:
 		var hovered_player : int = available.get_leader_id_from_mouse()

@@ -1,15 +1,17 @@
 extends Node
 
-var current_directory : String = "res://maps"
-var current_map_name : String = ""
-var player_amount : int = 1
-var default_digital_player : int = DPControl.CONTROLER.DEFAULT
+var current_directory: String = "res://maps"
+var current_map_name: String = ""
+var current_pack_name: String = "Base Maps"
 
-var aliances_amount : int = 0
+var player_amount: int = 1
+var default_digital_player: DPControl.CONTROLER = DPControl.CONTROLER.DEFAULT
 
-var used_alignments : int = 0
+var aliances_amount: int = 0
 
-var preset_alignments : Array[int] = []
+var used_alignments: int = 0
+
+var preset_alignments: Array[int] = []
 
 
 func print_map_data():

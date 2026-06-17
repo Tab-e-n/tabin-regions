@@ -1,6 +1,6 @@
 [gd_scene load_steps=6 format=3 uid="uid://t2528ie7ag6n"]
 
-[ext_resource type="PackedScene" uid="uid://cnxb64453xeqg" path="res://maps/A.2_Title_Map.tscn" id="1_dr8vy"]
+[ext_resource type="PackedScene" uid="uid://cnxb64453xeqg" path="res://maps/A.02_Title_Map.tscn" id="1_dr8vy"]
 [ext_resource type="Script" path="res://scripts/title.gd" id="1_wam5a"]
 [ext_resource type="Texture2D" uid="uid://bdhc82g82oksd" path="res://sprites/dp/dp_neuron_real.png" id="4_m1j5c"]
 [ext_resource type="PackedScene" uid="uid://ib7qg43imr83" path="res://objects/moving_polygon.tscn" id="4_xrc6d"]
@@ -470,7 +470,7 @@ offset_right = 112.0
 offset_bottom = 624.0
 texture_normal = ExtResource("4_m1j5c")
 
-[node name="new_menu" type="TextureButton" parent="."]
+[node name="interchange" type="TextureButton" parent="."]
 visible = false
 offset_left = 120.0
 offset_top = 544.0
@@ -480,5 +480,5 @@ texture_normal = ExtResource("5_mseuf")
 
 [connection signal="mouse_entered" from="network" to="." method="_on_network_mouse_entered"]
 [connection signal="mouse_exited" from="network" to="." method="_on_network_mouse_exited"]
-[connection signal="mouse_entered" from="new_menu" to="." method="_on_new_menu_mouse_entered"]
-[connection signal="mouse_exited" from="new_menu" to="." method="_on_new_menu_mouse_exited"]
+[connection signal="mouse_entered" from="interchange" to="." method="_on_interchange_mouse_entered"]
+[connection signal="mouse_exited" from="interchange" to="." method="_on_interchange_mouse_exited"]

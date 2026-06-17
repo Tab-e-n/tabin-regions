@@ -534,7 +534,7 @@ vertical_alignment = 1
 layout_mode = 0
 offset_left = 288.0
 offset_top = 56.0
-offset_right = 424.0
+offset_right = 427.0
 offset_bottom = 88.0
 focus_mode = 0
 theme_override_icons/grabber = ExtResource("39_e1cuf")
@@ -575,7 +575,7 @@ theme_override_styles/disabled = ExtResource("36_qdefb")
 theme_override_styles/hover = ExtResource("36_qdefb")
 theme_override_styles/hover_pressed = ExtResource("36_qdefb")
 theme_override_styles/focus = ExtResource("36_qdefb")
-text = "Automatic phases"
+text = "Automatically end turn phases"
 
 [node name="particles" type="CheckButton" parent="GameCamera/UI/pause"]
 layout_mode = 0

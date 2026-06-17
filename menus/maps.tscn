@@ -42,6 +42,7 @@ offset_left = 16.0
 offset_top = 56.0
 offset_right = 496.0
 offset_bottom = 304.0
+empty_list_message = "No maps."
 
 [node name="directory" type="Control" parent="."]
 layout_mode = 1
@@ -281,6 +282,7 @@ texture_normal = ExtResource("11_cyadq")
 
 [connection signal="item_activated" from="maps" to="." method="_on_map_activated"]
 [connection signal="item_selected" from="maps" to="." method="_on_map_selected"]
+[connection signal="pressed" from="directory/back" to="." method="_on_directory_back_pressed"]
 [connection signal="value_changed" from="presets/clip/container/leaders/slider" to="." method="_on_leaders_value_changed"]
 [connection signal="value_changed" from="presets/clip/container/players/slider" to="." method="_on_players_value_changed"]
 [connection signal="value_changed" from="presets/clip/container/aliances/slider" to="." method="_on_aliances_value_changed"]

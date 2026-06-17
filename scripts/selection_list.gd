@@ -16,9 +16,11 @@ var selected_item: SelectionListItem = null
 
 var double_click_timer: float = 0.0
 
+@export var empty_list_message: String = "No items."
+
 @onready var page: float = size.y / SELECTION_ITEM_SIZE
 @onready var items: Control = $HBoxContainer/Items
-#@onready var scrollbar: ScrollBar = $HBoxContainer/ScrollBar
+@onready var label_empty: Label = $Empty
 
 
 func _physics_process(delta):
@@ -37,7 +39,8 @@ func add_item(value: String, display: String = "") -> SelectionListItem:
 	items.add_child(item)
 	
 	item_count += 1
-	reset_scrollbar()
+	
+	update_empty_message()
 	
 	return item
 
@@ -51,7 +54,8 @@ func remove_item(item: SelectionListItem) -> void:
 	item.queue_free()
 	
 	item_count -= 1
-	reset_scrollbar()
+	
+	update_empty_message()
 
 
 func clear() -> void:
@@ -59,8 +63,11 @@ func clear() -> void:
 		items.remove_child(node)
 		node.queue_free()
 	
+	selected_item = null
+	
 	item_count = 0
-	reset_scrollbar()
+	
+	update_empty_message()
 
 
 func select_item(item: SelectionListItem) -> void:
@@ -89,13 +96,12 @@ func get_selected_item() -> SelectionListItem:
 	return selected_item
 
 
-func reset_scrollbar() -> void:
-	pass
-#	scrollbar.visible = item_count > page
-#	scrollbar.max_value = item_count
-#	scrollbar.page = page
-#	scrollbar.set_value_no_signal(0)
-#	items.set_deferred(&"position", Vector2(items.position.x, 0))
+func update_empty_message():
+	if item_count == 0:
+		label_empty.text = empty_list_message
+		label_empty.visible = true
+	else:
+		label_empty.visible = false
 
 
 func _item_toggled(pressed: bool, item: Control) -> void:
@@ -103,8 +109,4 @@ func _item_toggled(pressed: bool, item: Control) -> void:
 	if pressed == false:
 		if double_click_timer > 0:
 			item_activated.emit(item)
-		double_click_timer = 0.5
-
-
-#func _on_scroll_bar_value_changed(value: float) -> void:
-#	items.position.y = value * -SELECTION_ITEM_SIZE
+	double_click_timer = 0.5

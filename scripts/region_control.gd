@@ -260,8 +260,8 @@ const COLOR_TOO_BRIGHT : float = 0.85
 ## Print more info about the map to the console. Useful when debugging, should be off for released maps.
 @export var print_more_info : bool = false
 ## When the project is launched through editor, cache gets saved when exiting the map.
-## On the release build, cache gets loaded from a .cache file.
-## Make sure to package your map with it's .cache file.
+## On the release build, cache gets loaded from a .json file with the same name as the map.
+## Make sure to package your map with that .json file.
 ## Use this if there is an expensive function that requires the map to be loaded to
 ## calculate, but always calculates to the same result, you can use set_cache to store
 ## the values and then in the release build call get_cache instead of the expensive function. 
@@ -381,7 +381,7 @@ static func setup_complexity_name(compx : SETUP_COMPLEXITY) -> String:
 
 
 func _load_cache():
-	cache_filename = game_control.map_name + ".cache"
+	cache_filename = game_control.map_name + ".json"
 	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.READ)
 	
 	if file:

@@ -2,11 +2,13 @@ extends MenuScene
 
 
 func _ready():
-	$fast_dp.set_pressed_no_signal(Options.dp_speedrun)
-	$mouse_scroll.set_pressed_no_signal(Options.mouse_scroll_active)
-	$auto_phase.set_pressed_no_signal(Options.auto_end_turn_phases)
-	$particles.set_pressed_no_signal(Options.action_change_particles)
-	$dp_speed.set_value_no_signal(1.0 - (Options.dp_think_timer - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN))
+	$gameplay/fast_dp.set_pressed_no_signal(Options.dp_speedrun)
+	$gameplay/mouse_scroll.set_pressed_no_signal(Options.mouse_scroll_active)
+	$gameplay/auto_phase.set_pressed_no_signal(Options.auto_end_turn_phases)
+	$visual/particles.set_pressed_no_signal(Options.action_change_particles)
+	$gameplay/graph.set_pressed_no_signal(Options.use_graph)
+	$debug/capital_dist.set_pressed_no_signal(Options.capital_distance_visible)
+	$gameplay/dp_speed.set_value_no_signal(1.0 - (Options.dp_think_timer - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN))
 
 
 ## Sets whether to use mouse camera scrolling or not.
@@ -33,3 +35,14 @@ func set_action_change_particles(active: bool):
 func set_dp_think_timer(value: float):
 	Options.dp_think_timer = DPControl.THINKING_TIMER_MIN + (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN) * (1.0 - value)
 
+
+func set_use_graph(value: bool):
+	Options.use_graph = value
+
+
+func set_capital_distance_visible(value: bool):
+	Options.capital_distance_visible = value
+
+
+func set_template(value: bool):
+	Options.use_graph = value

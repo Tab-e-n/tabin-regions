@@ -165,7 +165,9 @@ func _on_replay_pressed():
 
 
 func leave():
-	get_tree().change_scene_to_file("res://setup_scene.tscn")
+	Options.discard_timestamp_sums()
+	Options.timestamp("EXIT STATS", "")
+	get_tree().change_scene_to_file("res://menu.tscn")
 
 
 func _show_stats():

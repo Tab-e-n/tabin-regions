@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://baequxmb1xdwc"]
 
 [ext_resource type="Script" path="res://scripts/menu_options.gd" id="1_imfoe"]
-[ext_resource type="StyleBox" uid="uid://cyrb3avj0w7tg" path="res://styles/menu_no_tab_label.tres" id="1_pmxno"]
+[ext_resource type="StyleBox" uid="uid://cyll56fcff0as" path="res://styles/menu_panel.tres" id="2_4c26u"]
 [ext_resource type="StyleBox" uid="uid://b7dy6x7vi2mcr" path="res://styles/style_empty.tres" id="3_qatca"]
 [ext_resource type="Texture2D" uid="uid://c77v2fbwwaldm" path="res://sprites/ui/pause_grabber.png" id="4_xd5tm"]
 [ext_resource type="StyleBox" uid="uid://cnviqaigva1ec" path="res://styles/style_hslider_slider_outline.tres" id="5_x33ly"]
@@ -17,21 +17,13 @@ grow_vertical = 2
 script = ExtResource("1_imfoe")
 metadata/_edit_horizontal_guides_ = [608.0]
 
-[node name="TEMP3" type="Label" parent="."]
-visible = false
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = ExtResource("1_pmxno")
-text = "OPTION SELECTION"
-horizontal_alignment = 1
-vertical_alignment = 1
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 608.0
+color = Color(0.133333, 0.129412, 0.180392, 1)
 
-[node name="Panel" type="Panel" parent="."]
+[node name="panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
@@ -40,121 +32,10 @@ offset_left = 56.0
 offset_top = 56.0
 offset_right = -56.0
 offset_bottom = -88.0
+theme_override_styles/panel = ExtResource("2_4c26u")
 
-[node name="header_gameplay" type="Label" parent="."]
-layout_mode = 0
-offset_left = 72.0
-offset_top = 80.0
-offset_right = 200.0
-offset_bottom = 110.0
-theme_override_font_sizes/font_size = 24
-text = "GAMEPLAY"
-
-[node name="fast_dp" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 112.0
-offset_right = 400.0
-offset_bottom = 144.0
-focus_mode = 0
-theme_override_styles/normal = ExtResource("3_qatca")
-theme_override_styles/pressed = ExtResource("3_qatca")
-theme_override_styles/disabled = ExtResource("3_qatca")
-theme_override_styles/hover = ExtResource("3_qatca")
-theme_override_styles/hover_pressed = ExtResource("3_qatca")
-theme_override_styles/focus = ExtResource("3_qatca")
-text = "Fast digital players"
-
-[node name="dp_speed_label" type="Label" parent="."]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 144.0
-offset_right = 256.0
-offset_bottom = 176.0
-text = "Digital player speed"
-vertical_alignment = 1
-
-[node name="dp_speed" type="HSlider" parent="."]
-layout_mode = 0
-offset_left = 256.0
-offset_top = 144.0
-offset_right = 392.0
-offset_bottom = 176.0
-focus_mode = 0
-theme_override_icons/grabber = ExtResource("4_xd5tm")
-theme_override_icons/grabber_highlight = ExtResource("4_xd5tm")
-theme_override_icons/grabber_disabled = ExtResource("4_xd5tm")
-theme_override_styles/slider = ExtResource("5_x33ly")
-theme_override_styles/grabber_area = ExtResource("6_fj727")
-theme_override_styles/grabber_area_highlight = ExtResource("6_fj727")
-max_value = 1.0
-step = 0.05
-value = 0.5
-
-[node name="mouse_scroll" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 176.0
-offset_right = 400.0
-offset_bottom = 208.0
-focus_mode = 0
-theme_override_styles/normal = ExtResource("3_qatca")
-theme_override_styles/pressed = ExtResource("3_qatca")
-theme_override_styles/disabled = ExtResource("3_qatca")
-theme_override_styles/hover = ExtResource("3_qatca")
-theme_override_styles/hover_pressed = ExtResource("3_qatca")
-theme_override_styles/focus = ExtResource("3_qatca")
-text = "Scrolling camera with mouse"
-
-[node name="auto_phase" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 80.0
-offset_top = 208.0
-offset_right = 400.0
-offset_bottom = 240.0
-focus_mode = 0
-theme_override_styles/normal = ExtResource("3_qatca")
-theme_override_styles/pressed = ExtResource("3_qatca")
-theme_override_styles/disabled = ExtResource("3_qatca")
-theme_override_styles/hover = ExtResource("3_qatca")
-theme_override_styles/hover_pressed = ExtResource("3_qatca")
-theme_override_styles/focus = ExtResource("3_qatca")
-text = "Automatic phases"
-
-[node name="header_visual" type="Label" parent="."]
-layout_mode = 0
-offset_left = 408.0
-offset_top = 80.0
-offset_right = 536.0
-offset_bottom = 110.0
-theme_override_font_sizes/font_size = 24
-text = "VISUAL"
-
-[node name="particles" type="CheckButton" parent="."]
-layout_mode = 0
-offset_left = 416.0
-offset_top = 112.0
-offset_right = 736.0
-offset_bottom = 144.0
-focus_mode = 0
-theme_override_styles/normal = ExtResource("3_qatca")
-theme_override_styles/pressed = ExtResource("3_qatca")
-theme_override_styles/disabled = ExtResource("3_qatca")
-theme_override_styles/hover = ExtResource("3_qatca")
-theme_override_styles/hover_pressed = ExtResource("3_qatca")
-theme_override_styles/focus = ExtResource("3_qatca")
-text = "Action change particles"
-
-[node name="header_other" type="Label" parent="."]
-layout_mode = 0
-offset_left = 744.0
-offset_top = 80.0
-offset_right = 872.0
-offset_bottom = 110.0
-theme_override_font_sizes/font_size = 24
-text = "OTHER"
-
-[node name="other" type="CheckButton" parent="."]
+[node name="template" type="CheckButton" parent="."]
+visible = false
 layout_mode = 0
 offset_left = 752.0
 offset_top = 112.0
@@ -169,8 +50,154 @@ theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
 text = "Other"
 
-[connection signal="toggled" from="fast_dp" to="." method="set_dp_speedrun"]
-[connection signal="value_changed" from="dp_speed" to="." method="set_dp_think_timer"]
-[connection signal="toggled" from="mouse_scroll" to="." method="set_mouse_scroll"]
-[connection signal="toggled" from="auto_phase" to="." method="set_auto_phases"]
-[connection signal="toggled" from="particles" to="." method="set_action_change_particles"]
+[node name="gameplay" type="Label" parent="."]
+layout_mode = 0
+offset_left = 72.0
+offset_top = 72.0
+offset_right = 200.0
+offset_bottom = 102.0
+theme_override_font_sizes/font_size = 24
+text = "GAMEPLAY"
+
+[node name="dp_speed_label" type="Label" parent="gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 184.0
+offset_bottom = 64.0
+text = "Digital player speed"
+vertical_alignment = 1
+
+[node name="dp_speed" type="HSlider" parent="gameplay"]
+layout_mode = 0
+offset_left = 184.0
+offset_top = 32.0
+offset_right = 323.0
+offset_bottom = 64.0
+focus_mode = 0
+theme_override_icons/grabber = ExtResource("4_xd5tm")
+theme_override_icons/grabber_highlight = ExtResource("4_xd5tm")
+theme_override_icons/grabber_disabled = ExtResource("4_xd5tm")
+theme_override_styles/slider = ExtResource("5_x33ly")
+theme_override_styles/grabber_area = ExtResource("6_fj727")
+theme_override_styles/grabber_area_highlight = ExtResource("6_fj727")
+max_value = 1.0
+step = 0.05
+value = 0.5
+
+[node name="mouse_scroll" type="CheckButton" parent="gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 328.0
+offset_bottom = 96.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Scrolling camera with mouse"
+
+[node name="auto_phase" type="CheckButton" parent="gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 96.0
+offset_right = 328.0
+offset_bottom = 128.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Automatically end turn phases"
+
+[node name="graph" type="CheckButton" parent="gameplay"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 328.0
+offset_bottom = 160.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Gameplay graph"
+
+[node name="fast_dp" type="CheckButton" parent="gameplay"]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 128.0
+offset_right = 328.0
+offset_bottom = 160.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Fastest digital players"
+
+[node name="visual" type="Label" parent="."]
+layout_mode = 0
+offset_left = 408.0
+offset_top = 72.0
+offset_right = 536.0
+offset_bottom = 102.0
+theme_override_font_sizes/font_size = 24
+text = "VISUAL"
+
+[node name="particles" type="CheckButton" parent="visual"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 328.0
+offset_bottom = 64.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Action change particles"
+
+[node name="debug" type="Label" parent="."]
+layout_mode = 0
+offset_left = 744.0
+offset_top = 72.0
+offset_right = 872.0
+offset_bottom = 102.0
+theme_override_font_sizes/font_size = 24
+text = "DEBUG"
+
+[node name="capital_dist" type="CheckButton" parent="debug"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 328.0
+offset_bottom = 64.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Show distance from capital"
+
+[connection signal="value_changed" from="gameplay/dp_speed" to="." method="set_dp_think_timer"]
+[connection signal="toggled" from="gameplay/mouse_scroll" to="." method="set_mouse_scroll"]
+[connection signal="toggled" from="gameplay/auto_phase" to="." method="set_auto_phases"]
+[connection signal="toggled" from="gameplay/graph" to="." method="set_use_graph"]
+[connection signal="toggled" from="gameplay/fast_dp" to="." method="set_dp_speedrun"]
+[connection signal="toggled" from="visual/particles" to="." method="set_action_change_particles"]
+[connection signal="toggled" from="debug/capital_dist" to="." method="set_capital_distance_visible"]

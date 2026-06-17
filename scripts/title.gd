@@ -1,23 +1,23 @@
 extends Node2D
 
 
-const CHANGE_ALIGN_TIMER : float = 0.5
+const CHANGE_ALIGN_TIMER: float = 0.5
 
 
-var timer : float = CHANGE_ALIGN_TIMER
+var timer: float = CHANGE_ALIGN_TIMER
 
-var regions : Array[Region] = []
-var alignments : Array = []
-var current_region : int = 0
-var current_align : int = 1
+var regions: Array[Region] = []
+var alignments: Array = []
+var current_region: int = 0
+var current_align: int = 1
 
 
-var going_network : bool = false
-var going_new_menu : bool = false
+var going_network: bool = false
+var going_interchange: bool = false
 
-@onready var title_color : Color = $title.color
-@onready var prev_color : Color = title_color
-@onready var curr_color : Color = Color(1, 1, 1)
+@onready var title_color: Color = $title.color
+@onready var prev_color: Color = title_color
+@onready var curr_color: Color = Color(1, 1, 1)
 
 
 func _ready():
@@ -34,7 +34,7 @@ func _ready():
 	
 	if Options.editor:
 		$network.visible = true
-		$new_menu.visible = true
+		$interchange.visible = true
 	
 	curr_color = $title.align_color[alignments[current_align]]
 
@@ -55,7 +55,7 @@ func _process(delta):
 			curr_color = $title.align_color[alignments[current_align]]
 #		print(current_region, " ", current_align)
 	
-	# I Love meth
+	# I Love meth  # Why did i write this
 	var progress : float = (1.0 - (timer / CHANGE_ALIGN_TIMER) + current_region) / regions.size()
 	var color : Color = (title_color + curr_color * progress + prev_color * (1.0 - progress)) / 3.0
 	#print(progress)
@@ -68,14 +68,14 @@ func _process(delta):
 			Options.discard_timestamp_sums()
 			Options.timestamp("START NETWORK TRAINER", "")
 			get_tree().change_scene_to_file("res://dp/network_trainer.tscn")
-		elif going_new_menu:
-			Options.discard_timestamp_sums()
-			Options.timestamp("START NEW MENU", "")
-			get_tree().change_scene_to_file("res://menu.tscn")
+#		elif going_interchange:
+#			Options.discard_timestamp_sums()
+#			Options.timestamp("START NEW MENU", "")
+#			get_tree().change_scene_to_file("res://menu.tscn")
 		else:
 			Options.discard_timestamp_sums()
-			Options.timestamp("START SETUP SCENE", "")
-			get_tree().change_scene_to_file("res://setup_scene.tscn")
+			Options.timestamp("START MENU", "")
+			get_tree().change_scene_to_file("res://menu.tscn")
 
 
 func _on_network_mouse_entered():
@@ -86,9 +86,9 @@ func _on_network_mouse_exited():
 	going_network = false
 
 
-func _on_new_menu_mouse_entered():
-	going_new_menu = true
+func _on_interchange_mouse_entered():
+	going_interchange = true
 
 
-func _on_new_menu_mouse_exited():
-	going_new_menu = false
+func _on_interchange_mouse_exited():
+	going_interchange = false

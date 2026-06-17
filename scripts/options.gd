@@ -1,6 +1,9 @@
 extends Node
 
 
+const VERSION: String = "v2.0.0"
+const REPLAY_COMPATIBLE_VERSIONS: Array[String] = [VERSION]
+
 const SAVEFILE: String = "user://OPTIONS.json"
 
 const TIMESTAMPS_ACTIVE: bool = false
@@ -8,19 +11,21 @@ const TIMESTAMPS_ACTIVE: bool = false
 const TIMESTAMP_THRESHOLD: float = 0.001
 
 
-var version: String = "v2.0.0"
-var replay_compatible_versions: Array[String] = [version]
-var editor: bool = OS.has_feature("editor")
-
 var dp_speedrun: bool = false
 var dp_think_timer: float = DPControl.THINKING_TIMER_DEFAULT
 var mouse_scroll_active: bool = true
 var auto_end_turn_phases: bool = false
+var use_graph: bool = true
+
 var action_change_particles: bool = true
 var capital_distance_visible: bool = false
+
+var last_tab: String = "maps"
+var accepted_directory_danger: bool = false
 var allowed_directories: Array = []
 
-var use_graph: bool = true
+
+var editor: bool = OS.has_feature("editor")
 
 var current_timestamp: int = 0
 var timestamp_sums: Dictionary = {}
@@ -46,8 +51,13 @@ func save_options():
 		"dp_think_timer" : dp_think_timer,
 		"mouse_scroll_active" : mouse_scroll_active,
 		"auto_end_turn_phases" : auto_end_turn_phases,
+		"use_graph" : use_graph,
+		
 		"action_change_particles" : action_change_particles,
 		"capital_distance_visible" : capital_distance_visible,
+		
+		"last_tab" : last_tab,
+		"accepted_directory_danger" : accepted_directory_danger,
 		"allowed_directories" : allowed_directories,
 	}
 	
@@ -59,7 +69,7 @@ func save_options():
 
 
 func load_options():
-	var options : Dictionary = {}
+	var options: Dictionary = {}
 	
 	if FileAccess.file_exists(SAVEFILE):
 		var file = FileAccess.open(SAVEFILE, FileAccess.READ)
@@ -76,29 +86,34 @@ func load_options():
 		return false
 
 
-func allow_directory(dir : String):
+func allow_directory(dir: String):
 	allowed_directories.append(dir)
+	allowed_directories.sort()
 	save_options()
 
 
-func disallow_directory(index : int):
+func disallow_directory_index(index: int):
 	allowed_directories.remove_at(index)
 	save_options()
 
 
-func _print_timestamp(timestamp_name : String, duration : float) -> void:
+func disallow_directory(dir: String):
+	disallow_directory_index(allowed_directories.find(dir))
+
+
+func _print_timestamp(timestamp_name: String, duration: float) -> void:
 	print(timestamp_name, " : ", duration)
 
 
-func _timestamp_duration(stamp : int, current : int) -> float:
+func _timestamp_duration(stamp: int, current: int) -> float:
 	return (current - stamp) * 0.000001
 
 
-func timestamp(timestamp_name : String = "Timestamp", group : String = "Other") -> void:
+func timestamp(timestamp_name: String = "Timestamp", group: String = "Other") -> void:
 	if not TIMESTAMPS_ACTIVE or not editor:
 		return
-	var new : int = Time.get_ticks_usec()
-	var duration : float = _timestamp_duration(current_timestamp, new)
+	var new: int = Time.get_ticks_usec()
+	var duration: float = _timestamp_duration(current_timestamp, new)
 	if duration >= TIMESTAMP_THRESHOLD:
 		_print_timestamp(timestamp_name, duration)
 	current_timestamp = new
@@ -111,8 +126,8 @@ func discard_timestamp_sums():
 	if not TIMESTAMPS_ACTIVE or not editor:
 		return
 	print("SUMMARY OF CURRENT SECTION")
-	var keys : Array = timestamp_sums.keys()
-	var summaries : Array = []
+	var keys: Array = timestamp_sums.keys()
+	var summaries: Array = []
 	for key in keys:
 		summaries.append([timestamp_sums[key], key])
 	summaries.sort()

@@ -1,7 +1,29 @@
-[gd_scene load_steps=3 format=3 uid="uid://cbt282jrbubml"]
+[gd_scene load_steps=17 format=3 uid="uid://cbt282jrbubml"]
 
 [ext_resource type="Script" path="res://scripts/menu_packs.gd" id="1_a1v3l"]
-[ext_resource type="StyleBox" uid="uid://cyrb3avj0w7tg" path="res://styles/menu_no_tab_label.tres" id="2_50cuv"]
+[ext_resource type="StyleBox" uid="uid://cyll56fcff0as" path="res://styles/menu_panel.tres" id="2_s5p1v"]
+[ext_resource type="PackedScene" uid="uid://g8hj7dax3yvv" path="res://objects/selection_list.tscn" id="3_85y22"]
+[ext_resource type="Texture2D" uid="uid://deqhvnfw114vp" path="res://sprites/ui/advance.png" id="4_4jpv8"]
+[ext_resource type="Texture2D" uid="uid://sppf5wxfa1bt" path="res://sprites/ui/add.png" id="5_cv67r"]
+[ext_resource type="Texture2D" uid="uid://chqgj3tiyx6na" path="res://sprites/ui/remove.png" id="6_nqq0u"]
+[ext_resource type="Shader" path="res://scripts/shader_ui_button.gdshader" id="6_oas45"]
+[ext_resource type="Texture2D" uid="uid://d2ixgtwhalidj" path="res://sprites/ui/mask_accept.png" id="7_41s4n"]
+[ext_resource type="StyleBox" uid="uid://cqoigkkkpcb0p" path="res://styles/menu_panel_popup.tres" id="7_qtais"]
+[ext_resource type="Texture2D" uid="uid://dm2nl24gy8gxh" path="res://sprites/ui/accept.png" id="8_aoapw"]
+[ext_resource type="Texture2D" uid="uid://boyn6qwdwdd1o" path="res://sprites/ui/accept_pressed.png" id="9_ewebl"]
+[ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/ui/mask_deny.png" id="10_2o7ss"]
+[ext_resource type="Texture2D" uid="uid://ex66wqntm5fi" path="res://sprites/ui/deny.png" id="11_kiy1r"]
+[ext_resource type="Texture2D" uid="uid://dg7vk6rgj3o7c" path="res://sprites/ui/deny_pressed.png" id="12_tqxd5"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_slr3e"]
+shader = ExtResource("6_oas45")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("7_41s4n")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_ksq4l"]
+shader = ExtResource("6_oas45")
+shader_parameter/value = 0.0
+shader_parameter/mask = ExtResource("10_2o7ss")
 
 [node name="packs" type="Control"]
 layout_mode = 3
@@ -13,15 +35,169 @@ grow_vertical = 2
 script = ExtResource("1_a1v3l")
 metadata/_edit_horizontal_guides_ = [608.0]
 
-[node name="TEMP2" type="Label" parent="."]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-offset_bottom = -32.0
-grow_horizontal = 2
-grow_vertical = 2
-theme_override_styles/normal = ExtResource("2_50cuv")
-text = "PACK SELECTION"
+[node name="background" type="ColorRect" parent="."]
+layout_mode = 0
+offset_right = 1152.0
+offset_bottom = 608.0
+color = Color(0.133333, 0.129412, 0.180392, 1)
+
+[node name="packs" parent="." instance=ExtResource("3_85y22")]
+offset_left = 64.0
+offset_top = 104.0
+offset_right = 512.0
+offset_bottom = 544.0
+empty_list_message = "No packs."
+
+[node name="pack_title" type="Label" parent="."]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 96.0
+offset_right = 1096.0
+offset_bottom = 144.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("2_s5p1v")
+text = "Cool Map Pack!"
 horizontal_alignment = 1
 vertical_alignment = 1
+
+[node name="pack_lore" type="Label" parent="."]
+layout_mode = 0
+offset_left = 552.0
+offset_top = 152.0
+offset_right = 1096.0
+offset_bottom = 360.0
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("2_s5p1v")
+text = "Lore
+goes
+here
+into
+this
+label.
+a
+b
+c
+d"
+horizontal_alignment = 1
+autowrap_mode = 2
+clip_text = true
+
+[node name="start" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 760.0
+offset_top = 368.0
+offset_right = 888.0
+offset_bottom = 496.0
+texture_normal = ExtResource("4_4jpv8")
+
+[node name="add" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 56.0
+offset_top = 56.0
+offset_right = 88.0
+offset_bottom = 88.0
+texture_normal = ExtResource("5_cv67r")
+
+[node name="remove" type="TextureButton" parent="."]
+layout_mode = 0
+offset_left = 96.0
+offset_top = 56.0
+offset_right = 128.0
+offset_bottom = 88.0
+texture_normal = ExtResource("6_nqq0u")
+
+[node name="dir_warning" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 296.0
+offset_top = 168.0
+offset_right = 856.0
+offset_bottom = 432.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("7_qtais")
+text = "Unofficial maps can contain malicious
+code. Make sure you trust the map
+creator before loading their maps.
+
+Add a map directory?"
+horizontal_alignment = 1
+
+[node name="yes" type="TextureButton" parent="dir_warning"]
+modulate = Color(0.713726, 0.890196, 0.65098, 1)
+material = SubResource("ShaderMaterial_slr3e")
+layout_mode = 0
+offset_left = 216.0
+offset_top = 208.0
+offset_right = 264.0
+offset_bottom = 256.0
+texture_normal = ExtResource("8_aoapw")
+texture_pressed = ExtResource("9_ewebl")
+
+[node name="no" type="TextureButton" parent="dir_warning"]
+modulate = Color(1, 0.717647, 0.698039, 1)
+material = SubResource("ShaderMaterial_ksq4l")
+layout_mode = 0
+offset_left = 296.0
+offset_top = 208.0
+offset_right = 344.0
+offset_bottom = 256.0
+texture_normal = ExtResource("11_kiy1r")
+texture_pressed = ExtResource("12_tqxd5")
+
+[node name="remove_popup" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 368.0
+offset_top = 224.0
+offset_right = 784.0
+offset_bottom = 376.0
+theme_override_font_sizes/font_size = 32
+theme_override_styles/normal = ExtResource("7_qtais")
+text = "Remove currently selected
+pack from the list?"
+horizontal_alignment = 1
+
+[node name="yes" type="TextureButton" parent="remove_popup"]
+modulate = Color(0.713726, 0.890196, 0.65098, 1)
+material = SubResource("ShaderMaterial_slr3e")
+layout_mode = 0
+offset_left = 144.0
+offset_top = 88.0
+offset_right = 192.0
+offset_bottom = 136.0
+texture_normal = ExtResource("8_aoapw")
+texture_pressed = ExtResource("9_ewebl")
+
+[node name="no" type="TextureButton" parent="remove_popup"]
+modulate = Color(1, 0.717647, 0.698039, 1)
+material = SubResource("ShaderMaterial_ksq4l")
+layout_mode = 0
+offset_left = 224.0
+offset_top = 88.0
+offset_right = 272.0
+offset_bottom = 136.0
+texture_normal = ExtResource("11_kiy1r")
+texture_pressed = ExtResource("12_tqxd5")
+
+[node name="dir_window" type="FileDialog" parent="."]
+initial_position = 1
+title = "Open a Directory"
+size = Vector2i(480, 480)
+borderless = true
+transparent = true
+popup_window = true
+ok_button_text = "Select Current Folder"
+dialog_hide_on_ok = true
+file_mode = 2
+filters = PackedStringArray("*.json")
+
+[connection signal="item_activated" from="packs" to="." method="_on_packs_item_activated"]
+[connection signal="item_selected" from="packs" to="." method="_on_packs_item_selected"]
+[connection signal="pressed" from="start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="add" to="." method="_on_add_pressed"]
+[connection signal="pressed" from="remove" to="." method="_on_remove_pressed"]
+[connection signal="pressed" from="dir_warning/yes" to="." method="_on_dir_warning_yes"]
+[connection signal="pressed" from="dir_warning/no" to="." method="_on_dir_warning_no"]
+[connection signal="pressed" from="remove_popup/yes" to="." method="_on_remove_popup_yes"]
+[connection signal="pressed" from="remove_popup/no" to="." method="_on_remove_popup_no"]
+[connection signal="dir_selected" from="dir_window" to="." method="_on_dir_window_dir_selected"]

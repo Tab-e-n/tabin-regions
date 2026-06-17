@@ -1,26 +1,5 @@
 extends MenuScene
 
-"""
-
-# Maps Tab
-
- - Selection list for map
- - Start map button
- - Map preview
-
- - Map title
- - Map description
- - Map option selection
-   * Leaders
-   * Players
-   * Aliances
- - DP selection
-
- - Changing map directory
- - Adding directory + warning about unsafety
- - Removing directory
-
-"""
 
 var current_map: RegionControl = null
 var map_filenames: PackedStringArray = []
@@ -48,6 +27,8 @@ var map_filenames: PackedStringArray = []
 @onready var dp_button_bookwyrm: BaseButton = $presets/clip/container/dp/buttons/bookwyrm
 @onready var dp_button_cheater: BaseButton = $presets/clip/container/dp/buttons/cheater
 
+@onready var directory_name_label: Label = $directory/name as Label
+
 
 func _ready() -> void:
 	update_presets.call_deferred()
@@ -60,6 +41,8 @@ func _ready() -> void:
 func _start() -> void:
 	map_filenames = load_map_names(MapSetup.current_directory)
 	setup_map_list(map_filenames)
+	
+	directory_name_label.text = MapSetup.current_pack_name
 
 
 func load_map_names(directory_name: String) -> PackedStringArray:
@@ -90,6 +73,9 @@ func setup_map_list(map_names: PackedStringArray) -> void:
 		map_list.select_index(0)
 	else:
 		map_list.select_item(selected_item)
+	
+	if map_list.get_selected_item() == null:
+		load_map("", "")
 
 
 func load_map(map_name: String, map_display_name: String, keep_sliders: bool = false) -> void:
@@ -131,19 +117,38 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 			slider_players.value = current_map.player_amount
 			slider_aliances.value = 1
 		
-		set_dp_disabled(current_map.lock_dp_setup)
-		
 		update_presets()
+		
+		if current_map.lock_dp_setup:
+			set_dp_disabled(true, current_map.default_digital_player)
+			update_dp_selection(current_map.default_digital_player)
+		else:
+			if MapSetup.default_digital_player == DPControl.CONTROLER.USER:
+				if current_map.default_digital_player == DPControl.CONTROLER.USER:
+					MapSetup.default_digital_player = DPControl.CONTROLER.DEFAULT
+				else:
+					@warning_ignore("int_as_enum_without_cast")
+					MapSetup.default_digital_player = current_map.default_digital_player
+			set_dp_disabled(false)
+			update_dp_selection()
 		
 		modulate = RegionControl.slight_tint(current_map.color)
 	
 	else:
-		map_title.text = "No map selected."
-		map_lore.text = "Select a map from the list on the left.\nIf there are no maps, change the directory."
+		update_map_info()
+		map_title.text = ""
+		map_lore.text = "No map selected."
+		
 		slider_leaders.visible = false
+		slider_key_leaders.text = ""
 		slider_players.visible = false
+		slider_key_players.text = ""
 		slider_aliances.visible = false
+		slider_key_aliances.text = ""
+		
 		set_dp_disabled(true)
+		update_dp_selection(DPControl.CONTROLER.USER)
+		
 		modulate = Color.WHITE
 
 
@@ -189,7 +194,7 @@ func update_presets() -> void:
 	update_slider_players()
 	update_slider_aliances()
 	
-	update_dp_selection.call_deferred()
+	update_dp_selection()
 
 
 func update_map_info() -> void:
@@ -215,32 +220,36 @@ func update_slider_aliances() -> void:
 	slider_key_aliances.text = "ALIANCES: " + (str(slider_aliances.value) if slider_aliances.value > 1 else "X")
 
 
-func update_dp_selection() -> void:
-	match(MapSetup.default_digital_player):
+@warning_ignore("int_as_enum_without_cast")
+func update_dp_selection(dp: DPControl.CONTROLER = MapSetup.default_digital_player) -> void:
+	var dp_button: Control = null
+	match(dp):
 		DPControl.CONTROLER.TURTLE:
-			dp_selector.position = dp_button_turtle.position
+			dp_button = dp_button_turtle
 			dp_label.text = "Turtle"
 		DPControl.CONTROLER.DEFAULT:
-			dp_selector.position = dp_button_simpleton.position
+			dp_button = dp_button_simpleton
 			dp_label.text = "Simpleton"
 		DPControl.CONTROLER.NEURAL:
-			dp_selector.position = dp_button_overthinker.position
+			dp_button = dp_button_overthinker
 			dp_label.text = "Overthinker"
 		DPControl.CONTROLER.SMARTIE:
-			dp_selector.position = dp_button_bookwyrm.position
+			dp_button = dp_button_bookwyrm
 			dp_label.text = "Bookwyrm"
 		DPControl.CONTROLER.CHEATER:
-			dp_selector.position = dp_button_cheater.position
+			dp_button = dp_button_cheater
 			dp_label.text = "Cheater"
+		_:
+			dp_label.text = ""
 	
-	dp_selector_position.call_deferred()
+	dp_selector_position.call_deferred(dp_button)
 
 
-func dp_selector_position() -> void:
-	dp_selector.position += dp_buttons.position
+func dp_selector_position(dp_button: Control) -> void:
+	dp_selector.position = dp_button.position + dp_buttons.position if dp_button else Vector2.ZERO
 
 
-func set_dp_disabled(disabled: bool) -> void:
+func set_dp_disabled(disabled: bool, map_dp: DPControl.CONTROLER = DPControl.CONTROLER.USER) -> void:
 	var buttons: Dictionary = {
 		DPControl.CONTROLER.TURTLE : dp_button_turtle,
 		DPControl.CONTROLER.DEFAULT : dp_button_simpleton, 
@@ -251,7 +260,7 @@ func set_dp_disabled(disabled: bool) -> void:
 	
 	for dp in buttons:
 		buttons[dp].disabled = disabled
-		buttons[dp].visible = not disabled or (current_map and current_map.default_digital_player == dp)
+		buttons[dp].visible = not disabled or (map_dp == dp)
 	
 	dp_selector.visible = not disabled
 
@@ -305,3 +314,7 @@ func _on_start_pressed():
 	var item: SelectionListItem = map_list.get_selected_item()
 	if item:
 		start_map(item.value)
+
+
+func _on_directory_back_pressed():
+	menu_control.change_tab("packs")
