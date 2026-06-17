@@ -43,6 +43,9 @@ func _ready():
 	
 	_on_power_changed(region.power)
 	
+	action_mode = BaseButton.ACTION_MODE_BUTTON_PRESS
+	button_mask = MOUSE_BUTTON_MASK_LEFT | MOUSE_BUTTON_MASK_MIDDLE
+	
 	if RegionControl.active(region.region_control):
 		Options.timestamp(" -- " + region.name + " city ready", "Cities")
 

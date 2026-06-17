@@ -227,7 +227,45 @@ const COLOR_TOO_BRIGHT : float = 0.85
 ]
 @export var neutral_colors: Array[Color] = []
 ## Names of alignments. Includes the name of the neutral alignment, at index 0.
-@export var align_names: Array[String] = []
+@export var align_names: Array[String] = [
+		"Neutral",
+
+		"Red",
+		"Green",
+		"Blue",
+		"Orange",
+		"Purple",
+
+		"Salmon",
+		"Pistachio",
+		"Navy",
+		"Sand",
+		"Magenta",
+
+		"Pink",
+		"Lime",
+		"Teal",
+		"Gold",
+		"Lavender",
+
+		"Violet",
+		"Grass",
+		"Denim",
+		"Yellow",
+		"Mauve",
+
+		"Maroon",
+		"Mint",
+		"Ocean",
+		"Tan",
+		"Gray",
+
+		"Brown",
+		"Tank",
+		"Silver",
+		"Sunrise",
+		"Frog",
+]
 ## Determines what message gets show at the end of the game.
 ## When set to 0 or lower, map will always show a victory message.
 ## When set to a positive integer, map will show a victory message only if an alignment of the same number wins, else it will show defeat.

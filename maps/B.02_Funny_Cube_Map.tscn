@@ -64,6 +64,7 @@ complexity = 2
 lore = "Welcome to the third dimension*!
 *This map is not actually 3D"
 align_color = Array[Color]([Color(0.84, 0.76272, 0.6468, 1), Color(0.494118, 0.662745, 0.415686, 1), Color(0.823529, 0.443137, 0.337255, 1)])
+align_names = Array[String](["Neutral", "Green", "Red"])
 render_mode = 1
 region_links = NodePath("links")
 

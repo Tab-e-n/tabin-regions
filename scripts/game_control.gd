@@ -35,6 +35,7 @@ enum CURSOR {
 
 var mouse_wheel_input : int = 0
 var mouse_position : Vector2
+var mouse_button: int = MOUSE_BUTTON_LEFT
 
 var win_timer : float = -1
 
@@ -89,12 +90,18 @@ func _ready():
 
 
 func _input(event : InputEvent):
-	if event is InputEventMouseButton:
-		if event.is_pressed():
-			if event.button_index == MOUSE_BUTTON_WHEEL_UP:
+	if event is InputEventMouseButton and event.is_pressed():
+		match event.button_index:
+			MOUSE_BUTTON_WHEEL_UP:
 				mouse_wheel_input = 1
-			if event.button_index == MOUSE_BUTTON_WHEEL_DOWN:
+			MOUSE_BUTTON_WHEEL_DOWN:
 				mouse_wheel_input = -1
+			MOUSE_BUTTON_LEFT:
+				mouse_button = MOUSE_BUTTON_LEFT
+			MOUSE_BUTTON_RIGHT:
+				mouse_button = MOUSE_BUTTON_RIGHT
+			MOUSE_BUTTON_MIDDLE:
+				mouse_button = MOUSE_BUTTON_MIDDLE
 
 
 func _process(delta : float):
@@ -167,6 +174,9 @@ func _process(delta : float):
 			if Input.is_action_just_pressed("hide_turn_order"):
 				game_camera.toggle_turn_order_visible()
 				new_callout("Toggle turn order")
+			
+			if Input.is_action_just_released("middle_click"):
+				game_camera.hide_player_info()
 		
 		if Input.is_action_just_pressed("hide_capitals"):
 			toggle_cities()

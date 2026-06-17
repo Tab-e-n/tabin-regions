@@ -427,8 +427,17 @@ func update_cursor():
 		GameControl.set_cursor(GameControl.CURSOR.NORMAL)
 
 
+func show_player_info():
+	if region_control.game_camera:
+		region_control.game_camera.show_player_info(alignment)
+
+
 func _on_capital_pressed():
-	if RegionControl.active(region_control) and region_control.is_player_controled:
+	if not RegionControl.active(region_control):
+		return
+	if region_control.game_control and region_control.game_control.mouse_button == MOUSE_BUTTON_MIDDLE:
+		show_player_info()
+	elif region_control.is_player_controled:
 		action_decided()
 	update_cursor()
 

@@ -445,21 +445,18 @@ func set_player_info_visible(visibility : bool):
 		player_info.visible = visibility
 
 
-func update_player_info() -> void:
+func hide_player_info():
+	set_player_info_visible(false)
+	if stats_graph:
+		stats_graph.show_lines()
+
+
+func show_player_info(player_alignment: int, new_player: bool = true):
 	if not turn_order or not player_info:
 		return
-	
-	var recent_hovered_player : int = turn_order.get_leader_id_from_mouse()
-	
-	var new_player : bool = false
-	if hovered_player != recent_hovered_player:
-		hovered_player = recent_hovered_player
-		new_player = true
-	
-	var player_alignment : int = region_control.get_alignment_from_play_order(hovered_player)
-	var leader : Sprite2D = turn_order.get_leader(player_alignment) as Sprite2D
+	var leader: Sprite2D = turn_order.get_leader(player_alignment) as Sprite2D
 	if leader and leader.visible:
-		var color : Color = leader.self_modulate
+		var color: Color = leader.self_modulate
 		if new_player:
 			AlignmentList.color_leader(player_info_leader, color)
 			AlignmentList.set_leader_dp(player_info_leader, leader.frame)
@@ -481,9 +478,23 @@ func update_player_info() -> void:
 		if not stats_graph or not stats_graph.visible:
 			set_player_info_visible(true)
 	else:
-		set_player_info_visible(false)
-		if stats_graph:
-			stats_graph.show_lines()
+		hide_player_info()
+
+
+func update_player_info() -> void:
+	if not turn_order or not player_info:
+		return
+	
+	var recent_hovered_player : int = turn_order.get_leader_id_from_mouse()
+	
+	var new_player : bool = false
+	if hovered_player != recent_hovered_player:
+		hovered_player = recent_hovered_player
+		new_player = true
+	
+	var player_alignment: int = region_control.get_alignment_from_play_order(hovered_player)
+	
+	show_player_info(player_alignment, new_player)
 
 
 func update_alignment_colored_ui():

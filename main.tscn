@@ -489,6 +489,7 @@ vertical_alignment = 1
 clip_text = true
 
 [node name="pause" type="Panel" parent="GameCamera/UI"]
+visible = false
 layout_mode = 0
 offset_left = -448.0
 offset_top = -184.0
@@ -706,6 +707,9 @@ Ctrl + Alt + Enter  -  Toggle fast digital players
 
 Hold Shift when clicking a city while
 mobilizing to grab all extra units.
+
+Holding middle click on a city will show
+you info on the region's owner.
 
 
 VISUAL
