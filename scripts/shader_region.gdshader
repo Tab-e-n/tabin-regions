@@ -1,21 +1,13 @@
 shader_type canvas_item;
 render_mode unshaded;
 
+uniform float scale = 1.0;
 uniform bool changing_color = false;
 uniform float n = 0;
 uniform vec4 previous_color : source_color = vec4(1, 1, 1, 1);
 
 void fragment() {
-	if(changing_color)
-	{
-		vec2 uv = UV;
-		if((uv.y * 1.5 - uv.x * 0.5 + 0.5) * 0.5 > n)
-		{
-			COLOR = texture(TEXTURE, UV) * previous_color;
-		}
-//		if((uv.x * 1.5 + uv.y * 0.5) * 0.5 > n)
-//		{
-//			COLOR = previous_color;
-//		}
-	}
+	vec2 uv = UV * scale;
+	float c = float(changing_color && (uv.y * 0.75 - uv.x * 0.25 + 0.25) > n);
+	COLOR = texture(TEXTURE, UV) * (COLOR * (1.0 - c) + previous_color * c);
 }

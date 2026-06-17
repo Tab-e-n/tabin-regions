@@ -494,7 +494,7 @@ func _recalculate_polygon():
 		else:
 			height = 1.0 / height
 		
-		
+		# TODO: instead of UV, set the shaders "scale" parameter
 		var temp_uv : PackedVector2Array = PackedVector2Array()
 		temp_uv.resize(polygon.size())
 		
