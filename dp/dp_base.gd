@@ -11,12 +11,12 @@ func start_turn(align : int):
 
 
 func think_normal():
-	controler.CALL_end_turn = true
+	controler.selected_action = DPControl.PlayerAction.END_TURN
 
 
 func think_mobilize():
-	controler.CALL_end_turn = true
+	controler.selected_action = DPControl.PlayerAction.END_TURN
 
 
 func think_bonus():
-	controler.CALL_end_turn = true
+	controler.selected_action = DPControl.PlayerAction.END_TURN

@@ -79,7 +79,7 @@ func _ready():
 	else:
 		push_warning("current_map_name in Map Setup is empty.")
 	
-	change_map(map_name, false)
+	change_map(map_name)
 	
 	if not game_camera:
 		push_error("No Game Camera present.")
@@ -225,13 +225,13 @@ func _process(delta : float):
 		if region_control:
 			if region_control.is_player_controled:
 				if Input.is_action_just_pressed("forfeit"):
-					region_control.forfeit()
+					dp_control.forfeit()
 					new_callout("Forfeit")
 				elif Input.is_action_just_pressed("plus_foward"):
-					region_control.end_turn(true)
+					dp_control.end_turn()
 					new_callout("End turn")
 				elif Input.is_action_just_pressed("plus_turn"):
-					region_control.change_current_phase()
+					dp_control.next_phase()
 					new_callout("Advance turn")
 			
 			if Input.is_action_just_pressed("show_extra"):
@@ -325,8 +325,6 @@ func change_map(new_map_name : String, update_others : bool = true) -> void:
 		map_name = new_map_name
 		
 		region_control = new_map
-		add_child(region_control)
-		move_child(region_control, 1)
 		
 		if update_others:
 			if game_camera:
@@ -334,8 +332,9 @@ func change_map(new_map_name : String, update_others : bool = true) -> void:
 				game_camera._connect_region_control_signals()
 			if dp_control:
 				dp_control.region_control = region_control
-			
-			ReplayControl.clear_replay()
+		
+		add_child(region_control)
+		move_child(region_control, 1)
 	
 	Options.timestamp("Return change_map", "GameControl")
 

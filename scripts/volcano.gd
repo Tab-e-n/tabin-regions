@@ -86,15 +86,15 @@ func _start_volcano_turn():
 		return
 	
 	if residing_region.alignment != dummy_alignment:
-		dp_control.CALL_forfeit = true
+		controler.selected_action = DPControl.PlayerAction.FORFEIT
 		for path in pathways:
 			path.deactivate()
 			path.update_warnings()
 		return
 	
 	if residing_region.power == residing_region.max_power:
-		dp_control.CALL_change_current_phase = true
-#	print(residing_region.power, "/", residing_region.max_power, " -> ", dp_control.CALL_change_current_phase)
+		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
+#	print(residing_region.power, "/", residing_region.max_power, " -> ", controler.selected_action)
 	
 	active = true
 
@@ -102,16 +102,16 @@ func _start_volcano_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.CALL_change_current_phase or dp_control.CALL_forfeit:
+	if controler.selected_action != DPControl.PlayerAction.REGION:
 #		print("Skipping normal")
 		return
 	if not active:
 #		print("Ending turn")
-		dp_control.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 		return
 	
 	if region_control.get_action_amount() == 0:
-		dp_control.CALL_cheat = true
+		controler.selected_action = DPControl.PlayerAction.ADD_ACTION
 	else:
 		dp_control.selected_capital = residing_region.name
 		active = false
@@ -121,12 +121,12 @@ func _think_normal():
 func _think_mobilize():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.CALL_forfeit:
+	if controler.selected_action != DPControl.PlayerAction.REGION:
 		return
 	
 	if residing_region.power == 1:
 #		print("Erupting")
-		dp_control.CALL_change_current_phase = true
+		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		shake_screen()
 	else:
 #		print("Timer reset")
@@ -143,10 +143,10 @@ func _think_bonus():
 		if not path.is_active():
 			continue
 		call_end_turn = false
-		dp_control.overtake_region(path.get_next_region().name)
+		dp_control.select_overtake(path.get_next_region().name)
 		break
 	if call_end_turn:
-		dp_control.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 		activate_pathways()
 
 

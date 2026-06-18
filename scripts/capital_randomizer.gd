@@ -19,7 +19,7 @@ func _on_region_control_used_alignments_chosen(used_alignments: Array):
 		for i in range(capitals_per_player):
 			var capital: Region = capitals.pop_back() as Region
 			if capital:
-				region_control.overtake_region(capital.name, alignment, true)
+				region_control.dp_control.overtake_as_alignment(capital.name, alignment)
 			else:
 				push_warning("Ran out of capitals to give to alignments.")
 				break

@@ -11,7 +11,7 @@ func think_bonus():
 
 func think_normal():
 	if controler.get_action_amount() == 0:
-		controler.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 		return
 	
 #	print("think default first")
@@ -68,7 +68,7 @@ func think_normal():
 			if results:
 				controler.selected_capital = results[rng.randi_range(0, results.size() - 1)]
 		else:
-			controler.CALL_end_turn = true
+			controler.selected_action = DPControl.PlayerAction.END_TURN
 
 
 func think_mobilize():
@@ -82,11 +82,11 @@ func think_mobilize():
 				break
 		if no_more_extra:
 			if controler.get_bonus_action_amount() == 0:
-				controler.CALL_end_turn = true
+				controler.selected_action = DPControl.PlayerAction.END_TURN
 			else:
-				controler.CALL_change_current_phase = true
+				controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 	else:
-		controler.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 
 
 func calculate_benefit_default(region : Region):

@@ -9,102 +9,119 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uvoby"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p76qm"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ac4kv"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wraqa"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4q5ik"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_proje"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_37k5m"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3yrfw"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5rdld"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_twauj"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_m0cul"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wpotj"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1hyoh"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_girt2"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ailai"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7254w"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tka20"]
 shader = ExtResource("2_xu4he")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
@@ -119,7 +136,6 @@ align_amount = 5
 complexity = 1
 lore = "Everythings comes back to cubes. Everything is cubes.
 Ignore that cities are still circles."
-hide_turn_order = true
 render_mode = 1
 region_links = NodePath("links")
 

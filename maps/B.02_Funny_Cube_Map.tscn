@@ -9,48 +9,56 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0p850"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0o7tw"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_4rwo0"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3cesh"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_6aasv"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iryvj"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xrofp"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ocs8i"]
 shader = ExtResource("3_fkek4")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
@@ -65,6 +73,7 @@ lore = "Welcome to the third dimension*!
 *This map is not actually 3D"
 align_color = Array[Color]([Color(0.84, 0.76272, 0.6468, 1), Color(0.494118, 0.662745, 0.415686, 1), Color(0.823529, 0.443137, 0.337255, 1)])
 align_names = Array[String](["Neutral", "Green", "Red"])
+hide_turn_order = true
 render_mode = 1
 region_links = NodePath("links")
 

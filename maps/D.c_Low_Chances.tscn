@@ -9,138 +9,161 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_a7tdt"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_26tr5"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iowq2"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_b55mc"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vk7f4"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_352wf"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1xp0j"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5xa3u"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1ocf5"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_det4n"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5djv2"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_lpt0h"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_abh7s"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wdage"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cyy2m"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_1tvo1"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uyyp8"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tarr4"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_71fl4"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5vvpn"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2jvpk"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_w56n7"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r7mqf"]
 shader = ExtResource("2_ysip3")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
@@ -162,6 +185,7 @@ complexity = 4
 lore = "Can you beat your enemy when you are at a disadvantage?"
 align_names = Array[String](["", "Calm Denizens", "Conspirators"])
 main_character = 1
+hide_turn_order = true
 render_mode = 1
 region_links = NodePath("links")
 

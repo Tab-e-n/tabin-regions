@@ -94,7 +94,7 @@ func _start_tornado_turn():
 #	print("Start tornado turn")
 	
 	if trigger_region and trigger_region.alignment != dummy_alignment:
-		dp_control.CALL_forfeit = true
+		controler.selected_action = DPControl.PlayerAction.FORFEIT
 		for path in pathways:
 			path.deactivate()
 			path.update_warnings()
@@ -111,7 +111,7 @@ func _start_tornado_turn():
 	
 	if should_active_paths:
 		activate_pathways()
-		dp_control.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 	
 	active = true
 
@@ -119,15 +119,15 @@ func _start_tornado_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.CALL_end_turn or dp_control.CALL_forfeit:
+	if controler.selected_action != DPControl.PlayerAction.REGION:
 		return
 	if not active:
-		dp_control.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 		return
 	
 	if current_path == pathways.size():
 #		print("Iterated through all paths")
-		dp_control.CALL_end_turn = true
+		controler.selected_action = DPControl.PlayerAction.END_TURN
 		current_path = 0
 		return
 	
@@ -143,7 +143,7 @@ func _think_normal():
 	if path.is_active():
 		var region: Region = path.get_next_region()
 #		print("Entering: ", region)
-		dp_control.overtake_region(region.name)
+		dp_control.select_overtake(region.name)
 		
 		particle.take_region(region, dp_control.thinking_timer)
 		ReplayControl.record_move(ReplayControl.RecordType.TORNADO, region.name, particle.tornado_id)
@@ -152,7 +152,7 @@ func _think_normal():
 		disabled_regions[current_path] = region
 	else:
 #		print("Path inactive")
-		dp_control.CALL_nothing = true
+		controler.selected_action = DPControl.PlayerAction.NOTHING
 		if particle.deactivate():
 			ReplayControl.record_move(ReplayControl.RecordType.TORNADO, "", particle.tornado_id)
 	
@@ -162,7 +162,7 @@ func _think_normal():
 func _think_mobilize():
 	if controler.current_alignment != dummy_alignment:
 		return
-	dp_control.CALL_change_current_phase = true
+	controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 
 
 func _think_bonus():

@@ -10,6 +10,11 @@ const TIMESTAMPS_ACTIVE: bool = false
 # 0 Will let through anything
 const TIMESTAMP_THRESHOLD: float = 0.001
 
+const BUILTIN_PACKS: Array = [
+	"res://maps",
+	"res://maps/botbattles",
+]
+
 
 var dp_speedrun: bool = false
 var dp_think_timer: float = DPControl.THINKING_TIMER_DEFAULT

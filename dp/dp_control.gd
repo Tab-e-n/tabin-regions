@@ -6,6 +6,7 @@ signal timer_has_ended
 
 
 enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY, SMARTIE, SIZE}
+enum PlayerAction {NOTHING, REGION, OVERTAKE, ADD_ACTION, NEXT_PHASE, END_TURN, FORFEIT}
 
 const THINKING_TIMER_MAX: float = 0.75
 const THINKING_TIMER_DEFAULT: float = 0.505
@@ -35,15 +36,9 @@ var owned_regions: Dictionary = {}
 var current_moves: Dictionary = {}
 var previous_moves: Set = Set.new()
 
+var selected_action: PlayerAction = PlayerAction.REGION
 var selected_capital : String = ""
 var selected_amount: int = 1
-
-var CALL_change_current_phase: bool = false
-var CALL_end_turn: bool = false
-var CALL_forfeit: bool = false
-var CALL_nothing: bool = false
-var CALL_cheat: bool = false
-var CALL_overtake: bool = false
 
 var replay_done_action: bool = true
 
@@ -67,14 +62,7 @@ func _ready():
 	
 	timer_has_ended.connect(timer_ended)
 	
-	call_deferred("_ready_deferred")
-	
 	Options.timestamp("DPCotrol ready", "DPCotrol")
-
-
-func _ready_deferred():
-	if game_control:
-		region_control = game_control.region_control
 
 
 func _process(delta: float):
@@ -93,31 +81,26 @@ func _process(delta: float):
 		timer_has_ended.emit()
 
 
-func reset_CALL() -> bool:
-	var r = (
-		CALL_forfeit or
-		CALL_end_turn or
-		CALL_change_current_phase or
-		CALL_nothing or
-		CALL_cheat or
-		CALL_overtake
-	)
-	CALL_forfeit = false
-	CALL_end_turn = false
-	CALL_change_current_phase = false
-	CALL_nothing = false
-	CALL_cheat = false
-	CALL_overtake = false
-	return r
-
-
 func reset():
 	owned_regions = {}
 	current_moves = {}
 	previous_moves.clear()
+	selected_action = PlayerAction.REGION
 	selected_capital = ""
-	reset_CALL()
+	selected_amount = 1
 	timer = 0
+
+
+func select_overtake(region_name: String):
+	selected_action = PlayerAction.OVERTAKE
+	selected_capital = region_name
+	selected_amount = -1
+
+
+func select_overtake_as_alignment(region_name: String, alignment: int):
+	selected_action = PlayerAction.OVERTAKE
+	selected_capital = region_name
+	selected_amount = alignment
 
 
 func thinking_timer_update():
@@ -146,7 +129,7 @@ func start_turn(alignment : int, control : int):
 
 func replay():
 	if not replay_done_action:
-		CALL_nothing = true
+		selected_action = PlayerAction.NOTHING
 		return
 	replay_done_action = false
 	
@@ -157,33 +140,34 @@ func replay():
 	
 #			print(current_alignment, " ", next_move)
 	if type == ReplayControl.RecordType.REGION:
+		selected_action = PlayerAction.REGION
 		selected_capital = action
 		selected_amount = amount
 	elif type == ReplayControl.RecordType.OVERTAKE:
+		selected_action = PlayerAction.OVERTAKE
 		selected_capital = action
 		selected_amount = amount
-		CALL_overtake = true
 	
 	elif type == ReplayControl.RecordType.FUNCTION:
 		match(action):
 			"forfeit":
-				CALL_forfeit = true
+				selected_action = PlayerAction.FORFEIT
 			"end_turn":
-				CALL_end_turn = true
+				selected_action = PlayerAction.END_TURN
 			"change_current_phase":
-				CALL_change_current_phase = true
+				selected_action = PlayerAction.NEXT_PHASE
 			"nothing":
-				CALL_nothing = true
+				selected_action = PlayerAction.NOTHING
 			"add_action":
-				CALL_cheat = true
+				selected_action = PlayerAction.ADD_ACTION
 	
 	elif type == ReplayControl.RecordType.VOLCANO:
-		CALL_nothing = true
+		selected_action = PlayerAction.NOTHING
 		match(action):
 			"shake_screen":
 				region_control.volcanos[amount].shake_screen()
 	elif type == ReplayControl.RecordType.TORNADO:
-		CALL_nothing = true
+		selected_action = PlayerAction.NOTHING
 		if action.is_empty():
 			region_control.tornados[amount].deactivate()
 		else:
@@ -191,19 +175,20 @@ func replay():
 	
 	else:
 		push_warning("Unrecognized replay move: ", type, " ", action, " ", amount)
-		CALL_nothing = true
+		selected_action = PlayerAction.NOTHING
 
 
 func think():
-#	print("think")
-	
 	timer = thinking_timer
+	
+	selected_action = PlayerAction.REGION
+	selected_capital = ""
+	selected_amount = 1
 	
 	if ReplayControl.replay_active:
 		replay()
 	else:
 		find_owned_regions()
-		selected_amount = 1
 		
 		var dp: DigitalPlayer = controlers[current_controler]
 		if dp:
@@ -219,51 +204,45 @@ func think():
 					dp.think_bonus()
 		else:
 			push_error("Digital player number ", current_controler, " is null, skipping turn")
-			CALL_end_turn = true
+			selected_action = PlayerAction.END_TURN
 
 
 func timer_ended():
-#	print("timer ended")
 	if ReplayControl.replay_active and replay_done_action:
 		think()
 		return
 	
 	var should_continue: bool = true
 	
-	if CALL_nothing:
-		pass
-	
-	if CALL_forfeit:
-		region_control.forfeit()
-		should_continue = false
-	
-	if CALL_end_turn:
-		region_control.end_turn(true)
-		should_continue = false
-	
-	if CALL_change_current_phase:
-		region_control.change_current_phase()
-		should_continue = region_control.current_phase != RegionControl.PHASE.NORMAL
-	
-	if CALL_cheat:
-		region_control.add_action(selected_amount)
-		should_continue = true
-	
-	if CALL_overtake:
-		if selected_amount == -1:
-			region_control.overtake_region(selected_capital, current_align())
-			if not ReplayControl.replay_active:
-				note_region_selection(selected_capital, current_align())
-		else:
-			region_control.overtake_region(selected_capital, selected_amount, true)
-		should_continue = true
-	
-	if not reset_CALL():
-		var region = region_control.get_region(selected_capital)
-		if region:
-			region.action_decided(selected_amount)
-			if not ReplayControl.replay_active:
-				note_region_selection(selected_capital, current_align())
+	print(selected_action, " ", selected_capital, " ", selected_amount)
+	match selected_action:
+		PlayerAction.NOTHING:
+			pass
+		
+		PlayerAction.REGION:
+			action_decided(selected_capital, selected_amount)
+		
+		PlayerAction.OVERTAKE:
+			if selected_amount == -1:
+				overtake(selected_capital)
+			else:
+				overtake_as_alignment(selected_capital, selected_amount)
+			should_continue = true
+		
+		PlayerAction.ADD_ACTION:
+			add_actions(selected_amount)
+			should_continue = true
+		
+		PlayerAction.NEXT_PHASE:
+			should_continue = next_phase()
+		
+		PlayerAction.END_TURN:
+			end_turn()
+			should_continue = false
+		
+		PlayerAction.FORFEIT:
+			forfeit()
+			should_continue = false
 	
 	replay_done_action = true
 	if should_continue:
@@ -288,6 +267,63 @@ func current_align() -> int:
 		return 0
 
 
+func get_region(region_name : String) -> Region:
+	return region_control.get_region(region_name)
+
+
+# ------ PLAYER MOVES ------
+
+func action_decided_region(region: Region, amount: int):
+	if region:
+		region.action_decided(amount)
+		if not ReplayControl.replay_active:
+			note_region_selection(region.name, current_align())
+
+
+func action_decided(region_name: String, amount: int):
+	var region = region_control.get_region(region_name)
+	action_decided_region(region, amount)
+
+
+func overtake(region_name: String) -> bool:
+	if region_control.overtake_region(region_name):
+		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name, -1)
+		if not ReplayControl.replay_active:
+			note_region_selection(region_name, current_align())
+		return true
+	return false
+
+
+func overtake_as_alignment(region_name: String, alignment: int) -> bool:
+	if region_control.overtake_region(region_name, alignment, true):
+		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name, alignment)
+		return true
+	return false
+
+
+func add_actions(amount: int):
+	region_control.add_action(amount)
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "add_action", amount)
+
+
+func forfeit():
+	region_control.forfeit()
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "forfeit")
+
+
+func end_turn():
+	region_control.end_turn()
+	ReplayControl.record_move.call_deferred(ReplayControl.RecordType.FUNCTION, "end_turn")
+
+
+func next_phase() -> bool:
+	region_control.change_current_phase()
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "change_current_phase")
+	return region_control.current_phase != RegionControl.PHASE.NORMAL
+
+
+# ------ OWNED REGIONS ------
+
 func find_owned_regions(alignment: int = current_align()):
 	owned_regions[alignment] = []
 	if not region_control:
@@ -308,6 +344,8 @@ func get_owned_regions(alignment : int = current_align()) -> Array:
 	return owned_regions[alignment].duplicate()
 
 
+# ------ ALLIANCES ------
+
 func aliances_on() -> bool:
 	return region_control.use_aliances
 
@@ -322,9 +360,7 @@ func get_allied_regions(alignment : int = current_align()) -> Array:
 	return allied_regs
 
 
-func get_region(region_name : String) -> Region:
-	return region_control.get_region(region_name)
-
+# ------ INFO FUNCTIONS ------
 
 func get_current_moves() -> Set:
 	_add_new_current_moves(current_align())
@@ -357,12 +393,3 @@ func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 
 func alignment_inactive(alignment: int = current_align()) -> bool:
 	return region_control.alignment_inactive(alignment)
-
-
-func overtake_region(region_name: String, alignment: int = current_align()):
-	CALL_overtake = true
-	if alignment != current_align():
-		selected_amount = alignment
-	else:
-		selected_amount = -1
-	selected_capital = region_name

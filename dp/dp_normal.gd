@@ -10,7 +10,7 @@ func start_turn(align : int):
 	cheated = false
 	if controler.region_control:
 		if cheater and controler.region_control.current_turn % 6 == 0:
-			controler.CALL_cheat = true
+			controler.selected_action = DPControl.PlayerAction.ADD_ACTION
 
 
 func think_bonus():
@@ -19,7 +19,7 @@ func think_bonus():
 
 func think_normal():
 	if controler.get_action_amount() == 0:
-		controler.CALL_change_current_phase = true
+		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		return
 	
 #	print("think default first")
@@ -72,7 +72,7 @@ func think_normal():
 			if region.power < region.max_power:
 				eligable_regions.add(region)
 		if eligable_regions.empty():
-			controler.CALL_change_current_phase = true
+			controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		else:
 			var index : int = randi_range(0, eligable_regions.size() - 1)
 			controler.selected_capital = eligable_regions.values()[index].name
@@ -93,13 +93,13 @@ func think_mobilize():
 #	print("think default mobilize")
 	if no_more_extra:
 		if controler.get_bonus_action_amount() == 0:
-			controler.CALL_end_turn = true
+			controler.selected_action = DPControl.PlayerAction.END_TURN
 		else:
 			if cheater and not cheated and controler.region_control.current_turn % 6 == 0:
-				controler.CALL_cheat = true
+				controler.selected_action = DPControl.PlayerAction.ADD_ACTION
 				cheated = true
 			else:
-				controler.CALL_change_current_phase = true
+				controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 
 
 func calculate_benefit_default(region : Region):

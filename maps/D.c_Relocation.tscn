@@ -13,162 +13,189 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gelkj"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ptnu7"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0mra0"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_i137k"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ha0er"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oqdku"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vk3ws"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j76ui"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7c6mn"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kmfbr"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_r4x34"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ovche"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fd6be"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_t3h8a"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5g2on"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_vc17h"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_53y1k"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yjv08"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_2mllt"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cjpqx"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7bk5u"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uekfo"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jsbtq"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yhohu"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_52l8n"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_msmkm"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_153hi"]
 shader = ExtResource("5_vg1se")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
@@ -197,6 +224,7 @@ align_names = Array[String](["Soon Red", "Escapee", "Target", "Big Red"])
 main_character = 1
 color_bg_according_to_alignment = false
 city_size = 0.75
+hide_turn_order = true
 render_mode = 1
 render_range = 10.0
 region_links = NodePath("links")

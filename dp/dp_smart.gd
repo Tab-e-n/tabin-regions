@@ -46,7 +46,7 @@ func start_turn(align : int):
 			@warning_ignore("integer_division")
 			cheat_amount_max = controler.region_control.current_turn / 18
 		if cheat_turn:
-			controler.CALL_cheat = true
+			controler.selected_action = DPControl.PlayerAction.ADD_ACTION
 			cheat_amount += 1
 
 
@@ -97,14 +97,17 @@ func set_linked_priority(region: Region, priorities: Dictionary, priority: int) 
 func calculate_priority(region: Region, priorities: Dictionary, phase_bonus: bool) -> int:
 	var action_amount: int = controler.get_action_amount()
 	var priority: int = BENEFIT.INDECISIVE
+	
 	if controler.alignment_friendly(current_alignment, region.alignment):
+		# PAL
 		var threat: int = region.worst_power_delta()
-		var in_threat: bool = -threat > 0
-		var saveable: bool = -threat <= action_amount
+		var in_threat: bool = threat < 0
+		var saveable: bool = -threat <= action_amount and region.power - threat <= region.max_power
 		var bonus_saveable: bool = saveable or not phase_bonus
 		var capturable: bool = region.outgoing_power_delta() + 2 <= action_amount
 		var next_to_unaligned_capital: bool = region.next_to_unaligned_capital()
 		var next_to_enemy: bool = region.next_to_enemy()
+		
 		priority = BENEFIT.REINFORCE
 		if not saveable:
 			priority = BENEFIT.BAD
@@ -129,6 +132,7 @@ func calculate_priority(region: Region, priorities: Dictionary, phase_bonus: boo
 			else:
 				priority = max(priority, BENEFIT.REINFORCE_ENEMY_ADJACENT)
 	else:
+		# ENEMY
 		if region.is_capital:
 			priority = BENEFIT.CAPTURE_CAPITAL
 		elif controler.alignment_inactive(region.alignment):
@@ -148,20 +152,20 @@ func calculate_priority_bonus(region : Region, priorities : Dictionary) -> int:
 	return calculate_priority(region, priorities, true)
 
 
-func calculate_benefit_mobilize(region : Region, _regions):
-	var action_amount : int = controler.get_action_amount()
-	var threat : int = region.worst_power_delta()
+func calculate_benefit_mobilize(region: Region, _regions):
+	var action_amount: int = controler.get_action_amount()
+	var threat: int = region.worst_power_delta()
 	if -threat > action_amount:
 		return 1
 	if -threat == action_amount:
 		return 0
-	var capture_power : int = region.outgoing_power_delta()
+	var capture_power: int = region.outgoing_power_delta()
 	if capture_power == -1:
 		return 0
 	return 1
 
 
-func _tiebreak_capital(region : Region) -> int:
+func _tiebreak_capital(region: Region) -> int:
 	if region.is_capital:
 		if region.alignment == current_alignment:
 			return 2
@@ -169,29 +173,35 @@ func _tiebreak_capital(region : Region) -> int:
 	return 0
 
 
-func _tiebreak_power(region : Region) -> int:
+func _tiebreak_power(region: Region) -> int:
 	if region.alignment == current_alignment:
 		return region.power << 1 + 1
 	return region.power << 1
 
 
-func _tiebreak_lowest_attack(region : Region) -> int:
-	var capture_power : int = -region.outgoing_power_delta()
+func _tiebreak_lowest_attack(region: Region) -> int:
+	var capture_power: int = region.outgoing_power_delta()
 	if region.alignment == current_alignment:
 		return capture_power << 1 + 1
 	return capture_power << 1
 
 
-func _tiebreak_capital_distance(region : Region) -> int:
+func _tiebreak_capital_distance(region: Region) -> int:
 	if region.alignment == current_alignment:
 		return -region.distance_from_capital << 1 + 1
 	return -region.distance_from_capital << 1
 
 
-func _tiebreak_max_power(region : Region) -> int:
+func _tiebreak_max_power(region: Region) -> int:
 	if region.alignment == current_alignment:
 		return region.max_power << 1 + 1
 	return region.max_power << 1
+
+
+func _tiebreak_previous_move(region: Region) -> int:
+	if controler.used_region_previously(region.name):
+		return 0
+	return 1
 
 
 func tiebreak_normal(regs : Array[Region]) -> Region:
@@ -203,6 +213,7 @@ func tiebreak_normal(regs : Array[Region]) -> Region:
 	for criterion in [
 				_tiebreak_capital,
 				_tiebreak_power,
+				_tiebreak_previous_move,
 				_tiebreak_lowest_attack,
 				_tiebreak_capital_distance,
 				_tiebreak_max_power
@@ -241,9 +252,9 @@ func tiebreak_mobilize(regions: Array[Region]) -> Region:
 	return null
 
 
-func think_normal():
+func think_normal(bonus: bool = false):
 	if controler.get_action_amount() <= 0:
-		controler.CALL_change_current_phase = true
+		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		return
 	
 	var regions : Set = Set.new()
@@ -251,9 +262,8 @@ func think_normal():
 	var friendly_regions : Array = controler.get_owned_regions()
 	
 	for region in friendly_regions:
-		print(region.name, ":", region.power, "/", region.max_power)
+#		print(region.name, ": ", region.power, "/", region.max_power)
 		if region.power < region.max_power:
-			print(region.name)
 			regions.add(region)
 		for link in region.links:
 			var target: Region = link.get_other_region(region)
@@ -261,9 +271,9 @@ func think_normal():
 				continue
 			if target.incoming_attack(current_alignment, 0, true):
 				regions.add(target)
-				print(region.name, "->", target.name)
+#				print(region.name, " -> ", target.name)
 	
-	var allied_regions : Array = []
+	var allied_regions: Array = []
 	
 	if controler.aliances_on():
 		allied_regions = controler.get_allied_regions()
@@ -271,37 +281,51 @@ func think_normal():
 			if region.power < region.max_power:
 				regions.add(region)
 	
-	var choice : String = choose_regions(calculate_priority_normal, tiebreak_normal, regions.values())
+	var choice: String = choose_regions(
+		calculate_priority_bonus if bonus else calculate_priority_normal,
+		tiebreak_normal,
+		regions.values()
+	)
+#	print("FINAL CHOICE: ", choice)
 	if choice.is_empty():
-		controler.CALL_change_current_phase = true
+		if controler.get_capital_amount() <= 0:
+			# TODO: They don't do this if they have other options still
+			controler.selected_action = DPControl.PlayerAction.FORFEIT
+		else:
+			controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 	else:
 		controler.selected_capital = choice
 
 
 func think_mobilize():
-	var regions : Set = Set.new()
+#	var regions: Set = Set.new()
 	
-	var friendly_regions : Array = controler.get_owned_regions()
+	var friendly_regions: Array = controler.get_owned_regions()
+	var chosen_region: Region = null
 	
 	for region in friendly_regions:
 		if region.power > 1:
-			regions.add(region)
+			chosen_region = region
+			break
+#			regions.add(region)
 	
-	var choice : String = choose_regions(calculate_benefit_mobilize, tiebreak_mobilize, regions.values())
+#	var choice: String = choose_regions(calculate_benefit_mobilize, tiebreak_mobilize, regions.values())
 	
-	if choice.is_empty():
+#	if choice.is_empty():
+	if chosen_region:
+		controler.selected_capital = chosen_region.name
+		controler.selected_amount = chosen_region.power - 1
+	else:
 		if controler.get_bonus_action_amount() == 0:
-			controler.CALL_end_turn = true
+			controler.selected_action = DPControl.PlayerAction.END_TURN
 		else:
 			if cheat_amount < cheat_amount_max and cheat_turn:
-				controler.CALL_cheat = true
+				controler.selected_action = DPControl.PlayerAction.ADD_ACTION
 				cheat_amount += 1
 			else:
-				controler.CALL_change_current_phase = true
-	else:
-		controler.selected_capital = choice
+				controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 
 
 func think_bonus():
-	think_normal()
+	think_normal(true)
 

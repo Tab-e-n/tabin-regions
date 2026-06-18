@@ -89,6 +89,7 @@ const PHASE_INFO : Array[String] = [
 
 @onready var game_control : GameControl = get_parent()
 @onready var region_control : RegionControl
+@onready var dp_control : DPControl
 @onready var window_size : Vector2
 
 var farthest_left : float = 0
@@ -127,6 +128,7 @@ func _ready():
 	
 	game_control.game_camera = self
 	game_control.command_callout = command_callout
+	dp_control = game_control.dp_control as DPControl
 	
 	zoom_level = ZOOM_START
 	zoom_change(0)
@@ -203,8 +205,6 @@ func _ready():
 func _deferred_ready():
 	Options.timestamp("GameCamera deferred")
 	
-	region_control = game_control.region_control as RegionControl
-	
 	var bounds: Vector4 = region_control.map_bounds()
 	farthest_right = bounds.x
 	farthest_left = bounds.y
@@ -247,8 +247,6 @@ func _deferred_ready():
 		get_node(path).self_modulate = region_control.color
 	
 	command_callout.default_color = region_control.command_callout_color
-	
-	_connect_region_control_signals()
 	
 	update_current_turn()
 	update_alignment_label()
@@ -387,14 +385,14 @@ func try_advance_turn():
 	if region_control.current_phase == RegionControl.PHASE.BONUS and region_control.get_action_amount() > 0:
 		set_leftover_message(true)
 	else:
-		region_control.change_current_phase()
+		dp_control.next_phase()
 
 
 func try_end_turn():
 	if region_control.get_action_amount() > 0:
 		set_leftover_message(true)
 	else:
-		region_control.end_turn(true)
+		dp_control.end_turn()
 
 
 func try_forfeit():
@@ -714,7 +712,7 @@ func _on_leave_canceled():
 
 func _on_leftover_confirmed():
 	set_leftover_message(false)
-	region_control.end_turn(true)
+	dp_control.end_turn()
 
 
 func _on_leftover_canceled():
@@ -723,7 +721,7 @@ func _on_leftover_canceled():
 
 func _on_forfeit_confirmed():
 	set_forfeit_message(false)
-	region_control.forfeit()
+	dp_control.forfeit()
 
 
 func _on_forfeit_canceled():

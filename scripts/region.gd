@@ -150,7 +150,7 @@ func set_mobilizable(value: bool) -> void:
 
 
 ## Attempts to reinforce the region.
-func reinforce(reinforce_align: int = alignment, addon_power: int = 1, force: bool = false):
+func reinforce(reinforce_align: int = alignment, addon_power: int = 1, force: bool = false) -> bool:
 	if not reinforceable and not force:
 		return false
 	if not _set_power(power + addon_power, 0):
@@ -161,7 +161,7 @@ func reinforce(reinforce_align: int = alignment, addon_power: int = 1, force: bo
 
 
 ## Attempts to mobilize on the region.
-func mobilize(mobilize_align: int = alignment, mobilize_amount: int = 1, force: bool = false):
+func mobilize(mobilize_align: int = alignment, mobilize_amount: int = 1, force: bool = false) -> int:
 	if not mobilizable and not force:
 		return 0
 	if not _set_power(power - mobilize_amount):
@@ -172,7 +172,7 @@ func mobilize(mobilize_align: int = alignment, mobilize_amount: int = 1, force: 
 
 
 ## Attempts to capture the region.
-func incoming_attack(attack_align: int, attack_power: int = 0, test_only: bool = false, force: bool = false):
+func incoming_attack(attack_align: int, attack_power: int = 0, test_only: bool = false, force: bool = false) -> bool:
 	if not captureable and not force:
 		return false
 	attack_power += get_alignments_attack_power(attack_align)
@@ -203,12 +203,11 @@ func change_alignment(align : int, recolor_self : bool = true):
 
 
 ## Captures the region for the overtaker, regardless of the state the region is in.
-func overtake(overtaker: int = region_control.current_playing_align, _during_ready: bool = false):
+func overtake(overtaker: int = region_control.current_playing_align, _during_ready: bool = false) -> bool:
 	city_particle(false)
 	if not _during_ready and region_control.alignment_friendly(overtaker, alignment):
-		reinforce(overtaker, 1, true)
-	else:
-		incoming_attack(overtaker, max_power + 1, false, true)
+		return reinforce(overtaker, 1, true)
+	return incoming_attack(overtaker, max_power + 1, false, true)
 
 
 ## Changes the max power of the region.
@@ -320,7 +319,7 @@ func outgoing_power_delta(align : int = alignment) -> int:
 	for link in links:
 		var region : Region = link.get_other_region(self)
 		if region:
-			var pow_diff : int = region.attack_power_delta(align)
+			var pow_diff: int = region.attack_power_delta(align)
 			if pow_diff > 0:
 				continue
 			if first_value or pow_diff > closest:

@@ -44,7 +44,11 @@ func setup_pack_list(pack_names: PackedStringArray, selected_pack: String = MapS
 	
 	var selected_item: SelectionListItem = null
 	
-	pack_list.add_item("res://maps", "Base Maps")
+	for pack_name in Options.BUILTIN_PACKS:
+		var info: Dictionary = load_pack_info(pack_name)
+		var item: SelectionListItem = pack_list.add_item(pack_name, info["title"])
+		if pack_name == selected_pack:
+			selected_item = item
 	for pack_name in pack_names:
 		var info: Dictionary = load_pack_info(pack_name)
 		var item: SelectionListItem = pack_list.add_item(pack_name, info["title"])
@@ -104,7 +108,7 @@ func _on_add_pressed():
 
 func _on_remove_pressed():
 	var item: SelectionListItem = pack_list.get_selected_item()
-	if item and item.value != "res://maps":
+	if item and item.value not in Options.BUILTIN_PACKS:
 		remove_popup.visible = true
 
 

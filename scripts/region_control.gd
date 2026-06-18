@@ -1290,13 +1290,11 @@ func change_current_phase():
 	turn_phase_changed.emit(current_phase)
 	
 	if call_end_turn:
-		end_turn(false)
-	
-	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "change_current_phase")
+		end_turn()
 
 
 ## Ends the current players turn.
-func end_turn(record : bool):
+func end_turn():
 	_calculate_penalty(current_playing_align, true)
 	
 	if region_amount[current_playing_align - 1] > 0:
@@ -1327,32 +1325,26 @@ func end_turn(record : bool):
 	turn_ended.emit()
 	if round_end:
 		_new_round()
-	
-	if record:
-		ReplayControl.record_move.call_deferred(ReplayControl.RecordType.FUNCTION, "end_turn")
 
 
 ## Makes the current player forfeit, turning their regions neutral.
 func forfeit():
 	convert_alignment(current_playing_align, 0)
 	
-	end_turn(false)
-	
-	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "forfeit")
+	end_turn()
 
 
 ## Gives the current player an extra action.
 func add_action(amount: int = 1):
 	_modify_action_amount(amount)
-	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "add_action", amount)
 
 
 ## Captures a region for the current player, regardless of the state the region is in.
-func overtake_region(region_name: String, alignment: int = current_playing_align, _during_ready: bool = false):
+func overtake_region(region_name: String, alignment: int = current_playing_align, _during_ready: bool = false) -> bool:
 	var region : Region = get_region(region_name)
 	if region:
-		region.overtake(alignment, _during_ready)
-		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name, alignment if _during_ready else -1)
+		return region.overtake(alignment, _during_ready)
+	return false
 
 
 ## Called after a region is pressed.
@@ -1375,6 +1367,7 @@ func action_done(region_name: String, amount: int = 1):
 	
 	if auto_end_phase and get_action_amount() <= 0:
 		change_current_phase()
+		ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "change_current_phase")
 
 
 func turn_is_player_turn() -> bool:

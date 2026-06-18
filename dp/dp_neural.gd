@@ -90,10 +90,10 @@ func start_turn(align : int, soflock_prevention : int = 0):
 
 func think_normal():
 	if not network_attack or not network_reinforce:
-		controler.CALL_nothing = true
+		controler.selected_action = DPControl.PlayerAction.NOTHING
 		return
 	if controler.get_action_amount() <= 0:
-		controler.CALL_change_current_phase = true
+		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		return
 	
 	if trainer:
@@ -128,7 +128,7 @@ func think_normal():
 	var chosen_attack : Array = choose_using_network(network_attack, attack_regions.values())
 	var chosen_reinforce : Array = choose_using_network(network_reinforce, reinforce_regions)
 	if chosen_attack[0] == "" and chosen_reinforce[0] == "":
-		controler.CALL_change_current_phase = true
+		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 	else:
 		if chosen_reinforce[0] == "" or chosen_attack[1] >= chosen_reinforce[1]:
 			controler.selected_capital = chosen_attack[0]
@@ -139,7 +139,7 @@ func think_normal():
 
 func think_mobilize():
 	if not network_mobilize:
-		controler.CALL_nothing = true
+		controler.selected_action = DPControl.PlayerAction.NOTHING
 		return
 	
 	if trainer:
@@ -155,17 +155,17 @@ func think_mobilize():
 			can_mobilize = true
 	if not can_mobilize:
 		if controler.get_bonus_action_amount() <= 0:
-			controler.CALL_end_turn = true
+			controler.selected_action = DPControl.PlayerAction.END_TURN
 		else:
-			controler.CALL_change_current_phase = true
+			controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		return
 	
 	var chosen_mobilize : Array = choose_using_network(network_mobilize, mobilize_regions)
 	if chosen_mobilize[0] == "":
 		if controler.get_bonus_action_amount() <= 0:
-			controler.CALL_end_turn = true
+			controler.selected_action = DPControl.PlayerAction.END_TURN
 		else:
-			controler.CALL_change_current_phase = true
+			controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 	else:
 		controler.selected_capital = chosen_mobilize[0]
 
