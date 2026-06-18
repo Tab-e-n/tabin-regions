@@ -91,18 +91,23 @@ func _start_tornado_turn():
 	if controler.current_alignment != dummy_alignment:
 		return
 	
+#	print("Start tornado turn")
+	
 	if trigger_region and trigger_region.alignment != dummy_alignment:
 		dp_control.CALL_forfeit = true
 		for path in pathways:
 			path.deactivate()
 			path.update_warnings()
 		reset_tornados()
+#		print("Tornado ended")
 		return
 	
 	var should_active_paths: bool = true
 	for path in pathways:
 		if path.is_active():
 			should_active_paths = false
+	
+#	print("Should reactivate: ", should_active_paths)
 	
 	if should_active_paths:
 		activate_pathways()
@@ -121,6 +126,7 @@ func _think_normal():
 		return
 	
 	if current_path == pathways.size():
+#		print("Iterated through all paths")
 		dp_control.CALL_end_turn = true
 		current_path = 0
 		return
@@ -130,11 +136,13 @@ func _think_normal():
 	var disabled_region = disabled_regions[current_path]
 	
 	if disabled_region:
+#		print("Leaving: ", disabled_region)
 		disabled_region.set_captureable(true)
 		disabled_regions[current_path] = null
 	
 	if path.is_active():
 		var region: Region = path.get_next_region()
+#		print("Entering: ", region)
 		dp_control.overtake_region(region.name)
 		
 		particle.take_region(region, dp_control.thinking_timer)
@@ -143,6 +151,7 @@ func _think_normal():
 		region.set_captureable(false)
 		disabled_regions[current_path] = region
 	else:
+#		print("Path inactive")
 		dp_control.CALL_nothing = true
 		if particle.deactivate():
 			ReplayControl.record_move(ReplayControl.RecordType.TORNADO, "", particle.tornado_id)

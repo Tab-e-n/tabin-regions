@@ -76,6 +76,7 @@ func change_directory_visual(dir: String):
 func change_directory(dir: String):
 	change_directory_visual(dir)
 	MapSetup.current_directory = dir
+	Options.last_pack = dir
 	MapSetup.current_pack_name = current_pack_name
 
 

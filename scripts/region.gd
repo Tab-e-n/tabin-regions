@@ -212,7 +212,7 @@ func overtake(overtaker: int = region_control.current_playing_align, _during_rea
 
 
 ## Changes the max power of the region.
-func set_max_power(new_max : int, reduce_power : bool = true):
+func set_max_power(new_max: int, reduce_power: bool = true):
 	max_power = new_max
 	if reduce_power and power > max_power:
 		_set_power(max_power)

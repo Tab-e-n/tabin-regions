@@ -231,7 +231,7 @@ func timer_ended():
 	var should_continue: bool = true
 	
 	if CALL_nothing:
-		reset_CALL()
+		pass
 	
 	if CALL_forfeit:
 		region_control.forfeit()

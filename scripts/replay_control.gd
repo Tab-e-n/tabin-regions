@@ -9,6 +9,10 @@ enum RecordType {
 	OVERTAKE,
 	VOLCANO,
 	TORNADO,
+	# TODO
+	START,
+	MOD_POWER,
+	MOD_MAX_POWER,
 }
 
 

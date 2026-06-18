@@ -11,120 +11,140 @@
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_rleug"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xk42j"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5l5nt"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tgnhc"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xmvjr"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_p6lqs"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h4pgf"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_fo5fy"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_d84fb"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_svwam"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f2gh6"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_svyrs"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_h378q"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_3ehw0"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mk7c0"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_dqwsq"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xdlbj"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_prinr"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kfpge"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_n1ad4"]
 shader = ExtResource("3_otni5")
+shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
@@ -330,6 +350,11 @@ to_name = &"Oberon"
 [node name="Oberon-Last Sighting" type="Line2D" parent="links"]
 script = ExtResource("2_e27es")
 from_name = &"Last Sighting"
+to_name = &"Oberon"
+
+[node name="Oberon-Grunchy" type="Line2D" parent="links"]
+script = ExtResource("2_e27es")
+from_name = &"Grunchy"
 to_name = &"Oberon"
 
 [node name="Pincher-Last Sighting" type="Line2D" parent="links"]

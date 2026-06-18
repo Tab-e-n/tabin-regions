@@ -21,6 +21,7 @@ var action_change_particles: bool = true
 var capital_distance_visible: bool = false
 
 var last_tab: String = "maps"
+var last_pack: String = "res://maps"
 var accepted_directory_danger: bool = false
 var allowed_directories: Array = []
 
@@ -33,6 +34,10 @@ var timestamp_sums: Dictionary = {}
 
 func _ready():
 	DirAccess.make_dir_absolute("user://Dev")
+	
+	load_options()
+	
+	MapSetup.current_directory = Options.last_pack
 
 
 func _physics_process(_delta):
@@ -57,6 +62,7 @@ func save_options():
 		"capital_distance_visible" : capital_distance_visible,
 		
 		"last_tab" : last_tab,
+		"last_pack" : last_pack,
 		"accepted_directory_danger" : accepted_directory_danger,
 		"allowed_directories" : allowed_directories,
 	}

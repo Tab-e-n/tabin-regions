@@ -22,7 +22,6 @@ var going_interchange: bool = false
 
 func _ready():
 	GameControl.set_cursor(GameControl.CURSOR.NORMAL)
-	Options.load_options()
 	
 	for i in $title.get_children():
 		if i is Region:
