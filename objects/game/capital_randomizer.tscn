@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://cb8ckc5gs2qyp"]
+
+[ext_resource type="Script" path="res://scripts/capital_randomizer.gd" id="1_p1ygl"]
+
+[node name="CapitalRandomizer" type="Node"]
+script = ExtResource("1_p1ygl")

@@ -16,17 +16,20 @@ const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)
 
 @export_node_path("Region") var from_path : NodePath:
 	set(path):
-		from_name = path.get_name(path.get_name_count() - 1)
+		if not path.is_empty():
+			from_name = path.get_name(path.get_name_count() - 1)
 @export_node_path("Region") var to_path : NodePath:
 	set(path):
-		to_name = path.get_name(path.get_name_count() - 1)
+		if not path.is_empty():
+			to_name = path.get_name(path.get_name_count() - 1)
 
 @export var from_name : StringName
 @export var to_name : StringName
 
 @export var generate_name : bool = false:
-	set(_u):
-		_generate_name()
+	set(value):
+		if value == true:
+			_generate_name()
 		generate_name = false
 
 @export var disabled : bool = false
@@ -36,8 +39,9 @@ const LABEL_SIZE_BASE : Vector2 = Vector2(256, 24)
 
 @export_subgroup("Dev")
 @export var show_if_obsolete : bool = false:
-	set(_u):
-		_show_if_obsolete()
+	set(value):
+		if value == true:
+			_show_if_obsolete()
 		show_if_obsolete = false
 
 
@@ -200,6 +204,8 @@ func _show_if_obsolete() -> void:
 	var parent: Node = self
 	while parent != null and (parent as RegionControl) == null:
 		parent = parent.get_parent()
+	if parent == null:
+		return
 	if not parent.get_node(str(from_name)) or not parent.get_node(str(to_name)):
 		add_point(Vector2(256, 256))
 		add_point(Vector2(512, 512))

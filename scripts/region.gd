@@ -203,9 +203,9 @@ func change_alignment(align : int, recolor_self : bool = true):
 
 
 ## Captures the region for the overtaker, regardless of the state the region is in.
-func overtake(overtaker: int = region_control.current_playing_align):
+func overtake(overtaker: int = region_control.current_playing_align, _during_ready: bool = false):
 	city_particle(false)
-	if region_control.alignment_friendly(overtaker, alignment):
+	if not _during_ready and region_control.alignment_friendly(overtaker, alignment):
 		reinforce(overtaker, 1, true)
 	else:
 		incoming_attack(overtaker, max_power + 1, false, true)
@@ -375,7 +375,8 @@ func color_self(animate: bool = true, backup_color: Color = color):
 func city_particle(is_mobilized : bool):
 	if region_control and not region_control.spawn_particles:
 		return
-	city.call_deferred("make_particle", is_mobilized)
+	if city:
+		city.call_deferred("make_particle", is_mobilized)
 
 
 ## Shows the regions links.

@@ -89,7 +89,7 @@ func save_replay(replay_name: String):
 	file.close()
 
 
-func load_replay(replay_name : String):
+func load_replay(replay_name: String):
 	var replay_save : Dictionary = {
 	}
 	
@@ -101,8 +101,10 @@ func load_replay(replay_name : String):
 		file.close()
 		
 		if not replay_save.has("game_version"):
+			push_warning("Replay is from an old version")
 			return false
 		if replay_save["game_version"] not in Options.REPLAY_COMPATIBLE_VERSIONS:
+			push_warning("Replay is from an incompatible version")
 			return false
 		
 		MapSetup.current_directory = replay_save["replay_dir"]
@@ -123,4 +125,5 @@ func load_replay(replay_name : String):
 		
 		return true
 	else:
+		push_warning("Couldn't open replay file")
 		return false

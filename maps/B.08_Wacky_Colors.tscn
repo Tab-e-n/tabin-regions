@@ -1,17 +1,250 @@
-[gd_scene load_steps=3 format=3 uid="uid://t1afuav5g8wx"]
+[gd_scene load_steps=12 format=3 uid="uid://t1afuav5g8wx"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_l550i"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_bids2"]
+[ext_resource type="Script" path="res://scripts/region_link.gd" id="2_vfg37"]
+[ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="3_u07oc"]
+[ext_resource type="Texture2D" uid="uid://bvrj84vn7prqo" path="res://sprites/region.png" id="4_qn4by"]
+[ext_resource type="Script" path="res://scripts/region.gd" id="5_bab7b"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kwsgr"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_o4j3h"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_rn1av"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_cct18"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tn1el"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [node name="region_control" type="Polygon2D" node_paths=PackedStringArray("region_links")]
-color = Color(0.521569, 0.521569, 0.603922, 1)
+color = Color(0.831373, 0.807843, 0.878431, 1)
+polygon = PackedVector2Array(-1384, 600, -552, 1480, 504, 1208, 1056, 144, 1048, -728, 56, -1328, -792, -1288, -1384, -552)
 script = ExtResource("1_l550i")
+align_amount = 9
 complexity = 2
 lore = "Wacky colors indeed!"
-align_color = Array[Color]([Color(0.384314, 0.341176, 0.458824, 1), Color(0.647059, 0.509804, 0.376471, 1), Color(0.223529, 0.337255, 0.129412, 1), Color(0.333333, 0.415686, 0.635294, 1), Color(0.537255, 0.345098, 0.439216, 1), Color(0.168627, 0.266667, 0.337255, 1), Color(0.309804, 0.294118, 0.231373, 1), Color(0.929412, 0.654902, 0.356863, 1), Color(0.180392, 0.34902, 0.286275, 1)])
+align_color = Array[Color]([Color(0.717647, 0.678431, 0.788235, 1), Color(0.647059, 0.509804, 0.376471, 1), Color(0.223529, 0.337255, 0.129412, 1), Color(0.333333, 0.415686, 0.635294, 1), Color(0.537255, 0.345098, 0.439216, 1), Color(0.168627, 0.266667, 0.337255, 1), Color(0.309804, 0.294118, 0.231373, 1), Color(0.929412, 0.654902, 0.356863, 1), Color(0.180392, 0.34902, 0.286275, 1)])
 align_names = Array[String](["Neutral", "Sand", "Grass", "Denim", "Mauve", "Ocean", "Tank", "Sunrise", "Frog"])
 region_links = NodePath("links")
 
 [node name="links" type="Node" parent="."]
 
+[node name="Ocean-Ocean Leadup" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Ocean"
+to_name = &"Ocean Leadup"
+
+[node name="Ocean-Furthest Ocean" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Ocean"
+to_name = &"Furthest Ocean"
+
+[node name="Big Wave-Ocean" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Ocean"
+to_name = &"Big Wave"
+
+[node name="Big Wave-Furthest Ocean" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Big Wave"
+to_name = &"Furthest Ocean"
+
+[node name="Big Wave-Splash Zone" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Big Wave"
+to_name = &"Splash Zone"
+
+[node name="Ocean Leadup-Splash Zone" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Ocean Leadup"
+to_name = &"Splash Zone"
+
+[node name="Big Wave-Ocean Leadup" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Big Wave"
+to_name = &"Ocean Leadup"
+
+[node name="Froglet-Frog" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Frog"
+to_name = &"Froglet"
+
 [node name="bg" parent="." instance=ExtResource("2_bids2")]
+color = Color(0.654902, 0.619608, 0.709804, 1)
+
+[node name="Outline" type="Line2D" parent="."]
+position = Vector2(-704, -936)
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(63.9999, 184, -96, 8, -80, -152, 8, -232, 152, -256, 224, -184, 216, -96, 184, 16, 152, 88, 160, 224, 64, 184)
+
+[node name="Outline1" type="Line2D" parent="."]
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(-776, -88, -816, 40, -792, 128, -816, 312, -952, 400, -1184, 336, -1512, 320, -1584, 520, -1552, 704, -1392, 808, -1144, 800, -992, 680, -864, 536, -672, 496, -536, 552, -520, 688, -456, 776, -368, 728, -264, 608, -112, 592, 24, 640, 120, 720, 240, 944, 168, 1136, 280, 1304, 416, 1368, 584, 1304, 616, 1152, 568, 984, 408, 904, 336, 768, 336, 584, 440, 408, 528, 296, 512, 168, 408, -24, 488, -176, 696, -408, 968, -488, 1176, -536, 1224, -712, 1128, -848, 896, -864, 696, -776, 632, -608, 528, -408, 368, -328, 176, -384, 96, -616, 120, -888, 216, -1152, 240, -1400, 48, -1464, -144, -1464, -264, -1344, -296, -1168, -240, -944, -176, -560, -304, -496, -464, -528, -656, -712, -672, -904, -904, -944, -1000, -888, -1096, -768, -1040, -608, -960, -416, -1008, -248, -976, -152, -776, -88)
+
+[node name="Outline2" type="Line2D" parent="."]
+position = Vector2(-952, -312)
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(152, -24, 56, -280, -200, -344, -328, -272, -336, -184, -320, -48, -264, 72, -8, 152, 152, 144, 152, -24)
+
+[node name="Outline3" type="Line2D" parent="."]
+position = Vector2(-464, 792)
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(8, -152, -104, -88, -208, -16, -232, 72, -184, 176, -96, 216, 8, 184, 104, 80, 48, -48, 48, -144, 64, -200, 8, -152)
+
+[node name="Outline4" type="Line2D" parent="."]
+position = Vector2(-448, 1168)
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(0, -176, -56, -88, -80, 8, -72, 96, -24, 152, 48, 144, 32, 32, 48, -72, 48, -216, 0, -176)
+
+[node name="Outline5" type="Line2D" parent="."]
+position = Vector2(-224, 880)
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(-160, -216, -128, -136, -112, -8, -128, 48, -168, 128, -144, 224, -72, 264, 56, 232, 144, 136, 104, -8, 40, -144, -56, -192, -104, -264, -112, -344, -152, -304, -160, -216)
+
+[node name="Outline6" type="Line2D" parent="."]
+position = Vector2(560, 208)
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(-160, -16, -32, 88, 80, 112, 168, 104, 240, 32, 288, -32, 344, -72, 432, -136, 472, -248, 408, -312, 280, -344, 224, -288, 192, -208, 168, -152, 128, -152, 64, -184, -24, -160, -88, -120, -160, -16)
+
+[node name="Outline7" type="Line2D" parent="."]
+scale = Vector2(0.75, 0.75)
+points = PackedVector2Array(-112, -216, -296, -192, -400, -112, -448, -8, -440, 120, -408, 176, -256, 256, -128, 280, -8, 272, 64, 216, 104, 88, 104, -24, 48, -104, -112, -216)
+
+[node name="Sand" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(40, -992)
+texture = ExtResource("4_qn4by")
+script = ExtResource("5_bab7b")
+alignment = 1
+is_capital = true
+
+[node name="Grass" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(808, -496)
+texture = ExtResource("4_qn4by")
+script = ExtResource("5_bab7b")
+alignment = 2
+is_capital = true
+
+[node name="Denim" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(808, 40)
+texture = ExtResource("4_qn4by")
+script = ExtResource("5_bab7b")
+alignment = 3
+is_capital = true
+
+[node name="Mauve" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(376, 904)
+texture = ExtResource("4_qn4by")
+script = ExtResource("5_bab7b")
+alignment = 4
+is_capital = true
+
+[node name="Ocean" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(-256, 992)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(-80, -16, -64, 48, -24, 72, 72, 48, 128, -16, 96, -120, 48, -208, 40, -120, -48, -72)
+uv = PackedVector2Array(0, 87.7714, 9.84615, 117.029, 34.4615, 128, 93.5385, 117.029, 128, 87.7714, 108.308, 40.2286, 78.7692, 0, 73.8462, 40.2286, 19.6923, 62.1714)
+script = ExtResource("5_bab7b")
+alignment = 5
+is_capital = true
+
+[node name="Ocean Leadup" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(-264, 792)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(-64, -128, -64, -80, -40, -16, -24, 80, -40, 120, 40, 72, 48, -16, -8, -48, -48, -104, -56, -144)
+uv = PackedVector2Array(0, 7.75758, 0, 31.0303, 27.4286, 62.0606, 45.7143, 108.606, 27.4286, 128, 118.857, 104.727, 128, 62.0606, 64, 46.5455, 18.2857, 19.3939, 9.14286, 0)
+script = ExtResource("5_bab7b")
+alignment = 5
+
+[node name="Splash Zone" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_o4j3h")
+position = Vector2(-496, 760)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(-80, 8, -56, 48, 16, 64, 72, 48, 56, 0, 56, -72, 64, -88, 40, -72, -40, -24)
+uv = PackedVector2Array(0, 80.8421, 20.2105, 114.526, 80.8421, 128, 128, 114.526, 114.526, 74.1053, 114.526, 13.4737, 121.263, 0, 101.053, 13.4737, 33.6842, 53.8947)
+script = ExtResource("5_bab7b")
+alignment = 5
+
+[node name="Big Wave" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_rn1av")
+position = Vector2(-552, 880)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(-56, -96, -72, -32, -40, 32, 16, 56, 88, 40, 152, -32, 136, -64, 72, -48, -8, -64, -32, -112)
+uv = PackedVector2Array(9.14286, 12.1905, 0, 60.9524, 18.2857, 109.714, 50.2857, 128, 91.4286, 115.81, 128, 60.9524, 118.857, 36.5714, 82.2857, 48.7619, 36.5714, 36.5714, 22.8571, 0)
+script = ExtResource("5_bab7b")
+alignment = 5
+
+[node name="Furthest Ocean" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_cct18")
+position = Vector2(-464, 1152)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(40, 112, 24, 40, 40, -40, 40, -120, 24, -104, -16, -40, -32, 24, -24, 88, 0, 120)
+uv = PackedVector2Array(128, 123.733, 99.5556, 85.3333, 128, 42.6667, 128, 0, 99.5556, 8.53333, 28.4444, 42.6667, 0, 76.8, 14.2222, 110.933, 56.8889, 128)
+script = ExtResource("5_bab7b")
+alignment = 5
+
+[node name="Tank" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(-1064, 328)
+texture = ExtResource("4_qn4by")
+script = ExtResource("5_bab7b")
+alignment = 6
+is_capital = true
+
+[node name="Sunrise" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(-928, -296)
+texture = ExtResource("4_qn4by")
+script = ExtResource("5_bab7b")
+alignment = 7
+is_capital = true
+
+[node name="Frog" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_kwsgr")
+position = Vector2(-624, -1032)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(32, 136, 48, 104, 72, 16, 72, -40, 32, -80, -72, -64, -128, -8, -56, -8, 8, 56)
+uv = PackedVector2Array(102.4, 128, 112.64, 109.037, 128, 56.8889, 128, 23.7037, 102.4, 0, 35.84, 9.48148, 0, 42.6667, 46.08, 42.6667, 87.04, 80.5926)
+script = ExtResource("5_bab7b")
+alignment = 8
+is_capital = true
+
+[node name="Froglet" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_tn1el")
+position = Vector2(-680, -936)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(80, 144, 32, 128, -80, 0, -72, -96, -8, -96, 56, -32, 80, 48)
+uv = PackedVector2Array(128, 128, 89.6, 119.467, 0, 51.2, 6.4, 0, 57.6, 0, 108.8, 34.1333, 128, 76.8)
+script = ExtResource("5_bab7b")
+alignment = 8

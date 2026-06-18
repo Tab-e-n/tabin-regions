@@ -9,6 +9,8 @@ signal center_camera_to_position(center : Vector2)
 ## before the capital distance is calculated.
 signal region_connections_ready
 
+signal used_alignments_chosen(play_order: Array)
+
 signal actions_modified(amount : int)
 ## Emitted when a players turn ends.
 signal turn_ended
@@ -332,6 +334,7 @@ var align_controlers: Array = []
 var is_player_controled: bool
 
 var regions : Dictionary = {}
+var capitals : Dictionary = {}
 var region_amount : Array[int] = []
 var last_turn_region_amount : Array[int] = []
 var capital_amount : Array[int] = []
@@ -495,6 +498,7 @@ func _ready():
 		align_controlers = ReplayControl.replay_controlers
 		use_aliances = ReplayControl.replay_uses_aliances
 	else:
+		ReplayControl.clear_replay()
 		if not lock_player_amount:
 			player_amount = MapSetup.player_amount
 		if not lock_dp_setup:
@@ -513,8 +517,8 @@ func _ready():
 	
 	Options.timestamp("RegionCotrol ready setup", "RegionControl")
 	
-	_get_all_regions()
-	Options.timestamp("_get_all_regions", "RegionControl")
+	_store_all_regions()
+	Options.timestamp("_store_all_regions", "RegionControl")
 	
 	# -- REGION LINKS --
 	if not region_links:
@@ -525,16 +529,6 @@ func _ready():
 	
 	_create_region_connections()
 	Options.timestamp("_create_region_connections", "RegionControl")
-	
-	# -- REGION AMOUNTS --
-	region_amount.resize(align_amount - 1)
-	capital_amount.resize(align_amount - 1)
-	
-	_count_up_regions()
-	
-	last_turn_region_amount = region_amount.duplicate()
-	
-	Options.timestamp("_count_up_regions", "RegionControl")
 	
 	# -- CAPITAL DISTANCE --
 	_set_capital_distance()
@@ -567,6 +561,8 @@ func _ready():
 			_randomly_fill_play_order(player_allowed)
 		
 		_randomly_fill_play_order(alignments)
+		
+		used_alignments_chosen.emit(align_play_order.duplicate())
 	else:
 		removed_alignments = ReplayControl.replay_removed_alignments.duplicate()
 		for alignment in removed_alignments:
@@ -578,6 +574,16 @@ func _ready():
 	current_playing_align = align_play_order[0]
 	
 	Options.timestamp("RegionCotrol ready turn order", "RegionControl")
+	
+	# -- REGION AMOUNTS --
+	region_amount.resize(align_amount - 1)
+	capital_amount.resize(align_amount - 1)
+	
+	_count_up_regions()
+	
+	last_turn_region_amount = region_amount.duplicate()
+	
+	Options.timestamp("_count_up_regions", "RegionControl")
 	
 	# -- DIGITAL PLAYERS --
 	if not ReplayControl.replay_active:
@@ -666,8 +672,6 @@ func _ready():
 
 func _save_replay_data():
 	if not ReplayControl.replay_active:
-		ReplayControl.clear_replay()
-		
 		ReplayControl.replay_play_order = align_play_order.duplicate()
 		ReplayControl.replay_aliances = alignment_aliances.duplicate()
 		ReplayControl.replay_controlers = align_controlers.duplicate()
@@ -703,11 +707,14 @@ func _check_duplicate_connections():
 		print(region_map)
 
 
-func _get_all_regions():
+func _store_all_regions():
 	for node in get_children():
 		var region : Region = node as Region
 		if region:
-			regions[StringName(region.name)] = region
+			var region_name: StringName = StringName(region.name)
+			regions[region_name] = region
+			if region.is_capital:
+				capitals[region_name] = region
 
 
 func _ready_region_links():
@@ -834,7 +841,7 @@ func _unused_alignments(alignments : Array[int]):
 		preset_alignments_amount += 1 if i != 0 else 0
 	used_alignments = max(used_alignments, preset_alignments_amount)
 	
-	# Remove preset alignments from the alignment pool
+	# Remove preset alignments from the alignment removal pool
 	for i in preset_alignments:
 		alignments.erase(i)
 	if use_alignment_picker:
@@ -993,13 +1000,13 @@ func _calculate_penalty(alignment : int, end_of_turn : bool = false):
 	if power_gain_penalties.size() == 0:
 		return
 	
-	var capitals : int = capital_amount[alignment - 1]
+	var amount_of_capitals : int = capital_amount[alignment - 1]
 	
 	var penalty : float = 0.0
 	for i in power_gain_penalties.keys():
-		if capitals <= i:
+		if amount_of_capitals <= i:
 			break
-		penalty += float(capitals - i) * power_gain_penalties[i]
+		penalty += float(amount_of_capitals - i) * power_gain_penalties[i]
 	var penalty_total = int(penalty)
 	
 #	print(penalty_total)
@@ -1037,24 +1044,41 @@ func _modify_action_amount(amount : int) -> bool:
 	return true
 
 
-## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
-func get_region(reg_name : StringName) -> Region:
-	if not regions.has(reg_name):
+func _get_region(reg_name : StringName, storage: Dictionary) -> Region:
+	if not storage.has(reg_name):
 		return null
-	var node : Node = regions[reg_name]
+	var node : Node = storage[reg_name]
 	if node is Region:
 		return node
 	else:
 		return null
 
 
-func get_all_regions() -> Array[Region]:
+## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
+func get_region(reg_name : StringName) -> Region:
+	return _get_region(reg_name, regions)
+
+
+## Get a capital from a name. Returns null if no capital is found or found node wasn't a Region.
+func get_capital(reg_name : StringName) -> Region:
+	return _get_region(reg_name, capitals)
+
+
+func _get_all_regions(storage: Dictionary) -> Array[Region]:
 	var all_of_them : Array[Region] = []
-	for region in regions.values():
+	for region in storage.values():
 		region = region as Region
 		if region:
 			all_of_them.append(region)
 	return all_of_them
+
+
+func get_all_regions() -> Array[Region]:
+	return _get_all_regions(regions)
+
+
+func get_all_capitals() -> Array[Region]:
+	return _get_all_regions(capitals)
 
 
 ## Check if two alignments are allied.
@@ -1324,11 +1348,11 @@ func add_action(amount: int = 1):
 
 
 ## Captures a region for the current player, regardless of the state the region is in.
-func overtake_region(region_name: String):
+func overtake_region(region_name: String, alignment: int = current_playing_align, _during_ready: bool = false):
 	var region : Region = get_region(region_name)
 	if region:
-		region.overtake()
-		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name)
+		region.overtake(alignment, _during_ready)
+		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name, alignment if _during_ready else -1)
 
 
 ## Called after a region is pressed.

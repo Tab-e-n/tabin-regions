@@ -55,8 +55,6 @@ func _ready():
 		queue_free()
 		return
 	
-	region_control.turn_ended.connect(_start_volcano_turn)
-	
 	_deferred_ready.call_deferred()
 	activate_pathways.call_deferred()
 
@@ -96,6 +94,7 @@ func _start_volcano_turn():
 	
 	if residing_region.power == residing_region.max_power:
 		dp_control.CALL_change_current_phase = true
+	print(residing_region.power, "/", residing_region.max_power, " -> ", dp_control.CALL_change_current_phase)
 	
 	active = true
 
@@ -104,8 +103,10 @@ func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
 	if dp_control.CALL_change_current_phase or dp_control.CALL_forfeit:
+		print("Skipping normal")
 		return
 	if not active:
+		print("Ending turn")
 		dp_control.CALL_end_turn = true
 		return
 	
@@ -114,6 +115,7 @@ func _think_normal():
 	else:
 		dp_control.selected_capital = residing_region.name
 		active = false
+		print(dp_control.selected_capital)
 
 
 func _think_mobilize():
@@ -123,9 +125,11 @@ func _think_mobilize():
 		return
 	
 	if residing_region.power == 1:
+		print("Erupting")
 		dp_control.CALL_change_current_phase = true
 		shake_screen()
 	else:
+		print("Timer reset")
 		dp_control.selected_capital = residing_region.name
 		dp_control.selected_amount = residing_region.power - 1
 
@@ -139,8 +143,7 @@ func _think_bonus():
 		if not path.is_active():
 			continue
 		call_end_turn = false
-		dp_control.CALL_overtake = true
-		dp_control.selected_capital = path.get_next_region().name
+		dp_control.overtake_region(path.get_next_region().name)
 		break
 	if call_end_turn:
 		dp_control.CALL_end_turn = true

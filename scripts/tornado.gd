@@ -134,9 +134,8 @@ func _think_normal():
 		disabled_regions[current_path] = null
 	
 	if path.is_active():
-		dp_control.CALL_overtake = true
 		var region: Region = path.get_next_region()
-		dp_control.selected_capital = region.name
+		dp_control.overtake_region(region.name)
 		
 		particle.take_region(region, dp_control.thinking_timer)
 		ReplayControl.record_move(ReplayControl.RecordType.TORNADO, region.name, particle.tornado_id)

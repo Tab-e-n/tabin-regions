@@ -146,6 +146,7 @@ func start_turn(alignment : int, control : int):
 
 func replay():
 	if not replay_done_action:
+		CALL_nothing = true
 		return
 	replay_done_action = false
 	
@@ -249,15 +250,20 @@ func timer_ended():
 		should_continue = true
 	
 	if CALL_overtake:
-		region_control.overtake_region(selected_capital)
-		if not ReplayControl.replay_active:
-			note_region_selection(selected_capital, current_align())
+		if selected_amount == -1:
+			region_control.overtake_region(selected_capital, current_align())
+			if not ReplayControl.replay_active:
+				note_region_selection(selected_capital, current_align())
+		else:
+			region_control.overtake_region(selected_capital, selected_amount, true)
 		should_continue = true
 	
 	if not reset_CALL():
-		region_control.get_region(selected_capital).action_decided(selected_amount)
-		if not ReplayControl.replay_active:
-			note_region_selection(selected_capital, current_align())
+		var region = region_control.get_region(selected_capital)
+		if region:
+			region.action_decided(selected_amount)
+			if not ReplayControl.replay_active:
+				note_region_selection(selected_capital, current_align())
 	
 	replay_done_action = true
 	if should_continue:
@@ -282,7 +288,7 @@ func current_align() -> int:
 		return 0
 
 
-func find_owned_regions(alignment : int = current_align()):
+func find_owned_regions(alignment: int = current_align()):
 	owned_regions[alignment] = []
 	if not region_control:
 		return
@@ -349,6 +355,14 @@ func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 	return region_control.alignment_friendly(your_align, opposing_align)
 
 
-func alignment_inactive(alignment : int = current_align()) -> bool:
+func alignment_inactive(alignment: int = current_align()) -> bool:
 	return region_control.alignment_inactive(alignment)
 
+
+func overtake_region(region_name: String, alignment: int = current_align()):
+	CALL_overtake = true
+	if alignment != current_align():
+		selected_amount = alignment
+	else:
+		selected_amount = -1
+	selected_capital = region_name
