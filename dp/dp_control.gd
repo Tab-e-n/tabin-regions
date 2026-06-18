@@ -37,7 +37,11 @@ var current_moves: Dictionary = {}
 var previous_moves: Set = Set.new()
 
 var selected_action: PlayerAction = PlayerAction.REGION
-var selected_capital : String = ""
+var selected_capital: String = ""
+#	set(c):
+#		print(get_stack())
+#		print("-> ", c)
+#		selected_capital = c
 var selected_amount: int = 1
 
 var replay_done_action: bool = true
@@ -90,7 +94,7 @@ func reset():
 	selected_amount = 1
 	timer = 0
 
-
+#
 func select_overtake(region_name: String):
 	selected_action = PlayerAction.OVERTAKE
 	selected_capital = region_name
@@ -124,12 +128,11 @@ func start_turn(alignment : int, control : int):
 		
 		controlers[current_controler].start_turn(alignment)
 	
-	call_deferred("think")
+	think.call_deferred()
 
 
 func replay():
 	if not replay_done_action:
-		selected_action = PlayerAction.NOTHING
 		return
 	replay_done_action = false
 	
@@ -138,7 +141,7 @@ func replay():
 	var action: String = next_move[1]
 	var amount: int = next_move[2]
 	
-#			print(current_alignment, " ", next_move)
+#	print(next_move)
 	if type == ReplayControl.RecordType.REGION:
 		selected_action = PlayerAction.REGION
 		selected_capital = action
@@ -149,6 +152,7 @@ func replay():
 		selected_amount = amount
 	
 	elif type == ReplayControl.RecordType.FUNCTION:
+		selected_capital = action
 		match(action):
 			"forfeit":
 				selected_action = PlayerAction.FORFEIT
@@ -181,13 +185,13 @@ func replay():
 func think():
 	timer = thinking_timer
 	
-	selected_action = PlayerAction.REGION
-	selected_capital = ""
-	selected_amount = 1
-	
 	if ReplayControl.replay_active:
 		replay()
 	else:
+		selected_action = PlayerAction.REGION
+		selected_capital = ""
+		selected_amount = 1
+		
 		find_owned_regions()
 		
 		var dp: DigitalPlayer = controlers[current_controler]
@@ -214,7 +218,7 @@ func timer_ended():
 	
 	var should_continue: bool = true
 	
-	print(selected_action, " ", selected_capital, " ", selected_amount)
+#	print(selected_action, " |", selected_capital, "| ", selected_amount)
 	match selected_action:
 		PlayerAction.NOTHING:
 			pass
