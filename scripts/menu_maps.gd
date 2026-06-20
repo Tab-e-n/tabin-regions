@@ -83,6 +83,8 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 		map_preview.remove_child(current_map)
 		current_map.queue_free()
 		current_map = null
+	else:
+		keep_sliders = true
 	
 	if not map_name.is_empty():
 		var packed_map : PackedScene = load(MapSetup.current_directory + "/" + map_name)

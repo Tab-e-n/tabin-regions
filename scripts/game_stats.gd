@@ -82,37 +82,63 @@ func get_stat(align : int, key : String, failsafe = null):
 	return stats[align][key]
 
 
-func stat_keys_as_strings() -> PackedStringArray:
+func format_stat_for_csv(stat: String, value: Variant) -> String:
+	if stat in ["alignment name", "placement"]:
+		return value
+	elif stat == "align color":
+		return "#" + value.to_html(false)
+	elif stat == "controler":
+		return DPControl.CONTROLER_NAMES[value]
+	return String.num(value)
+
+
+func stat_keys() -> PackedStringArray:
 	return DEFAULT_STATS.keys()
 
 
 func stats_as_strings(align : int) -> PackedStringArray:
 	var str_stats : PackedStringArray = []
-	for i in DEFAULT_STATS.keys():
-		if i in ["alignment name", "placement"]:
-			str_stats.append(stats[align][i])
-		elif i == "align color":
-			str_stats.append("#" + stats[align][i].to_html(false))
-		elif i == "controler":
-			str_stats.append(DPControl.CONTROLER_NAMES[stats[align][i]])
-		else:
-			str_stats.append(String.num(stats[align][i]))
+	for i in stat_keys():
+		str_stats.append(format_stat_for_csv(i, stats[align][i]))
 	
 	return str_stats
 
 
-func save_as_csv(file_name : String):
+func single_stat_to_row(stat: String) -> PackedStringArray:
+	var str_stats : PackedStringArray = [stat]
+	for i in range(stats.size()):
+		str_stats.append(format_stat_for_csv(stat, stats[i][stat]))
+	return str_stats
+
+
+func overwrite_prevention(file_name: String) -> String:
 	if FileAccess.file_exists("user://" + file_name + ".csv"):
 		var i : int = 1
 		while FileAccess.file_exists("user://" + file_name + " " + str(i) + ".csv"):
 			i += 1
 		file_name += " " + str(i)
+	return file_name
+
+
+func save_as_csv_transposed(file_name : String):
+	file_name = overwrite_prevention(file_name)
 	
 	var file = FileAccess.open("user://" + file_name + ".csv", FileAccess.WRITE)
 	
-	file.store_csv_line(stat_keys_as_strings())
+	file.store_csv_line(stat_keys())
 	for i in range(stats.size()):
 		file.store_csv_line(stats_as_strings(i))
+	
+	file.close()
+
+
+func save_as_csv(file_name : String):
+	file_name = overwrite_prevention(file_name)
+	
+	var file = FileAccess.open("user://" + file_name + ".csv", FileAccess.WRITE)
+	
+	for stat in stat_keys():
+		file.store_csv_line(single_stat_to_row(stat))
 	
 	file.close()
 

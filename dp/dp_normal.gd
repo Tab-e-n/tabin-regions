@@ -102,37 +102,37 @@ func think_mobilize():
 				controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 
 
-func calculate_benefit_default(region : Region):
-	var action_amount : int = controler.get_action_amount()
-	var benefit : int = 0
+func calculate_benefit_default(region: Region):
+	var action_amount: int = controler.get_action_amount()
+	var benefit: int = 0
 	if controler.alignment_friendly(current_alignment, region.alignment):
-		var threat : int = region.worst_power_delta()
+		var threat: int = -region.worst_power_delta()
 		# Not enough actions, can't defend
-		if -threat > action_amount:
-			benefit = -region.power - 1
+		if threat > action_amount:
+			benefit = -region.power * 2 - 2
 		# Not enough space on region, can't defend
-		elif region.power - threat > region.max_power:
-			benefit = -region.power - 1
+		elif region.power + threat > region.max_power:
+			benefit = -region.power * 2
 		else:
-			# Can defend, not as encouraged
-			benefit = region.power
+			benefit = region.power * 2
 			# Capitals are still good to keep
 			if region.is_capital:
-				benefit += 4
-			if not region.is_capital or threat <= 1:
-				benefit = benefit >> 1
+				benefit += 8
+			# Can defend, not as encouraged if not required
+			if threat < 0 or not region.next_to_enemy():
+				benefit >>= 1
 		# Self-centered
 		if region.alignment != current_alignment:
-			benefit -= 1
+			benefit -= 2
 	else:
 		# Capitals are good to take
 		if region.is_capital:
-			benefit += 5
+			benefit += 10
 		# Would remove all of the regions power and add one of your own
-		benefit += region.power + 1
+		benefit += region.power * 2 + 2
+		# Discourage repetition
 		if controler.used_region_previously(region.name):
-			# Discourage repetition
-			benefit -= 4
+			benefit -= 8
 	
 #	print(region, ": ", benefit)
 	return benefit

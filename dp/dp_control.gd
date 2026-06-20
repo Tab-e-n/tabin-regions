@@ -12,7 +12,7 @@ const THINKING_TIMER_MAX: float = 0.75
 const THINKING_TIMER_DEFAULT: float = 0.505
 const THINKING_TIMER_MIN: float = 0.05
 
-const THINKING_TIMER_SPEEDRUN: float = 0.05
+const THINKING_TIMER_SPEEDRUN: float = 0.025
 const THINKING_TIMER_NETWORK: float = 0.001
 
 const CONTROLER_NAMES: Array = ["User Controled", "Simpleton", "Turtle", "Overthinker", "Cheater", "Environment", "Bookwyrm"]
