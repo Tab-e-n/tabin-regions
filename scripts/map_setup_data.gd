@@ -5,7 +5,7 @@ var current_map_name: String = ""
 var current_pack_name: String = "Base Maps"
 
 var player_amount: int = 1
-var default_digital_player: DPControl.CONTROLER = DPControl.CONTROLER.DEFAULT
+var default_digital_player: DPControl.Controler = DPControl.Controler.DEFAULT
 
 var aliances_amount: int = 0
 

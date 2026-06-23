@@ -17,7 +17,7 @@ static func make_leader(alignment : int) -> Sprite2D:
 	var leader : Sprite2D = Sprite2D.new()
 	leader.name = String.num(alignment)
 	leader.texture = preload("res://sprites/dp/turn_order_players.png")
-	leader.hframes = DPControl.CONTROLER.SIZE
+	leader.hframes = DPControl.Controler.SIZE
 	leader.z_index = 1
 	var new_sweat : Sprite2D = Sprite2D.new()
 	new_sweat.texture = preload("res://sprites/dp/leader_sweat.png")

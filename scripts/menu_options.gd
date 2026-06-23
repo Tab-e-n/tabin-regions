@@ -9,6 +9,7 @@ func _ready():
 	$gameplay/graph.set_pressed_no_signal(Options.use_graph)
 	$debug/capital_dist.set_pressed_no_signal(Options.capital_distance_visible)
 	$gameplay/dp_speed.set_value_no_signal(1.0 - (Options.dp_think_timer - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN))
+	init_default_dp()
 
 
 ## Sets whether to use mouse camera scrolling or not.
@@ -46,3 +47,31 @@ func set_capital_distance_visible(value: bool):
 
 func set_template(value: bool):
 	Options.use_graph = value
+
+
+func init_default_dp():
+	match(Options.default_dp):
+		DPControl.Controler.TURTLE:
+			$gameplay/default_dp.select(0)
+		DPControl.Controler.SIMPLETON:
+			$gameplay/default_dp.select(1)
+		DPControl.Controler.OVERTHINKER:
+			$gameplay/default_dp.select(2)
+		DPControl.Controler.BOOKWYRM:
+			$gameplay/default_dp.select(3)
+		DPControl.Controler.CHEATER:
+			$gameplay/default_dp.select(4)
+
+
+func _on_default_dp_item_selected(index: int):
+	match(index):
+		0:
+			Options.default_dp = DPControl.Controler.TURTLE
+		1:
+			Options.default_dp = DPControl.Controler.SIMPLETON
+		2:
+			Options.default_dp = DPControl.Controler.OVERTHINKER
+		3:
+			Options.default_dp = DPControl.Controler.BOOKWYRM
+		4:
+			Options.default_dp = DPControl.Controler.CHEATER

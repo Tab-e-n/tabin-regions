@@ -149,6 +149,14 @@ func set_mobilizable(value: bool) -> void:
 	mobilizable = value
 
 
+func is_reinforceable() -> bool:
+	return reinforceable and power < max_power
+
+
+func is_mobilizable() -> bool:
+	return mobilizable and power > 1
+
+
 ## Attempts to reinforce the region.
 func reinforce(reinforce_align: int = alignment, addon_power: int = 1, force: bool = false) -> bool:
 	if not reinforceable and not force:

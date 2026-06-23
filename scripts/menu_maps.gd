@@ -125,14 +125,13 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 			set_dp_disabled(true, current_map.default_digital_player)
 			update_dp_selection(current_map.default_digital_player)
 		else:
-			if MapSetup.default_digital_player == DPControl.CONTROLER.USER:
-				if current_map.default_digital_player == DPControl.CONTROLER.USER:
-					MapSetup.default_digital_player = DPControl.CONTROLER.DEFAULT
+			if MapSetup.default_digital_player == DPControl.Controler.DEFAULT:
+				if current_map.default_digital_player == DPControl.Controler.DEFAULT:
+					MapSetup.default_digital_player = Options.default_dp
 				else:
-					@warning_ignore("int_as_enum_without_cast")
 					MapSetup.default_digital_player = current_map.default_digital_player
 			set_dp_disabled(false)
-			update_dp_selection()
+			update_dp_selection(MapSetup.default_digital_player)
 		
 		modulate = RegionControl.slight_tint(current_map.color)
 	
@@ -149,7 +148,7 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 		slider_key_aliances.text = ""
 		
 		set_dp_disabled(true)
-		update_dp_selection(DPControl.CONTROLER.USER)
+		update_dp_selection(DPControl.Controler.DEFAULT)
 		
 		modulate = Color.WHITE
 
@@ -195,8 +194,6 @@ func update_presets() -> void:
 	update_slider_leaders()
 	update_slider_players()
 	update_slider_aliances()
-	
-	update_dp_selection()
 
 
 func update_map_info() -> void:
@@ -204,7 +201,7 @@ func update_map_info() -> void:
 		map_info.text = (
 			RegionControl.setup_tag_name(current_map.tag) + ", " +
 			RegionControl.setup_complexity_name(current_map.complexity) + "\n" +
-			("PRESET ORDER" if current_map.use_preset_alignments else "RANDOM ORDER")
+			("RANDOM ORDER" if current_map.preset_alignments.is_empty() else "PRESET ORDER")
 		)
 	else:
 		map_info.text = "\n"
@@ -222,23 +219,22 @@ func update_slider_aliances() -> void:
 	slider_key_aliances.text = "ALIANCES: " + (str(slider_aliances.value) if slider_aliances.value > 1 else "X")
 
 
-@warning_ignore("int_as_enum_without_cast")
-func update_dp_selection(dp: DPControl.CONTROLER = MapSetup.default_digital_player) -> void:
+func update_dp_selection(dp: DPControl.Controler = Options.default_dp) -> void:
 	var dp_button: Control = null
 	match(dp):
-		DPControl.CONTROLER.TURTLE:
+		DPControl.Controler.TURTLE:
 			dp_button = dp_button_turtle
 			dp_label.text = "Turtle"
-		DPControl.CONTROLER.DEFAULT:
+		DPControl.Controler.SIMPLETON:
 			dp_button = dp_button_simpleton
 			dp_label.text = "Simpleton"
-		DPControl.CONTROLER.NEURAL:
+		DPControl.Controler.OVERTHINKER:
 			dp_button = dp_button_overthinker
 			dp_label.text = "Overthinker"
-		DPControl.CONTROLER.SMARTIE:
+		DPControl.Controler.BOOKWYRM:
 			dp_button = dp_button_bookwyrm
 			dp_label.text = "Bookwyrm"
-		DPControl.CONTROLER.CHEATER:
+		DPControl.Controler.CHEATER:
 			dp_button = dp_button_cheater
 			dp_label.text = "Cheater"
 		_:
@@ -251,13 +247,13 @@ func dp_selector_position(dp_button: Control) -> void:
 	dp_selector.position = dp_button.position + dp_buttons.position if dp_button else Vector2.ZERO
 
 
-func set_dp_disabled(disabled: bool, map_dp: DPControl.CONTROLER = DPControl.CONTROLER.USER) -> void:
+func set_dp_disabled(disabled: bool, map_dp: DPControl.Controler = Options.default_dp) -> void:
 	var buttons: Dictionary = {
-		DPControl.CONTROLER.TURTLE : dp_button_turtle,
-		DPControl.CONTROLER.DEFAULT : dp_button_simpleton, 
-		DPControl.CONTROLER.NEURAL : dp_button_overthinker,
-		DPControl.CONTROLER.SMARTIE : dp_button_bookwyrm,
-		DPControl.CONTROLER.CHEATER : dp_button_cheater,
+		DPControl.Controler.TURTLE : dp_button_turtle,
+		DPControl.Controler.SIMPLETON : dp_button_simpleton, 
+		DPControl.Controler.OVERTHINKER : dp_button_overthinker,
+		DPControl.Controler.BOOKWYRM : dp_button_bookwyrm,
+		DPControl.Controler.CHEATER : dp_button_cheater,
 	}
 	
 	for dp in buttons:
@@ -270,16 +266,16 @@ func set_dp_disabled(disabled: bool, map_dp: DPControl.CONTROLER = DPControl.CON
 func change_dp_by_name(dp_name: String) -> void:
 	match(dp_name):
 		"Turtle":
-			MapSetup.default_digital_player = DPControl.CONTROLER.TURTLE
+			MapSetup.default_digital_player = DPControl.Controler.TURTLE
 		"Simpleton":
-			MapSetup.default_digital_player = DPControl.CONTROLER.DEFAULT
+			MapSetup.default_digital_player = DPControl.Controler.SIMPLETON
 		"Overthinker":
-			MapSetup.default_digital_player = DPControl.CONTROLER.NEURAL
+			MapSetup.default_digital_player = DPControl.Controler.OVERTHINKER
 		"Bookwyrm":
-			MapSetup.default_digital_player = DPControl.CONTROLER.SMARTIE
+			MapSetup.default_digital_player = DPControl.Controler.BOOKWYRM
 		"Cheater":
-			MapSetup.default_digital_player = DPControl.CONTROLER.CHEATER
-	update_dp_selection()
+			MapSetup.default_digital_player = DPControl.Controler.CHEATER
+	update_dp_selection(MapSetup.default_digital_player)
 
 
 func _on_map_selected(item: SelectionListItem) -> void:

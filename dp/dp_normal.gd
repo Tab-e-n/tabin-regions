@@ -45,7 +45,7 @@ func think_normal():
 			if not target.incoming_attack(current_alignment, 0, true):
 				continue
 			eligable_regions.add(target)
-		if in_threat and region.power < region.max_power:
+		if in_threat and region.is_reinforceable():
 			eligable_regions.add(region)
 	
 #	print(eligable_regions)
@@ -69,7 +69,7 @@ func think_normal():
 	else:
 		# Backup strategy
 		for region in friendly_regions:
-			if region.power < region.max_power:
+			if region.is_reinforceable():
 				eligable_regions.add(region)
 		if eligable_regions.empty():
 			controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
@@ -83,7 +83,7 @@ func think_normal():
 func think_mobilize():
 	var no_more_extra : bool = true
 	for region in controler.get_owned_regions():
-		if region.power <= 1:
+		if not region.is_mobilizable():
 			continue
 		var threat : int = region.strongest_enemy_attack()
 		if threat != region.power and not controler.get_current_moves().contains(region.name):

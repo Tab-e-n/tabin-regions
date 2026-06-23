@@ -17,6 +17,7 @@ const DEFAULT_STATS : Dictionary = {
 	"regions captured" : 0,
 	"regions reinforced" : 0,
 	"capital regions captured" : 0,
+	"turn order" : 0,
 	
 	# GRAPH
 	"regions" : 0,
@@ -31,10 +32,12 @@ const DEFAULT_GRAPH_STATISTICS : Dictionary = {
 }
 
 
-var stats : Array = []
+var victorious_alignment: String = ""
 
-var graph_statistics : Dictionary
-var graph : Array = []
+var stats: Array = []
+
+var graph_statistics: Dictionary
+var graph: Array = []
 
 
 func reset_statistics(align_amount):
@@ -46,6 +49,7 @@ func reset_statistics(align_amount):
 		stats[i] = DEFAULT_STATS.duplicate()
 		graph[i] = []
 	graph_statistics = DEFAULT_GRAPH_STATISTICS.duplicate()
+	victorious_alignment = ""
 
 
 func stat_exists(align : int, key : String) -> bool:
@@ -57,12 +61,12 @@ func stat_exists(align : int, key : String) -> bool:
 	return true
 
 
-func create_stat(key : String, initial : Variant) -> void:
+func create_stat(key: String, initial: Variant) -> void:
 	for align_stats in stats:
 		align_stats[key] = initial
 
 
-func add_to_stat(align : int, key : String, value : Variant) -> void:
+func add_to_stat(align: int, key: String, value: Variant) -> void:
 	if not stat_exists(align, key):
 		return
 	if not typeof(stats[align][key]) in [TYPE_FLOAT, TYPE_INT]:
@@ -70,13 +74,13 @@ func add_to_stat(align : int, key : String, value : Variant) -> void:
 	stats[align][key] += value
 
 
-func set_stat(align : int, key : String, value : Variant) -> void:
+func set_stat(align: int, key: String, value: Variant) -> void:
 	if not stat_exists(align, key):
 		return
 	stats[align][key] = value
 
 
-func get_stat(align : int, key : String, failsafe = null):
+func get_stat(align: int, key: String, failsafe = null):
 	if not stat_exists(align, key):
 		return failsafe
 	return stats[align][key]
@@ -97,7 +101,7 @@ func stat_keys() -> PackedStringArray:
 
 
 func stats_as_strings(align : int) -> PackedStringArray:
-	var str_stats : PackedStringArray = []
+	var str_stats: PackedStringArray = []
 	for i in stat_keys():
 		str_stats.append(format_stat_for_csv(i, stats[align][i]))
 	
@@ -111,19 +115,21 @@ func single_stat_to_row(stat: String) -> PackedStringArray:
 	return str_stats
 
 
-func overwrite_prevention(file_name: String) -> String:
+func full_filename(file_name: String) -> String:
+	if not victorious_alignment.is_empty():
+		file_name += " - " + victorious_alignment
 	if FileAccess.file_exists("user://" + file_name + ".csv"):
-		var i : int = 1
+		var i: int = 1
 		while FileAccess.file_exists("user://" + file_name + " " + str(i) + ".csv"):
 			i += 1
 		file_name += " " + str(i)
-	return file_name
+	return "user://" + file_name + ".csv"
 
 
-func save_as_csv_transposed(file_name : String):
-	file_name = overwrite_prevention(file_name)
+func save_as_csv_transposed(file_name: String):
+	file_name = full_filename(file_name)
 	
-	var file = FileAccess.open("user://" + file_name + ".csv", FileAccess.WRITE)
+	var file = FileAccess.open(file_name, FileAccess.WRITE)
 	
 	file.store_csv_line(stat_keys())
 	for i in range(stats.size()):
@@ -132,10 +138,10 @@ func save_as_csv_transposed(file_name : String):
 	file.close()
 
 
-func save_as_csv(file_name : String):
-	file_name = overwrite_prevention(file_name)
+func save_as_csv(file_name: String):
+	file_name = full_filename(file_name)
 	
-	var file = FileAccess.open("user://" + file_name + ".csv", FileAccess.WRITE)
+	var file = FileAccess.open(file_name, FileAccess.WRITE)
 	
 	for stat in stat_keys():
 		file.store_csv_line(single_stat_to_row(stat))

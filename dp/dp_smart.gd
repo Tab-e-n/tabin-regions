@@ -263,7 +263,7 @@ func think_normal(bonus: bool = false):
 	
 	for region in friendly_regions:
 #		print(region.name, ": ", region.power, "/", region.max_power)
-		if region.power < region.max_power:
+		if region.is_reinforceable():
 			regions.add(region)
 		for link in region.links:
 			var target: Region = link.get_other_region(region)
@@ -278,7 +278,7 @@ func think_normal(bonus: bool = false):
 	if controler.aliances_on():
 		allied_regions = controler.get_allied_regions()
 		for region in allied_regions:
-			if region.power < region.max_power:
+			if region.is_reinforceable():
 				regions.add(region)
 	
 	var choice: String = choose_regions(
@@ -304,7 +304,7 @@ func think_mobilize():
 	var chosen_region: Region = null
 	
 	for region in friendly_regions:
-		if region.power > 1:
+		if region.is_mobilizable():
 			chosen_region = region
 			break
 #			regions.add(region)

@@ -287,8 +287,8 @@ func _process(delta):
 	if hovering_turn_order:
 		update_player_info()
 	
-	if replay_paused_label and ReplayControl.replay_active:
-		replay_paused_label.visible = ReplayControl.paused
+	if replay_paused_label:
+		replay_paused_label.visible = dp_control.paused
 	
 	var shake_offset : Vector2 = Vector2(0.0, 0.0)
 	
@@ -530,6 +530,8 @@ func update_alignment_label():
 func update_current_turn():
 	if current_turn:
 		current_turn.text = "Turn " + str(region_control.current_turn)
+		if ReplayControl.replay_active and ReplayControl.last_turn >= 0:
+			current_turn.text += " / " + str(ReplayControl.last_turn)
 
 
 func advance_turn_visual(type : int):

@@ -9,27 +9,28 @@ enum RecordType {
 	OVERTAKE,
 	VOLCANO,
 	TORNADO,
-	# TODO
 	START,
 	MOD_POWER,
 	MOD_MAX_POWER,
 }
 
 
-var replay_active : bool = false
+var initializing: bool = true
+var replay_active: bool = false
+var replay_ended: bool = false
 
-var replay : Array = []
-var current_replay_pos : int = 0
+var replay: Array = []
+var current_replay_pos: int = 0
 
-var replay_play_order : Array = []
-var replay_controlers : Array = []
+var replay_play_order: Array = []
+var replay_controlers: Array = []
 
-var replay_uses_aliances : bool = false
-var replay_aliances : Array[int] = []
+var replay_uses_aliances: bool = false
+var replay_aliances: Array[int] = []
 
-var replay_removed_alignments : Array = []
+var replay_removed_alignments: Array = []
 
-var paused : bool = false
+var last_turn: int = 0
 
 
 func clear_replay():
@@ -42,28 +43,26 @@ func clear_replay():
 	replay_active = false
 
 
-func record_move(type: int, action: String, amount: int = 1):
+func record_move(type: RecordType, action: String = "", amount: int = 1):
 	if not replay_active:
 		replay.append([type, action, amount])
-#		current_replay_pos += 1
 #		print(type, " ", action, " ", amount)
 
 
 func get_next_move():
-	if paused:
-		return NOTHING_MOVE
+#	if paused and not initializing:
+#		return NOTHING_MOVE
 	if current_replay_pos < replay.size():
-		var next_move = replay[current_replay_pos]
+		var next_move: Array = replay[current_replay_pos]
 		current_replay_pos += 1
+		if next_move[0] == RecordType.START:
+			initializing = false
 #		print(current_replay_pos)
 #		print(type, " ", action, " ", amount)
 		return next_move
 	else:
+		replay_ended = true
 		return NOTHING_MOVE
-
-
-func toggle_pause():
-	paused = not paused
 
 
 func save_replay(replay_name: String):
@@ -77,11 +76,13 @@ func save_replay(replay_name: String):
 		"replay" : replay,
 		"replay_uses_aliances" : replay_uses_aliances,
 		"replay_removed_alignments" : replay_removed_alignments,
+		"last_turn" : last_turn,
 	}
 	
-	
+	if not GameStats.victorious_alignment.is_empty():
+		replay_name += " - " + GameStats.victorious_alignment
 	if FileAccess.file_exists("user://" + replay_name + ".replay"):
-		var i : int = 1
+		var i: int = 1
 		while FileAccess.file_exists("user://" + replay_name + " " + str(i) + ".replay"):
 			i += 1
 		replay_name += " " + str(i)
@@ -100,7 +101,7 @@ func load_replay(replay_name: String):
 	if FileAccess.file_exists(replay_name):
 		var file = FileAccess.open(replay_name, FileAccess.READ)
 		
-		replay_save = JSON.parse_string(file.get_as_text())
+		replay_save = JSON.parse_string(file.get_as_text()) as Dictionary
 		
 		file.close()
 		
@@ -125,7 +126,11 @@ func load_replay(replay_name: String):
 		for i in range(ra_size):
 			replay_aliances[i] = int(replay_save["replay_aliances"][i])
 		
+		last_turn = replay_save.get("last_turn", -1)
+		
 		replay_active = true
+		replay_ended = false
+		initializing = true
 		
 		return true
 	else:

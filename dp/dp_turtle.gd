@@ -20,7 +20,7 @@ func think_normal():
 	var rng : RandomNumberGenerator = RandomNumberGenerator.new()
 	
 	for region in controler.get_owned_regions():
-		if region.power != region.max_power:
+		if region.is_reinforceable():
 			eligable_regions.append(region)
 	
 #	print(eligable_regions)
@@ -47,7 +47,7 @@ func think_normal():
 #					print("cannot attack")
 					continue
 				eligable_regions.append(target)
-			if in_threat and region.power != region.max_power:
+			if in_threat and region.is_reinforceable():
 				eligable_regions.append(region)
 		
 #		print(eligable_regions)
@@ -76,7 +76,7 @@ func think_mobilize():
 		var no_more_extra : bool = true
 		for region in controler.get_owned_regions():
 			var threat : int = region.worst_power_delta()
-			if threat >= 1 and region.power > 1 and not controler.get_current_moves().contains(region.name):
+			if threat >= 1 and region.is_mobilizable() and not controler.get_current_moves().contains(region.name):
 				controler.selected_capital = region.name
 				no_more_extra = false
 				break

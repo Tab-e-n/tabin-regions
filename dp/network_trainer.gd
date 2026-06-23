@@ -70,7 +70,7 @@ func _ready():
 	
 	MapSetup.current_map_name = "B.5_Testlandia.tscn"
 	MapSetup.player_amount = 0
-	MapSetup.default_digital_player = DPControl.CONTROLER.NEURAL
+	MapSetup.default_digital_player = DPControl.Controler.OVERTHINKER
 	MapSetup.aliances_amount = 1
 	MapSetup.used_alignments = 65532
 	MapSetup.preset_alignments = []

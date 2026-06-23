@@ -218,9 +218,9 @@ func _process(delta : float):
 			if game_camera and game_camera.action_change_part:
 				game_camera.action_change_part.button_pressed = Options.action_change_particles
 		
-		if ReplayControl.replay_active:
+		if ReplayControl.replay_active or dp_control.paused:
 			if Input.is_action_just_pressed("right_click"):
-				ReplayControl.toggle_pause()
+				dp_control.toggle_pause()
 		
 		if region_control:
 			if region_control.is_player_controled:
@@ -339,13 +339,13 @@ func change_map(new_map_name : String, update_others : bool = true) -> void:
 	Options.timestamp("Return change_map", "GameControl")
 
 
-func win(align : int):
+func win(align: int):
 	if game_camera:
 		game_camera.show_victory_message(align)
 	win_timer = 5.0
 
 
-func lose(align : int):
+func lose(align: int):
 	if game_camera:
 		game_camera.show_defeat_message(align)
 	win_timer = 5.0

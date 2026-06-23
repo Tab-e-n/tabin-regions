@@ -5,8 +5,27 @@ class_name DPControl
 signal timer_has_ended
 
 
-enum CONTROLER {USER, DEFAULT, TURTLE, NEURAL, CHEATER, DUMMY, SMARTIE, SIZE}
-enum PlayerAction {NOTHING, REGION, OVERTAKE, ADD_ACTION, NEXT_PHASE, END_TURN, FORFEIT}
+enum Controler {
+	DEFAULT,
+	SIMPLETON,
+	TURTLE,
+	OVERTHINKER,
+	CHEATER,
+	DUMMY,
+	BOOKWYRM,
+	SIZE
+}
+enum PlayerAction {
+	NOTHING,
+	REGION,
+	OVERTAKE,
+	ADD_ACTION,
+	NEXT_PHASE,
+	END_TURN,
+	FORFEIT,
+	MOD_POWER,
+	MOD_MAX_POWER
+}
 
 const THINKING_TIMER_MAX: float = 0.75
 const THINKING_TIMER_DEFAULT: float = 0.505
@@ -31,6 +50,7 @@ var controlers: Array[DigitalPlayer] = []
 var current_controler: int
 
 var timer: float = 0
+var paused: bool = false
 
 var owned_regions: Dictionary = {}
 var current_moves: Dictionary = {}
@@ -66,7 +86,14 @@ func _ready():
 	
 	timer_has_ended.connect(timer_ended)
 	
+	paused = ReplayControl.replay_active or MapSetup.player_amount == 0
+	
 	Options.timestamp("DPCotrol ready", "DPCotrol")
+
+
+func _init_replay():
+	while ReplayControl.initializing and not ReplayControl.replay_ended:
+		timer_ended()
 
 
 func _process(delta: float):
@@ -77,7 +104,10 @@ func _process(delta: float):
 	if region_control.is_player_controled:
 		timer = 0
 	if timer > 0:
-		timer -= delta
+		if ReplayControl.replay_active and ReplayControl.initializing:
+			timer = -1
+		if not paused:
+			timer -= delta
 		if timer == 0:
 			timer = -1
 	if timer < 0:
@@ -94,7 +124,7 @@ func reset():
 	selected_amount = 1
 	timer = 0
 
-#
+
 func select_overtake(region_name: String):
 	selected_action = PlayerAction.OVERTAKE
 	selected_capital = region_name
@@ -137,11 +167,11 @@ func replay():
 	replay_done_action = false
 	
 	var next_move = ReplayControl.get_next_move()
+	print(next_move)
 	var type: ReplayControl.RecordType = next_move[0]
 	var action: String = next_move[1]
 	var amount: int = next_move[2]
 	
-#	print(next_move)
 	if type == ReplayControl.RecordType.REGION:
 		selected_action = PlayerAction.REGION
 		selected_capital = action
@@ -176,6 +206,18 @@ func replay():
 			region_control.tornados[amount].deactivate()
 		else:
 			region_control.tornados[amount].take_region(region_control.get_region(action), thinking_timer)
+	
+	elif type == ReplayControl.RecordType.START:
+		selected_action = PlayerAction.NOTHING
+	
+	elif type == ReplayControl.RecordType.MOD_POWER:
+		selected_action = PlayerAction.MOD_POWER
+		selected_capital = action
+		selected_amount = amount
+	elif type == ReplayControl.RecordType.MOD_MAX_POWER:
+		selected_action = PlayerAction.MOD_MAX_POWER
+		selected_capital = action
+		selected_amount = amount
 	
 	else:
 		push_warning("Unrecognized replay move: ", type, " ", action, " ", amount)
@@ -247,11 +289,21 @@ func timer_ended():
 		PlayerAction.FORFEIT:
 			forfeit()
 			should_continue = false
+		
+		PlayerAction.MOD_POWER:
+			modify_power(selected_capital, selected_amount)
+		
+		PlayerAction.MOD_MAX_POWER:
+			modify_max_power(selected_capital, selected_amount)
 	
 	replay_done_action = true
 	if should_continue:
 		think()
 #	print(current_moves)
+
+
+func toggle_pause():
+	paused = not paused
 
 
 func _add_new_current_moves(alignment : int) -> void:
@@ -298,13 +350,6 @@ func overtake(region_name: String) -> bool:
 	return false
 
 
-func overtake_as_alignment(region_name: String, alignment: int) -> bool:
-	if region_control.overtake_region(region_name, alignment, true):
-		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name, alignment)
-		return true
-	return false
-
-
 func add_actions(amount: int):
 	region_control.add_action(amount)
 	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "add_action", amount)
@@ -324,6 +369,33 @@ func next_phase() -> bool:
 	region_control.change_current_phase()
 	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "change_current_phase")
 	return region_control.current_phase != RegionControl.PHASE.NORMAL
+
+
+# -- PLAYER INDEPENDENT MOVES --
+
+func overtake_as_alignment(region_name: String, alignment: int) -> bool:
+	if region_control.overtake_region(region_name, alignment, true):
+		ReplayControl.record_move(ReplayControl.RecordType.OVERTAKE, region_name, alignment)
+		return true
+	return false
+
+
+func modify_power(region_name: String, amount: int) -> bool:
+	var region: Region = region_control.get_region(region_name)
+	if region:
+		var retval: bool = region._set_power(amount)
+		ReplayControl.record_move(ReplayControl.RecordType.MOD_POWER, region_name, amount)
+		return retval
+	return false
+
+
+func modify_max_power(region_name: String, amount: int) -> bool:
+	var region: Region = region_control.get_region(region_name)
+	if region:
+		region.set_max_power(amount)
+		ReplayControl.record_move(ReplayControl.RecordType.MOD_MAX_POWER, region_name, amount)
+		return true
+	return false
 
 
 # ------ OWNED REGIONS ------

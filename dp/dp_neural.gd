@@ -107,7 +107,7 @@ func think_normal():
 	
 	for region in friendly_regions:
 #		print("FROM: ", region.name)
-		if region.power != region.max_power:
+		if region.is_reinforceable():
 			reinforce_regions.append(region)
 		if region.alignment != current_alignment:
 #			print("allies region, cannot attack through")
@@ -150,7 +150,7 @@ func think_mobilize():
 	
 	var can_mobilize : bool = false
 	for region in friendly_regions:
-		if region.power > 1:
+		if region.is_mobilizable():
 			mobilize_regions.append(region)
 			can_mobilize = true
 	if not can_mobilize:

@@ -16,6 +16,7 @@ const BUILTIN_PACKS: Array = [
 ]
 
 
+var default_dp: DPControl.Controler = DPControl.Controler.SIMPLETON
 var dp_speedrun: bool = false
 var dp_think_timer: float = DPControl.THINKING_TIMER_DEFAULT
 var mouse_scroll_active: bool = true
@@ -57,6 +58,7 @@ func should_limit_flashing() -> bool:
 
 func save_options():
 	var options : Dictionary = {
+		"default_dp" : default_dp,
 		"dp_speedrun" : dp_speedrun,
 		"dp_think_timer" : dp_think_timer,
 		"mouse_scroll_active" : mouse_scroll_active,

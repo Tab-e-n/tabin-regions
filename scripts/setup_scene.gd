@@ -264,45 +264,45 @@ func _on_next_menu_pressed():
 
 func dp_selected_pos():
 	match(MapSetup.default_digital_player):
-		DPControl.CONTROLER.TURTLE:
+		DPControl.Controler.TURTLE:
 			dp_cursor.position.x = $tintable_ui/diff/dp_turtle.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nTURTLE"
-		DPControl.CONTROLER.DEFAULT:
+		DPControl.Controler.SIMPLETON:
 			dp_cursor.position.x = $tintable_ui/diff/dp_default.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nSIMPLETON"
-		DPControl.CONTROLER.NEURAL:
+		DPControl.Controler.OVERTHINKER:
 			dp_cursor.position.x = $tintable_ui/diff/dp_neural.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nOVERTHINKER"
-		DPControl.CONTROLER.SMARTIE:
+		DPControl.Controler.BOOKWYRM:
 			dp_cursor.position.x = $tintable_ui/diff/dp_smartie.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nBOOKWYRM"
-		DPControl.CONTROLER.CHEATER:
+		DPControl.Controler.CHEATER:
 			dp_cursor.position.x = $tintable_ui/diff/dp_cheater.position.x
 			$tintable_ui/diff/opponent.text = "OPPONENT:\nCHEATER"
 
 
 func _on_dp_turtle_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER.TURTLE
+	MapSetup.default_digital_player = DPControl.Controler.TURTLE
 	dp_selected_pos()
 
 
 func _on_dp_default_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER.DEFAULT
+	MapSetup.default_digital_player = DPControl.Controler.SIMPLETON
 	dp_selected_pos()
 
 
 func _on_dp_neural_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER.NEURAL
+	MapSetup.default_digital_player = DPControl.Controler.OVERTHINKER
 	dp_selected_pos()
 
 
 func _on_dp_cheater_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER.CHEATER
+	MapSetup.default_digital_player = DPControl.Controler.CHEATER
 	dp_selected_pos()
 
 
 func _on_dp_smartie_pressed():
-	MapSetup.default_digital_player = DPControl.CONTROLER.SMARTIE
+	MapSetup.default_digital_player = DPControl.Controler.BOOKWYRM
 	dp_selected_pos()
 
 
@@ -312,7 +312,6 @@ func _on_replay_pressed():
 
 func _on_replay_window_file_selected(path):
 	if ReplayControl.load_replay(path):
-		ReplayControl.paused = true
 		Options.discard_timestamp_sums()
 		Options.timestamp("START MAP", "")
 		get_tree().change_scene_to_file("res://main.tscn")

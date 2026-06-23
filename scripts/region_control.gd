@@ -83,6 +83,11 @@ enum SETUP_COMPLEXITY {
 	## (R.)
 	ROCKET_SCIENCE,
 }
+enum CAPITAL_SNAP {
+	DISABLED,
+	POWER,
+	FIRST,
+}
 enum RENDER_MODE {
 	## Regions will be white.
 	DISABLED,
@@ -100,132 +105,128 @@ enum RENDER_MODE {
 	POSITION,
 }
 
-const LAST_PHASE : PHASE = PHASE.BONUS
+const LAST_PHASE: PHASE = PHASE.BONUS
 ## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
-const COLOR_TOO_BRIGHT : float = 0.85
+const COLOR_TOO_BRIGHT: float = 0.85
 
 
 @export_subgroup("Setup Scene")
+## Tells the player the type of the map.
+@export var tag: SETUP_TAG = SETUP_TAG.SKIRMISH
+## Tells the player how experienced with the game they should be before playing this map.
+@export var complexity: SETUP_COMPLEXITY = SETUP_COMPLEXITY.UNSPECIFIED
+## Text explaing the context of the map.
+@export_multiline var lore: String = """Insert lore here"""
 ## When set to true, before starting the map players will be able to pick which alignment they want to play as.
-@export var use_alignment_picker : bool = true
+@export var use_alignment_picker: bool = true
 ## Prevents the player from changing the number of alignments on the map.
 ## Set to true by default, because changing the align amount could break some maps by removing important alignments.
 ## If you think your map is not be affected by this, set this to false.
-@export var lock_align_amount : bool = true
+@export var lock_align_amount: bool = true
 ## Prevents users changing the amount of players that can be played on the map.
-@export var lock_player_amount : bool = false
+@export var lock_player_amount: bool = false
 ## Prevents users from changing the number of aliances.
-@export var lock_aliances : bool = false
+@export var lock_aliances: bool = false
 ## Prevents users from changing the digital players. Set this to true if you need a specific DP active.
-@export var lock_dp_setup : bool = false
+@export var lock_dp_setup: bool = false
 
 
 @export_subgroup("Gameplay")
 ## Specifies the behaviour of power_gain_penalties.
-@export_enum ("Off", "Current Capital Amount", "Previous Capital Amount") var apply_penalties : int = APPLY_PENALTIES.OFF
+@export_enum ("Off", "Current Capital Amount", "Previous Capital Amount") var apply_penalties: int = APPLY_PENALTIES.OFF
 ## Sets penalties to slow down players who get ahead, so they don't snowball too hard.
 ## The keys should be intigers, values should be floats representing percentages.
 ## After a player reaches a certain capital amount, specified by the dictionary's keys,
 ## every subsequent capital the player gains will give them less power, specified by the dictionary's value.
-@export var power_gain_penalties : Dictionary = {
+@export var power_gain_penalties: Dictionary = {
 	3 : .325,
 	13 : .25,
 	21 : .125,
 } 
 
 @export_subgroup("Alignments & Players")
-## The number of alignments the map uses. It equals the number of all active alignments + alignment 0 for neutral regions.
-@export var align_amount : int = 3
+## The number of alignments the map uses. Set it to a number of active alignments + 1 neutral alignment.
+@export var align_amount: int = 3
 ## Will specify the amount of alignments that are used. When the map has more alignments than the amount specified with this property,
 ## random alignments not picked by players will have their regions converted to neutral.
-@export var used_alignments : int = 0
+@export var used_alignments: int = 0
 ## Determines if the capitals of alignments that were removed by 'used_alignments' should be removed as well.
 ## When set to true, all the alignments capitals will be converted to basic cities.
-@export var remove_capitals_with_alignments : bool = true
+@export var remove_capitals_with_alignments: bool = true
 ## The intended amount of players the map should have. Can be overwritten in the setup scene unless allow_map_spec_change is set to false.
-@export var player_amount : int = 1
+@export var player_amount: int = 1
 ## Players will only be able to play as alignments 1 to the number specified here.
 ## Setting this to 0 allows them to be any active alignment.
-@export var random_player_align_range : int = 0
+@export var random_player_align_range: int = 0
 ## The maximum amount of players the map allows to be played. There can be more alignments than players.
 ## When set to -1, the max amount of players is equal to the number of active alignments.
-@export var max_player_amount : int = -1
-## Toggles the use of preset_alignments.
-@export var use_preset_alignments : bool = false
-## Specifies an unchanging turn order.
-@export var preset_alignments : Array[int] = []
+@export var max_player_amount: int = -1
+## Specifies an unchanging turn order. 0 gets randomized.
+@export var preset_alignments: Array[int] = []
 
 @export_subgroup("Digital Players")
-## The default digital player the map uses. Uses the CONTROLER from 'DPControl'.
-## Default, Turtle, Neural and Cheater are all accessible in the setup scene.
+## Alignments will be controled the DP specified by default.
 ## The Dummy DP does nothing, expecting to be controled by the map.
-@export_enum("None", "Default", "Turtle", "Neural", "Cheater", "Dummy", "Smartie") var default_digital_player: int = DPControl.CONTROLER.USER
-## List of digital players the individual alignments use. Excludes aligment 0.
-## 0 gets overriden during map setup, 1-5 force a specific alignment to be controled by a specific digital player.
-@export var custom_dp_setup : Array[int] = []
-## If set to true, when starting the map custom_dp_setup will be shuffled so it is not the same every time.
-@export var shuffle_dp : bool = false
+@export var default_digital_player: DPControl.Controler = DPControl.Controler.DEFAULT
+## List of digital players the individual alignments use. Excludes the neutral aligment.
+## Default gets overriden during map setup.
+@export var custom_dp_setup: Array[DPControl.Controler] = []
+## If set to true, custom_dp_setup will be shuffled when starting the map.
+@export var shuffle_dp: bool = false
 
 @export_subgroup("Aliances")
-## Enable aliances. When off, every alignment will internally be in a separate alience.
-@export var use_aliances : bool = false
-## What aliance an alignment belongs to. Includes alignment 0.
-## Doesn't need to encompass all alignments. Alignments who weren't given an
-## alignment will have alignment 0.
-@export var alignment_aliances : Array[int] = []
+## Enable aliances. When off, every alignment will internally be in a separate aliance.
+@export var use_aliances: bool = false
+## What aliance an alignment belongs to. Includes the neutral alignment.
+## If it doesn't have all alignments, the unspecified alignments will have aliance 0.
+@export var alignment_aliances: Array[int] = []
 ## When set to true, alignments will be automatically divided into aliances
 ## based on autoaliances_divisions_amount. If you specified your own aliances using
 ## alignment_aliances, autoaliances will only override alience 0.
-@export var use_autoaliances : bool = false
+@export var use_autoaliances: bool = false
 ## The amount of aliance divisions when using autoaliances.
-@export var autoaliances_divisions_amount : int = 2
+@export var autoaliances_divisions_amount: int = 2
 
 @export_subgroup("Cosmetics")
-## Tells the player the type of the map.
-@export var tag : SETUP_TAG = SETUP_TAG.SKIRMISH
-## Tells the player how experienced with the game they should be before playing this map.
-@export var complexity : SETUP_COMPLEXITY = SETUP_COMPLEXITY.UNSPECIFIED
-## Text explaing the context of the map.
-@export_multiline var lore : String = """Insert lore here"""
 ## Colors used by the map's alignments. The first color is used for neutral regions.
-@export var align_color : Array[Color] = [
-		Color("625775"), # purplish gray
+@export var align_color: Array[Color] = [
+		Color("625775"),
 		
-		Color("a72b37"), # red
-		Color("368d61"), # green
-		Color("2b7dba"), # blue
-		Color("ae5b15"), # orange
-		Color("8927a8"), # purple
+		Color("a72b37"),
+		Color("368d61"),
+		Color("2b7dba"),
+		Color("ae5b15"),
+		Color("8927a8"),
 		
-		Color("ed858d"), # salmon
-		Color("c5ebbf"), # pistachio
-		Color("213775"), # navy
-		Color("a58260"), # dirt
-		Color("dd4f96"), # magenta
+		Color("ed858d"),
+		Color("c5ebbf"),
+		Color("213775"),
+		Color("a58260"),
+		Color("dd4f96"),
 		
-		Color("deaac7"), # pink
-		Color("6da63d"), # vibrant green
-		Color("7795ed"), # teal
-		Color("d09f15"), # gold
-		Color("b177c9"), # lavender
+		Color("deaac7"),
+		Color("6da63d"),
+		Color("7795ed"),
+		Color("d09f15"),
+		Color("b177c9"),
 		
-		Color("7a0e43"), # violet
-		Color("395621"), # grass
-		Color("556aa2"), # denim
-		Color("d7e06b"), # yellow
-		Color("895870"), # dim lavender
+		Color("7a0e43"),
+		Color("395621"),
+		Color("556aa2"),
+		Color("d7e06b"),
+		Color("895870"),
 		
-		Color("3f0628"), # dark red
-		Color("7ded92"), # lime
-		Color("2b4456"), # swamp
-		Color("d7cac0"), # tan
-		Color("828387"), # gray
+		Color("3f0628"),
+		Color("7ded92"),
+		Color("2b4456"),
+		Color("d7cac0"),
+		Color("828387"),
 		
-		Color("673a2b"), # brown
-		Color("4f4b3b"), # tank
-		Color("b6b7eb"), # silver
-		Color("eda75b"), # sandstorm
-		Color("2e5949"), # dark green
+		Color("673a2b"),
+		Color("4f4b3b"),
+		Color("b6b7eb"),
+		Color("eda75b"),
+		Color("2e5949"),
 ]
 @export var neutral_colors: Array[Color] = []
 ## Names of alignments. Includes the name of the neutral alignment, at index 0.
@@ -269,17 +270,15 @@ const COLOR_TOO_BRIGHT : float = 0.85
 		"Frog",
 ]
 ## Determines what message gets show at the end of the game.
-## When set to 0 or lower, map will always show a victory message.
-## When set to a positive integer, map will show a victory message only if an alignment of the same number wins, else it will show defeat.
-## If aliances are turned on, this check applies to aliances and not to individual alignments.
+## Set to an alignment, or a specific aliance if they are enabled.
 @export var main_character: int = 0
 ## When set to true, the RegionControl will color itself based on which alignment is currently playing.
 @export var color_bg_according_to_alignment: bool = true
 ## Controls the scale of cities. Smaller cities will make the map feel larger, without it taking up more space.
 @export var city_size: float = 1
 ## When starting the map, the camera will snap to a capital of the starting alignment.
-@export var snap_camera_to_first_align_capital: bool = true
-## When set to true, the turn order will start invisible.
+@export var snap_camera_to_capital: CAPITAL_SNAP = CAPITAL_SNAP.POWER
+## When set to true, the turn order will start hidden.
 @export var hide_turn_order: bool = false
 ## When false, regions will not spawn particles.
 @export var spawn_particles: bool = true
@@ -288,47 +287,46 @@ const COLOR_TOO_BRIGHT : float = 0.85
 
 @export_subgroup("Editor")
 
-@export var update_region_textures : bool = false:
+@export var update_region_textures: bool = false:
 	set(_update):
 		update_textures()
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
-@export var render_mode : RENDER_MODE = RENDER_MODE.DISABLED
+@export var render_mode: RENDER_MODE = RENDER_MODE.DISABLED
 ## The range visible during render modes. Certain render modes use this to figure out how to color the regions.
-@export var render_range : float = 20
+@export var render_range: float = 20
 ## When false, cities won't be rendered. Can be toggled in-game.
-@export var cities_visible : bool = true
+@export var cities_visible: bool = true
 ## Print more info about the map to the console. Useful when debugging, should be off for released maps.
-@export var print_more_info : bool = false
+@export var print_more_info: bool = false
 ## When the project is launched through editor, cache gets saved when exiting the map.
 ## On the release build, cache gets loaded from a .json file with the same name as the map.
 ## Make sure to package your map with that .json file.
 ## Use this if there is an expensive function that requires the map to be loaded to
 ## calculate, but always calculates to the same result, you can use set_cache to store
 ## the values and then in the release build call get_cache instead of the expensive function. 
-@export var save_cache : bool = false
+@export var save_cache: bool = false
 ## When set to true, RegionControl wil not do anything on its own.
 ## This is intended to be used by other scenes, not RegionControl itself.
-@export var dummy : bool = false
+@export var dummy: bool = false
 ## A node that will hold all RegionLinks.
-@export var region_links : Node = null
-## Holds the links of all regions. When the map is readying, RegionControl will attempt to make every link in this array.
-## Not recommended to use the inspector to edit this property, use a built-in script like in the template map instead, because it is easier to edit.
-@export var connections : Array = []
+@export var region_links: Node = null
+## Depraceted.
+@export var connections: Array = []
 
 
-@onready var bg_color : Color = color
-@onready var game_control : GameControl
-@onready var dp_control : DPControl
-@onready var game_camera : GameCamera
+@onready var bg_color: Color = color
+@onready var game_control: GameControl
+@onready var dp_control: DPControl
+@onready var game_camera: GameCamera
 
 
-var cache_filename : String = ""
-var modified_cache : bool = false
-var cache : Dictionary = {}
+var cache_filename: String = ""
+var modified_cache: bool = false
+var cache: Dictionary = {}
 
-var current_playing_align : int = 1
-var align_play_order : Array = []
-var play_order_i : int = 0
+var current_playing_align: int = 1
+var align_play_order: Array = []
+var play_order_i: int = 0
 
 var align_controlers: Array = []
 var is_player_controled: bool
@@ -547,8 +545,7 @@ func _ready():
 		
 		align_play_order.resize(used_alignments)
 		
-		if use_preset_alignments:
-			_set_play_order(preset_alignments)
+		_set_play_order(preset_alignments)
 		if use_alignment_picker:
 			_set_play_order(MapSetup.preset_alignments)
 		
@@ -567,11 +564,14 @@ func _ready():
 		removed_alignments = ReplayControl.replay_removed_alignments.duplicate()
 		for alignment in removed_alignments:
 			_remove_alignment(alignment, remove_capitals_with_alignments)
+		dp_control._init_replay()
 	
 	if print_more_info:
 		print("Play Order ", align_play_order)
 	
 	current_playing_align = align_play_order[0]
+	
+	_save_turn_order()
 	
 	Options.timestamp("RegionCotrol ready turn order", "RegionControl")
 	
@@ -596,7 +596,7 @@ func _ready():
 				if custom_dp_setup[i] != 0:
 					align_controlers[i] = custom_dp_setup[i]
 		for i in range(player_amount):
-			align_controlers[align_play_order[i] - 1] = DPControl.CONTROLER.USER
+			align_controlers[align_play_order[i] - 1] = DPControl.Controler.DEFAULT
 	
 	if print_more_info:
 		print("DPs ", align_controlers)
@@ -633,7 +633,7 @@ func _ready():
 	for align in range(align_amount):
 		GameStats.set_stat(align, "align color", get_alignment_color(align))
 		if align == 0:
-			GameStats.set_stat(align, "controler", DPControl.CONTROLER.DUMMY)
+			GameStats.set_stat(align, "controler", DPControl.Controler.DUMMY)
 		else:
 			GameStats.set_stat(align, "controler", align_controlers[align - 1])
 		GameStats.set_stat(align, "alignment name", align_names[align])
@@ -653,17 +653,32 @@ func _ready():
 	if hide_turn_order and not use_aliances and game_camera:
 		game_camera.set_turn_order_visible(false)
 	
-	if snap_camera_to_first_align_capital:
-		var center_camera : Vector2 = Vector2(0, 0)
-		for node in get_children():
-			var region : Region = node as Region
-			if region and region.alignment == current_playing_align:
-				center_camera = region.position
-				if region.is_capital:
-					break
+	if snap_camera_to_capital != CAPITAL_SNAP.DISABLED:
+		var center_region: Region = null
+		for region in get_all_regions():
+			if not region:
+				continue
+			if region.alignment != current_playing_align:
+				continue
+			
+			if center_region:
+				if center_region.is_capital and not region.is_capital:
+					continue
+				if center_region.power >= region.power:
+					continue
+				if center_region.max_power >= region.power:
+					continue
+			
+			center_region = region
+			
+			if region.is_capital and snap_camera_to_capital == CAPITAL_SNAP.FIRST:
+				break
+		var center_position: Vector2 = Vector2(0, 0)
+		if center_region:
+			center_position = center_region.position
 		if game_camera:
-			game_camera.center_camera.call_deferred(center_camera)
-		center_camera_to_position.emit(center_camera)
+			game_camera.center_camera.call_deferred(center_position)
+		center_camera_to_position.emit(center_position)
 	
 	_save_replay_data.call_deferred()
 	
@@ -679,6 +694,8 @@ func _save_replay_data():
 		ReplayControl.replay_uses_aliances = use_aliances
 		
 		ReplayControl.replay_removed_alignments = removed_alignments
+	
+	ReplayControl.record_move(ReplayControl.RecordType.START)
 
 
 func _check_duplicate_connections():
@@ -853,13 +870,13 @@ func _unused_alignments(alignments : Array[int]):
 		removed_align_count = min(removed_align_count, alignments.size())
 		# Remove unused alignments
 		for i in range(removed_align_count):
-			var pos : int = randi_range(0, alignments.size() - 1)
-			var alignment : int = alignments.pop_at(pos)
+			var pos: int = randi_range(0, alignments.size() - 1)
+			var alignment: int = alignments.pop_at(pos)
 			_remove_alignment(alignment, remove_capitals_with_alignments)
 			removed_alignments.append(alignment)
 
 
-func _set_play_order(preset : Array[int]):
+func _set_play_order(preset: Array[int]):
 	for i in range(preset.size()):
 		if align_play_order.size() <= i:
 			break
@@ -867,7 +884,7 @@ func _set_play_order(preset : Array[int]):
 			align_play_order[i] = preset[i]
 
 
-func _randomly_fill_play_order(alignments : Array[int]):
+func _randomly_fill_play_order(alignments: Array[int]):
 	alignments.shuffle()
 	var j : int = 0
 	for i in range(align_play_order.size()):
@@ -879,7 +896,12 @@ func _randomly_fill_play_order(alignments : Array[int]):
 		j += 1
 
 
-func _fill_aliances(divisions : int, keep_existing : bool = true):
+func _save_turn_order():
+	for i in range(align_play_order.size()):
+		GameStats.set_stat(align_play_order[i], "turn order", i)
+
+
+func _fill_aliances(divisions: int, keep_existing: bool = true):
 	alignment_aliances[0] = 0
 	var current_aliance : int = 1
 	for i in range(align_play_order.size()):
@@ -1055,12 +1077,12 @@ func _get_region(reg_name : StringName, storage: Dictionary) -> Region:
 
 
 ## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
-func get_region(reg_name : StringName) -> Region:
+func get_region(reg_name: StringName) -> Region:
 	return _get_region(reg_name, regions)
 
 
 ## Get a capital from a name. Returns null if no capital is found or found node wasn't a Region.
-func get_capital(reg_name : StringName) -> Region:
+func get_capital(reg_name: StringName) -> Region:
 	return _get_region(reg_name, capitals)
 
 
@@ -1082,7 +1104,7 @@ func get_all_capitals() -> Array[Region]:
 
 
 ## Check if two alignments are allied.
-func alignment_friendly(your_align : int, opposing_align : int) -> bool:
+func alignment_friendly(your_align: int, opposing_align: int) -> bool:
 	if your_align < 0 or your_align >= align_amount:
 		return false
 	if opposing_align < 0 or opposing_align >= align_amount:
@@ -1091,30 +1113,30 @@ func alignment_friendly(your_align : int, opposing_align : int) -> bool:
 
 
 ## Check if the alignment does not have a digital player controling it.
-func alignment_inactive(align : int) -> bool:
+func alignment_inactive(align: int) -> bool:
 	return align <= 0 or align >= align_amount
 
 
 ## Check if the alignment has a digital player controling it.
-func alignment_active(align : int) -> bool:
+func alignment_active(align: int) -> bool:
 	return align > 0 and align < align_amount
 
 
-func get_alignment_from_play_order(id : int) -> int:
+func get_alignment_from_play_order(id: int) -> int:
 	if id >= 0 and id < align_play_order.size():
 		return align_play_order[id]
 	return 0
 
 
-func get_alignment_regions(alignment : int = current_playing_align) -> int:
+func get_alignment_regions(alignment: int = current_playing_align) -> int:
 	return region_amount[alignment - 1]
 
 
-func get_alignment_capitals(alignment : int = current_playing_align) -> int:
+func get_alignment_capitals(alignment: int = current_playing_align) -> int:
 	return capital_amount[alignment - 1]
 
 
-func get_alignment_penalties(alignment : int = current_playing_align) -> int:
+func get_alignment_penalties(alignment: int = current_playing_align) -> int:
 	return penalty_amount[alignment - 1]
 
 
@@ -1134,9 +1156,10 @@ func convert_alignment(alignment_a : int, alignment_b : int):
 
 
 ## Grants victory to the specified alignment.
-func victory(align_victory : int):
+func victory(align_victory: int):
 	dummy = true
 	
+	ReplayControl.last_turn = current_turn
 	GameStats.set_stat(align_victory, "placement", "1")
 	
 	var placement = String.num(current_placement)
@@ -1153,10 +1176,13 @@ func victory(align_victory : int):
 			GameStats.set_stat(align, "placement", placement)
 	
 	if main_character <= 0:
+		GameStats.victorious_alignment = align_names[align_victory]
 		game_control.win(align_victory)
 	elif alignment_aliances[align_victory] == main_character:
+		GameStats.victorious_alignment = "Won"
 		game_control.win(align_victory)
 	else:
+		GameStats.victorious_alignment = "lost"
 		game_control.lose(align_victory)
 	
 	game_ended.emit(align_victory)
@@ -1371,7 +1397,7 @@ func action_done(region_name: String, amount: int = 1):
 
 
 func turn_is_player_turn() -> bool:
-	return align_controlers[current_playing_align - 1] == DPControl.CONTROLER.USER
+	return align_controlers[current_playing_align - 1] == DPControl.Controler.DEFAULT
 
 
 func map_bounds() -> Vector4:
