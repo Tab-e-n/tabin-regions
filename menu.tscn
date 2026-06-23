@@ -119,6 +119,7 @@ visible = false
 layout_mode = 1
 
 [node name="maps" parent="middle/menus" instance=ExtResource("3_hskgm")]
+visible = false
 layout_mode = 1
 
 [node name="replays" parent="middle/menus" instance=ExtResource("4_ewqpl")]

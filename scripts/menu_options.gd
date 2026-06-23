@@ -81,3 +81,11 @@ func _on_default_dp_item_selected(index: int):
 			Options.default_dp = DPControl.Controler.BOOKWYRM
 		4:
 			Options.default_dp = DPControl.Controler.CHEATER
+
+
+func _on_save_pressed():
+	Options.save_options()
+	$save_label.visible = true
+	var tween: Tween = create_tween()
+	tween.tween_interval(2.5)
+	tween.tween_property($save_label, "visible", false, 0.0)

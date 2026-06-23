@@ -4,7 +4,7 @@ extends Node
 const VERSION: String = "v2.0.0"
 const REPLAY_COMPATIBLE_VERSIONS: Array[String] = [VERSION]
 
-const SAVEFILE: String = "user://OPTIONS.json"
+const SAVEFILE: String = "user://OPTIONS.sav"
 # 0 Will let through anything
 const TIMESTAMP_THRESHOLD: float = 0.001
 
@@ -19,7 +19,7 @@ var editor: bool = OS.has_feature("editor")
 var default_dp: DPControl.Controler = DPControl.Controler.SIMPLETON
 var dp_speedrun: bool = false
 var dp_think_timer: float = DPControl.THINKING_TIMER_DEFAULT
-var mouse_scroll_active: bool = true
+var mouse_scroll_active: bool = false
 var auto_end_turn_phases: bool = false
 var use_graph: bool = true
 
@@ -57,53 +57,45 @@ func should_limit_flashing() -> bool:
 
 # ------------ SAVE AND LOAD ------------
 
-func save_options():
-	var options : Dictionary = {
-		"default_dp" : default_dp,
-		"dp_speedrun" : dp_speedrun,
-		"dp_think_timer" : dp_think_timer,
-		"mouse_scroll_active" : mouse_scroll_active,
-		"auto_end_turn_phases" : auto_end_turn_phases,
-		"use_graph" : use_graph,
-		
-		"action_change_particles" : action_change_particles,
-		
-		"debug_options" : debug_options,
-		"capital_distance_visible" : capital_distance_visible,
-		"timestamps_active" : timestamps_active,
-		
-		"last_tab" : last_tab,
-		"last_pack" : last_pack,
-		"accepted_directory_danger" : accepted_directory_danger,
-		"allowed_directories" : allowed_directories,
-	}
+func save_options() -> Error:
+	var savefile: ConfigFile = ConfigFile.new()
 	
-	var file = FileAccess.open(SAVEFILE, FileAccess.WRITE)
+	savefile.set_value("Gameplay", "default_dp", default_dp)
+	savefile.set_value("Gameplay", "dp_speedrun", dp_speedrun)
+	savefile.set_value("Gameplay", "dp_think_timer", dp_think_timer)
+	savefile.set_value("Gameplay", "auto_end_turn_phases", auto_end_turn_phases)
+	savefile.set_value("Gameplay", "use_graph", use_graph)
 	
-	file.store_string(JSON.stringify(options))
+	savefile.set_value("Visual", "action_change_particles", action_change_particles)
 	
-	file.close()
+	savefile.set_value("Legacy", "mouse_scroll_active", mouse_scroll_active)
+	
+	savefile.set_value("Debug", "debug_options", debug_options)
+	savefile.set_value("Debug", "capital_distance_visible", capital_distance_visible)
+	savefile.set_value("Debug", "timestamps_active", timestamps_active)
+	
+	savefile.set_value("Menu", "last_tab", last_tab)
+	savefile.set_value("Menu", "last_pack", last_pack)
+	savefile.set_value("Menu", "accepted_directory_danger", accepted_directory_danger)
+	savefile.set_value("Menu", "allowed_directories", allowed_directories)
+	
+	return savefile.save(SAVEFILE)
 
 
-func load_options():
-	var options: Dictionary = {}
+func load_options() -> bool:
+	var savefile: ConfigFile = ConfigFile.new()
 	
-	if FileAccess.file_exists(SAVEFILE):
-		var file = FileAccess.open(SAVEFILE, FileAccess.READ)
-		
-		options = JSON.parse_string(file.get_as_text())
-		
-		file.close()
-		
-		for i in options.keys():
-			set(i, options[i])
-		
+	if savefile.load(SAVEFILE) == OK:
+		for section in savefile.get_sections():
+			for key in savefile.get_section_keys(section):
+				var value: Variant = savefile.get_value(section, key)
+				if value != null:
+					set(key, value)
 		return true
-	else:
-		return false
+	return false
 
 
-# ------------ ALLOWED DIRECTORIES ------------
+# ------------ ALLOWED PACKS ------------
 
 func allow_directory(dir: String):
 	allowed_directories.append(dir)

@@ -64,10 +64,10 @@ func _on_update_texture():
 
 func _recalculate_polygon():
 	if polygon.size() > 0:
-		var far_left : float = polygon[0].x
-		var far_right : float = polygon[0].x
-		var far_up : float = polygon[0].y
-		var far_down : float = polygon[0].y
+		var far_left: float = polygon[0].x
+		var far_right: float = polygon[0].x
+		var far_up: float = polygon[0].y
+		var far_down: float = polygon[0].y
 		
 		for i in polygon:
 			if i.x < far_left:
@@ -79,26 +79,31 @@ func _recalculate_polygon():
 			if i.y > far_down:
 				far_down = i.y
 		
-		var width : float = abs(far_right - far_left)
-		var height : float = abs(far_down - far_up)
-		if width == 0.0:
-			width = 1.0
-		else:
-			width = 1.0 / width
-		if height == 0.0:
-			height = 1.0
-		else:
-			height = 1.0 / height
+#		var width: float = abs(far_right - far_left)
+#		var height: float = abs(far_down - far_up)
+#		if width == 0.0:
+#			width = 1.0
+#		else:
+#			width = 1.0 / width
+#		if height == 0.0:
+#			height = 1.0
+#		else:
+#			height = 1.0 / height
 		
-		# TODO: instead of UV, set the shaders "scale" parameter
+		var scaling: Vector2 = Vector2.ONE / TEXTURE_SIZE
+
+		material.set_shader_parameter("scale", scaling)
+		
 		var temp_uv : PackedVector2Array = PackedVector2Array()
 		temp_uv.resize(polygon.size())
-		
+
 		for i in range(temp_uv.size()):
-			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * width
-			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
+#			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * height
+#			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
+			temp_uv[i].x = scaling.x * (polygon[i].x - far_left)
+			temp_uv[i].y = scaling.y * (polygon[i].y - far_up)
 #			print(temp_uv[i])
-		
+
 		set_uv(temp_uv)
 		
 #		print(polygon, " ", uv)

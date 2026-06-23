@@ -333,23 +333,11 @@ func unload_current_map() -> void:
 	region_control = null
 
 
-func load_map(_map_name : String) -> RegionControl:
-	var packed_map : PackedScene = load(MapSetup.current_directory + "/" + _map_name) as PackedScene
-	if not packed_map:
-		push_error(_map_name, " is not a Scene, could not load.")
-		return null
-	var new_map : RegionControl = packed_map.instantiate() as RegionControl
-	if not new_map:
-		push_warning(_map_name, " is not a RegionControl, refused to load.")
-		return null
-	return new_map
-
-
 ## Tries to load a new map and if it succeeds, replaces the current map with the new one.
-func change_map(new_map_name : String, update_others : bool = true) -> void:
+func change_map(new_map_name: String, update_others: bool = true) -> void:
 	Options.timestamp("Call change_map", "GameControl")
 	
-	var new_map : RegionControl = load_map(new_map_name)
+	var new_map: RegionControl = MapSetup.load_map(new_map_name)
 	if new_map:
 		unload_current_map()
 		

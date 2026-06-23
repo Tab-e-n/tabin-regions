@@ -1,7 +1,7 @@
 shader_type canvas_item;
 render_mode unshaded;
 
-uniform float scale = 1.0;
+uniform vec2 scale = vec2(1.0, 1.0);
 uniform bool changing_color = false;
 uniform float n = 0;
 uniform vec4 previous_color : source_color = vec4(1, 1, 1, 1);

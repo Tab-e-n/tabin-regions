@@ -18,20 +18,22 @@ script = ExtResource("1_imfoe")
 metadata/_edit_horizontal_guides_ = [608.0]
 
 [node name="background" type="ColorRect" parent="."]
-layout_mode = 0
-offset_right = 1152.0
-offset_bottom = 608.0
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
 color = Color(0.133333, 0.129412, 0.180392, 1)
 
 [node name="panel" type="Panel" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_right = 1.0
-anchor_bottom = 1.0
 offset_left = 56.0
 offset_top = 56.0
 offset_right = -56.0
-offset_bottom = -88.0
+offset_bottom = 552.0
 theme_override_styles/panel = ExtResource("2_4c26u")
 
 [node name="template" type="CheckButton" parent="."]
@@ -74,6 +76,7 @@ offset_left = 176.0
 offset_top = 32.0
 offset_right = 328.0
 offset_bottom = 64.0
+focus_mode = 0
 item_count = 5
 selected = 1
 popup/item_0/text = "Turtle"
@@ -245,6 +248,27 @@ theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
 text = "Console timestamps"
 
+[node name="save" type="Button" parent="."]
+layout_mode = 0
+offset_left = 1000.0
+offset_top = 488.0
+offset_right = 1073.0
+offset_bottom = 528.0
+theme_override_font_sizes/font_size = 24
+text = "SAVE"
+
+[node name="save_label" type="Label" parent="."]
+visible = false
+layout_mode = 0
+offset_left = 912.0
+offset_top = 488.0
+offset_right = 992.0
+offset_bottom = 528.0
+theme_override_font_sizes/font_size = 24
+text = "Saved!"
+horizontal_alignment = 1
+vertical_alignment = 1
+
 [connection signal="item_selected" from="gameplay/default_dp" to="." method="_on_default_dp_item_selected"]
 [connection signal="value_changed" from="gameplay/dp_speed" to="." method="set_dp_think_timer"]
 [connection signal="toggled" from="gameplay/fast_dp" to="." method="set_dp_speedrun"]
@@ -254,3 +278,4 @@ text = "Console timestamps"
 [connection signal="toggled" from="legacy/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="debug/capital_dist" to="." method="set_capital_distance_visible"]
 [connection signal="toggled" from="debug/timestamps" to="." method="set_timestamps_active"]
+[connection signal="pressed" from="save" to="." method="_on_save_pressed"]

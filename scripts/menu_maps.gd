@@ -78,6 +78,68 @@ func setup_map_list(map_names: PackedStringArray) -> void:
 		load_map("", "")
 
 
+func setup_menu_backup():
+	update_map_info()
+	map_title.text = ""
+	map_lore.text = "No map selected."
+	
+	slider_leaders.visible = false
+	slider_key_leaders.text = ""
+	slider_players.visible = false
+	slider_key_players.text = ""
+	slider_aliances.visible = false
+	slider_key_aliances.text = ""
+	
+	set_dp_disabled(true)
+	update_dp_selection(DPControl.Controler.DEFAULT)
+	
+	modulate = Color.WHITE
+
+
+func setup_menu_based_on_map(map_display_name: String, keep_sliders: bool = false):
+	current_map.dummy = true
+	
+	var bounds: Vector4 = current_map.map_bounds()
+	var map_size: Vector2 = current_map.map_size(bounds)
+	current_map.scale = Vector2(0.5, 0.5) * (1 / max(max(map_size.x / 1120, map_size.y / 800), 1))
+	current_map.position = -current_map.map_center_offset(bounds) * current_map.scale
+	
+	map_preview.add_child(current_map)
+	
+	map_title.text = map_display_name
+	map_lore.text = current_map.lore
+	
+	setup_sliders()
+	
+	if keep_sliders:
+		slider_leaders.value = MapSetup.used_alignments
+		slider_players.value = MapSetup.player_amount
+		slider_aliances.value = MapSetup.aliances_amount
+	else:
+		if current_map.used_alignments >= 2:
+			slider_leaders.value = current_map.used_alignments
+		else:
+			slider_leaders.value = current_map.align_amount - 1
+		slider_players.value = current_map.player_amount
+		slider_aliances.value = 1
+	
+	update_presets()
+	
+	if current_map.lock_dp_setup:
+		set_dp_disabled(true, current_map.default_digital_player)
+		update_dp_selection(current_map.default_digital_player)
+	else:
+		if MapSetup.default_digital_player == DPControl.Controler.DEFAULT:
+			if current_map.default_digital_player == DPControl.Controler.DEFAULT:
+				MapSetup.default_digital_player = Options.default_dp
+			else:
+				MapSetup.default_digital_player = current_map.default_digital_player
+		set_dp_disabled(false)
+		update_dp_selection(MapSetup.default_digital_player)
+	
+	modulate = RegionControl.slight_tint(current_map.color)
+
+
 func load_map(map_name: String, map_display_name: String, keep_sliders: bool = false) -> void:
 	if current_map:
 		map_preview.remove_child(current_map)
@@ -87,70 +149,13 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 		keep_sliders = true
 	
 	if not map_name.is_empty():
-		var packed_map : PackedScene = load(MapSetup.current_directory + "/" + map_name)
-		if packed_map:
-			current_map = packed_map.instantiate() as RegionControl
+		current_map = MapSetup.load_map(map_name)
 	
 	if current_map:
-		current_map.dummy = true
-		
-		var bounds: Vector4 = current_map.map_bounds()
-		var map_size: Vector2 = current_map.map_size(bounds)
-		current_map.scale = Vector2(0.5, 0.5) * (1 / max(max(map_size.x / 1120, map_size.y / 800), 1))
-		current_map.position = -current_map.map_center_offset(bounds) * current_map.scale
-		
-		map_preview.add_child(current_map)
-		
-		map_title.text = map_display_name
-		map_lore.text = current_map.lore
-		
-		setup_sliders()
-		
-		if keep_sliders:
-			slider_leaders.value = MapSetup.used_alignments
-			slider_players.value = MapSetup.player_amount
-			slider_aliances.value = MapSetup.aliances_amount
-		else:
-			MapSetup.current_map_name = map_name
-			if current_map.used_alignments >= 2:
-				slider_leaders.value = current_map.used_alignments
-			else:
-				slider_leaders.value = current_map.align_amount - 1
-			slider_players.value = current_map.player_amount
-			slider_aliances.value = 1
-		
-		update_presets()
-		
-		if current_map.lock_dp_setup:
-			set_dp_disabled(true, current_map.default_digital_player)
-			update_dp_selection(current_map.default_digital_player)
-		else:
-			if MapSetup.default_digital_player == DPControl.Controler.DEFAULT:
-				if current_map.default_digital_player == DPControl.Controler.DEFAULT:
-					MapSetup.default_digital_player = Options.default_dp
-				else:
-					MapSetup.default_digital_player = current_map.default_digital_player
-			set_dp_disabled(false)
-			update_dp_selection(MapSetup.default_digital_player)
-		
-		modulate = RegionControl.slight_tint(current_map.color)
-	
+		MapSetup.current_map_name = map_name
+		setup_menu_based_on_map(map_display_name, keep_sliders)
 	else:
-		update_map_info()
-		map_title.text = ""
-		map_lore.text = "No map selected."
-		
-		slider_leaders.visible = false
-		slider_key_leaders.text = ""
-		slider_players.visible = false
-		slider_key_players.text = ""
-		slider_aliances.visible = false
-		slider_key_aliances.text = ""
-		
-		set_dp_disabled(true)
-		update_dp_selection(DPControl.Controler.DEFAULT)
-		
-		modulate = Color.WHITE
+		setup_menu_backup()
 
 
 func start_map(map_name: String) -> void:
