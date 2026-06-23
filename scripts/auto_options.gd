@@ -70,14 +70,14 @@ func save_options() -> Error:
 	
 	savefile.set_value("Legacy", "mouse_scroll_active", mouse_scroll_active)
 	
-	savefile.set_value("Debug", "debug_options", debug_options)
-	savefile.set_value("Debug", "capital_distance_visible", capital_distance_visible)
-	savefile.set_value("Debug", "timestamps_active", timestamps_active)
-	
 	savefile.set_value("Menu", "last_tab", last_tab)
 	savefile.set_value("Menu", "last_pack", last_pack)
 	savefile.set_value("Menu", "accepted_directory_danger", accepted_directory_danger)
 	savefile.set_value("Menu", "allowed_directories", allowed_directories)
+	
+	savefile.set_value("Debug", "debug_options", debug_options)
+	savefile.set_value("Debug", "capital_distance_visible", capital_distance_visible)
+	savefile.set_value("Debug", "timestamps_active", timestamps_active)
 	
 	return savefile.save(SAVEFILE)
 

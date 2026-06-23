@@ -59,12 +59,82 @@ func print_map_data():
 
 # ------------ PACK USER DATA ------------
 
-func pack_user_folder(pack_filename: String) -> String:
-	return "user:" + pack_filename.trim_prefix("res:")
+func get_pack_save_folder(pack_folder: String) -> String:
+	return "user:" + pack_folder.trim_prefix("res:")
 
 
-func load_user_folder() -> Dictionary:
+func get_pack_savefile_name(pack_save_folder: String) -> String:
+	return pack_save_folder + "/savefile.sav"
+
+
+#func get_pack_savefile_name(pack_folder: String) -> String:
+#	if Options.pack_user_folders.has(pack_folder):
+#		return Options.pack_user_folders[pack_folder]
+#
+#	var savefile: String = "save" + Options.pack_user_folders.size()
+#	if FileAccess.file_exists("user://" + savefile):
+#		var i: int = 1
+#		while FileAccess.file_exists("user://" + savefile + "_" + str(i)):
+#			i += 1
+#		savefile += "_" + str(i)
+#
+#	Options.pack_user_folders[pack_folder] = savefile
+#
+#	return savefile
+
+
+func save_pack_savefile(save_name: String, data: Dictionary) -> bool:
+	var savefile: ConfigFile = ConfigFile.new()
 	
-	ConfigFile
+	for section in data:
+		if data[section] is Dictionary:
+			for key in data[section]:
+				savefile.set_value(section, key, data[section][key])
 	
-	return {}
+	return savefile.save(save_name) == OK
+
+
+func load_pack_savefile(save_name: String) -> Dictionary:
+	var savefile: ConfigFile = ConfigFile.new()
+	
+	var data: Dictionary = {}
+	
+	if savefile.load(save_name):
+		for section in savefile.get_sections():
+			data[section] = {}
+			for key in savefile.get_section_keys(section):
+				var value: Variant = savefile.get_value(section, key)
+				if value != null:
+					data[section][key] = value
+	
+	return data
+
+
+func set_pack_data(data: Dictionary, section: String, key: String, value: Variant) -> void:
+	if not data.has(section):
+		data[section] = {}
+	data[section][key] = value
+
+
+func get_pack_data(data: Dictionary, section: String, key: String, default: Variant = null) -> Variant:
+	if not data.has(section) or not data[section] is Dictionary or not data[section].has(key):
+		return default
+	return data[section][key]
+
+
+# ------------ CHECKMARKS ------------
+
+func check_general() -> String:
+	return "won"
+
+
+func check_alignment(alignment: int) -> String:
+	return str(alignment)
+
+
+func checkmark_set(data: Dictionary, map: String, check: String, dp: DPControl.Controler) -> void:
+	set_pack_data(data, map, check, dp)
+
+
+func checkmark_save_replay(data: Dictionary, map: String, check: String, dp: DPControl.Controler) -> void:
+	pass # TODO
