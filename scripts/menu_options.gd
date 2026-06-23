@@ -3,7 +3,7 @@ extends MenuScene
 
 func _ready():
 	$gameplay/fast_dp.set_pressed_no_signal(Options.dp_speedrun)
-	$gameplay/mouse_scroll.set_pressed_no_signal(Options.mouse_scroll_active)
+	$legacy/mouse_scroll.set_pressed_no_signal(Options.mouse_scroll_active)
 	$gameplay/auto_phase.set_pressed_no_signal(Options.auto_end_turn_phases)
 	$visual/particles.set_pressed_no_signal(Options.action_change_particles)
 	$gameplay/graph.set_pressed_no_signal(Options.use_graph)

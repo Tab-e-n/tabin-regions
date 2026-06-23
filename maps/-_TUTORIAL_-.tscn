@@ -189,16 +189,15 @@ shader_parameter/previous_color = Color(1, 1, 1, 1)
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-1024, -448, 1024, -448, 1024, 3680, -1024, 3680)
 script = ExtResource("1_fhy2h")
+tag = 3
+complexity = 1
+lore = "An interactive tutorial, where you learn the mechanics of the game."
 use_alignment_picker = false
 lock_player_amount = true
 lock_aliances = true
 lock_dp_setup = true
-use_preset_alignments = true
 preset_alignments = Array[int]([1, 2])
 default_digital_player = 2
-tag = 3
-complexity = 1
-lore = "An interactive tutorial, where you learn the mechanics of the game."
 align_color = Array[Color]([Color(0.384314, 0.341176, 0.458824, 1), Color(0.211765, 0.552941, 0.380392, 1), Color(0.654902, 0.168627, 0.215686, 1)])
 align_names = Array[String](["Neutral", "You", "Enemy"])
 main_character = 1
@@ -348,8 +347,8 @@ Regions is a simple turn based strategy game.
 The goal of the game is simple: defeat all of
 you opponents by capturing their regions.
 
-To move the camera, hover your mouse
-near the edges of the window.
+To move the camera, right click
+and drag your mouse.
 
 \\/ \\/ \\/ The tutorial continues below \\/ \\/ \\/"
 horizontal_alignment = 1
@@ -381,8 +380,8 @@ theme_override_styles/normal = ExtResource("2_j6kmh")
 text = "The number in the city tells you
 the region's current power.
 
-Hovering over the city, will show the region's name
-and in brackets it's maximum power.
+Hovering over the city will show the region's name
+and it's maximum power in brackets.
 "
 horizontal_alignment = 1
 

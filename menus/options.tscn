@@ -128,7 +128,7 @@ theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
 text = "Speedrun digital players"
 
-[node name="mouse_scroll" type="CheckButton" parent="gameplay"]
+[node name="auto_phase" type="CheckButton" parent="gameplay"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 128.0
@@ -141,29 +141,14 @@ theme_override_styles/disabled = ExtResource("3_qatca")
 theme_override_styles/hover = ExtResource("3_qatca")
 theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
-text = "Scrolling camera with mouse"
-
-[node name="auto_phase" type="CheckButton" parent="gameplay"]
-layout_mode = 0
-offset_left = 8.0
-offset_top = 160.0
-offset_right = 328.0
-offset_bottom = 192.0
-focus_mode = 0
-theme_override_styles/normal = ExtResource("3_qatca")
-theme_override_styles/pressed = ExtResource("3_qatca")
-theme_override_styles/disabled = ExtResource("3_qatca")
-theme_override_styles/hover = ExtResource("3_qatca")
-theme_override_styles/hover_pressed = ExtResource("3_qatca")
-theme_override_styles/focus = ExtResource("3_qatca")
 text = "Automatically end turn phases"
 
 [node name="graph" type="CheckButton" parent="gameplay"]
 layout_mode = 0
 offset_left = 8.0
-offset_top = 192.0
+offset_top = 160.0
 offset_right = 328.0
-offset_bottom = 224.0
+offset_bottom = 192.0
 focus_mode = 0
 theme_override_styles/normal = ExtResource("3_qatca")
 theme_override_styles/pressed = ExtResource("3_qatca")
@@ -197,12 +182,36 @@ theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
 text = "Action change particles"
 
-[node name="debug" type="Label" parent="."]
+[node name="legacy" type="Label" parent="."]
 layout_mode = 0
 offset_left = 744.0
 offset_top = 72.0
 offset_right = 872.0
 offset_bottom = 102.0
+theme_override_font_sizes/font_size = 24
+text = "LEGACY"
+
+[node name="mouse_scroll" type="CheckButton" parent="legacy"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 32.0
+offset_right = 328.0
+offset_bottom = 64.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Old mouse scrolling"
+
+[node name="debug" type="Label" parent="."]
+layout_mode = 0
+offset_left = 744.0
+offset_top = 144.0
+offset_right = 872.0
+offset_bottom = 174.0
 theme_override_font_sizes/font_size = 24
 text = "DEBUG"
 
@@ -224,8 +233,8 @@ text = "Show distance from capital"
 [connection signal="item_selected" from="gameplay/default_dp" to="." method="_on_default_dp_item_selected"]
 [connection signal="value_changed" from="gameplay/dp_speed" to="." method="set_dp_think_timer"]
 [connection signal="toggled" from="gameplay/fast_dp" to="." method="set_dp_speedrun"]
-[connection signal="toggled" from="gameplay/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="gameplay/auto_phase" to="." method="set_auto_phases"]
 [connection signal="toggled" from="gameplay/graph" to="." method="set_use_graph"]
 [connection signal="toggled" from="visual/particles" to="." method="set_action_change_particles"]
+[connection signal="toggled" from="legacy/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="debug/capital_dist" to="." method="set_capital_distance_visible"]

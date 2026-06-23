@@ -92,15 +92,14 @@ texture_normal = ExtResource("9_sbjsb")
 texture_pressed = ExtResource("10_k7ox8")
 
 [node name="expo1" type="Label" parent="buttons"]
-visible = false
 layout_mode = 0
 offset_left = 16.0
 offset_top = 120.0
 offset_right = 176.0
 offset_bottom = 184.0
-text = "Hover your cursor
-over the edges of
-the screen to move."
+text = "Right click & drag
+your mouse to move
+the list."
 horizontal_alignment = 1
 clip_text = true
 

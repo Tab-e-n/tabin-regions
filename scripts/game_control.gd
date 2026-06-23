@@ -28,24 +28,25 @@ enum CURSOR {
 	HAND
 }
 
-@onready var game_camera : GameCamera
-@onready var region_control : RegionControl
-@onready var dp_control : DPControl
-@onready var command_callout : CommandCallouts
+@onready var game_camera: GameCamera
+@onready var region_control: RegionControl
+@onready var dp_control: DPControl
+@onready var command_callout: CommandCallouts
 
-var mouse_wheel_input : int = 0
-var mouse_position : Vector2
+var mouse_wheel_input: int = 0
+var mouse_position: Vector2 = Vector2.ZERO
 var mouse_button: int = MOUSE_BUTTON_LEFT
+var mouse_drag_start: Vector2 = Vector2.ZERO
 
-var win_timer : float = -1
+var win_timer: float = -1
 
-var inputs_active : bool = true
+var inputs_active: bool = true
 
-var map_name : String = "A.2_Title_Map.tscn"
+var map_name: String = "A.2_Title_Map.tscn"
 
 
 ## Sets the cursor graphic.
-static func set_cursor(cursor : CURSOR):
+static func set_cursor(cursor: CURSOR):
 	match cursor:
 		CURSOR.NORMAL:
 			Input.set_custom_mouse_cursor(preload("res://sprites/cursor/cursor.png"))
@@ -126,7 +127,7 @@ func _process(delta : float):
 		var shift = Input.is_action_pressed("shift")
 		var ctrl = Input.is_action_pressed("ctrl")
 		
-		var direction : Vector2 = Vector2(0, 0)
+		var direction: Vector2 = Vector2.ZERO
 		if Input.is_action_pressed("right"):
 			direction.x += 1
 		if Input.is_action_pressed("left"):
@@ -136,17 +137,23 @@ func _process(delta : float):
 		if Input.is_action_pressed("up"):
 			direction.y -= 1
 		
-		var mouse_scrolling : bool = Options.mouse_scroll_active
-		var window_limits : Vector2 = Vector2(0, 0)
+		if not Options.mouse_scroll_active:
+			if Input.is_action_just_pressed("right_click"):
+				mouse_drag_start = mouse_position
+				if game_camera:
+					game_camera.start_drag()
+			if Input.is_action_pressed("right_click"):
+				if game_camera:
+					game_camera.move_by_drag(mouse_position, mouse_drag_start)
+				direction = Vector2.ZERO
+		
+		var window_limits: Vector2 = Vector2(0, 0)
 		if game_camera:
-			if game_camera.cam_movement_stop > 0:
-				game_camera.cam_movement_stop -= 1
-				mouse_scrolling = false
 			window_limits = game_camera.window_size
 		else:
 			window_limits = GameCamera.get_window_size()
 		
-		if mouse_scrolling:
+		if Options.mouse_scroll_active:
 			if mouse_position.x > window_limits.x - 16:
 				direction.x += 1
 			if mouse_position.x < 16:
@@ -182,14 +189,14 @@ func _process(delta : float):
 			toggle_cities()
 			new_callout("Toggle hide capitols")
 		
-		if Input.is_action_just_pressed("disable_mouse_scroll"):
-			set_mouse_scroll(not Options.mouse_scroll_active)
-			if Options.mouse_scroll_active:
-				new_callout("Mouse scrolling active")
-			else:
-				new_callout("Mouse scrolling disabled")
-			if game_camera and game_camera.mouse_scroll:
-				game_camera.mouse_scroll.button_pressed = Options.mouse_scroll_active
+#		if Input.is_action_just_pressed("disable_mouse_scroll"):
+#			set_mouse_scroll(not Options.mouse_scroll_active)
+#			if Options.mouse_scroll_active:
+#				new_callout("Mouse scrolling active")
+#			else:
+#				new_callout("Mouse scrolling disabled")
+#			if game_camera and game_camera.mouse_scroll:
+#				game_camera.mouse_scroll.button_pressed = Options.mouse_scroll_active
 		
 		if Input.is_action_just_pressed("auto_phase"):
 			set_auto_phases(not Options.auto_end_turn_phases)
@@ -219,7 +226,7 @@ func _process(delta : float):
 				game_camera.action_change_part.button_pressed = Options.action_change_particles
 		
 		if ReplayControl.replay_active or dp_control.paused:
-			if Input.is_action_just_pressed("right_click"):
+			if Input.is_action_just_pressed("space"):
 				dp_control.toggle_pause()
 		
 		if region_control:

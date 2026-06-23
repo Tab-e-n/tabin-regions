@@ -1,19 +1,22 @@
 extends Node2D
 
 
-@onready var window_size : Vector2 = get_viewport_rect().size
-@onready var columbs : Node2D = $columbs
-@onready var graph : GameStatsGraph = $graph
-@onready var graph_align_list : AlignmentList = $graph_alignments
+@onready var window_size: Vector2 = get_viewport_rect().size
+@onready var columbs: Node2D = $columbs
+@onready var graph: GameStatsGraph = $graph
+@onready var graph_align_list: AlignmentList = $graph_alignments
+@onready var movement_expo: Label = $buttons/expo1
 
-@onready var farthest_left : float = columbs.position.x
-@onready var farthest_right : float = columbs.position.x
+@onready var farthest_left: float = columbs.position.x
+@onready var farthest_right: float = columbs.position.x
 
 
-var input_delay : bool = true
+var input_delay: bool = true
+var mouse_drag_start: float = 0.0
+var column_drag_start: float = 0.0
 
-var hovering_alignments : bool = false
-var hovered_player : int = 0
+var hovering_alignments: bool = false
+var hovered_player: int = 0
 
 
 func _ready():
@@ -62,6 +65,9 @@ func _ready():
 		$buttons/stats.visible = false
 	graph.visible = false
 	graph_align_list.visible = false
+	
+	if Options.mouse_scroll_active:
+		movement_expo.text = "Hover your cursor\nover the edges of\nthe screen to move."
 
 
 func new_stats_panel(stats : Dictionary, pos : int):
@@ -126,19 +132,39 @@ func _physics_process(delta):
 		leave()
 	
 	var mouse_position = get_viewport().get_mouse_position()
+	var direction: int = 0
 	var move_speed = 480 * delta
 	if Input.is_action_pressed("shift"):
 		move_speed *= 2.0
 	
 	if columbs.visible:
-		if mouse_position.x > window_size.x - 64 or Input.is_action_pressed("right"):
+		
+		if Input.is_action_pressed("right"):
+			direction -= 1
+		if Input.is_action_pressed("left"):
+			direction += 1
+		
+		if not Options.mouse_scroll_active:
+			if Input.is_action_just_pressed("right_click"):
+				mouse_drag_start = mouse_position.x
+				column_drag_start = columbs.position.x
+			if Input.is_action_pressed("right_click"):
+				columbs.position.x = column_drag_start - mouse_drag_start + mouse_position.x
+				direction = 0
+		else:
+			if mouse_position.x > window_size.x - 64:
+				direction -= 1
+			if mouse_position.x < 64:
+				direction += 1
+		
+		if direction == -1:
 			columbs.position.x -= move_speed
-			if columbs.position.x < farthest_left:
-				columbs.position.x = farthest_left
-		if mouse_position.x < 64 or Input.is_action_pressed("left"):
+		if direction == 1:
 			columbs.position.x += move_speed
-			if columbs.position.x > farthest_right:
-				columbs.position.x = farthest_right
+		if columbs.position.x < farthest_left:
+			columbs.position.x = farthest_left
+		if columbs.position.x > farthest_right:
+			columbs.position.x = farthest_right
 	
 	if hovering_alignments:
 		var recent_hovered_player : int = graph_align_list.get_leader_id_from_mouse()

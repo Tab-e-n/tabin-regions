@@ -9,67 +9,67 @@ enum TOOLTIP {
 	FORFEIT,
 }
 
-const PREVENT_CAMERA_MOVEMENT_START : float = 1
+const PREVENT_CAMERA_MOVEMENT_START: float = 1
 
-const ZOOM_OUT_MAX : int = -10
-const ZOOM_START : int = 0
-const ZOOM_IN_MAX : int = 5
-const BASE_MOVE_SPEED : float = 8
+const ZOOM_OUT_MAX: int = -10
+const ZOOM_START: int = 0
+const ZOOM_IN_MAX: int = 5
+const BASE_MOVE_SPEED: float = 8
 
-const ACTIONS : Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
-const PHASE_INFO : Array[String] = [
+const ACTIONS: Array[String] = ["FIRST ACTIONS", "MOBILIZATION", "BONUS ACTIONS"]
+const PHASE_INFO: Array[String] = [
 	"First Actions: Attack or defend regions!",
 	"Mobilization: Grab extra units!",
 	"Bonus Actions: Attack or defend regions with mobilized units!"
 ]
 
 
-@export var ui : Control
-@export var ui_hideable : Control
-@export var pause_menu : Control
-@export var player_info : Control
-@export var player_actions : Control
-@export var map_tint_list : Array[NodePath]
-@export var action_change_particle : PackedScene
+@export var ui: Control
+@export var ui_hideable: Control
+@export var pause_menu: Control
+@export var player_info: Control
+@export var player_actions: Control
+@export var map_tint_list: Array[NodePath]
+@export var action_change_particle: PackedScene
 
 @export_subgroup("Buttons")
-@export var advance_turn_button : BaseButton
-@export var advance_action_light : Sprite2D
-@export var advance_action_dark : Sprite2D
-@export var advance_mobilize_light : Sprite2D
-@export var advance_mobilize_dark : Sprite2D
-@export var end_turn_button : BaseButton
-@export var forfeit_button : BaseButton
-@export var pause_button : BaseButton
-@export var leave_button : BaseButton
-@export var graph_button : BaseButton
+@export var advance_turn_button: BaseButton
+@export var advance_action_light: Sprite2D
+@export var advance_action_dark: Sprite2D
+@export var advance_mobilize_light: Sprite2D
+@export var advance_mobilize_dark: Sprite2D
+@export var end_turn_button: BaseButton
+@export var forfeit_button: BaseButton
+@export var pause_button: BaseButton
+@export var leave_button: BaseButton
+@export var graph_button: BaseButton
 
 @export_subgroup("Info")
-@export var turn_order : AlignmentList
-@export var power_sprite : TextureRect
-@export var power_amount : Label
-@export var current_turn : Label
-@export var current_alignment : Label
-@export var current_action : Label
-@export var phase_info : Label
-@export var replay_paused_label : Label
-@export var stats_graph : GameStatsGraph
+@export var turn_order: AlignmentList
+@export var power_sprite: TextureRect
+@export var power_amount: Label
+@export var current_turn: Label
+@export var current_alignment: Label
+@export var current_action: Label
+@export var phase_info: Label
+@export var replay_paused_label: Label
+@export var stats_graph: GameStatsGraph
 
 @export_subgroup("Player Info")
-@export var player_info_leader : Sprite2D
-@export var player_info_city : Sprite2D
-@export var player_info_capital : Sprite2D
-@export var player_info_regions : Label
-@export var player_info_power : Label
-@export var player_info_name : Label
+@export var player_info_leader: Sprite2D
+@export var player_info_city: Sprite2D
+@export var player_info_capital: Sprite2D
+@export var player_info_regions: Label
+@export var player_info_power: Label
+@export var player_info_name: Label
 
 @export_subgroup("Messages")
-@export var victory_message : Control
-@export var defeat_message : Control
-@export var leave_message : Control
-@export var forfeit_message : Control
-@export var leftover_message : Control
-@export var command_callout : CommandCallouts
+@export var victory_message: Control
+@export var defeat_message: Control
+@export var leave_message: Control
+@export var forfeit_message: Control
+@export var leftover_message: Control
+@export var command_callout: CommandCallouts
 
 @export_subgroup("Pause Options")
 @export var dp_speed: Range
@@ -82,39 +82,40 @@ const PHASE_INFO : Array[String] = [
 @export var visible_turn_order: BaseButton
 
 @export_subgroup("Tooltips")
-@export var tooltip_actions : Label
-@export var tooltip_phase : Label
-@export var tooltip_end_turn : Label
-@export var tooltip_forfeit : Label
+@export var tooltip_actions: Label
+@export var tooltip_phase: Label
+@export var tooltip_end_turn: Label
+@export var tooltip_forfeit: Label
 
-@onready var game_control : GameControl = get_parent()
-@onready var region_control : RegionControl
-@onready var dp_control : DPControl
-@onready var window_size : Vector2
+@onready var game_control: GameControl = get_parent()
+@onready var region_control: RegionControl
+@onready var dp_control: DPControl
+@onready var window_size: Vector2
 
-var farthest_left : float = 0
-var farthest_right : float = 0
-var farthest_up : float = 0
-var farthest_down : float = 0
+var farthest_left: float = 0
+var farthest_right: float = 0
+var farthest_up: float = 0
+var farthest_down: float = 0
 
-var cam_movement_stop : float = PREVENT_CAMERA_MOVEMENT_START
-var next_position : Vector2 = position
+var cam_movement_stop: float = PREVENT_CAMERA_MOVEMENT_START
+var drag_start_position: Vector2 = Vector2.ZERO
+var next_position: Vector2 = position
 
-var zoom_level : int = 0
+var zoom_level: int = 0
 
-var disable_camera_movement : bool = false
-var hovering_turn_order : bool = false
+var disable_camera_movement: bool = false
+var hovering_turn_order: bool = false
 
-var hovered_player : int = -1
+var hovered_player: int = -1
 
-var shake_duration : float
-var shake_time : float
-var shake_amplitude : float
-var shake_period : float
+var shake_duration: float
+var shake_time: float
+var shake_amplitude: float
+var shake_period: float
 
 
 static func get_window_size() -> Vector2:
-	var window : Vector2 = Vector2(0, 0)
+	var window: Vector2 = Vector2(0, 0)
 	window.x = ProjectSettings.get_setting("display/window/size/viewport_width")
 	window.y = ProjectSettings.get_setting("display/window/size/viewport_height")
 	return window
@@ -310,7 +311,7 @@ func _camera_shake_offset() -> Vector2:
 		return shake_offset
 
 
-func set_ui_shader_parameter(Element : CanvasItem, param : String, value : Variant) -> void:
+func set_ui_shader_parameter(Element: CanvasItem, param: String, value: Variant) -> void:
 	if not Element:
 		return
 	if Element.material:
@@ -319,16 +320,7 @@ func set_ui_shader_parameter(Element : CanvasItem, param : String, value : Varia
 		push_warning(Element, " doesn't have a shader material")
 
 
-func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
-	var move_speed = BASE_MOVE_SPEED
-	if ui:
-		move_speed *= ui.scale.x
-	if shift:
-		move_speed *= 2.0
-	if ctrl:
-		move_speed *= 0.3
-	next_position += direction * Vector2(move_speed, move_speed) * 60 * delta
-	
+func limit_camera_movement():
 	snapped(next_position, Vector2(1.0, 1.0))
 	if next_position.x > farthest_right:
 		next_position.x = farthest_right
@@ -340,11 +332,40 @@ func move_camera(delta : float, direction : Vector2, shift : bool, ctrl : bool):
 		next_position.y = farthest_down
 
 
-func center_camera(pos : Vector2):
+func move_camera(delta: float, direction: Vector2, shift: bool, ctrl: bool):
+	if cam_movement_stop > 0:
+		cam_movement_stop -= 1
+	
+	var move_speed = BASE_MOVE_SPEED
+	if ui:
+		move_speed *= ui.scale.x
+	if shift:
+		move_speed *= 2.0
+	if ctrl:
+		move_speed *= 0.3
+	next_position += direction * Vector2(move_speed, move_speed) * 60 * delta
+	
+	limit_camera_movement()
+
+
+func center_camera(pos: Vector2):
 	next_position = pos
 
 
-func zoom_change(amount : int):
+func start_drag():
+	drag_start_position = position
+
+
+func move_by_drag(mouse_pos: Vector2, start_pos: Vector2):
+	var movement: Vector2 = (start_pos - mouse_pos)
+	if ui:
+		movement *= ui.scale.x
+	next_position = drag_start_position + movement
+	
+	limit_camera_movement()
+
+
+func zoom_change(amount: int):
 	zoom_level += amount
 	if zoom_level < ZOOM_OUT_MAX:
 		zoom_level = ZOOM_OUT_MAX
