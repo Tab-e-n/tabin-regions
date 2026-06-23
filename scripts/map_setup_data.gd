@@ -14,6 +14,28 @@ var used_alignments: int = 0
 var preset_alignments: Array[int] = []
 
 
+func _ready():
+	current_directory = Options.last_pack
+	var info: Dictionary = load_pack_info()
+	current_pack_name = info["title"]
+
+
+func load_pack_info(dir: String = current_directory) -> Dictionary:
+	var info: Dictionary = {
+		"title" : dir,
+		"lore" : "A pack of maps.",
+	}
+	
+	if FileAccess.file_exists(dir + "/info.json"):
+		var file = FileAccess.open(dir + "/info.json", FileAccess.READ)
+		
+		info = JSON.parse_string(file.get_as_text())
+		
+		file.close()
+		
+	return info
+
+
 func print_map_data():
 	print(current_map_name)
 	print("Players: ", player_amount)

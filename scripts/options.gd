@@ -42,8 +42,6 @@ func _ready():
 	DirAccess.make_dir_absolute("user://Dev")
 	
 	load_options()
-	
-	MapSetup.current_directory = Options.last_pack
 
 
 func _physics_process(_delta):

@@ -19,7 +19,8 @@ var double_click_timer: float = 0.0
 @export var empty_list_message: String = "No items."
 
 @onready var page: float = size.y / SELECTION_ITEM_SIZE
-@onready var items: Control = $HBoxContainer/Items
+@onready var hbox: ScrollContainer = $ScrollContainer
+@onready var items: Control = $ScrollContainer/Items
 @onready var label_empty: Label = $Empty
 
 
@@ -70,6 +71,11 @@ func clear() -> void:
 	update_empty_message()
 
 
+func _show_selected_item() -> void:
+	await get_tree().process_frame
+	hbox.ensure_control_visible(selected_item)
+
+
 func select_item(item: SelectionListItem) -> void:
 	if item == selected_item:
 		selected_item.set_pressed_no_signal(true)
@@ -83,6 +89,7 @@ func select_item(item: SelectionListItem) -> void:
 	
 	if selected_item:
 		selected_item.set_pressed_no_signal(true)
+		_show_selected_item()
 		item_selected.emit(item)
 
 

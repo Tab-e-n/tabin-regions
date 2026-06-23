@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://t1afuav5g8wx"]
+[gd_scene load_steps=15 format=3 uid="uid://t1afuav5g8wx"]
 
 [ext_resource type="Script" path="res://scripts/region_control.gd" id="1_l550i"]
 [ext_resource type="PackedScene" uid="uid://s6v72p116y03" path="res://objects/game/map_background.tscn" id="2_bids2"]
@@ -8,6 +8,27 @@
 [ext_resource type="Script" path="res://scripts/region.gd" id="5_bab7b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kwsgr"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_0hry8"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mir3m"]
+shader = ExtResource("3_u07oc")
+shader_parameter/scale = 1.0
+shader_parameter/changing_color = false
+shader_parameter/n = 0.0
+shader_parameter/previous_color = Color(1, 1, 1, 1)
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_8s050"]
 shader = ExtResource("3_u07oc")
 shader_parameter/scale = 1.0
 shader_parameter/changing_color = false
@@ -95,6 +116,26 @@ script = ExtResource("2_vfg37")
 from_name = &"Frog"
 to_name = &"Froglet"
 
+[node name="Boots-Denim" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Denim"
+to_name = &"Boots"
+
+[node name="Boots-BootCruncher" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"BootCruncher"
+to_name = &"Boots"
+
+[node name="Halapanto-Boots" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"Halapanto"
+to_name = &"Boots"
+
+[node name="Halapanto-BootCruncher" type="Line2D" parent="links"]
+script = ExtResource("2_vfg37")
+from_name = &"BootCruncher"
+to_name = &"Halapanto"
+
 [node name="bg" parent="." instance=ExtResource("2_bids2")]
 color = Color(0.654902, 0.619608, 0.709804, 1)
 
@@ -160,6 +201,30 @@ polygon = PackedVector2Array(-96, 24, -32, 40, 0, -16, 8, -16, -8, 48, 48, 72, 6
 script = ExtResource("5_bab7b")
 alignment = 3
 is_capital = true
+
+[node name="Boots" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_0hry8")
+position = Vector2(736, 128)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(32, -40, -16, 24, 0, 32, 56, -32, 112, -8, 32, 48, 8, 80, -72, 40, -48, 16, -24, 16, -48, 8, -80, 32, -136, -8, -112, -32, -88, -24, -40, -24, -24, -56)
+script = ExtResource("5_bab7b")
+alignment = 3
+
+[node name="BootCruncher" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_mir3m")
+position = Vector2(552, 128)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(-96, 64, -48, 0, 0, -32, 56, -40, 64, -32, 40, -8, 96, 32, 64, 56, 16, 72, -56, 72)
+script = ExtResource("5_bab7b")
+alignment = 3
+
+[node name="Halapanto" type="Polygon2D" parent="."]
+material = SubResource("ShaderMaterial_8s050")
+position = Vector2(632, 224)
+texture = ExtResource("4_qn4by")
+polygon = PackedVector2Array(-176, -24, -88, 40, -8, 56, 48, 48, 96, 0, 104, -8, 16, -56, -16, -32, -64, -16, -120, -16)
+script = ExtResource("5_bab7b")
+alignment = 3
 
 [node name="Mauve" type="Polygon2D" parent="."]
 material = SubResource("ShaderMaterial_kwsgr")

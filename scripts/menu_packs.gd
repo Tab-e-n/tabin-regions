@@ -17,22 +17,6 @@ func _start() -> void:
 	setup_pack_list(Options.allowed_directories)
 
 
-func load_pack_info(dir: String = MapSetup.current_directory) -> Dictionary:
-	var info: Dictionary = {
-		"title" : dir,
-		"lore" : "A pack of maps.",
-	}
-	
-	if FileAccess.file_exists(dir + "/info.json"):
-		var file = FileAccess.open(dir + "/info.json", FileAccess.READ)
-		
-		info = JSON.parse_string(file.get_as_text())
-		
-		file.close()
-		
-	return info
-
-
 func set_info(info: Dictionary):
 	current_pack_name = info["title"]
 	pack_title.text = info["title"]
@@ -45,12 +29,12 @@ func setup_pack_list(pack_names: PackedStringArray, selected_pack: String = MapS
 	var selected_item: SelectionListItem = null
 	
 	for pack_name in Options.BUILTIN_PACKS:
-		var info: Dictionary = load_pack_info(pack_name)
+		var info: Dictionary = MapSetup.load_pack_info(pack_name)
 		var item: SelectionListItem = pack_list.add_item(pack_name, info["title"])
 		if pack_name == selected_pack:
 			selected_item = item
 	for pack_name in pack_names:
-		var info: Dictionary = load_pack_info(pack_name)
+		var info: Dictionary = MapSetup.load_pack_info(pack_name)
 		var item: SelectionListItem = pack_list.add_item(pack_name, info["title"])
 		if pack_name == selected_pack:
 			selected_item = item
@@ -73,7 +57,7 @@ func remove_directory(dir: String):
 
 
 func change_directory_visual(dir: String):
-	var info: Dictionary = load_pack_info(dir)
+	var info: Dictionary = MapSetup.load_pack_info(dir)
 	set_info(info)
 
 
