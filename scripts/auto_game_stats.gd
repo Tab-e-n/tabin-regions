@@ -90,6 +90,8 @@ func get_stat(align: int, key: String, failsafe = null):
 	return stats[align][key]
 
 
+# ------------ SAVING STATS ------------
+
 func format_stat_for_csv(stat: String, value: Variant) -> String:
 	if stat in ["alignment name", "placement"]:
 		return value
@@ -152,6 +154,8 @@ func save_as_csv(file_name: String):
 	
 	file.close()
 
+
+# ------------ STATS GRAPH ------------
 
 func create_graph_stat(stat: String, stat_max: int) -> void:
 	graph_statistics[stat] = stat_max

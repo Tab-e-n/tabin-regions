@@ -208,7 +208,7 @@ func fill_missing_networks(net_amount : int, new_amount : int):
 
 
 func win(_align : int):
-	dp_control.reset()
+	dp_control._reset()
 	
 	var turn_penalty : float = 0.1 * (float(region_control.current_turn) / float(turn_cutoff))
 	print("Turn penalty: ",  turn_penalty)

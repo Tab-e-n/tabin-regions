@@ -295,20 +295,12 @@ func _process(delta):
 	
 	if shake_time > 0.0:
 		shake_time -= delta
-		shake_offset = _camera_shake_offset()
+		shake_offset = camera_shake_offset()
 		if shake_time <= 0.0:
 			reset_camera_shake()
 	
 	position = next_position + shake_offset
 	force_update_scroll()
-
-
-func _camera_shake_offset() -> Vector2:
-		var shake_offset : Vector2 = Vector2(0, 0)
-		var damp : float = shake_time / shake_duration
-		shake_offset.x = shake_amplitude * (abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.15) * 13.3) - 0.5) * damp
-		shake_offset.y = shake_amplitude * abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.4) * 5.0) * damp
-		return shake_offset
 
 
 func set_ui_shader_parameter(Element: CanvasItem, param: String, value: Variant) -> void:
@@ -319,6 +311,8 @@ func set_ui_shader_parameter(Element: CanvasItem, param: String, value: Variant)
 	else:
 		push_warning(Element, " doesn't have a shader material")
 
+
+# ------------ MOVING CAMERA ------------
 
 func limit_camera_movement():
 	snapped(next_position, Vector2(1.0, 1.0))
@@ -365,6 +359,8 @@ func move_by_drag(mouse_pos: Vector2, start_pos: Vector2):
 	limit_camera_movement()
 
 
+# ------------ ZOOM ------------
+
 func zoom_change(amount: int):
 	zoom_level += amount
 	if zoom_level < ZOOM_OUT_MAX:
@@ -383,6 +379,8 @@ func reset_zoom():
 	zoom_change(0)
 
 
+# ------------ SCREEN SHAKE ------------
+
 func reset_camera_shake() -> void:
 	shake_time = 0.0
 	shake_duration = 0.0
@@ -396,6 +394,56 @@ func shake_camera(duration : float, amplitude : float, period : float) -> void:
 	shake_amplitude += amplitude
 	shake_period = max(period, shake_period)
 
+
+func camera_shake_offset() -> Vector2:
+	var shake_offset : Vector2 = Vector2(0, 0)
+	var damp : float = shake_time / shake_duration
+	shake_offset.x = shake_amplitude * (abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.15) * 13.3) - 0.5) * damp
+	shake_offset.y = shake_amplitude * abs(shake_period - wrap(shake_time, 0.0, shake_period * 0.4) * 5.0) * damp
+	return shake_offset
+
+
+# ------------ GENERAL UI ------------
+
+func set_ui_visible(visibility : bool):
+	if ui_hideable:
+		ui_hideable.visible = visibility
+		if visible_ui:
+			visible_ui.set_pressed_no_signal(visibility)
+
+
+func toggle_ui_visible():
+	set_ui_visible(not ui_hideable.visible)
+
+
+func update_alignment_colored_ui():
+	if player_actions:
+		player_actions.modulate = region_control.get_current_alignment_color()
+		player_actions.modulate.a = 1
+		player_actions.visible = region_control.is_player_controled and not ReplayControl.replay_active
+		var value : float = player_actions.modulate.v
+		set_ui_shader_parameter(advance_action_light, "value", value)
+		set_ui_shader_parameter(advance_action_dark, "value", value)
+		set_ui_shader_parameter(advance_mobilize_light, "value", value)
+		set_ui_shader_parameter(advance_mobilize_dark, "value", value)
+		set_ui_shader_parameter(end_turn_button, "value", value)
+		set_ui_shader_parameter(forfeit_button, "value", value)
+		if current_action:
+			if region_control.is_player_controled:
+				current_action.self_modulate = RegionControl.text_color(value)
+			else:
+				current_action.self_modulate = Color.WHITE
+	if power_sprite:
+		var color: Color = Color.WHITE
+		if region_control.is_player_controled or not Options.should_limit_flashing():
+			color = region_control.get_current_alignment_color()
+		power_sprite.self_modulate = color
+		power_sprite.self_modulate.a = 1
+		if power_amount:
+			power_amount.self_modulate = RegionControl.text_color(power_sprite.self_modulate.v)
+
+
+# ------------ INTERFACE ------------
 
 func try_leaving():
 	set_pause_menu_visible(false)
@@ -420,6 +468,45 @@ func try_forfeit():
 	set_forfeit_message(true)
 
 
+func update_alignment_label():
+	if current_alignment:
+		current_alignment.text = region_control.get_current_alignment_name()
+
+
+func update_current_turn():
+	if current_turn:
+		current_turn.text = "Turn " + str(region_control.current_turn)
+		if ReplayControl.replay_active and ReplayControl.last_turn >= 0:
+			current_turn.text += " / " + str(ReplayControl.last_turn)
+
+
+func advance_turn_visual(type : int):
+	if advance_action_light:
+		advance_action_light.visible = type == 0
+	
+	if advance_action_dark:
+		advance_action_dark.visible = type == 1
+	
+	if advance_mobilize_light:
+		advance_mobilize_light.visible = type == 2
+	
+	if advance_mobilize_dark:
+		advance_mobilize_dark.visible = type == 3
+
+
+func update_current_action(current_phase : int):
+	if current_action:
+		current_action.text = ACTIONS[current_phase]
+	if current_phase == RegionControl.PHASE.MOBILIZE:
+		advance_turn_visual(2)
+	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
+		advance_turn_visual(1)
+	else:
+		advance_turn_visual(0)
+	if phase_info:
+		phase_info.text = PHASE_INFO[current_phase]
+
+
 func make_action_changed_particle(amount : int, color : Color) -> void:
 	if not Options.action_change_particles:
 		return
@@ -436,16 +523,7 @@ func make_action_changed_particle(amount : int, color : Color) -> void:
 	ui.add_child(part)
 
 
-func toggle_ui_visible():
-	set_ui_visible(not ui_hideable.visible)
-
-
-func set_ui_visible(visibility : bool):
-	if ui_hideable:
-		ui_hideable.visible = visibility
-		if visible_ui:
-			visible_ui.set_pressed_no_signal(visibility)
-
+# ------------ TURN ORDER ------------
 
 func toggle_turn_order_visible():
 	if turn_order:
@@ -458,6 +536,8 @@ func set_turn_order_visible(visibility : bool):
 		if visible_turn_order:
 			visible_turn_order.set_pressed_no_signal(turn_order.visible)
 
+
+# ------------ PLAYER INFO ------------
 
 func set_player_info_visible(visibility : bool):
 	if player_info:
@@ -516,71 +596,7 @@ func update_player_info() -> void:
 	show_player_info(player_alignment, new_player)
 
 
-func update_alignment_colored_ui():
-	if player_actions:
-		player_actions.modulate = region_control.get_current_alignment_color()
-		player_actions.modulate.a = 1
-		player_actions.visible = region_control.is_player_controled and not ReplayControl.replay_active
-		var value : float = player_actions.modulate.v
-		set_ui_shader_parameter(advance_action_light, "value", value)
-		set_ui_shader_parameter(advance_action_dark, "value", value)
-		set_ui_shader_parameter(advance_mobilize_light, "value", value)
-		set_ui_shader_parameter(advance_mobilize_dark, "value", value)
-		set_ui_shader_parameter(end_turn_button, "value", value)
-		set_ui_shader_parameter(forfeit_button, "value", value)
-		if current_action:
-			if region_control.is_player_controled:
-				current_action.self_modulate = RegionControl.text_color(value)
-			else:
-				current_action.self_modulate = Color.WHITE
-	if power_sprite:
-		var color: Color = Color.WHITE
-		if region_control.is_player_controled or not Options.should_limit_flashing():
-			color = region_control.get_current_alignment_color()
-		power_sprite.self_modulate = color
-		power_sprite.self_modulate.a = 1
-		if power_amount:
-			power_amount.self_modulate = RegionControl.text_color(power_sprite.self_modulate.v)
-
-
-func update_alignment_label():
-	if current_alignment:
-		current_alignment.text = region_control.get_current_alignment_name()
-
-
-func update_current_turn():
-	if current_turn:
-		current_turn.text = "Turn " + str(region_control.current_turn)
-		if ReplayControl.replay_active and ReplayControl.last_turn >= 0:
-			current_turn.text += " / " + str(ReplayControl.last_turn)
-
-
-func advance_turn_visual(type : int):
-	if advance_action_light:
-		advance_action_light.visible = type == 0
-	
-	if advance_action_dark:
-		advance_action_dark.visible = type == 1
-	
-	if advance_mobilize_light:
-		advance_mobilize_light.visible = type == 2
-	
-	if advance_mobilize_dark:
-		advance_mobilize_dark.visible = type == 3
-
-
-func update_current_action(current_phase : int):
-	if current_action:
-		current_action.text = ACTIONS[current_phase]
-	if current_phase == RegionControl.PHASE.MOBILIZE:
-		advance_turn_visual(2)
-	elif current_phase == RegionControl.PHASE.BONUS and region_control.bonus_action_amount == 0:
-		advance_turn_visual(1)
-	else:
-		advance_turn_visual(0)
-	if phase_info:
-		phase_info.text = PHASE_INFO[current_phase]
-
+# ------------ MESSAGES ------------
 
 func show_victory_message(alignment : int):
 	if victory_message:
@@ -609,25 +625,7 @@ func set_leftover_message(visibility : bool):
 		leftover_message.visible = visibility
 
 
-func toggle_pause_menu():
-	if pause_menu:
-		set_pause_menu_visible(not pause_menu.visible)
-	set_graph_visible(false)
-	set_leave_message(false)
-
-
-func set_pause_menu_visible(visibility : bool):
-	if pause_menu:
-		pause_menu.visible = visibility
-		if game_control:
-			game_control.inputs_active = not visibility
-
-
-func set_dp_speed_slider(options_value: float) -> void:
-	if dp_speed:
-		var value: float = (options_value - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN)
-		dp_speed.set_value_no_signal(1.0 - value)
-
+# ------------ TOOLTIPS ------------
 
 func show_tooltip(tooltip : TOOLTIP):
 	tooltip_actions.visible = tooltip == TOOLTIP.ACTIONS
@@ -658,6 +656,30 @@ func hide_all_tooltips():
 	disable_camera_movement = false
 
 
+# ------------ PAUSE MENU ------------
+
+func toggle_pause_menu():
+	if pause_menu:
+		set_pause_menu_visible(not pause_menu.visible)
+	set_graph_visible(false)
+	set_leave_message(false)
+
+
+func set_pause_menu_visible(visibility : bool):
+	if pause_menu:
+		pause_menu.visible = visibility
+		if game_control:
+			game_control.inputs_active = not visibility
+
+
+func set_dp_speed_slider(options_value: float) -> void:
+	if dp_speed:
+		var value: float = (options_value - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN)
+		dp_speed.set_value_no_signal(1.0 - value)
+
+
+# ------------ STATS GRAPH ------------
+
 func toggle_graph():
 	if stats_graph:
 		set_graph_visible(not stats_graph.visible)
@@ -677,6 +699,8 @@ func update_graph():
 	if stats_graph:
 		stats_graph.update_lines()
 
+
+# ------------ SIGNAL CALLBACKS ------------
 
 func _on_turn_ended():
 	update_alignment_colored_ui()

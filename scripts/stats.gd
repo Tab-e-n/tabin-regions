@@ -169,7 +169,7 @@ func _physics_process(delta):
 	if hovering_alignments:
 		var recent_hovered_player : int = graph_align_list.get_leader_id_from_mouse()
 		
-		var new_player : bool = false
+		var new_player: bool = false
 		if hovered_player != recent_hovered_player:
 			hovered_player = recent_hovered_player
 			new_player = true
@@ -179,13 +179,13 @@ func _physics_process(delta):
 
 
 func _on_csv_pressed():
-	var map_name : String = MapSetup.current_map_name.trim_suffix(".tscn")
+	var map_name: String = MapSetup.current_map_name.trim_suffix(".tscn")
 	GameStats.save_as_csv(map_name.replace("_", " "))
 	$buttons/save.text = "Saved CSV!"
 
 
 func _on_replay_pressed():
-	var map_name : String = MapSetup.current_map_name.trim_suffix(".tscn")
+	var map_name: String = MapSetup.current_map_name.trim_suffix(".tscn")
 	ReplayControl.save_replay(map_name.replace("_", " "))
 	$buttons/save.text = "Saved Replay!"
 

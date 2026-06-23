@@ -2,7 +2,7 @@ extends Node
 class_name DPControl
 
 
-signal timer_has_ended
+signal think_timeout
 
 
 enum Controler {
@@ -84,7 +84,7 @@ func _ready():
 			dp.controler = self
 			controlers.append(dp)
 	
-	timer_has_ended.connect(timer_ended)
+	think_timeout.connect(_on_think_timeout)
 	
 	paused = ReplayControl.replay_active or MapSetup.player_amount == 0
 	
@@ -93,7 +93,17 @@ func _ready():
 
 func _init_replay():
 	while ReplayControl.initializing and not ReplayControl.replay_ended:
-		timer_ended()
+		_on_think_timeout()
+
+
+func _reset():
+	owned_regions = {}
+	current_moves = {}
+	previous_moves.clear()
+	selected_action = PlayerAction.REGION
+	selected_capital = ""
+	selected_amount = 1
+	timer = 0
 
 
 func _process(delta: float):
@@ -112,29 +122,20 @@ func _process(delta: float):
 			timer = -1
 	if timer < 0:
 		timer = 0
-		timer_has_ended.emit()
+		think_timeout.emit()
 
 
-func reset():
-	owned_regions = {}
-	current_moves = {}
-	previous_moves.clear()
-	selected_action = PlayerAction.REGION
-	selected_capital = ""
-	selected_amount = 1
-	timer = 0
-
-
-func select_overtake(region_name: String):
-	selected_action = PlayerAction.OVERTAKE
-	selected_capital = region_name
-	selected_amount = -1
-
-
-func select_overtake_as_alignment(region_name: String, alignment: int):
-	selected_action = PlayerAction.OVERTAKE
-	selected_capital = region_name
-	selected_amount = alignment
+func _on_think_timeout():
+	if ReplayControl.replay_active and replay_done_action:
+		think()
+		return
+	
+	var should_continue: bool = perform_selection()
+	
+	replay_done_action = true
+	if should_continue:
+		think()
+#	print(current_moves)
 
 
 func thinking_timer_update():
@@ -144,6 +145,10 @@ func thinking_timer_update():
 		thinking_timer = THINKING_TIMER_SPEEDRUN
 	else:
 		thinking_timer = Options.dp_think_timer
+
+
+func toggle_pause():
+	paused = not paused
 
 
 func start_turn(alignment : int, control : int):
@@ -159,6 +164,35 @@ func start_turn(alignment : int, control : int):
 		controlers[current_controler].start_turn(alignment)
 	
 	think.call_deferred()
+
+
+func think():
+	timer = thinking_timer
+	
+	if ReplayControl.replay_active:
+		replay()
+	else:
+		selected_action = PlayerAction.REGION
+		selected_capital = ""
+		selected_amount = 1
+		
+		find_owned_regions()
+		
+		var dp: DigitalPlayer = controlers[current_controler]
+		if dp:
+			var phase = RegionControl.PHASE.NORMAL
+			if region_control:
+				phase = region_control.current_phase
+			match phase:
+				RegionControl.PHASE.NORMAL:
+					dp.think_normal()
+				RegionControl.PHASE.MOBILIZE:
+					dp.think_mobilize()
+				RegionControl.PHASE.BONUS:
+					dp.think_bonus()
+		else:
+			push_error("Digital player number ", current_controler, " is null, skipping turn")
+			selected_action = PlayerAction.END_TURN
 
 
 func replay():
@@ -224,42 +258,7 @@ func replay():
 		selected_action = PlayerAction.NOTHING
 
 
-func think():
-	timer = thinking_timer
-	
-	if ReplayControl.replay_active:
-		replay()
-	else:
-		selected_action = PlayerAction.REGION
-		selected_capital = ""
-		selected_amount = 1
-		
-		find_owned_regions()
-		
-		var dp: DigitalPlayer = controlers[current_controler]
-		if dp:
-			var phase = RegionControl.PHASE.NORMAL
-			if region_control:
-				phase = region_control.current_phase
-			match phase:
-				RegionControl.PHASE.NORMAL:
-					dp.think_normal()
-				RegionControl.PHASE.MOBILIZE:
-					dp.think_mobilize()
-				RegionControl.PHASE.BONUS:
-					dp.think_bonus()
-		else:
-			push_error("Digital player number ", current_controler, " is null, skipping turn")
-			selected_action = PlayerAction.END_TURN
-
-
-func timer_ended():
-	if ReplayControl.replay_active and replay_done_action:
-		think()
-		return
-	
-	var should_continue: bool = true
-	
+func perform_selection() -> bool:
 #	print(selected_action, " |", selected_capital, "| ", selected_amount)
 	match selected_action:
 		PlayerAction.NOTHING:
@@ -273,22 +272,20 @@ func timer_ended():
 				overtake(selected_capital)
 			else:
 				overtake_as_alignment(selected_capital, selected_amount)
-			should_continue = true
 		
 		PlayerAction.ADD_ACTION:
 			add_actions(selected_amount)
-			should_continue = true
 		
 		PlayerAction.NEXT_PHASE:
-			should_continue = next_phase()
+			return next_phase()
 		
 		PlayerAction.END_TURN:
 			end_turn()
-			should_continue = false
+			return false
 		
 		PlayerAction.FORFEIT:
 			forfeit()
-			should_continue = false
+			return false
 		
 		PlayerAction.MOD_POWER:
 			modify_power(selected_capital, selected_amount)
@@ -296,15 +293,10 @@ func timer_ended():
 		PlayerAction.MOD_MAX_POWER:
 			modify_max_power(selected_capital, selected_amount)
 	
-	replay_done_action = true
-	if should_continue:
-		think()
-#	print(current_moves)
+	return true
 
 
-func toggle_pause():
-	paused = not paused
-
+# ------------ PREVIOUS MOVES ------------
 
 func _add_new_current_moves(alignment : int) -> void:
 	if not current_moves.has(alignment):
@@ -316,18 +308,21 @@ func note_region_selection(region: StringName, alignment: int) -> void:
 	current_moves[alignment].add(region)
 
 
-func current_align() -> int:
-	if region_control:
-		return region_control.current_playing_align
-	else:
-		return 0
+# ------------ MOVE SELECTION HELPERS ------------
+
+func select_overtake(region_name: String):
+	selected_action = PlayerAction.OVERTAKE
+	selected_capital = region_name
+	selected_amount = -1
 
 
-func get_region(region_name : String) -> Region:
-	return region_control.get_region(region_name)
+func select_overtake_as_alignment(region_name: String, alignment: int):
+	selected_action = PlayerAction.OVERTAKE
+	selected_capital = region_name
+	selected_amount = alignment
 
 
-# ------ PLAYER MOVES ------
+# ------------ PLAYER MOVES ------------
 
 func action_decided_region(region: Region, amount: int):
 	if region:
@@ -398,7 +393,7 @@ func modify_max_power(region_name: String, amount: int) -> bool:
 	return false
 
 
-# ------ OWNED REGIONS ------
+# ------------ OWNED REGIONS ------------
 
 func find_owned_regions(alignment: int = current_align()):
 	owned_regions[alignment] = []
@@ -420,7 +415,7 @@ func get_owned_regions(alignment : int = current_align()) -> Array:
 	return owned_regions[alignment].duplicate()
 
 
-# ------ ALLIANCES ------
+# ------------ ALLIANCES ------------
 
 func aliances_on() -> bool:
 	return region_control.use_aliances
@@ -436,7 +431,18 @@ func get_allied_regions(alignment : int = current_align()) -> Array:
 	return allied_regs
 
 
-# ------ INFO FUNCTIONS ------
+# ------------ GET FUNCTIONS ------------
+
+func current_align() -> int:
+	if region_control:
+		return region_control.current_playing_align
+	else:
+		return 0
+
+
+func get_region(region_name : String) -> Region:
+	return region_control.get_region(region_name)
+
 
 func get_current_moves() -> Set:
 	_add_new_current_moves(current_align())

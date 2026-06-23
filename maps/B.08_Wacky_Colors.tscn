@@ -76,7 +76,7 @@ region_links = NodePath("links")
 
 [node name="links" type="Node" parent="."]
 
-[node name="Ocean-Ocean Leadup" type="Line2D" parent="links"]
+[node name="Ocean Leadup-Ocean" type="Line2D" parent="links"]
 script = ExtResource("2_vfg37")
 from_name = &"Ocean"
 to_name = &"Ocean Leadup"
@@ -198,6 +198,7 @@ material = SubResource("ShaderMaterial_kwsgr")
 position = Vector2(808, 40)
 texture = ExtResource("4_qn4by")
 polygon = PackedVector2Array(-96, 24, -32, 40, 0, -16, 8, -16, -8, 48, 48, 72, 64, 64, 88, -16, 48, -56, -32, -72, -72, -40)
+uv = PackedVector2Array(0, 85.3333, 44.5217, 99.5556, 66.7826, 49.7778, 72.3478, 49.7778, 61.2174, 106.667, 100.174, 128, 111.304, 120.889, 128, 49.7778, 100.174, 14.2222, 44.5217, 0, 16.6957, 28.4444)
 script = ExtResource("5_bab7b")
 alignment = 3
 is_capital = true
@@ -207,6 +208,7 @@ material = SubResource("ShaderMaterial_0hry8")
 position = Vector2(736, 128)
 texture = ExtResource("4_qn4by")
 polygon = PackedVector2Array(32, -40, -16, 24, 0, 32, 56, -32, 112, -8, 32, 48, 8, 80, -72, 40, -48, 16, -24, 16, -48, 8, -80, 32, -136, -8, -112, -32, -88, -24, -40, -24, -24, -56)
+uv = PackedVector2Array(86.7097, 15.0588, 61.9355, 75.2941, 70.1936, 82.8235, 99.0968, 22.5882, 128, 45.1765, 86.7097, 97.8824, 74.3226, 128, 33.0323, 90.3529, 45.4194, 67.7647, 57.8064, 67.7647, 45.4194, 60.2353, 28.9032, 82.8235, 0, 45.1765, 12.3871, 22.5882, 24.7742, 30.1176, 49.5484, 30.1176, 57.8064, 0)
 script = ExtResource("5_bab7b")
 alignment = 3
 
@@ -215,6 +217,7 @@ material = SubResource("ShaderMaterial_mir3m")
 position = Vector2(552, 128)
 texture = ExtResource("4_qn4by")
 polygon = PackedVector2Array(-96, 64, -48, 0, 0, -32, 56, -40, 64, -32, 40, -8, 96, 32, 64, 56, 16, 72, -56, 72)
+uv = PackedVector2Array(0, 118.857, 32, 45.7143, 64, 9.14286, 101.333, 0, 106.667, 9.14286, 90.6667, 36.5714, 128, 82.2857, 106.667, 109.714, 74.6667, 128, 26.6667, 128)
 script = ExtResource("5_bab7b")
 alignment = 3
 
@@ -223,6 +226,7 @@ material = SubResource("ShaderMaterial_8s050")
 position = Vector2(632, 224)
 texture = ExtResource("4_qn4by")
 polygon = PackedVector2Array(-176, -24, -88, 40, -8, 56, 48, 48, 96, 0, 104, -8, 16, -56, -16, -32, -64, -16, -120, -16)
+uv = PackedVector2Array(0, 36.5714, 40.2286, 109.714, 76.8, 128, 102.4, 118.857, 124.343, 64, 128, 54.8571, 87.7714, 0, 73.1429, 27.4286, 51.2, 45.7143, 25.6, 45.7143)
 script = ExtResource("5_bab7b")
 alignment = 3
 

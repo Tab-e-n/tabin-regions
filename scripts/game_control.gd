@@ -250,6 +250,14 @@ func _process(delta : float):
 	mouse_wheel_input = 0
 
 
+## Makes a new command callout.
+func new_callout(text: String):
+	if command_callout:
+		command_callout.new_callout(text)
+
+
+# ------------ OPTIONS ------------
+
 ## Toggles if cities are visible or invisible.
 func toggle_cities():
 	if region_control:
@@ -293,11 +301,27 @@ func set_dp_think_timer(value: float):
 	dp_control.thinking_timer_update()
 
 
-## Makes a new command callout.
-func new_callout(text: String):
-	if command_callout:
-		command_callout.new_callout(text)
+# ------------ GAME END ------------
 
+func win(align: int):
+	if game_camera:
+		game_camera.show_victory_message(align)
+	win_timer = 5.0
+
+
+func lose(align: int):
+	if game_camera:
+		game_camera.show_defeat_message(align)
+	win_timer = 5.0
+
+
+func leave():
+	Options.discard_timestamp_sums()
+	Options.timestamp("EXIT MAP", "")
+	get_tree().change_scene_to_file("res://stats.tscn")
+
+
+# ------------ MAP ------------
 
 func unload_current_map() -> void:
 	if not region_control:
@@ -344,21 +368,3 @@ func change_map(new_map_name : String, update_others : bool = true) -> void:
 		move_child(region_control, 1)
 	
 	Options.timestamp("Return change_map", "GameControl")
-
-
-func win(align: int):
-	if game_camera:
-		game_camera.show_victory_message(align)
-	win_timer = 5.0
-
-
-func lose(align: int):
-	if game_camera:
-		game_camera.show_defeat_message(align)
-	win_timer = 5.0
-
-
-func leave():
-	Options.discard_timestamp_sums()
-	Options.timestamp("EXIT MAP", "")
-	get_tree().change_scene_to_file("res://stats.tscn")

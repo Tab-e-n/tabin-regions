@@ -289,7 +289,7 @@ const COLOR_TOO_BRIGHT: float = 0.85
 
 @export var update_region_textures: bool = false:
 	set(_update):
-		update_textures()
+		_tool_update_textures()
 ## Only has an effect in the editor. When not set to Disabled, will color the regions depending on certain criteria.
 @export var render_mode: RENDER_MODE = RENDER_MODE.DISABLED
 ## The range visible during render modes. Certain render modes use this to figure out how to color the regions.
@@ -419,51 +419,11 @@ static func setup_complexity_name(compx : SETUP_COMPLEXITY) -> String:
 			return "Unknown"
 
 
-func _load_cache():
-	cache_filename = game_control.map_name + ".json"
-	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.READ)
-	
-	if file:
-		var file_cache = JSON.parse_string(file.get_as_text())
-		if file_cache:
-			cache = file_cache
-		else:
-			push_warning("Could not parse ", cache_filename)
-		
-		file.close()
-	elif print_more_info:
-		print("No cache file name ", cache_filename, " exists")
-
-
-func _save_cache():
-	if cache.is_empty():
-		return
-	
-	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.WRITE)
-	
-	if file:
-		var file_cache : String = JSON.stringify(cache)
-		
-		file.store_pascal_string(file_cache)
-		
-		file.close()
-	else:
-		push_warning("Could not open ", cache_filename)
-
-
-func set_cache(key : String, value : Variant):
-	if cache.has(key) and cache[key] == value:
-		return
-	modified_cache = true
-	cache[key] = value
-	return
-
-
-func get_cache(key : String) -> Variant:
-	if cache.has(key):
-		return cache[key]
-	push_error("Cache does not have ", key)
-	return null
+func _tool_update_textures():
+	for node in get_children():
+		var region : Region = node as Region
+		if region:
+			region._on_update_texture()
 
 
 func _ready():
@@ -837,7 +797,7 @@ func _check_capital_distance():
 				push_warning(region.name, "has an incorrect capital distance.")
 
 
-func _remove_alignment(align : int, remove_capitals : bool):
+func _remove_alignment(align: int, remove_capitals: bool):
 	for node in get_children():
 		var region : Region = node as Region
 		if not region:
@@ -848,7 +808,7 @@ func _remove_alignment(align : int, remove_capitals : bool):
 				region.is_capital = false
 
 
-func _unused_alignments(alignments : Array[int]):
+func _unused_alignments(alignments: Array[int]):
 	if used_alignments < 2 or used_alignments >= align_amount:
 		used_alignments = align_amount - 1
 	
@@ -919,13 +879,7 @@ func _exit_tree():
 		_save_cache()
 
 
-#func _process(_delta):
-#	if Engine.is_editor_hint():
-#		return
-#
-#	if dummy:
-#		return
-
+# ------------ TURNS ------------
 
 func _start_turn():
 	var reg_amount : int = GameStats.get_stat(current_playing_align, "most regions owned", 0)
@@ -978,314 +932,6 @@ func _new_round(_in_ready : bool = false):
 	
 	if game_camera:
 		game_camera.update_graph()
-
-
-func _check_victory():
-	var aliance : int = 0
-	var victory_align : int = 0
-	for i in range(region_amount.size()):
-		if region_amount[i] > 0:
-			if alignment_aliances[i + 1] <= 0:
-				continue
-			elif aliance == 0:
-				victory_align = i + 1
-				aliance = alignment_aliances[i + 1]
-			elif aliance != alignment_aliances[i + 1]:
-				return
-	victory(victory_align)
-
-
-func _check_eliminations():
-	var placement = String.num(current_placement)
-	
-	for i in range(region_amount.size()):
-		if region_amount[i] != last_turn_region_amount[i] and region_amount[i] == 0: 
-			GameStats.set_stat(i + 1, "placement", placement)
-			if game_control and not align_names[i + 1].is_empty():
-				game_control.new_callout(align_names[i + 1] + " got eliminated!")
-			current_placement -= 1
-
-
-func _record_region_amount_change(amount : int, alignment : int, is_capital : bool):
-	if alignment > 0 and alignment < align_amount and region_amount.size() > 0:
-		region_amount[alignment - 1] += amount
-		if is_capital:
-			capital_amount[alignment - 1] += amount
-			_calculate_penalty(alignment)
-
-
-func _calculate_penalty(alignment : int, end_of_turn : bool = false):
-	if apply_penalties == APPLY_PENALTIES.OFF:
-		return
-	if apply_penalties == APPLY_PENALTIES.PREVIOUS_CAPITAL and not end_of_turn:
-		return
-	if power_gain_penalties.size() == 0:
-		return
-	
-	var amount_of_capitals : int = capital_amount[alignment - 1]
-	
-	var penalty : float = 0.0
-	for i in power_gain_penalties.keys():
-		if amount_of_capitals <= i:
-			break
-		penalty += float(amount_of_capitals - i) * power_gain_penalties[i]
-	var penalty_total = int(penalty)
-	
-#	print(penalty_total)
-	
-	penalty_amount[alignment - 1] = penalty_total
-
-
-func _set_action_amount(amount : int) -> bool:
-	if amount < 0:
-		return false
-	match(current_phase):
-		PHASE.NORMAL:
-			first_action_amount = amount
-		PHASE.MOBILIZE, PHASE.BONUS:
-			bonus_action_amount = amount
-	
-	actions_modified.emit(amount)
-	
-	return true
-
-
-func _modify_action_amount(amount : int) -> bool:
-	match(current_phase):
-		PHASE.NORMAL:
-			if first_action_amount + amount < 0:
-				return false
-			first_action_amount += amount
-		PHASE.MOBILIZE, PHASE.BONUS:
-			if bonus_action_amount + amount < 0:
-				return false
-			bonus_action_amount += amount
-	
-	actions_modified.emit(amount)
-	
-	return true
-
-
-func _get_region(reg_name : StringName, storage: Dictionary) -> Region:
-	if not storage.has(reg_name):
-		return null
-	var node : Node = storage[reg_name]
-	if node is Region:
-		return node
-	else:
-		return null
-
-
-## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
-func get_region(reg_name: StringName) -> Region:
-	return _get_region(reg_name, regions)
-
-
-## Get a capital from a name. Returns null if no capital is found or found node wasn't a Region.
-func get_capital(reg_name: StringName) -> Region:
-	return _get_region(reg_name, capitals)
-
-
-func _get_all_regions(storage: Dictionary) -> Array[Region]:
-	var all_of_them : Array[Region] = []
-	for region in storage.values():
-		region = region as Region
-		if region:
-			all_of_them.append(region)
-	return all_of_them
-
-
-func get_all_regions() -> Array[Region]:
-	return _get_all_regions(regions)
-
-
-func get_all_capitals() -> Array[Region]:
-	return _get_all_regions(capitals)
-
-
-## Check if two alignments are allied.
-func alignment_friendly(your_align: int, opposing_align: int) -> bool:
-	if your_align < 0 or your_align >= align_amount:
-		return false
-	if opposing_align < 0 or opposing_align >= align_amount:
-		return false
-	return alignment_aliances[your_align] == alignment_aliances[opposing_align]
-
-
-## Check if the alignment does not have a digital player controling it.
-func alignment_inactive(align: int) -> bool:
-	return align <= 0 or align >= align_amount
-
-
-## Check if the alignment has a digital player controling it.
-func alignment_active(align: int) -> bool:
-	return align > 0 and align < align_amount
-
-
-func get_alignment_from_play_order(id: int) -> int:
-	if id >= 0 and id < align_play_order.size():
-		return align_play_order[id]
-	return 0
-
-
-func get_alignment_regions(alignment: int = current_playing_align) -> int:
-	return region_amount[alignment - 1]
-
-
-func get_alignment_capitals(alignment: int = current_playing_align) -> int:
-	return capital_amount[alignment - 1]
-
-
-func get_alignment_penalties(alignment: int = current_playing_align) -> int:
-	return penalty_amount[alignment - 1]
-
-
-## Turns all regions of alignment A into regions of alignment B
-func convert_alignment(alignment_a : int, alignment_b : int):
-	if alignment_a < 0:
-		push_warning("Alignment ", alignment_a, " cannot be converted.")
-		return
-	if alignment_b < 0:
-		push_warning("Alignment ", alignment_b, " cannot be converted to.")
-		return
-	
-	for region in get_children():
-		if region is Region:
-			if region.alignment == alignment_a:
-				region.change_alignment(alignment_b)
-
-
-## Grants victory to the specified alignment.
-func victory(align_victory: int):
-	dummy = true
-	
-	ReplayControl.last_turn = current_turn
-	GameStats.set_stat(align_victory, "placement", "1")
-	
-	var placement = String.num(current_placement)
-	
-	for i in range(align_amount - 1):
-		var align : int = i + 1
-		if alignment_aliances[align] <= 0:
-			continue
-		if use_aliances:
-			if alignment_aliances[align] == alignment_aliances[align_victory]:
-				GameStats.set_stat(align, "placement", "1")
-				continue
-		if GameStats.get_stat(align, "placement") == "N/A":
-			GameStats.set_stat(align, "placement", placement)
-	
-	if main_character <= 0:
-		GameStats.victorious_alignment = align_names[align_victory]
-		game_control.win(align_victory)
-	elif alignment_aliances[align_victory] == main_character:
-		GameStats.victorious_alignment = "Won"
-		game_control.win(align_victory)
-	else:
-		GameStats.victorious_alignment = "lost"
-		game_control.lose(align_victory)
-	
-	game_ended.emit(align_victory)
-
-
-## Amount of actions the player has.
-func get_action_amount() -> int:
-	if current_phase in [PHASE.NORMAL]:
-		return first_action_amount
-	elif current_phase in [PHASE.MOBILIZE, PHASE.BONUS]:
-		return bonus_action_amount
-	return 0
-
-
-## Check if the current player has enough actions left.
-func has_enough_actions(needed : int = 1) -> bool:
-	if current_phase == PHASE.NORMAL:
-		return first_action_amount >= needed
-	elif current_phase == PHASE.BONUS:
-		return bonus_action_amount >= needed
-	return true
-
-
-func get_neutral_color(neutral: int) -> Color:
-	# Requesting neutral colors
-	if neutral >= 0 and neutral < neutral_colors.size():
-		# Special neutral color
-		return neutral_colors[neutral]
-	# Default neutral color
-	if align_color.size() == 0:
-		return Color.WHITE
-	return align_color[0]
-
-
-func get_alignment_color(alignment: int, neutral: int = -1) -> Color:
-	if align_color.size() == 0 or alignment < 0 or alignment >= align_color.size():
-		return Color.WHITE
-	if alignment == 0:
-		return get_neutral_color(neutral)
-	return align_color[alignment]
-
-
-func get_current_alignment_color() -> Color:
-	return get_alignment_color(current_playing_align)
-
-
-func get_alignment_name(alignment : int) -> String:
-	return align_names[alignment]
-
-
-func get_current_alignment_name() -> String:
-	return get_alignment_name(current_playing_align)
-
-
-## Spawns the cross particle at the specified position.
-## Used when the player attempts an illegal move.
-func spawn_cross_particle(capital_position : Vector2):
-	var part : Sprite2D = Sprite2D.new()
-	part.set_script(preload("res://scripts/particle_cross.gd"))
-	part.texture = preload("res://sprites/cross.png")
-	part.position = capital_position
-	part.set_color(color)
-	part.z_index = 25
-	add_child(part)
-
-
-func show_region_description(region : Region, singleton : bool = true) -> RegionDescription:
-	if not region:
-		return null
-	var description : RegionDescription = null
-	if singleton and region_description:
-		region_description.visible = true
-		description = region_description
-	else:
-		description = preload("res://objects/region_description.tscn").instantiate() as RegionDescription
-		if not description:
-			push_error("Cannot load RegionDescription")
-			return null
-		add_child(description)
-	
-	var adjanced : Array[int] = region.get_adjacent_attack_power()
-	var colors : Array[Color] = []
-	var power : Array[int] = []
-	for alignment in range(adjanced.size()):
-		if alignment == 0 or adjanced[alignment] == 0:
-			continue
-		colors.append(get_alignment_color(alignment)) 
-		power.append(adjanced[alignment])
-	
-	description.scale = Vector2(city_size, city_size);
-	description.position = region.position
-	description.update_attacks(colors, power)
-	description.update_name(region)
-	description.attacks_position(region.is_capital)
-	
-	if singleton:
-		region_description = description
-	return description
-
-
-func hide_region_description() -> void:
-	if region_description:
-		region_description.visible = false
 
 
 func next_phase(phase : PHASE) -> PHASE:
@@ -1353,26 +999,6 @@ func end_turn():
 		_new_round()
 
 
-## Makes the current player forfeit, turning their regions neutral.
-func forfeit():
-	convert_alignment(current_playing_align, 0)
-	
-	end_turn()
-
-
-## Gives the current player an extra action.
-func add_action(amount: int = 1):
-	_modify_action_amount(amount)
-
-
-## Captures a region for the current player, regardless of the state the region is in.
-func overtake_region(region_name: String, alignment: int = current_playing_align, _during_ready: bool = false) -> bool:
-	var region : Region = get_region(region_name)
-	if region:
-		return region.overtake(alignment, _during_ready)
-	return false
-
-
 ## Called after a region is pressed.
 func action_done(region_name: String, amount: int = 1):
 	var auto_end_phase: bool = Options.auto_end_turn_phases and is_player_controled and not ReplayControl.replay_active
@@ -1398,6 +1024,348 @@ func action_done(region_name: String, amount: int = 1):
 
 func turn_is_player_turn() -> bool:
 	return align_controlers[current_playing_align - 1] == DPControl.Controler.DEFAULT
+
+
+# ------------ GAME END ------------
+
+func _check_victory():
+	var aliance : int = 0
+	var victory_align : int = 0
+	for i in range(region_amount.size()):
+		if region_amount[i] > 0:
+			if alignment_aliances[i + 1] <= 0:
+				continue
+			elif aliance == 0:
+				victory_align = i + 1
+				aliance = alignment_aliances[i + 1]
+			elif aliance != alignment_aliances[i + 1]:
+				return
+	victory(victory_align)
+
+
+func _check_eliminations():
+	var placement = String.num(current_placement)
+	
+	for i in range(region_amount.size()):
+		if region_amount[i] != last_turn_region_amount[i] and region_amount[i] == 0: 
+			GameStats.set_stat(i + 1, "placement", placement)
+			if game_control and not align_names[i + 1].is_empty():
+				game_control.new_callout(align_names[i + 1] + " got eliminated!")
+			current_placement -= 1
+
+
+## Makes the current player forfeit, turning their regions neutral.
+func forfeit():
+	convert_alignment(current_playing_align, 0)
+	
+	end_turn()
+
+
+## Grants victory to the specified alignment.
+func victory(align_victory: int):
+	dummy = true
+	
+	ReplayControl.last_turn = current_turn
+	GameStats.set_stat(align_victory, "placement", "1")
+	
+	var placement = String.num(current_placement)
+	
+	for i in range(align_amount - 1):
+		var align : int = i + 1
+		if alignment_aliances[align] <= 0:
+			continue
+		if use_aliances:
+			if alignment_aliances[align] == alignment_aliances[align_victory]:
+				GameStats.set_stat(align, "placement", "1")
+				continue
+		if GameStats.get_stat(align, "placement") == "N/A":
+			GameStats.set_stat(align, "placement", placement)
+	
+	if main_character <= 0:
+		GameStats.victorious_alignment = align_names[align_victory]
+		game_control.win(align_victory)
+	elif alignment_aliances[align_victory] == main_character:
+		GameStats.victorious_alignment = "Won"
+		game_control.win(align_victory)
+	else:
+		GameStats.victorious_alignment = "lost"
+		game_control.lose(align_victory)
+	
+	game_ended.emit(align_victory)
+
+
+# ------------ ACTIONS ------------
+
+func _set_action_amount(amount : int) -> bool:
+	if amount < 0:
+		return false
+	match(current_phase):
+		PHASE.NORMAL:
+			first_action_amount = amount
+		PHASE.MOBILIZE, PHASE.BONUS:
+			bonus_action_amount = amount
+	
+	actions_modified.emit(amount)
+	
+	return true
+
+
+func _modify_action_amount(amount : int) -> bool:
+	match(current_phase):
+		PHASE.NORMAL:
+			if first_action_amount + amount < 0:
+				return false
+			first_action_amount += amount
+		PHASE.MOBILIZE, PHASE.BONUS:
+			if bonus_action_amount + amount < 0:
+				return false
+			bonus_action_amount += amount
+	
+	actions_modified.emit(amount)
+	
+	return true
+
+
+## Amount of actions the player has.
+func get_action_amount() -> int:
+	if current_phase in [PHASE.NORMAL]:
+		return first_action_amount
+	elif current_phase in [PHASE.MOBILIZE, PHASE.BONUS]:
+		return bonus_action_amount
+	return 0
+
+
+## Check if the current player has enough actions left.
+func has_enough_actions(needed : int = 1) -> bool:
+	if current_phase == PHASE.NORMAL:
+		return first_action_amount >= needed
+	elif current_phase == PHASE.BONUS:
+		return bonus_action_amount >= needed
+	return true
+
+
+## Gives the current player an extra action.
+func add_action(amount: int = 1):
+	_modify_action_amount(amount)
+
+
+# ------------ PENALTIES ------------
+
+func _calculate_penalty(alignment : int, end_of_turn : bool = false):
+	if apply_penalties == APPLY_PENALTIES.OFF:
+		return
+	if apply_penalties == APPLY_PENALTIES.PREVIOUS_CAPITAL and not end_of_turn:
+		return
+	if power_gain_penalties.size() == 0:
+		return
+	
+	var amount_of_capitals : int = capital_amount[alignment - 1]
+	
+	var penalty : float = 0.0
+	for i in power_gain_penalties.keys():
+		if amount_of_capitals <= i:
+			break
+		penalty += float(amount_of_capitals - i) * power_gain_penalties[i]
+	var penalty_total = int(penalty)
+	
+#	print(penalty_total)
+	
+	penalty_amount[alignment - 1] = penalty_total
+
+
+# ------------ ALIGNMENTS ------------
+
+## Check if two alignments are allied.
+func alignment_friendly(your_align: int, opposing_align: int) -> bool:
+	if your_align < 0 or your_align >= align_amount:
+		return false
+	if opposing_align < 0 or opposing_align >= align_amount:
+		return false
+	return alignment_aliances[your_align] == alignment_aliances[opposing_align]
+
+
+## Check if the alignment does not have a digital player controling it.
+func alignment_inactive(align: int) -> bool:
+	return align <= 0 or align >= align_amount
+
+
+## Check if the alignment has a digital player controling it.
+func alignment_active(align: int) -> bool:
+	return align > 0 and align < align_amount
+
+
+func get_alignment_from_play_order(id: int) -> int:
+	if id >= 0 and id < align_play_order.size():
+		return align_play_order[id]
+	return 0
+
+
+func get_alignment_regions(alignment: int = current_playing_align) -> int:
+	return region_amount[alignment - 1]
+
+
+func get_alignment_capitals(alignment: int = current_playing_align) -> int:
+	return capital_amount[alignment - 1]
+
+
+func get_alignment_penalties(alignment: int = current_playing_align) -> int:
+	return penalty_amount[alignment - 1]
+
+
+## Turns all regions of alignment A into regions of alignment B
+func convert_alignment(alignment_a : int, alignment_b : int):
+	if alignment_a < 0:
+		push_warning("Alignment ", alignment_a, " cannot be converted.")
+		return
+	if alignment_b < 0:
+		push_warning("Alignment ", alignment_b, " cannot be converted to.")
+		return
+	
+	for region in get_children():
+		if region is Region:
+			if region.alignment == alignment_a:
+				region.change_alignment(alignment_b)
+
+
+# ------------ REGIONS ------------
+
+func _record_region_amount_change(amount : int, alignment : int, is_capital : bool):
+	if alignment > 0 and alignment < align_amount and region_amount.size() > 0:
+		region_amount[alignment - 1] += amount
+		if is_capital:
+			capital_amount[alignment - 1] += amount
+			_calculate_penalty(alignment)
+
+
+func _get_region(reg_name : StringName, storage: Dictionary) -> Region:
+	if not storage.has(reg_name):
+		return null
+	var node : Node = storage[reg_name]
+	if node is Region:
+		return node
+	else:
+		return null
+
+
+## Get a region from a name. Returns null if no region is found or found node wasn't a Region.
+func get_region(reg_name: StringName) -> Region:
+	return _get_region(reg_name, regions)
+
+
+## Get a capital from a name. Returns null if no capital is found or found node wasn't a Region.
+func get_capital(reg_name: StringName) -> Region:
+	return _get_region(reg_name, capitals)
+
+
+func _get_all_regions(storage: Dictionary) -> Array[Region]:
+	var all_of_them : Array[Region] = []
+	for region in storage.values():
+		region = region as Region
+		if region:
+			all_of_them.append(region)
+	return all_of_them
+
+
+func get_all_regions() -> Array[Region]:
+	return _get_all_regions(regions)
+
+
+func get_all_capitals() -> Array[Region]:
+	return _get_all_regions(capitals)
+
+
+## Captures a region for the current player, regardless of the state the region is in.
+func overtake_region(region_name: String, alignment: int = current_playing_align, _during_ready: bool = false) -> bool:
+	var region : Region = get_region(region_name)
+	if region:
+		return region.overtake(alignment, _during_ready)
+	return false
+
+
+# ------------ COLORS AND NAMES ------------
+
+func get_neutral_color(neutral: int) -> Color:
+	# Requesting neutral colors
+	if neutral >= 0 and neutral < neutral_colors.size():
+		# Special neutral color
+		return neutral_colors[neutral]
+	# Default neutral color
+	if align_color.size() == 0:
+		return Color.WHITE
+	return align_color[0]
+
+
+func get_alignment_color(alignment: int, neutral: int = -1) -> Color:
+	if align_color.size() == 0 or alignment < 0 or alignment >= align_color.size():
+		return Color.WHITE
+	if alignment == 0:
+		return get_neutral_color(neutral)
+	return align_color[alignment]
+
+
+func get_current_alignment_color() -> Color:
+	return get_alignment_color(current_playing_align)
+
+
+func get_alignment_name(alignment : int) -> String:
+	return align_names[alignment]
+
+
+func get_current_alignment_name() -> String:
+	return get_alignment_name(current_playing_align)
+
+
+# ------------ OTHER ------------
+
+## Spawns the cross particle at the specified position.
+## Used when the player attempts an illegal move.
+func spawn_cross_particle(capital_position : Vector2):
+	var part : Sprite2D = Sprite2D.new()
+	part.set_script(preload("res://scripts/particle_cross.gd"))
+	part.texture = preload("res://sprites/cross.png")
+	part.position = capital_position
+	part.set_color(color)
+	part.z_index = 25
+	add_child(part)
+
+
+func show_region_description(region : Region, singleton : bool = true) -> RegionDescription:
+	if not region:
+		return null
+	var description : RegionDescription = null
+	if singleton and region_description:
+		region_description.visible = true
+		description = region_description
+	else:
+		description = preload("res://objects/region_description.tscn").instantiate() as RegionDescription
+		if not description:
+			push_error("Cannot load RegionDescription")
+			return null
+		add_child(description)
+	
+	var adjanced : Array[int] = region.get_adjacent_attack_power()
+	var colors : Array[Color] = []
+	var power : Array[int] = []
+	for alignment in range(adjanced.size()):
+		if alignment == 0 or adjanced[alignment] == 0:
+			continue
+		colors.append(get_alignment_color(alignment)) 
+		power.append(adjanced[alignment])
+	
+	description.scale = Vector2(city_size, city_size);
+	description.position = region.position
+	description.update_attacks(colors, power)
+	description.update_name(region)
+	description.attacks_position(region.is_capital)
+	
+	if singleton:
+		region_description = description
+	return description
+
+
+func hide_region_description() -> void:
+	if region_description:
+		region_description.visible = false
 
 
 func map_bounds() -> Vector4:
@@ -1428,8 +1396,50 @@ func map_center_offset(bounds: Vector4 = Vector4.ZERO) -> Vector2:
 	return Vector2(bounds.x + bounds.y, bounds.z + bounds.w) * 0.5
 
 
-func update_textures():
-	for node in get_children():
-		var region : Region = node as Region
-		if region:
-			region._on_update_texture()
+# ------------ CACHE ------------
+
+func _load_cache():
+	cache_filename = game_control.map_name + ".json"
+	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.READ)
+	
+	if file:
+		var file_cache = JSON.parse_string(file.get_as_text())
+		if file_cache:
+			cache = file_cache
+		else:
+			push_warning("Could not parse ", cache_filename)
+		
+		file.close()
+	elif print_more_info:
+		print("No cache file name ", cache_filename, " exists")
+
+
+func _save_cache():
+	if cache.is_empty():
+		return
+	
+	var file : FileAccess = FileAccess.open(cache_filename, FileAccess.WRITE)
+	
+	if file:
+		var file_cache : String = JSON.stringify(cache)
+		
+		file.store_pascal_string(file_cache)
+		
+		file.close()
+	else:
+		push_warning("Could not open ", cache_filename)
+
+
+func set_cache(key : String, value : Variant):
+	if cache.has(key) and cache[key] == value:
+		return
+	modified_cache = true
+	cache[key] = value
+	return
+
+
+func get_cache(key : String) -> Variant:
+	if cache.has(key):
+		return cache[key]
+	push_error("Cache does not have ", key)
+	return null

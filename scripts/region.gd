@@ -55,6 +55,63 @@ var capital_id: int = -1
 var _color_change_time: float = 1.0
 
 
+func _on_update_texture():
+	texture = preload("res://sprites/region.png")
+	material = ShaderMaterial.new()
+	material.shader = preload("res://scripts/shader_region.gdshader")
+	_recalculate_polygon()
+
+
+func _recalculate_polygon():
+	if polygon.size() > 0:
+		var far_left : float = polygon[0].x
+		var far_right : float = polygon[0].x
+		var far_up : float = polygon[0].y
+		var far_down : float = polygon[0].y
+		
+		for i in polygon:
+			if i.x < far_left:
+				far_left = i.x
+			if i.x > far_right:
+				far_right = i.x
+			if i.y < far_up:
+				far_up = i.y
+			if i.y > far_down:
+				far_down = i.y
+		
+		var width : float = abs(far_right - far_left)
+		var height : float = abs(far_down - far_up)
+		if width == 0.0:
+			width = 1.0
+		else:
+			width = 1.0 / width
+		if height == 0.0:
+			height = 1.0
+		else:
+			height = 1.0 / height
+		
+		# TODO: instead of UV, set the shaders "scale" parameter
+		var temp_uv : PackedVector2Array = PackedVector2Array()
+		temp_uv.resize(polygon.size())
+		
+		for i in range(temp_uv.size()):
+			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * width
+			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
+#			print(temp_uv[i])
+		
+		set_uv(temp_uv)
+		
+#		print(polygon, " ", uv)
+
+
+func _power_color(amount: int, no_zero: bool):
+	if amount == 0 and no_zero:
+		color = Color("703d5d")
+		return
+	var c : float = 1.0 - clampf(amount, 0, region_control.render_range) / region_control.render_range
+	color = Color(c, c, c, 1)
+
+
 func _ready():
 	if not texture or not material:
 		_on_update_texture()
@@ -99,18 +156,18 @@ func _process(delta):
 			RegionControl.RENDER_MODE.NEUTRAL_COLOR:
 				color = region_control.get_neutral_color(neutral_color)
 			RegionControl.RENDER_MODE.POWER:
-				power_color(power, false)
+				_power_color(power, false)
 			RegionControl.RENDER_MODE.MAX_POWER:
-				power_color(max_power, true)
+				_power_color(max_power, true)
 			RegionControl.RENDER_MODE.CAPITAL:
 				if is_capital:
 					color = Color(0.9, 1, 0.9, 1)
 				else:
 					color = Color(0.3, 0.1, 0.1, 1)
 			RegionControl.RENDER_MODE.POSITION:
-				var pos_range : float = region_control.render_range * 40
-				var col1 : float = 1.0 - clampf(abs(position.x) / pos_range, 0, 1)
-				var col2 : float = 1.0 - clampf(abs(position.y) / pos_range, 0, 1)
+				var pos_range: float = region_control.render_range * 40
+				var col1: float = 1.0 - clampf(abs(position.x) / pos_range, 0, 1)
+				var col2: float = 1.0 - clampf(abs(position.y) / pos_range, 0, 1)
 				color = Color(col1, col2, 0.5, 1)
 	
 	if not Engine.is_editor_hint():
@@ -122,6 +179,8 @@ func _process(delta):
 				material.set_shader_parameter("changing_color", false)
 
 
+# ------------ POWER ------------
+
 func _set_power(value: int, minimum: int = 1) -> bool:
 	if value < minimum or value > max_power:
 		return false
@@ -130,12 +189,15 @@ func _set_power(value: int, minimum: int = 1) -> bool:
 	return true
 
 
-func _city_visible() -> bool:
-	var cities_visible: bool = true
-	if region_control:
-		cities_visible = region_control.cities_visible
-	return not hide_capital and cities_visible 
+## Changes the max power of the region.
+func set_max_power(new_max: int, reduce_power: bool = true):
+	max_power = new_max
+	if reduce_power and power > max_power:
+		_set_power(max_power)
+	city.update_region_name()
 
+
+# ------------ LIMITS ------------
 
 func set_captureable(value: bool) -> void:
 	captureable = value
@@ -149,12 +211,158 @@ func set_mobilizable(value: bool) -> void:
 	mobilizable = value
 
 
+# ------------ INFO ------------
+
+## Checks if the region can be reinforced.
 func is_reinforceable() -> bool:
 	return reinforceable and power < max_power
 
 
+## Checks if the region can be mobilized.
 func is_mobilizable() -> bool:
 	return mobilizable and power > 1
+
+
+## Checks if a region of the attackers alignment is connected to the current region.
+func alignment_can_attack(attack_align: int) -> bool:
+	if not captureable:
+		return false
+	for link in links:
+		var region: Region = link.get_other_region(self)
+		if region and region.alignment == attack_align:
+			return true
+	return false
+
+
+## Gets the regions attack power on the connected region.
+func link_attack_power(link: RegionLink) -> int:
+	var region: Region = link.get_other_region(self)
+	if region:
+		return max(region.power - link.power_reduction, 0)
+	else:
+		return 0
+
+
+## Sums up all possible attacks from all connected regions.
+func get_adjacent_attack_power() -> Array[int]:
+	var attacks: Array[int] = []
+	attacks.resize(region_control.align_amount)
+	
+	for link in links:
+		var target: Region = link.get_other_region(self)
+		if target and region_control.alignment_active(target.alignment):
+			attacks[target.alignment] += link_attack_power(link)
+	
+	return attacks
+
+
+## Returns the highest attack from connected regions.
+func strongest_enemy_attack(align : int = alignment) -> int:
+	var attacks: Array[int] = get_adjacent_attack_power()
+	var strongest: int = 0
+	for i in range(attacks.size()):
+		if region_control.alignment_friendly(align, i):
+			continue
+		if attacks[i] > strongest:
+			strongest = attacks[i]
+	return strongest
+
+
+## Checks if attack power is enough to capture the region.
+func incoming_attack_captures(attack_power: int, force: bool = false) -> bool:
+	return (captureable or force) and attack_power > power
+
+
+## Get the attack power of a specific alignment.
+func get_alignments_attack_power(align: int) -> int:
+	var attack_power: int = 0
+	for link in links:
+		var region: Region = link.get_other_region(self)
+		if region and region.alignment == align:
+			attack_power += link_attack_power(link)
+	return attack_power
+
+
+## The difference between the regions power and an alignments attack
+func attack_power_delta(attack_align: int) -> int:
+	return power - get_alignments_attack_power(attack_align)
+
+
+func worst_power_delta(align: int = alignment) -> int:
+	return power - strongest_enemy_attack(align)
+
+
+func outgoing_power_delta(align: int = alignment) -> int:
+	var closest: int = 0
+	var first_value: bool = true
+	for link in links:
+		var region: Region = link.get_other_region(self)
+		if region:
+			var pow_diff: int = region.attack_power_delta(align)
+			if pow_diff > 0:
+				continue
+			if first_value or pow_diff > closest:
+				closest = pow_diff
+				first_value = false
+	return closest
+
+
+func next_to_enemy() -> bool:
+	for link in links:
+		var region : Region = link.get_other_region(self)
+		if region and not region_control.alignment_friendly(alignment, region.alignment):
+			if region_control.alignment_active(region.alignment):
+				return true
+	return false
+
+
+func next_to_capital() -> bool:
+	for link in links:
+		var region: Region = link.get_other_region(self)
+		if region and region.is_capital:
+			return true
+	return false
+
+
+func next_to_unaligned_capital(align: int = alignment) -> bool:
+	for link in links:
+		var region: Region = link.get_other_region(self)
+		if region and region.is_capital and region.alignment != align:
+			return true
+	return false
+
+
+# ------------ MOVES ------------
+
+## Changes the regions alignment to a new one.
+func change_alignment(align : int, recolor_self : bool = true):
+	region_control._record_region_amount_change(-1, alignment, is_capital)
+	alignment = align
+	if recolor_self:
+		color_self()
+	region_control._record_region_amount_change(1, alignment, is_capital)
+	changed_alignment.emit(alignment)
+
+
+## Attempts to capture the region.
+func incoming_attack(attack_align: int, attack_power: int = 0, test_only: bool = false, force: bool = false) -> bool:
+	if not captureable and not force:
+		return false
+	attack_power += get_alignments_attack_power(attack_align)
+	if incoming_attack_captures(attack_power, force):
+		if test_only:
+			return true
+		GameStats.add_to_stat(attack_align, "enemy units removed", power)
+		GameStats.add_to_stat(alignment, "units lost", power)
+		_set_power(1)
+		change_alignment(attack_align)
+		GameStats.add_to_stat(attack_align, "regions captured", 1)
+		if is_capital:
+			GameStats.add_to_stat(attack_align, "capital regions captured", 1)
+		captured.emit()
+		return true
+	else:
+		return false
 
 
 ## Attempts to reinforce the region.
@@ -179,51 +387,12 @@ func mobilize(mobilize_align: int = alignment, mobilize_amount: int = 1, force: 
 	return mobilize_amount
 
 
-## Attempts to capture the region.
-func incoming_attack(attack_align: int, attack_power: int = 0, test_only: bool = false, force: bool = false) -> bool:
-	if not captureable and not force:
-		return false
-	attack_power += get_alignments_attack_power(attack_align)
-	if incoming_attack_captures(attack_power, force):
-		if test_only:
-			return true
-		GameStats.add_to_stat(attack_align, "enemy units removed", power)
-		GameStats.add_to_stat(alignment, "units lost", power)
-		_set_power(1)
-		change_alignment(attack_align)
-		GameStats.add_to_stat(attack_align, "regions captured", 1)
-		if is_capital:
-			GameStats.add_to_stat(attack_align, "capital regions captured", 1)
-		captured.emit()
-		return true
-	else:
-		return false
-
-
-## Changes the regions alignment to a new one.
-func change_alignment(align : int, recolor_self : bool = true):
-	region_control._record_region_amount_change(-1, alignment, is_capital)
-	alignment = align
-	if recolor_self:
-		color_self()
-	region_control._record_region_amount_change(1, alignment, is_capital)
-	changed_alignment.emit(alignment)
-
-
 ## Captures the region for the overtaker, regardless of the state the region is in.
 func overtake(overtaker: int = region_control.current_playing_align, _during_ready: bool = false) -> bool:
 	city_particle(false)
 	if not _during_ready and region_control.alignment_friendly(overtaker, alignment):
 		return reinforce(overtaker, 1, true)
 	return incoming_attack(overtaker, max_power + 1, false, true)
-
-
-## Changes the max power of the region.
-func set_max_power(new_max: int, reduce_power: bool = true):
-	max_power = new_max
-	if reduce_power and power > max_power:
-		_set_power(max_power)
-	city.update_region_name()
 
 
 func action_decided(amount_requested: int = 1) -> bool:
@@ -252,114 +421,24 @@ func action_decided(amount_requested: int = 1) -> bool:
 	return false
 
 
-## Checks if a region of the attackers alignment is connected to the current region.
-func alignment_can_attack(attack_align : int) -> bool:
-	if not captureable:
-		return false
-	for link in links:
-		var region : Region = link.get_other_region(self)
-		if region and region.alignment == attack_align:
-			return true
-	return false
+# ------------ CITY ------------
+
+func _city_visible() -> bool:
+	var cities_visible: bool = true
+	if region_control:
+		cities_visible = region_control.cities_visible
+	return not hide_capital and cities_visible
 
 
-## Gets the regions attack power on the connected region.
-func link_attack_power(link : RegionLink) -> int:
-	var region : Region = link.get_other_region(self)
-	if region:
-		return max(region.power - link.power_reduction, 0)
-	else:
-		return 0
+## Makes a particle on the city.
+func city_particle(is_mobilized : bool):
+	if region_control and not region_control.spawn_particles:
+		return
+	if city:
+		city.call_deferred("make_particle", is_mobilized)
 
 
-## Sums up all possible attacks from all connected regions.
-func get_adjacent_attack_power() -> Array[int]:
-	var attacks : Array[int] = []
-	attacks.resize(region_control.align_amount)
-	
-	for link in links:
-		var target : Region = link.get_other_region(self)
-		if target and region_control.alignment_active(target.alignment):
-			attacks[target.alignment] += link_attack_power(link)
-	
-	return attacks
-
-
-## Returns the highest attack from connected regions.
-func strongest_enemy_attack(align : int = alignment) -> int:
-	var attacks : Array[int] = get_adjacent_attack_power()
-	var strongest : int = 0
-	for i in range(attacks.size()):
-		if region_control.alignment_friendly(align, i):
-			continue
-		if attacks[i] > strongest:
-			strongest = attacks[i]
-	return strongest
-
-
-## Checks if attack power is enough to capture the region.
-func incoming_attack_captures(attack_power: int, force: bool = false) -> bool:
-	return (captureable or force) and attack_power > power
-
-
-## Get the attack power of a specific alignment.
-func get_alignments_attack_power(align : int) -> int:
-	var attack_power : int = 0
-	for link in links:
-		var region : Region = link.get_other_region(self)
-		if region and region.alignment == align:
-			attack_power += link_attack_power(link)
-	return attack_power
-
-
-## The difference between the regions power and an alignments attack
-func attack_power_delta(attack_align : int) -> int:
-	return power - get_alignments_attack_power(attack_align)
-
-
-func worst_power_delta(align : int = alignment) -> int:
-	return power - strongest_enemy_attack(align)
-
-
-func outgoing_power_delta(align : int = alignment) -> int:
-	var closest : int = 0
-	var first_value : bool = true
-	for link in links:
-		var region : Region = link.get_other_region(self)
-		if region:
-			var pow_diff: int = region.attack_power_delta(align)
-			if pow_diff > 0:
-				continue
-			if first_value or pow_diff > closest:
-				closest = pow_diff
-				first_value = false
-	return closest
-
-
-func next_to_capital() -> bool:
-	for link in links:
-		var region : Region = link.get_other_region(self)
-		if region and region.is_capital:
-			return true
-	return false
-
-
-func next_to_unaligned_capital(align : int = alignment) -> bool:
-	for link in links:
-		var region : Region = link.get_other_region(self)
-		if region and region.is_capital and region.alignment != align:
-			return true
-	return false
-
-
-func next_to_enemy() -> bool:
-	for link in links:
-		var region : Region = link.get_other_region(self)
-		if region and not region_control.alignment_friendly(alignment, region.alignment):
-			if region_control.alignment_active(region.alignment):
-				return true
-	return false
-
+# ------------ VISUAL ------------
 
 ## Recolors the region.
 func color_self(animate: bool = true, backup_color: Color = color):
@@ -376,14 +455,6 @@ func color_self(animate: bool = true, backup_color: Color = color):
 		city.color_self(color)
 	for link in links:
 		link.update_gradient()
-
-
-## Makes a particle on the city.
-func city_particle(is_mobilized : bool):
-	if region_control and not region_control.spawn_particles:
-		return
-	if city:
-		city.call_deferred("make_particle", is_mobilized)
 
 
 ## Shows the regions links.
@@ -440,6 +511,8 @@ func show_player_info():
 		region_control.game_camera.show_player_info(alignment)
 
 
+# ------------ SIGNAL CALLBACKS ------------
+
 func _on_capital_pressed():
 	if not RegionControl.active(region_control):
 		return
@@ -457,60 +530,3 @@ func _on_mouse_entered():
 
 func _on_mouse_exited():
 	GameControl.set_cursor(GameControl.CURSOR.NORMAL)
-
-
-func power_color(amount : int, no_zero : bool):
-	if amount == 0 and no_zero:
-		color = Color("703d5d")
-		return
-	var c : float = 1.0 - clampf(amount, 0, region_control.render_range) / region_control.render_range
-	color = Color(c, c, c, 1)
-
-
-func _on_update_texture():
-	texture = preload("res://sprites/region.png")
-	material = ShaderMaterial.new()
-	material.shader = preload("res://scripts/shader_region.gdshader")
-	_recalculate_polygon()
-
-
-func _recalculate_polygon():
-	if polygon.size() > 0:
-		var far_left : float = polygon[0].x
-		var far_right : float = polygon[0].x
-		var far_up : float = polygon[0].y
-		var far_down : float = polygon[0].y
-		
-		for i in polygon:
-			if i.x < far_left:
-				far_left = i.x
-			if i.x > far_right:
-				far_right = i.x
-			if i.y < far_up:
-				far_up = i.y
-			if i.y > far_down:
-				far_down = i.y
-		
-		var width : float = abs(far_right - far_left)
-		var height : float = abs(far_down - far_up)
-		if width == 0.0:
-			width = 1.0
-		else:
-			width = 1.0 / width
-		if height == 0.0:
-			height = 1.0
-		else:
-			height = 1.0 / height
-		
-		# TODO: instead of UV, set the shaders "scale" parameter
-		var temp_uv : PackedVector2Array = PackedVector2Array()
-		temp_uv.resize(polygon.size())
-		
-		for i in range(temp_uv.size()):
-			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * width
-			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
-#			print(temp_uv[i])
-		
-		set_uv(temp_uv)
-		
-#		print(polygon, " ", uv)

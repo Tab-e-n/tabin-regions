@@ -65,6 +65,8 @@ func get_next_move():
 		return NOTHING_MOVE
 
 
+# ------------ SAVE AND LOAD ------------
+
 func save_replay(replay_name: String):
 	var replay_save : Dictionary = {
 		"game_version" : Options.VERSION,

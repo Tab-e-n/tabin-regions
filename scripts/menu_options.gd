@@ -8,7 +8,9 @@ func _ready():
 	$visual/particles.set_pressed_no_signal(Options.action_change_particles)
 	$gameplay/graph.set_pressed_no_signal(Options.use_graph)
 	$debug/capital_dist.set_pressed_no_signal(Options.capital_distance_visible)
+	$debug/timestamps.set_pressed_no_signal(Options.timestamps_active)
 	$gameplay/dp_speed.set_value_no_signal(1.0 - (Options.dp_think_timer - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN))
+	$debug.visible = Options.debug_options or Options.editor
 	init_default_dp()
 
 
@@ -47,6 +49,10 @@ func set_capital_distance_visible(value: bool):
 
 func set_template(value: bool):
 	Options.use_graph = value
+
+
+func set_timestamps_active(value: bool):
+	Options.timestamps_active = value
 
 
 func init_default_dp():

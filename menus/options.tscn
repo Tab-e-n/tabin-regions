@@ -228,7 +228,22 @@ theme_override_styles/disabled = ExtResource("3_qatca")
 theme_override_styles/hover = ExtResource("3_qatca")
 theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
-text = "Show distance from capital"
+text = "Show distances from capital"
+
+[node name="timestamps" type="CheckButton" parent="debug"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 64.0
+offset_right = 328.0
+offset_bottom = 96.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Console timestamps"
 
 [connection signal="item_selected" from="gameplay/default_dp" to="." method="_on_default_dp_item_selected"]
 [connection signal="value_changed" from="gameplay/dp_speed" to="." method="set_dp_think_timer"]
@@ -238,3 +253,4 @@ text = "Show distance from capital"
 [connection signal="toggled" from="visual/particles" to="." method="set_action_change_particles"]
 [connection signal="toggled" from="legacy/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="debug/capital_dist" to="." method="set_capital_distance_visible"]
+[connection signal="toggled" from="debug/timestamps" to="." method="set_timestamps_active"]

@@ -5,8 +5,6 @@ const VERSION: String = "v2.0.0"
 const REPLAY_COMPATIBLE_VERSIONS: Array[String] = [VERSION]
 
 const SAVEFILE: String = "user://OPTIONS.json"
-
-const TIMESTAMPS_ACTIVE: bool = false
 # 0 Will let through anything
 const TIMESTAMP_THRESHOLD: float = 0.001
 
@@ -16,6 +14,8 @@ const BUILTIN_PACKS: Array = [
 ]
 
 
+var editor: bool = OS.has_feature("editor")
+
 var default_dp: DPControl.Controler = DPControl.Controler.SIMPLETON
 var dp_speedrun: bool = false
 var dp_think_timer: float = DPControl.THINKING_TIMER_DEFAULT
@@ -24,15 +24,16 @@ var auto_end_turn_phases: bool = false
 var use_graph: bool = true
 
 var action_change_particles: bool = true
+
+var debug_options: bool = false
 var capital_distance_visible: bool = false
+var timestamps_active: bool = false
 
 var last_tab: String = "maps"
 var last_pack: String = "res://maps"
 var accepted_directory_danger: bool = false
 var allowed_directories: Array = []
 
-
-var editor: bool = OS.has_feature("editor")
 
 var current_timestamp: int = 0
 var timestamp_sums: Dictionary = {}
@@ -54,6 +55,8 @@ func should_limit_flashing() -> bool:
 	return dp_speedrun or dp_think_timer <= 0.35
 
 
+# ------------ SAVE AND LOAD ------------
+
 func save_options():
 	var options : Dictionary = {
 		"default_dp" : default_dp,
@@ -64,7 +67,10 @@ func save_options():
 		"use_graph" : use_graph,
 		
 		"action_change_particles" : action_change_particles,
+		
+		"debug_options" : debug_options,
 		"capital_distance_visible" : capital_distance_visible,
+		"timestamps_active" : timestamps_active,
 		
 		"last_tab" : last_tab,
 		"last_pack" : last_pack,
@@ -97,6 +103,8 @@ func load_options():
 		return false
 
 
+# ------------ ALLOWED DIRECTORIES ------------
+
 func allow_directory(dir: String):
 	allowed_directories.append(dir)
 	allowed_directories.sort()
@@ -112,6 +120,8 @@ func disallow_directory(dir: String):
 	disallow_directory_index(allowed_directories.find(dir))
 
 
+# ------------ TIMESTAMPS ------------
+
 func _print_timestamp(timestamp_name: String, duration: float) -> void:
 	print(timestamp_name, " : ", duration)
 
@@ -121,7 +131,7 @@ func _timestamp_duration(stamp: int, current: int) -> float:
 
 
 func timestamp(timestamp_name: String = "Timestamp", group: String = "Other") -> void:
-	if not TIMESTAMPS_ACTIVE or not editor:
+	if not timestamps_active or not editor:
 		return
 	var new: int = Time.get_ticks_usec()
 	var duration: float = _timestamp_duration(current_timestamp, new)
@@ -134,7 +144,7 @@ func timestamp(timestamp_name: String = "Timestamp", group: String = "Other") ->
 
 
 func discard_timestamp_sums():
-	if not TIMESTAMPS_ACTIVE or not editor:
+	if not timestamps_active or not editor:
 		return
 	print("SUMMARY OF CURRENT SECTION")
 	var keys: Array = timestamp_sums.keys()
