@@ -191,6 +191,7 @@ func _on_replay_pressed():
 
 
 func leave():
+	GameStats.clear_statistics()
 	Options.discard_timestamp_sums()
 	Options.timestamp("EXIT STATS", "")
 	get_tree().change_scene_to_file("res://menu.tscn")

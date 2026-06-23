@@ -23,10 +23,10 @@ config/windows_native_icon="res://icon.ico"
 
 [autoload]
 
-MapSetup="*res://scripts/map_setup_data.gd"
-GameStats="*res://scripts/game_stats.gd"
-ReplayControl="*res://scripts/replay_control.gd"
-Options="*res://scripts/options.gd"
+MapSetup="*res://scripts/auto_map_setup.gd"
+GameStats="*res://scripts/auto_game_stats.gd"
+ReplayControl="*res://scripts/auto_replay_control.gd"
+Options="*res://scripts/auto_options.gd"
 
 [display]
 

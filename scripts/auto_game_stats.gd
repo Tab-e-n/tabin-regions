@@ -40,10 +40,14 @@ var graph_statistics: Dictionary
 var graph: Array = []
 
 
-func reset_statistics(align_amount):
+func clear_statistics() -> void:
 	stats.clear()
-	stats.resize(align_amount)
 	graph.clear()
+
+
+func reset_statistics(align_amount) -> void:
+	clear_statistics()
+	stats.resize(align_amount)
 	graph.resize(align_amount)
 	for i in range(align_amount):
 		stats[i] = DEFAULT_STATS.duplicate()
@@ -52,7 +56,7 @@ func reset_statistics(align_amount):
 	victorious_alignment = ""
 
 
-func stat_exists(align : int, key : String) -> bool:
+func stat_exists(align: int, key: String) -> bool:
 	if align < 0 or align >= stats.size():
 		return false
 	if not stats[align].has(key):
@@ -100,7 +104,7 @@ func stat_keys() -> PackedStringArray:
 	return DEFAULT_STATS.keys()
 
 
-func stats_as_strings(align : int) -> PackedStringArray:
+func stats_as_strings(align: int) -> PackedStringArray:
 	var str_stats: PackedStringArray = []
 	for i in stat_keys():
 		str_stats.append(format_stat_for_csv(i, stats[align][i]))
@@ -149,12 +153,12 @@ func save_as_csv(file_name: String):
 	file.close()
 
 
-func create_graph_stat(stat : String, stat_max : int) -> void:
+func create_graph_stat(stat: String, stat_max: int) -> void:
 	graph_statistics[stat] = stat_max
 	create_stat(stat, 0)
 
 
-func set_graph_max(stat : String, stat_max : int) -> void:
+func set_graph_max(stat: String, stat_max: int) -> void:
 	graph_statistics[stat] = stat_max
 
 

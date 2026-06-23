@@ -478,9 +478,9 @@ func _ready():
 	if dummy:
 		return
 	
-	if Options.editor:
-		_check_duplicate_connections()
-		Options.timestamp("_check_duplicate_connections", "RegionControl")
+#	if Options.editor:
+#		_check_duplicate_connections()
+#		Options.timestamp("_check_duplicate_connections", "RegionControl")
 #		check_capital_distance()
 	
 	# -- SETUP --
