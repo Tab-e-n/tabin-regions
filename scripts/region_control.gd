@@ -4,14 +4,14 @@ extends Polygon2D
 class_name RegionControl
 
 
-signal center_camera_to_position(center : Vector2)
+signal center_camera_to_position(center: Vector2)
 ## Emitted once after RegionControl makes all RegionLinks defined through region_connections,
 ## before the capital distance is calculated.
 signal region_connections_ready
 
 signal used_alignments_chosen(play_order: Array)
 
-signal actions_modified(amount : int)
+signal actions_modified(amount: int)
 ## Emitted when a players turn ends.
 signal turn_ended
 ## Emitted when a player changes the turns phase. First argument is the turn phase which just started.
@@ -19,7 +19,9 @@ signal turn_phase_changed(phase : PHASE)
 ## Emitted when all alignments played their turn.
 signal round_ended
 ## Emitted after the an alignment ends their turn and no unfriendly alignments towards them are left.
-signal game_ended(winner : int)
+signal game_ended(winner: int)
+
+signal grab_extra_power_signaled(alignment: int)
 
 
 enum PHASE {
@@ -353,6 +355,7 @@ var region_description : RegionDescription = null
 var volcanos: Array[Volcano] = []
 var tornados: Array[ParticleTornado] = []
 
+var frame_actions_modified_amount: int = 0
 
 static func active(region_control : RegionControl) -> bool:
 	return region_control and not region_control.dummy
@@ -879,11 +882,18 @@ func _exit_tree():
 		_save_cache()
 
 
+func _process(_delta):
+	if frame_actions_modified_amount != 0:
+#		print(frame_actions_modified_amount)
+		actions_modified.emit(frame_actions_modified_amount)
+		frame_actions_modified_amount = 0
+
+
 # ------------ TURNS ------------
 
 func _start_turn():
-	var reg_amount : int = GameStats.get_stat(current_playing_align, "most regions owned", 0)
-	var cap_amount : int = GameStats.get_stat(current_playing_align, "most capitals owned", 0)
+	var reg_amount: int = GameStats.get_stat(current_playing_align, "most regions owned", 0)
+	var cap_amount: int = GameStats.get_stat(current_playing_align, "most capitals owned", 0)
 	if get_alignment_regions() > reg_amount:
 		GameStats.set_stat(current_playing_align, "most regions owned", get_alignment_regions())
 	if get_alignment_capitals() > cap_amount:
@@ -1096,21 +1106,29 @@ func victory(align_victory: int):
 
 # ------------ ACTIONS ------------
 
-func _set_action_amount(amount : int) -> bool:
+func _set_action_amount(amount: int) -> bool:
+#	print("set ", amount)
 	if amount < 0:
 		return false
+	
+	var modification: int = 0
 	match(current_phase):
 		PHASE.NORMAL:
+			modification = first_action_amount
 			first_action_amount = amount
+			modification = first_action_amount - modification
 		PHASE.MOBILIZE, PHASE.BONUS:
+			modification = bonus_action_amount
 			bonus_action_amount = amount
+			modification = bonus_action_amount - modification
 	
-	actions_modified.emit(amount)
+	frame_actions_modified_amount += modification
 	
 	return true
 
 
-func _modify_action_amount(amount : int) -> bool:
+func _modify_action_amount(amount: int) -> bool:
+#	print("mod ", amount)
 	match(current_phase):
 		PHASE.NORMAL:
 			if first_action_amount + amount < 0:
@@ -1121,7 +1139,11 @@ func _modify_action_amount(amount : int) -> bool:
 				return false
 			bonus_action_amount += amount
 	
-	actions_modified.emit(amount)
+	if amount == 0:
+		actions_modified.emit(frame_actions_modified_amount)
+		frame_actions_modified_amount = 0
+	else:
+		frame_actions_modified_amount += amount
 	
 	return true
 
@@ -1280,6 +1302,10 @@ func overtake_region(region_name: String, alignment: int = current_playing_align
 	if region:
 		return region.overtake(alignment, _during_ready)
 	return false
+
+
+func grab_extra_power() -> void:
+	grab_extra_power_signaled.emit(current_playing_align)
 
 
 # ------------ COLORS AND NAMES ------------

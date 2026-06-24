@@ -141,6 +141,7 @@ func _ready_deferred():
 		city.mouse_entered.connect(_on_mouse_entered)
 		city.mouse_exited.connect(_on_mouse_exited)
 		region_control.turn_ended.connect(city._on_end_turn)
+		region_control.grab_extra_power_signaled.connect(_on_grab_extra_power)
 		if region_control.game_control:
 			region_control.game_control.show_extra_current.connect(city._on_show_extra_current)
 			region_control.game_control.show_extra_other.connect(city._on_show_extra_other)
@@ -526,6 +527,16 @@ func _on_capital_pressed():
 	elif region_control.is_player_controled:
 		action_decided()
 	update_cursor()
+
+
+func _on_grab_extra_power(player_alignment: int) -> void:
+	if not RegionControl.active(region_control):
+		return
+	if region_control.current_phase == RegionControl.PHASE.MOBILIZE and alignment == player_alignment and is_mobilizable():
+		var amount: int = mobilize(player_alignment, power - 1)
+		if amount > 0:
+			region_control._modify_action_amount(amount)
+			city_particle(true)
 
 
 func _on_mouse_entered():

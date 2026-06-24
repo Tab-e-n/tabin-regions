@@ -12,6 +12,7 @@ enum RecordType {
 	START,
 	MOD_POWER,
 	MOD_MAX_POWER,
+	ALL_EXCESS,
 }
 
 

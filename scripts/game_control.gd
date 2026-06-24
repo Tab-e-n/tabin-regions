@@ -2,8 +2,9 @@ extends Node2D
 class_name GameControl
 
 
-signal show_extra_current(alignment : int)
-signal show_extra_other(alignment : int)
+signal show_extra_current(alignment: int)
+signal show_extra_other(alignment: int)
+signal grab_extra_current(alignment: int)
 
 
 ## Possible cursor graphics that set_cursor can use.
@@ -241,7 +242,9 @@ func _process(delta : float):
 					dp_control.next_phase()
 					new_callout("Advance turn")
 			
-			if Input.is_action_just_pressed("show_extra"):
+			if Input.is_action_just_pressed("grab_extra"):
+				region_control.grab_extra_power()
+			elif Input.is_action_just_pressed("show_extra"):
 				if Input.is_action_pressed("shift"):
 					show_extra_other.emit(region_control.current_playing_align)
 				else:

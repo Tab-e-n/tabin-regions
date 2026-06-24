@@ -31,15 +31,19 @@ enum PRIORITY {
 }
 
 
-@export var cheater : bool = false
-var cheat_turn : bool = false
-var cheat_amount : int = 0
-var cheat_amount_max : int = 1
+@export var cheater: bool = false
+
+var grabbing_extra_power: bool = true
+
+var cheat_turn: bool = false
+var cheat_amount: int = 0
+var cheat_amount_max: int = 1
 
 
 func start_turn(align : int):
 	super.start_turn(align)
 	cheat_amount = 0
+	grabbing_extra_power = true
 	if controler.region_control:
 		if cheater:
 			cheat_turn = controler.region_control.current_turn % 6 == 0
@@ -298,23 +302,9 @@ func think_normal(bonus: bool = false):
 
 
 func think_mobilize():
-#	var regions: Set = Set.new()
-	
-	var friendly_regions: Array = controler.get_owned_regions()
-	var chosen_region: Region = null
-	
-	for region in friendly_regions:
-		if region.is_mobilizable():
-			chosen_region = region
-			break
-#			regions.add(region)
-	
-#	var choice: String = choose_regions(calculate_benefit_mobilize, tiebreak_mobilize, regions.values())
-	
-#	if choice.is_empty():
-	if chosen_region:
-		controler.selected_capital = chosen_region.name
-		controler.selected_amount = chosen_region.power - 1
+	if grabbing_extra_power:
+		grabbing_extra_power = false
+		controler.selected_action = DPControl.PlayerAction.GRAB_EXTRA_POWER
 	else:
 		if controler.get_bonus_action_amount() == 0:
 			controler.selected_action = DPControl.PlayerAction.END_TURN
@@ -324,6 +314,33 @@ func think_mobilize():
 				cheat_amount += 1
 			else:
 				controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
+	
+#	var regions: Set = Set.new()
+	
+#	var friendly_regions: Array = controler.get_owned_regions()
+#	var chosen_region: Region = null
+#
+#	for region in friendly_regions:
+#		if region.is_mobilizable():
+#			chosen_region = region
+#			break
+#			regions.add(region)
+	
+#	var choice: String = choose_regions(calculate_benefit_mobilize, tiebreak_mobilize, regions.values())
+	
+#	if choice.is_empty():
+#	if chosen_region:
+#		controler.selected_capital = chosen_region.name
+#		controler.selected_amount = chosen_region.power - 1
+#	else:
+#		if controler.get_bonus_action_amount() == 0:
+#			controler.selected_action = DPControl.PlayerAction.END_TURN
+#		else:
+#			if cheat_amount < cheat_amount_max and cheat_turn:
+#				controler.selected_action = DPControl.PlayerAction.ADD_ACTION
+#				cheat_amount += 1
+#			else:
+#				controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
 
 
 func think_bonus():

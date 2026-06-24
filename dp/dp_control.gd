@@ -24,7 +24,8 @@ enum PlayerAction {
 	END_TURN,
 	FORFEIT,
 	MOD_POWER,
-	MOD_MAX_POWER
+	MOD_MAX_POWER,
+	GRAB_EXTRA_POWER,
 }
 
 const THINKING_TIMER_MAX: float = 0.75
@@ -228,6 +229,8 @@ func replay():
 				selected_action = PlayerAction.NOTHING
 			"add_action":
 				selected_action = PlayerAction.ADD_ACTION
+			"grab_extra_power":
+				selected_action = PlayerAction.GRAB_EXTRA_POWER
 	
 	elif type == ReplayControl.RecordType.VOLCANO:
 		selected_action = PlayerAction.NOTHING
@@ -292,6 +295,9 @@ func perform_selection() -> bool:
 		
 		PlayerAction.MOD_MAX_POWER:
 			modify_max_power(selected_capital, selected_amount)
+		
+		PlayerAction.GRAB_EXTRA_POWER:
+			grab_extra_power()
 	
 	return true
 
@@ -324,14 +330,14 @@ func select_overtake_as_alignment(region_name: String, alignment: int):
 
 # ------------ PLAYER MOVES ------------
 
-func action_decided_region(region: Region, amount: int):
+func action_decided_region(region: Region, amount: int) -> void:
 	if region:
 		region.action_decided(amount)
 		if not ReplayControl.replay_active:
 			note_region_selection(region.name, current_align())
 
 
-func action_decided(region_name: String, amount: int):
+func action_decided(region_name: String, amount: int) -> void:
 	var region = region_control.get_region(region_name)
 	action_decided_region(region, amount)
 
@@ -345,17 +351,17 @@ func overtake(region_name: String) -> bool:
 	return false
 
 
-func add_actions(amount: int):
+func add_actions(amount: int) -> void:
 	region_control.add_action(amount)
 	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "add_action", amount)
 
 
-func forfeit():
+func forfeit() -> void:
 	region_control.forfeit()
 	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "forfeit")
 
 
-func end_turn():
+func end_turn() -> void:
 	region_control.end_turn()
 	ReplayControl.record_move.call_deferred(ReplayControl.RecordType.FUNCTION, "end_turn")
 
@@ -364,6 +370,11 @@ func next_phase() -> bool:
 	region_control.change_current_phase()
 	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "change_current_phase")
 	return region_control.current_phase != RegionControl.PHASE.NORMAL
+
+
+func grab_extra_power() -> void:
+	region_control.grab_extra_power()
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "grab_extra_power")
 
 
 # -- PLAYER INDEPENDENT MOVES --
