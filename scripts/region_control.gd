@@ -85,6 +85,16 @@ enum SETUP_COMPLEXITY {
 	## (R.)
 	ROCKET_SCIENCE,
 }
+enum Checkmarks {
+	DISABLED=0,
+	WON=0b1,
+	ALIGNMENT=0b10,
+	WON_PLUS_ALIGNMENT=0b11,
+	MULTIPLAYER_WON=0b101,
+	MULTIPLAYER_ALIGNMENT=0b110,
+	MULTIPLAYER_WON_PLUS_ALIGNMENT=0b111,
+	MULTIPLAYER=0b100,
+}
 enum CAPITAL_SNAP {
 	DISABLED,
 	POWER,
@@ -132,6 +142,7 @@ const COLOR_TOO_BRIGHT: float = 0.85
 ## Prevents users from changing the digital players. Set this to true if you need a specific DP active.
 @export var lock_dp_setup: bool = false
 
+@export var checkmarks: Checkmarks = Checkmarks.WON
 
 @export_subgroup("Gameplay")
 ## Specifies the behaviour of power_gain_penalties.
@@ -598,7 +609,7 @@ func _ready():
 		if align == 0:
 			GameStats.set_stat(align, "controler", DPControl.Controler.DUMMY)
 		else:
-			GameStats.set_stat(align, "controler", align_controlers[align - 1])
+			GameStats.set_stat(align, "controler", get_align_controler(align))
 		GameStats.set_stat(align, "alignment name", align_names[align])
 	
 	for align in removed_alignments:
@@ -923,7 +934,7 @@ func _start_turn():
 		is_player_controled = turn_is_player_turn()
 	
 	if not is_player_controled and dp_control:
-		dp_control.start_turn(current_playing_align, align_controlers[current_playing_align - 1])
+		dp_control.start_turn(current_playing_align, get_align_controler(current_playing_align))
 
 
 func _new_round(_in_ready : bool = false):
@@ -1033,7 +1044,7 @@ func action_done(region_name: String, amount: int = 1):
 
 
 func turn_is_player_turn() -> bool:
-	return align_controlers[current_playing_align - 1] == DPControl.Controler.DEFAULT
+	return get_align_controler(current_playing_align) == DPControl.Controler.DEFAULT
 
 
 # ------------ GAME END ------------
@@ -1093,15 +1104,54 @@ func victory(align_victory: int):
 	
 	if main_character <= 0:
 		GameStats.victorious_alignment = align_names[align_victory]
+		grant_checkmarks(align_victory)
+		MapSetup.save_checkmarks()
 		game_control.win(align_victory)
 	elif alignment_aliances[align_victory] == main_character:
 		GameStats.victorious_alignment = "Won"
+		grant_checkmarks(align_victory)
+		MapSetup.save_checkmarks()
 		game_control.win(align_victory)
 	else:
-		GameStats.victorious_alignment = "lost"
+		GameStats.victorious_alignment = "Lost"
 		game_control.lose(align_victory)
 	
 	game_ended.emit(align_victory)
+
+
+func player_won(align_victory: int) -> bool:
+	if player_amount <= 0:
+		return false
+	if checkmarks & Checkmarks.MULTIPLAYER == 0 and player_amount > 1:
+		return false
+	for align in align_play_order:
+		if get_align_controler(align) == DPControl.Controler.DEFAULT and alignment_aliances[align] == alignment_aliances[align_victory]:
+			return true
+	return false
+
+
+func grant_checkmarks(align_victory: int) -> void:
+	if ReplayControl.replay_active:
+		return
+	if not player_won(align_victory):
+		return
+	var new_dp: DPControl.Controler = default_digital_player
+	if lock_dp_setup:
+		new_dp = DPControl.Controler.DEFAULT
+	if checkmarks & Checkmarks.WON != 0:
+		var dp: DPControl.Controler = MapSetup.checkmark_get(MapSetup.current_map_name, MapSetup.check_general())
+		if MapSetup.harder_dp(dp, new_dp):
+			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_general(), new_dp)
+			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_general(), new_dp)
+	if checkmarks & Checkmarks.ALIGNMENT == 0:
+		return
+	for align in align_play_order:
+		if get_align_controler(align) != DPControl.Controler.DEFAULT:
+			continue
+		var dp: DPControl.Controler = MapSetup.checkmark_get(MapSetup.current_map_name, MapSetup.check_alignment(align))
+		if MapSetup.harder_dp(dp, new_dp):
+			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
+			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
 
 
 # ------------ ACTIONS ------------
@@ -1342,6 +1392,12 @@ func get_current_alignment_name() -> String:
 
 
 # ------------ OTHER ------------
+
+func get_align_controler(alignment: int) -> DPControl.Controler:
+	alignment -= 1
+	if alignment < 0 or alignment >= align_controlers.size():
+		return DPControl.Controler.DUMMY
+	return align_controlers[alignment]
 
 ## Spawns the cross particle at the specified position.
 ## Used when the player attempts an illegal move.

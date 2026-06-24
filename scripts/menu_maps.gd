@@ -1,6 +1,17 @@
 extends MenuScene
 
 
+const CHECKMARK_TEXTURES: Dictionary = {
+	DPControl.Controler.DEFAULT : preload("res://sprites/checkmark_default.png"),
+	DPControl.Controler.SIMPLETON : preload("res://sprites/checkmark_simpleton.png"),
+	DPControl.Controler.TURTLE : preload("res://sprites/checkmark_turtle.png"),
+	DPControl.Controler.OVERTHINKER : preload("res://sprites/checkmark_overthinker.png"),
+	DPControl.Controler.CHEATER : preload("res://sprites/checkmark_cheater.png"),
+	DPControl.Controler.DUMMY : preload("res://sprites/checkmark_extra.png"),
+	DPControl.Controler.BOOKWYRM : preload("res://sprites/checkmark_bookwyrm.png"),
+}
+
+
 var current_map: RegionControl = null
 var map_filenames: PackedStringArray = []
 
@@ -28,6 +39,8 @@ var map_filenames: PackedStringArray = []
 @onready var dp_button_cheater: BaseButton = $presets/clip/container/dp/buttons/cheater
 
 @onready var directory_name_label: Label = $directory/name as Label
+
+@onready var checkmarks: Container = $checkmarks as Container
 
 
 func _ready() -> void:
@@ -151,9 +164,12 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 	if not map_name.is_empty():
 		current_map = MapSetup.load_map(map_name)
 	
+	clear_checkmarks()
+	
 	if current_map:
 		MapSetup.current_map_name = map_name
 		setup_menu_based_on_map(map_display_name, keep_sliders)
+		setup_checkmarks()
 	else:
 		setup_menu_backup()
 
@@ -281,6 +297,52 @@ func change_dp_by_name(dp_name: String) -> void:
 		"Cheater":
 			MapSetup.default_digital_player = DPControl.Controler.CHEATER
 	update_dp_selection(MapSetup.default_digital_player)
+
+
+func clear_checkmarks() -> void:
+	for check in checkmarks.get_children():
+		checkmarks.remove_child(check)
+		check.queue_free()
+
+
+func setup_checkmarks() -> void:
+	var map_data: Dictionary = MapSetup.get_map_checkmarks(MapSetup.current_map_name)
+	if map_data.is_empty():
+		return
+	var checks: Array = map_data.keys()
+	checks.sort_custom(func(a, b): return a.naturalnocasecmp_to(b) < 0)
+	for check in checks:
+		var button: TextureButton = TextureButton.new()
+		
+		if check != "won":
+			button.scale = Vector2(0.5, 0.5)
+			if current_map:
+				button.self_modulate = current_map.get_alignment_color(check.to_int())
+		else:
+			button.self_modulate = DPControl.dp_color(map_data[check])
+		
+		button.ignore_texture_size = true
+		button.stretch_mode = TextureButton.STRETCH_KEEP_CENTERED
+		button.texture_normal = CHECKMARK_TEXTURES[map_data[check]]
+		button.size = Vector2(96, 112)
+		
+		button.focus_mode = Control.FOCUS_NONE
+		button.pressed.connect(start_checkmark_replay.bind(check, map_data[check]))
+		
+		checkmarks.add_child(button)
+
+
+func start_checkmark_replay(check: String, dp: DPControl.Controler):
+	if MapSetup.checkmark_load_replay(MapSetup.current_directory, MapSetup.current_map_name, check, dp):
+		Options.discard_timestamp_sums()
+		Options.timestamp("START CHECKMARK REPLAY", "")
+		get_tree().change_scene_to_file("res://main.tscn")
+	else:
+		show_replay_fail_popup()
+
+
+func show_replay_fail_popup():
+	pass
 
 
 func _on_map_selected(item: SelectionListItem) -> void:

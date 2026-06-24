@@ -17,228 +17,266 @@ func _ready():
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wj5le"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_xfrf6"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tkjkb"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_oeqt6"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ujcon"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_38x3m"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c5svd"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cyx65"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_0b6o4"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jg235"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_cbv42"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_mo4sr"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_31553"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_uus4i"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iofv7"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_nv8ud"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8o6ml"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_c42vv"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jbg4l"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_tpvme"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_ih7hi"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_7ucdi"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_f0nny"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_jghou"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5i0h8"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_hp65g"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_kpnqu"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_srxeh"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_5p53o"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_x14o6"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_pnb2d"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_yiiwa"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_gibio"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_wmwwx"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_886bg"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_iguua"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_8q3e8"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_l0suu"]
 shader = ExtResource("3_haoha")
+shader_parameter/scale = Vector2(0.0078125, 0.0078125)
 shader_parameter/changing_color = false
 shader_parameter/n = 0.0
 shader_parameter/previous_color = Color(1, 1, 1, 1)
@@ -247,10 +285,11 @@ shader_parameter/previous_color = Color(1, 1, 1, 1)
 color = Color(0.521569, 0.521569, 0.603922, 1)
 polygon = PackedVector2Array(-3200, -1848, 3200, -1848, 3200, 1848, -3200, 1848)
 script = ExtResource("1_mqgbc")
-lock_align_amount = false
-align_amount = 4
 complexity = 2
 lore = "Is this anything?"
+lock_align_amount = false
+checkmarks = 2
+align_amount = 4
 align_color = Array[Color]([Color(0.384314, 0.341176, 0.458824, 1), Color(0.866667, 0.309804, 0.588235, 1), Color(0.168627, 0.266667, 0.337255, 1), Color(0.843137, 0.792157, 0.752941, 1)])
 align_names = Array[String](["Other", "Australia", "Indonesia", "Antarctic"])
 city_size = 0.75
@@ -630,7 +669,7 @@ position = Vector2(488, 360)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-24, 48, -16, 40, -8, 40, 3, 46, 27, 30, 32, 24, 40, 24, 40, 32, 32, 40, 24, 32, 0, 48, -8, 56, -16, 56)
-uv = PackedVector2Array(0, 96, 16, 64, 32, 64, 54, 88, 102, 24, 112, 0, 128, 0, 128, 32, 112, 64, 96, 32, 48, 96, 32, 128, 16, 128)
+uv = PackedVector2Array(0, 0.1875, 0.0625, 0.125, 0.125, 0.125, 0.210938, 0.171875, 0.398438, 0.046875, 0.4375, 0, 0.5, 0, 0.5, 0.0625, 0.4375, 0.125, 0.375, 0.0625, 0.1875, 0.1875, 0.125, 0.25, 0.0625, 0.25)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -640,7 +679,7 @@ position = Vector2(624, 1032)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-24, 8, -16, -16, 0, 0, 16, -8, 0, 16, -16, 8)
-uv = PackedVector2Array(0, 96, 25.6, 0, 76.8, 64, 128, 32, 76.8, 128, 25.6, 96)
+uv = PackedVector2Array(0, 0.1875, 0.0625, 0, 0.1875, 0.125, 0.3125, 0.0625, 0.1875, 0.25, 0.0625, 0.1875)
 script = ExtResource("5_6qhos")
 power = 0
 max_power = 2
@@ -651,7 +690,7 @@ position = Vector2(2488, 872)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-152, 88, -136, 96, -104, 96, -72, 72, -40, 48, -16, 40, 56, -8, 64, -16, 80, -8, 120, -40, 192, -88, 176, -96, 160, -88, 144, -104, 160, -120, 160, -136, 128, -168, 128, -144, 120, -88, 80, -64, 96, -40, 72, -24, 40, -32, 8, -8, -48, 32, -88, 40, -128, 64, -144, 72)
-uv = PackedVector2Array(0, 124.121, 5.95349, 128, 17.8605, 128, 29.7674, 116.364, 41.6744, 104.727, 50.6047, 100.848, 77.3953, 77.5758, 80.3721, 73.697, 86.3256, 77.5758, 101.209, 62.0606, 128, 38.7879, 122.047, 34.9091, 116.093, 38.7879, 110.14, 31.0303, 116.093, 23.2727, 116.093, 15.5152, 104.186, 0, 104.186, 11.6364, 101.209, 38.7879, 86.3256, 50.4242, 92.2791, 62.0606, 83.3488, 69.8182, 71.4419, 65.9394, 59.5349, 77.5758, 38.6977, 96.9697, 23.814, 100.848, 8.93023, 112.485, 2.97674, 116.364)
+uv = PackedVector2Array(0, 2, 0.125, 2.0625, 0.375, 2.0625, 0.625, 1.875, 0.875, 1.6875, 1.0625, 1.625, 1.625, 1.25, 1.6875, 1.1875, 1.8125, 1.25, 2.125, 1, 2.6875, 0.625, 2.5625, 0.5625, 2.4375, 0.625, 2.3125, 0.5, 2.4375, 0.375, 2.4375, 0.25, 2.1875, 0, 2.1875, 0.1875, 2.125, 0.625, 1.8125, 0.8125, 1.9375, 1, 1.75, 1.125, 1.5, 1.0625, 1.25, 1.25, 0.8125, 1.5625, 0.5, 1.625, 0.1875, 1.8125, 0.0625, 1.875)
 script = ExtResource("5_6qhos")
 max_power = 4
 is_capital = true
@@ -662,7 +701,7 @@ position = Vector2(1704, 488)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(208, -216, 168, 0, 128, 152, 88, 168, 48, 176, 0, 208, -40, 200, -104, 232, -128, 232, -152, 216, -160, 200, -136, 192, -128, 168, -128, 80, -136, 48, -120, 32, -128, 0, -128, -16, -120, -24, -112, -48, -64, -80, -32, -88, 0, -104, 32, -104, 64, -144, 64, -160, 80, -176, 88, -160, 104, -168, 96, -184, 120, -192, 128, -208, 152, -232, 176, -232, 184, -224, 192, -200, 200, -216)
-uv = PackedVector2Array(128, 4.41379, 114.087, 64, 100.174, 105.931, 86.2609, 110.345, 72.3478, 112.552, 55.6522, 121.379, 41.7391, 119.172, 19.4783, 128, 11.1304, 128, 2.78261, 123.586, 0, 119.172, 8.34783, 116.966, 11.1304, 110.345, 11.1304, 86.069, 8.34783, 77.2414, 13.913, 72.8276, 11.1304, 64, 11.1304, 59.5862, 13.913, 57.3793, 16.6957, 50.7586, 33.3913, 41.931, 44.5217, 39.7241, 55.6522, 35.3103, 66.7826, 35.3103, 77.913, 24.2759, 77.913, 19.8621, 83.4783, 15.4483, 86.2609, 19.8621, 91.8261, 17.6552, 89.0435, 13.2414, 97.3913, 11.0345, 100.174, 6.62069, 108.522, 0, 116.87, 0, 119.652, 2.2069, 122.435, 8.82759, 125.217, 4.41379)
+uv = PackedVector2Array(2.875, 0.125, 2.5625, 1.8125, 2.25, 3, 1.9375, 3.125, 1.625, 3.1875, 1.25, 3.4375, 0.9375, 3.375, 0.4375, 3.625, 0.25, 3.625, 0.0625, 3.5, 0, 3.375, 0.1875, 3.3125, 0.25, 3.125, 0.25, 2.4375, 0.1875, 2.1875, 0.3125, 2.0625, 0.25, 1.8125, 0.25, 1.6875, 0.3125, 1.625, 0.375, 1.4375, 0.75, 1.1875, 1, 1.125, 1.25, 1, 1.5, 1, 1.75, 0.6875, 1.75, 0.5625, 1.875, 0.4375, 1.9375, 0.5625, 2.0625, 0.5, 2, 0.375, 2.1875, 0.3125, 2.25, 0.1875, 2.4375, 0, 2.625, 0, 2.6875, 0.0625, 2.75, 0.25, 2.8125, 0.125)
 script = ExtResource("5_6qhos")
 alignment = 1
 max_power = 3
@@ -673,7 +712,7 @@ position = Vector2(1960, 616)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-88, -128, 112, -128, 96, -64, 56, 72, 32, 168, 16, 160, 16, 144, 24, 136, 24, 112, 8, 112, 16, 96, 8, 88, -8, 112, -8, 128, -24, 120, -8, 104, 8, 72, 0, 64, -16, 80, -32, 104, -40, 88, -32, 64, -40, 56, -40, 40, -80, 24, -128, 24)
-uv = PackedVector2Array(21.3333, 0, 128, 0, 119.467, 27.6757, 98.1333, 86.4865, 85.3333, 128, 76.8, 124.541, 76.8, 117.622, 81.0667, 114.162, 81.0667, 103.784, 72.5333, 103.784, 76.8, 96.8649, 72.5333, 93.4054, 64, 103.784, 64, 110.703, 55.4667, 107.243, 64, 100.324, 72.5333, 86.4865, 68.2667, 83.027, 59.7333, 89.9459, 51.2, 100.324, 46.9333, 93.4054, 51.2, 83.027, 46.9333, 79.5676, 46.9333, 72.6487, 25.6, 65.7297, 0, 65.7297)
+uv = PackedVector2Array(0.3125, 0, 1.875, 0, 1.75, 0.5, 1.4375, 1.5625, 1.25, 2.3125, 1.125, 2.25, 1.125, 2.125, 1.1875, 2.0625, 1.1875, 1.875, 1.0625, 1.875, 1.125, 1.75, 1.0625, 1.6875, 0.9375, 1.875, 0.9375, 2, 0.8125, 1.9375, 0.9375, 1.8125, 1.0625, 1.5625, 1, 1.5, 0.875, 1.625, 0.75, 1.8125, 0.6875, 1.6875, 0.75, 1.5, 0.6875, 1.4375, 0.6875, 1.3125, 0.375, 1.1875, 0, 1.1875)
 script = ExtResource("5_6qhos")
 alignment = 1
 max_power = 3
@@ -684,7 +723,7 @@ position = Vector2(1960, 368)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-48, -96, -32, -96, -32, -104, -40, -112, -32, -128, -16, -144, 0, -152, 24, -152, 32, -168, 112, -152, 88, -128, 72, -96, 120, -64, 72, 120, -88, 120)
-uv = PackedVector2Array(24.6154, 32, 34.4615, 32, 34.4615, 28.4444, 29.5385, 24.8889, 34.4615, 17.7778, 44.3077, 10.6667, 54.1538, 7.11111, 68.9231, 7.11111, 73.8462, 0, 123.077, 7.11111, 108.308, 17.7778, 98.4615, 32, 128, 46.2222, 98.4615, 128, 0, 128)
+uv = PackedVector2Array(0.3125, 0.5625, 0.4375, 0.5625, 0.4375, 0.5, 0.375, 0.4375, 0.4375, 0.3125, 0.5625, 0.1875, 0.6875, 0.125, 0.875, 0.125, 0.9375, 0, 1.5625, 0.125, 1.375, 0.3125, 1.25, 0.5625, 1.625, 0.8125, 1.25, 2.25, 0, 2.25)
 script = ExtResource("5_6qhos")
 alignment = 1
 max_power = 3
@@ -695,7 +734,7 @@ position = Vector2(2168, 432)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-112, 120, 56, 120, 80, 112, 112, 112, 152, 104, 160, 72, 144, 48, 128, 32, 128, 8, 112, 0, 112, -40, 64, -72, 64, -120, 56, -128, 56, -168, 32, -176, 32, -208, 16, -256, 0, -224, 0, -208, -8, -192, -16, -152, -32, -112, -48, -104, -56, -104, -72, -120, -88, -128, -136, 56, -96, 56)
-uv = PackedVector2Array(10.3784, 128, 83.027, 128, 93.4054, 125.277, 107.243, 125.277, 124.541, 122.553, 128, 111.66, 121.081, 103.489, 114.162, 98.0426, 114.162, 89.8723, 107.243, 87.1489, 107.243, 73.5319, 86.4865, 62.6383, 86.4865, 46.2979, 83.027, 43.5745, 83.027, 29.9574, 72.6487, 27.234, 72.6487, 16.3404, 65.7297, 0, 58.8108, 10.8936, 58.8108, 16.3404, 55.3514, 21.7872, 51.8919, 35.4043, 44.973, 49.0213, 38.0541, 51.7447, 34.5946, 51.7447, 27.6757, 46.2979, 20.7568, 43.5745, 0, 106.213, 17.2973, 106.213)
+uv = PackedVector2Array(0.1875, 2.9375, 1.5, 2.9375, 1.6875, 2.875, 1.9375, 2.875, 2.25, 2.8125, 2.3125, 2.5625, 2.1875, 2.375, 2.0625, 2.25, 2.0625, 2.0625, 1.9375, 2, 1.9375, 1.6875, 1.5625, 1.4375, 1.5625, 1.0625, 1.5, 1, 1.5, 0.6875, 1.3125, 0.625, 1.3125, 0.375, 1.1875, 0, 1.0625, 0.25, 1.0625, 0.375, 1, 0.5, 0.9375, 0.8125, 0.8125, 1.125, 0.6875, 1.1875, 0.625, 1.1875, 0.5, 1.0625, 0.375, 1, 0, 2.4375, 0.3125, 2.4375)
 script = ExtResource("5_6qhos")
 alignment = 1
 max_power = 4
@@ -707,7 +746,7 @@ position = Vector2(2048, 768)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(104, 8, 80, -16, 72, -24, 56, -32, 40, -32, 8, -48, -8, -64, -32, -80, -56, 16, -32, 24, -16, 32, 8, 16, 16, 16, 24, 32, 40, 32, 64, 8)
-uv = PackedVector2Array(128, 100.571, 108.8, 73.1429, 102.4, 64, 89.6, 54.8571, 76.8, 54.8571, 51.2, 36.5714, 38.4, 18.2857, 19.2, 0, 0, 109.714, 19.2, 118.857, 32, 128, 51.2, 109.714, 57.6, 109.714, 64, 128, 76.8, 128, 96, 100.571)
+uv = PackedVector2Array(1.25, 0.6875, 1.0625, 0.5, 1, 0.4375, 0.875, 0.375, 0.75, 0.375, 0.5, 0.25, 0.375, 0.125, 0.1875, 0, 0, 0.75, 0.1875, 0.8125, 0.3125, 0.875, 0.5, 0.75, 0.5625, 0.75, 0.625, 0.875, 0.75, 0.875, 0.9375, 0.6875)
 script = ExtResource("5_6qhos")
 alignment = 1
 max_power = 3
@@ -718,7 +757,7 @@ position = Vector2(2136, 640)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-80, -88, 88, -88, 112, -96, 144, -96, 184, -104, 176, -64, 144, -8, 104, 32, 48, 88, 16, 136, -16, 104, -32, 96, -48, 96, -80, 80, -96, 64, -120, 48)
-uv = PackedVector2Array(16.8421, 8.53333, 87.5789, 8.53333, 97.6842, 4.26667, 111.158, 4.26667, 128, 0, 124.632, 21.3333, 111.158, 51.2, 94.3158, 72.5333, 70.7368, 102.4, 57.2632, 128, 43.7895, 110.933, 37.0526, 106.667, 30.3158, 106.667, 16.8421, 98.1333, 10.1053, 89.6, 0, 81.0667)
+uv = PackedVector2Array(0.3125, 0.125, 1.625, 0.125, 1.8125, 0.0625, 2.0625, 0.0625, 2.375, 0, 2.3125, 0.3125, 2.0625, 0.75, 1.75, 1.0625, 1.3125, 1.5, 1.0625, 1.875, 0.8125, 1.625, 0.6875, 1.5625, 0.5625, 1.5625, 0.3125, 1.4375, 0.1875, 1.3125, 0, 1.1875)
 script = ExtResource("5_6qhos")
 alignment = 1
 max_power = 4
@@ -729,7 +768,7 @@ position = Vector2(2040, 872)
 color = Color(0.866667, 0.309804, 0.588235, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-16, -32, -24, -16, -32, 24, -16, 32, 8, 16, 16, 16, 40, -8, 48, -24, 40, -32, 24, -24, 8, -24, -8, -32)
-uv = PackedVector2Array(25.6, 0, 12.8, 32, 0, 112, 25.6, 128, 64, 96, 76.8, 96, 115.2, 48, 128, 16, 115.2, 0, 89.6, 16, 64, 16, 38.4, 0)
+uv = PackedVector2Array(0.125, 0, 0.0625, 0.125, 0, 0.4375, 0.125, 0.5, 0.3125, 0.375, 0.375, 0.375, 0.5625, 0.1875, 0.625, 0.0625, 0.5625, 0, 0.4375, 0.0625, 0.3125, 0.0625, 0.1875, 0)
 script = ExtResource("5_6qhos")
 alignment = 1
 power = 0
@@ -741,7 +780,7 @@ position = Vector2(1368, -408)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(8, 216, -8, 208, -24, 176, -40, 160, -40, 120, -24, 88, -32, 56, -32, 40, -48, 24, -48, 8, -40, -8, -72, -56, -72, -88, -32, -104, -8, -80, -8, -40, 8, -56, 24, -48, 40, -64, 64, -40, 64, -16, 88, 0, 88, 32, 48, 24, 24, 48, 40, 80, 8, 64, 0, 48, -8, 48, -16, 64, -16, 96, -32, 120, -8, 160, 0, 184, 40, 208, 24, 216)
-uv = PackedVector2Array(64, 128, 51.2, 124.8, 38.4, 112, 25.6, 105.6, 25.6, 89.6, 38.4, 76.8, 32, 64, 32, 57.6, 19.2, 51.2, 19.2, 44.8, 25.6, 38.4, 0, 19.2, 0, 6.4, 32, 0, 51.2, 9.6, 51.2, 25.6, 64, 19.2, 76.8, 22.4, 89.6, 16, 108.8, 25.6, 108.8, 35.2, 128, 41.6, 128, 54.4, 96, 51.2, 76.8, 60.8, 89.6, 73.6, 64, 67.2, 57.6, 60.8, 51.2, 60.8, 44.8, 67.2, 44.8, 80, 32, 89.6, 51.2, 105.6, 57.6, 115.2, 89.6, 124.8, 76.8, 128)
+uv = PackedVector2Array(0.625, 2.5, 0.5, 2.4375, 0.375, 2.1875, 0.25, 2.0625, 0.25, 1.75, 0.375, 1.5, 0.3125, 1.25, 0.3125, 1.125, 0.1875, 1, 0.1875, 0.875, 0.25, 0.75, 0, 0.375, 0, 0.125, 0.3125, 0, 0.5, 0.1875, 0.5, 0.5, 0.625, 0.375, 0.75, 0.4375, 0.875, 0.3125, 1.0625, 0.5, 1.0625, 0.6875, 1.25, 0.8125, 1.25, 1.0625, 0.9375, 1, 0.75, 1.1875, 0.875, 1.4375, 0.625, 1.3125, 0.5625, 1.1875, 0.5, 1.1875, 0.4375, 1.3125, 0.4375, 1.5625, 0.3125, 1.75, 0.5, 2.0625, 0.5625, 2.25, 0.875, 2.4375, 0.75, 2.5)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -751,7 +790,7 @@ position = Vector2(1504, -144)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-144, -56, -136, -24, -112, 16, -72, 48, -64, 64, 96, 64, 104, 56, 144, 56, 152, 40, 152, 32, 160, 16, 160, 0, 176, -16, 200, -16, 208, -8, 224, -16, 232, -32, 224, -40, 208, -48, 192, -80, 152, -24, 128, -16, 112, 8, 88, 16, 80, 32, 80, 48, 64, 48, 48, 40, 48, 48, 72, 64, -48, 64, -56, 48, -64, 24, -72, 16, -72, -24, -80, -40, -96, -56, -112, -48, -128, -48)
-uv = PackedVector2Array(0, 21.3333, 2.7234, 49.7778, 10.8936, 85.3333, 24.5106, 113.778, 27.234, 128, 81.7021, 128, 84.4255, 120.889, 98.0426, 120.889, 100.766, 106.667, 100.766, 99.5556, 103.489, 85.3333, 103.489, 71.1111, 108.936, 56.8889, 117.106, 56.8889, 119.83, 64, 125.277, 56.8889, 128, 42.6667, 125.277, 35.5556, 119.83, 28.4444, 114.383, 0, 100.766, 49.7778, 92.5957, 56.8889, 87.1489, 78.2222, 78.9787, 85.3333, 76.2553, 99.5556, 76.2553, 113.778, 70.8085, 113.778, 65.3617, 106.667, 65.3617, 113.778, 73.5319, 128, 32.6809, 128, 29.9574, 113.778, 27.234, 92.4444, 24.5106, 85.3333, 24.5106, 49.7778, 21.7872, 35.5556, 16.3404, 21.3333, 10.8936, 28.4444, 5.44681, 28.4444)
+uv = PackedVector2Array(0, 0.1875, 0.0625, 0.4375, 0.25, 0.75, 0.5625, 1, 0.625, 1.125, 1.875, 1.125, 1.9375, 1.0625, 2.25, 1.0625, 2.3125, 0.9375, 2.3125, 0.875, 2.375, 0.75, 2.375, 0.625, 2.5, 0.5, 2.6875, 0.5, 2.75, 0.5625, 2.875, 0.5, 2.9375, 0.375, 2.875, 0.3125, 2.75, 0.25, 2.625, 0, 2.3125, 0.4375, 2.125, 0.5, 2, 0.6875, 1.8125, 0.75, 1.75, 0.875, 1.75, 1, 1.625, 1, 1.5, 0.9375, 1.5, 1, 1.6875, 1.125, 0.75, 1.125, 0.6875, 1, 0.625, 0.8125, 0.5625, 0.75, 0.5625, 0.4375, 0.5, 0.3125, 0.375, 0.1875, 0.25, 0.25, 0.125, 0.25)
 script = ExtResource("5_6qhos")
 max_power = 4
 
@@ -762,7 +801,7 @@ color = Color(0.384314, 0.341176, 0.458824, 1)
 offset = Vector2(-288, 160)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(328, -64, 344, -48, 360, -48, 360, -56, 352, -72, 360, -80, 376, -64, 376, -80, 368, -104, 368, -120, 344, -152, 344, -168, 352, -184, 336, -192, 328, -192, 312, -224, 288, -232, 264, -232, 264, -248, 256, -256, 256, -264, 264, -272, 280, -296, 264, -312, 256, -320, 240, -328, 232, -320, 232, -280, 224, -264, 240, -240, 248, -216, 248, -200, 248, -184, 232, -176, 224, -144, 216, -128, 192, -112, 192, -96, 216, -112, 240, -144, 232, -152, 248, -176, 248, -192, 264, -184, 272, -192, 264, -208, 264, -224, 280, -224, 296, -200, 304, -184, 328, -176, 320, -160, 312, -152, 296, -176, 280, -176, 280, -160, 296, -144, 296, -120, 304, -120, 312, -128, 328, -128, 336, -136, 320, -144, 328, -152, 344, -144, 352, -120, 336, -104, 312, -104, 296, -96, 288, -80, 288, -64, 304, -80, 320, -88, 328, -80)
-uv = PackedVector2Array(94.6087, 120.686, 105.739, 128, 116.87, 128, 116.87, 124.343, 111.304, 117.029, 116.87, 113.371, 128, 120.686, 128, 113.371, 122.435, 102.4, 122.435, 95.0857, 105.739, 80.4571, 105.739, 73.1429, 111.304, 65.8286, 100.174, 62.1714, 94.6087, 62.1714, 83.4783, 47.5429, 66.7826, 43.8857, 50.087, 43.8857, 50.087, 36.5714, 44.5217, 32.9143, 44.5217, 29.2571, 50.087, 25.6, 61.2174, 14.6286, 50.087, 7.31429, 44.5217, 3.65714, 33.3913, 0, 27.8261, 3.65714, 27.8261, 21.9429, 22.2609, 29.2571, 33.3913, 40.2286, 38.9565, 51.2, 38.9565, 58.5143, 38.9565, 65.8286, 27.8261, 69.4857, 22.2609, 84.1143, 16.6957, 91.4286, 0, 98.7429, 0, 106.057, 16.6957, 98.7429, 33.3913, 84.1143, 27.8261, 80.4571, 38.9565, 69.4857, 38.9565, 62.1714, 50.087, 65.8286, 55.6522, 62.1714, 50.087, 54.8571, 50.087, 47.5429, 61.2174, 47.5429, 72.3478, 58.5143, 77.913, 65.8286, 94.6087, 69.4857, 89.0435, 76.8, 83.4783, 80.4571, 72.3478, 69.4857, 61.2174, 69.4857, 61.2174, 76.8, 72.3478, 84.1143, 72.3478, 95.0857, 77.913, 95.0857, 83.4783, 91.4286, 94.6087, 91.4286, 100.174, 87.7714, 89.0435, 84.1143, 94.6087, 80.4571, 105.739, 84.1143, 111.304, 95.0857, 100.174, 102.4, 83.4783, 102.4, 72.3478, 106.057, 66.7826, 113.371, 66.7826, 120.686, 77.913, 113.371, 89.0435, 109.714, 94.6087, 113.371)
+uv = PackedVector2Array(1.0625, 2.0625, 1.1875, 2.1875, 1.3125, 2.1875, 1.3125, 2.125, 1.25, 2, 1.3125, 1.9375, 1.4375, 2.0625, 1.4375, 1.9375, 1.375, 1.75, 1.375, 1.625, 1.1875, 1.375, 1.1875, 1.25, 1.25, 1.125, 1.125, 1.0625, 1.0625, 1.0625, 0.9375, 0.8125, 0.75, 0.75, 0.5625, 0.75, 0.5625, 0.625, 0.5, 0.5625, 0.5, 0.5, 0.5625, 0.4375, 0.6875, 0.25, 0.5625, 0.125, 0.5, 0.0625, 0.375, 0, 0.3125, 0.0625, 0.3125, 0.375, 0.25, 0.5, 0.375, 0.6875, 0.4375, 0.875, 0.4375, 1, 0.4375, 1.125, 0.3125, 1.1875, 0.25, 1.4375, 0.1875, 1.5625, 0, 1.6875, 0, 1.8125, 0.1875, 1.6875, 0.375, 1.4375, 0.3125, 1.375, 0.4375, 1.1875, 0.4375, 1.0625, 0.5625, 1.125, 0.625, 1.0625, 0.5625, 0.9375, 0.5625, 0.8125, 0.6875, 0.8125, 0.8125, 1, 0.875, 1.125, 1.0625, 1.1875, 1, 1.3125, 0.9375, 1.375, 0.8125, 1.1875, 0.6875, 1.1875, 0.6875, 1.3125, 0.8125, 1.4375, 0.8125, 1.625, 0.875, 1.625, 0.9375, 1.5625, 1.0625, 1.5625, 1.125, 1.5, 1, 1.4375, 1.0625, 1.375, 1.1875, 1.4375, 1.25, 1.625, 1.125, 1.75, 0.9375, 1.75, 0.8125, 1.8125, 0.75, 1.9375, 0.75, 2.0625, 0.875, 1.9375, 1, 1.875, 1.0625, 1.9375)
 script = ExtResource("5_6qhos")
 power = 0
 
@@ -772,7 +811,7 @@ position = Vector2(1400, -48)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-128, -136, -112, -128, -88, -128, -64, -104, -56, -88, -40, -80, -16, -56, -8, -56, 24, -24, 40, -16, 32, -8, 32, 0, 48, 16, 56, 40, 72, 48, 80, 56, 80, 112, 56, 112, 16, 80, -8, 48, -24, 16, -48, -16, -64, -56, -80, -72, -96, -96, -112, -104, -128, -120)
-uv = PackedVector2Array(0, 0, 9.84615, 4.12903, 24.6154, 4.12903, 39.3846, 16.5161, 44.3077, 24.7742, 54.1538, 28.9032, 68.9231, 41.2903, 73.8462, 41.2903, 93.5385, 57.8064, 103.385, 61.9355, 98.4615, 66.0645, 98.4615, 70.1936, 108.308, 78.4516, 113.231, 90.8387, 123.077, 94.9677, 128, 99.0968, 128, 128, 113.231, 128, 88.6154, 111.484, 73.8462, 94.9677, 64, 78.4516, 49.2308, 61.9355, 39.3846, 41.2903, 29.5385, 33.0323, 19.6923, 20.6452, 9.84615, 16.5161, 0, 8.25806)
+uv = PackedVector2Array(0, 0, 0.125, 0.0625, 0.3125, 0.0625, 0.5, 0.25, 0.5625, 0.375, 0.6875, 0.4375, 0.875, 0.625, 0.9375, 0.625, 1.1875, 0.875, 1.3125, 0.9375, 1.25, 1, 1.25, 1.0625, 1.375, 1.1875, 1.4375, 1.375, 1.5625, 1.4375, 1.625, 1.5, 1.625, 1.9375, 1.4375, 1.9375, 1.125, 1.6875, 0.9375, 1.4375, 0.8125, 1.1875, 0.625, 0.9375, 0.5, 0.625, 0.375, 0.5, 0.25, 0.3125, 0.125, 0.25, 0, 0.125)
 script = ExtResource("5_6qhos")
 alignment = 2
 max_power = 4
@@ -783,7 +822,7 @@ position = Vector2(1632, -48)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-80, -56, -96, -32, -96, -16, -88, -8, -88, 8, -72, 16, -72, 40, -64, 56, -40, 56, -32, 64, -16, 64, -8, 56, 0, 64, 16, 64, 24, 80, 48, 64, 56, 24, 72, 8, 80, -32, 96, -32, 104, -40, 96, -48, 88, -56, 88, -64, 72, -80, 80, -104, 72, -112, 48, -112, 32, -96, 32, -80, 24, -64, 24, -56, 16, -40, -24, -40, -32, -32, -56, -32, -80, -48)
-uv = PackedVector2Array(10.24, 37.3333, 0, 53.3333, 0, 64, 5.12, 69.3333, 5.12, 80, 15.36, 85.3333, 15.36, 101.333, 20.48, 112, 35.84, 112, 40.96, 117.333, 51.2, 117.333, 56.32, 112, 61.44, 117.333, 71.68, 117.333, 76.8, 128, 92.16, 117.333, 97.28, 90.6667, 107.52, 80, 112.64, 53.3333, 122.88, 53.3333, 128, 48, 122.88, 42.6667, 117.76, 37.3333, 117.76, 32, 107.52, 21.3333, 112.64, 5.33333, 107.52, 0, 92.16, 0, 81.92, 10.6667, 81.92, 21.3333, 76.8, 32, 76.8, 37.3333, 71.68, 48, 46.08, 48, 40.96, 53.3333, 25.6, 53.3333, 10.24, 42.6667)
+uv = PackedVector2Array(0.125, 0.4375, 0, 0.625, 0, 0.75, 0.0625, 0.8125, 0.0625, 0.9375, 0.1875, 1, 0.1875, 1.1875, 0.25, 1.3125, 0.4375, 1.3125, 0.5, 1.375, 0.625, 1.375, 0.6875, 1.3125, 0.75, 1.375, 0.875, 1.375, 0.9375, 1.5, 1.125, 1.375, 1.1875, 1.0625, 1.3125, 0.9375, 1.375, 0.625, 1.5, 0.625, 1.5625, 0.5625, 1.5, 0.5, 1.4375, 0.4375, 1.4375, 0.375, 1.3125, 0.25, 1.375, 0.0625, 1.3125, 0, 1.125, 0, 1, 0.125, 1, 0.25, 0.9375, 0.375, 0.9375, 0.4375, 0.875, 0.5625, 0.5625, 0.5625, 0.5, 0.625, 0.3125, 0.625, 0.125, 0.5)
 script = ExtResource("5_6qhos")
 alignment = 2
 max_power = 3
@@ -794,7 +833,7 @@ position = Vector2(1760, -8)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-16, 72, 0, 72, 0, 24, 8, 8, 16, 8, 24, 40, 40, 72, 48, 72, 56, 64, 56, 40, 32, 0, 32, -16, 48, -16, 56, -32, 48, -40, 16, -24, 0, -40, 8, -64, 32, -64, 64, -56, 80, -56, 96, -72, 104, -88, 96, -88, 72, -72, 48, -80, 16, -80, 0, -64, -8, -32, -24, 0, -24, 24, -16, 32, -16, 56, -24, 64)
-uv = PackedVector2Array(8, 128, 24, 128, 24, 89.6, 32, 76.8, 40, 76.8, 48, 102.4, 64, 128, 72, 128, 80, 121.6, 80, 102.4, 56, 70.4, 56, 57.6, 72, 57.6, 80, 44.8, 72, 38.4, 40, 51.2, 24, 38.4, 32, 19.2, 56, 19.2, 88, 25.6, 104, 25.6, 120, 12.8, 128, 0, 120, 0, 96, 12.8, 72, 6.4, 40, 6.4, 24, 19.2, 16, 44.8, 0, 70.4, 0, 89.6, 8, 96, 8, 115.2, 0, 121.6)
+uv = PackedVector2Array(0.0625, 1.25, 0.1875, 1.25, 0.1875, 0.875, 0.25, 0.75, 0.3125, 0.75, 0.375, 1, 0.5, 1.25, 0.5625, 1.25, 0.625, 1.1875, 0.625, 1, 0.4375, 0.6875, 0.4375, 0.5625, 0.5625, 0.5625, 0.625, 0.4375, 0.5625, 0.375, 0.3125, 0.5, 0.1875, 0.375, 0.25, 0.1875, 0.4375, 0.1875, 0.6875, 0.25, 0.8125, 0.25, 0.9375, 0.125, 1, 0, 0.9375, 0, 0.75, 0.125, 0.5625, 0.0625, 0.3125, 0.0625, 0.1875, 0.1875, 0.125, 0.4375, 0, 0.6875, 0, 0.875, 0.0625, 0.9375, 0.0625, 1.125, 0, 1.1875)
 script = ExtResource("5_6qhos")
 alignment = 2
 max_power = 3
@@ -805,7 +844,7 @@ position = Vector2(1544, 104)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-64, -32, -72, -8, -56, 0, -24, 8, 0, 8, 24, 16, 56, 24, 96, 24, 96, 8, 72, 8, 56, -8, 32, -24, 16, -16, -8, -16, -24, -24, -40, -32)
-uv = PackedVector2Array(6.09524, 0, 0, 54.8571, 12.1905, 73.1429, 36.5714, 91.4286, 54.8571, 91.4286, 73.1429, 109.714, 97.5238, 128, 128, 128, 128, 91.4286, 109.714, 91.4286, 97.5238, 54.8571, 79.2381, 18.2857, 67.0476, 36.5714, 48.7619, 36.5714, 36.5714, 18.2857, 24.381, 0)
+uv = PackedVector2Array(0.0625, 0, 0, 0.1875, 0.125, 0.25, 0.375, 0.3125, 0.5625, 0.3125, 0.75, 0.375, 1, 0.4375, 1.3125, 0.4375, 1.3125, 0.3125, 1.125, 0.3125, 1, 0.1875, 0.8125, 0.0625, 0.6875, 0.125, 0.5, 0.125, 0.375, 0.0625, 0.25, 0)
 script = ExtResource("5_6qhos")
 alignment = 2
 is_capital = true
@@ -816,7 +855,7 @@ position = Vector2(1752, 144)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-96, -24, -104, -8, -96, -8, -88, -16, -80, -8, -64, -8, -56, 0, -40, -8, -24, -8, -16, 0, -16, 16, 8, 24, 8, 16, -8, 0, -16, 8, -16, -8, 0, -8, 16, 0, 40, -8, 56, -8, 64, -16, 96, -16, 64, 16, 64, 24, 72, 24, 88, 16, 96, 8, 88, -8, 104, -24, 56, -24, 24, -16, 8, -24, -16, -16, -24, -24, -40, -16, -72, -16)
-uv = PackedVector2Array(4.92308, 0, 0, 42.6667, 4.92308, 42.6667, 9.84615, 21.3333, 14.7692, 42.6667, 24.6154, 42.6667, 29.5385, 64, 39.3846, 42.6667, 49.2308, 42.6667, 54.1538, 64, 54.1538, 106.667, 68.9231, 128, 68.9231, 106.667, 59.0769, 64, 54.1538, 85.3333, 54.1538, 42.6667, 64, 42.6667, 73.8462, 64, 88.6154, 42.6667, 98.4615, 42.6667, 103.385, 21.3333, 123.077, 21.3333, 103.385, 106.667, 103.385, 128, 108.308, 128, 118.154, 106.667, 123.077, 85.3333, 118.154, 42.6667, 128, 0, 98.4615, 0, 78.7692, 21.3333, 68.9231, 0, 54.1538, 21.3333, 49.2308, 0, 39.3846, 21.3333, 19.6923, 21.3333)
+uv = PackedVector2Array(0.0625, 0, 0, 0.125, 0.0625, 0.125, 0.125, 0.0625, 0.1875, 0.125, 0.3125, 0.125, 0.375, 0.1875, 0.5, 0.125, 0.625, 0.125, 0.6875, 0.1875, 0.6875, 0.3125, 0.875, 0.375, 0.875, 0.3125, 0.75, 0.1875, 0.6875, 0.25, 0.6875, 0.125, 0.8125, 0.125, 0.9375, 0.1875, 1.125, 0.125, 1.25, 0.125, 1.3125, 0.0625, 1.5625, 0.0625, 1.3125, 0.3125, 1.3125, 0.375, 1.375, 0.375, 1.5, 0.3125, 1.5625, 0.25, 1.5, 0.125, 1.625, 0, 1.25, 0, 1, 0.0625, 0.875, 0, 0.6875, 0.0625, 0.625, 0, 0.5, 0.0625, 0.25, 0.0625)
 script = ExtResource("5_6qhos")
 alignment = 2
 max_power = 3
@@ -827,7 +866,7 @@ position = Vector2(1864, 136)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-24, 0, -16, 16, 8, 8, 32, -8, 8, -16)
-uv = PackedVector2Array(0, 64, 18.2857, 128, 73.1429, 96, 128, 32, 73.1429, 0)
+uv = PackedVector2Array(0, 0.125, 0.0625, 0.25, 0.25, 0.1875, 0.4375, 0.0625, 0.25, 0)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -837,7 +876,7 @@ position = Vector2(2112, 24)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(56, 120, 56, -24, 40, -32, 0, -48, -16, -48, -48, -24, -56, -8, -72, -32, -80, -56, -96, -72, -120, -72, -136, -64, -136, -48, -112, -32, -88, -40, -80, -32, -104, -32, -112, -16, -96, 8, -88, 0, -80, 0, -56, 16, -24, 24, 0, 48, 8, 72, -16, 96, -16, 104, 0, 104, 8, 96, 16, 96, 40, 112)
-uv = PackedVector2Array(128, 128, 128, 32, 117.333, 26.6667, 90.6667, 16, 80, 16, 58.6667, 32, 53.3333, 42.6667, 42.6667, 26.6667, 37.3333, 10.6667, 26.6667, 0, 10.6667, 0, 0, 5.33333, 0, 16, 16, 26.6667, 32, 21.3333, 37.3333, 26.6667, 21.3333, 26.6667, 16, 37.3333, 26.6667, 53.3333, 32, 48, 37.3333, 48, 53.3333, 58.6667, 74.6667, 64, 90.6667, 80, 96, 96, 80, 112, 80, 117.333, 90.6667, 117.333, 96, 112, 101.333, 112, 117.333, 122.667)
+uv = PackedVector2Array(1.5, 1.5, 1.5, 0.375, 1.375, 0.3125, 1.0625, 0.1875, 0.9375, 0.1875, 0.6875, 0.375, 0.625, 0.5, 0.5, 0.3125, 0.4375, 0.125, 0.3125, 0, 0.125, 0, 0, 0.0625, 0, 0.1875, 0.1875, 0.3125, 0.375, 0.25, 0.4375, 0.3125, 0.25, 0.3125, 0.1875, 0.4375, 0.3125, 0.625, 0.375, 0.5625, 0.4375, 0.5625, 0.625, 0.6875, 0.875, 0.75, 1.0625, 0.9375, 1.125, 1.125, 0.9375, 1.3125, 0.9375, 1.375, 1.0625, 1.375, 1.125, 1.3125, 1.1875, 1.3125, 1.375, 1.4375)
 script = ExtResource("5_6qhos")
 alignment = 2
 max_power = 3
@@ -848,7 +887,7 @@ position = Vector2(1904, -24)
 color = Color(0.168627, 0.266667, 0.337255, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-24, 32, -32, 40, -24, 48, -16, 48, -8, 40, 48, 40, 56, 48, 64, 48, 64, 40, 56, 32, 24, 24, 16, 32, 8, 32, 16, 40, 0, 40, -8, 40, -16, 32, 1, -53, 16, -40, 8, -56, 24, -56, 8, -64, 24, -80, 8, -72, 8, -80, 24, -88, 16, -88, 0, -80, 0, -64, 0, -48, -16, 32)
-uv = PackedVector2Array(10.6667, 112.941, 0, 120.471, 10.6667, 128, 21.3333, 128, 32, 120.471, 106.667, 120.471, 117.333, 128, 128, 128, 128, 120.471, 117.333, 112.941, 74.6667, 105.412, 64, 112.941, 53.3333, 112.941, 64, 120.471, 42.6667, 120.471, 32, 120.471, 21.3333, 112.941, 44, 32.9412, 64, 45.1765, 53.3333, 30.1176, 74.6667, 30.1176, 53.3333, 22.5882, 74.6667, 7.52941, 53.3333, 15.0588, 53.3333, 7.52941, 74.6667, 0, 64, 0, 42.6667, 7.52941, 42.6667, 22.5882, 42.6667, 37.6471, 21.3333, 112.941)
+uv = PackedVector2Array(0.0625, 0.9375, 0, 1, 0.0625, 1.0625, 0.125, 1.0625, 0.1875, 1, 0.625, 1, 0.6875, 1.0625, 0.75, 1.0625, 0.75, 1, 0.6875, 0.9375, 0.4375, 0.875, 0.375, 0.9375, 0.3125, 0.9375, 0.375, 1, 0.25, 1, 0.1875, 1, 0.125, 0.9375, 0.257812, 0.273438, 0.375, 0.375, 0.3125, 0.25, 0.4375, 0.25, 0.3125, 0.1875, 0.4375, 0.0625, 0.3125, 0.125, 0.3125, 0.0625, 0.4375, 0, 0.375, 0, 0.25, 0.0625, 0.25, 0.1875, 0.25, 0.3125, 0.125, 0.9375)
 script = ExtResource("5_6qhos")
 alignment = 2
 max_power = 3
@@ -859,7 +898,7 @@ position = Vector2(2216, 72)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-48, 72, -16, 72, -8, 48, 8, 40, 24, 40, 48, 56, 56, 72, 80, 96, 104, 96, 120, 104, 128, 96, 104, 72, 88, 64, 80, 48, 64, 32, 64, 16, 80, 16, 80, 8, 64, 0, 48, -8, 40, -32, -24, -64, -48, -72)
-uv = PackedVector2Array(0, 104.727, 23.2727, 104.727, 29.0909, 87.2727, 40.7273, 81.4545, 52.3636, 81.4545, 69.8182, 93.0909, 75.6364, 104.727, 93.0909, 122.182, 110.545, 122.182, 122.182, 128, 128, 122.182, 110.545, 104.727, 98.9091, 98.9091, 93.0909, 87.2727, 81.4545, 75.6364, 81.4545, 64, 93.0909, 64, 93.0909, 58.1818, 81.4545, 52.3636, 69.8182, 46.5455, 64, 29.0909, 17.4545, 5.81818, 0, 0)
+uv = PackedVector2Array(0, 1.125, 0.25, 1.125, 0.3125, 0.9375, 0.4375, 0.875, 0.5625, 0.875, 0.75, 1, 0.8125, 1.125, 1, 1.3125, 1.1875, 1.3125, 1.3125, 1.375, 1.375, 1.3125, 1.1875, 1.125, 1.0625, 1.0625, 1, 0.9375, 0.875, 0.8125, 0.875, 0.6875, 1, 0.6875, 1, 0.625, 0.875, 0.5625, 0.75, 0.5, 0.6875, 0.3125, 0.1875, 0.0625, 0, 0)
 script = ExtResource("5_6qhos")
 max_power = 4
 
@@ -869,7 +908,7 @@ position = Vector2(2448, 88)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-16, -24, 0, 8, 32, 48, 48, 48, 40, 32, 8, 8, 32, 16, 72, 40, 88, 56, 72, 56, 72, 64, 120, 96, 120, 80, 96, 72, 96, 64, 112, 64, 112, 56, 96, 40, 56, 16, 24, 0, 0, -8, -8, -32, -56, -32, -48, -48, -48, -56, -56, -72, -80, -88, -104, -88, -80, -80, -64, -72, -64, -64, -72, -56, -80, -48, -88, -32, -104, -24, -136, -24, -136, -16, -120, -8, -96, -8, -80, -16, -64, -32, -16, -32)
-uv = PackedVector2Array(60, 44.5217, 68, 66.7826, 84, 94.6087, 92, 94.6087, 88, 83.4783, 72, 66.7826, 84, 72.3478, 104, 89.0435, 112, 100.174, 104, 100.174, 104, 105.739, 128, 128, 128, 116.87, 116, 111.304, 116, 105.739, 124, 105.739, 124, 100.174, 116, 89.0435, 96, 72.3478, 80, 61.2174, 68, 55.6522, 64, 38.9565, 40, 38.9565, 44, 27.8261, 44, 22.2609, 40, 11.1304, 28, 0, 16, 0, 28, 5.56522, 36, 11.1304, 36, 16.6957, 32, 22.2609, 28, 27.8261, 24, 38.9565, 16, 44.5217, 0, 44.5217, 0, 50.087, 8, 55.6522, 20, 55.6522, 28, 50.087, 36, 38.9565, 60, 38.9565)
+uv = PackedVector2Array(0.9375, 0.5, 1.0625, 0.75, 1.3125, 1.0625, 1.4375, 1.0625, 1.375, 0.9375, 1.125, 0.75, 1.3125, 0.8125, 1.625, 1, 1.75, 1.125, 1.625, 1.125, 1.625, 1.1875, 2, 1.4375, 2, 1.3125, 1.8125, 1.25, 1.8125, 1.1875, 1.9375, 1.1875, 1.9375, 1.125, 1.8125, 1, 1.5, 0.8125, 1.25, 0.6875, 1.0625, 0.625, 1, 0.4375, 0.625, 0.4375, 0.6875, 0.3125, 0.6875, 0.25, 0.625, 0.125, 0.4375, 0, 0.25, 0, 0.4375, 0.0625, 0.5625, 0.125, 0.5625, 0.1875, 0.5, 0.25, 0.4375, 0.3125, 0.375, 0.4375, 0.25, 0.5, 0, 0.5, 0, 0.5625, 0.125, 0.625, 0.3125, 0.625, 0.4375, 0.5625, 0.5625, 0.4375, 0.9375, 0.4375)
 script = ExtResource("5_6qhos")
 power = 0
 max_power = 4
@@ -881,7 +920,7 @@ color = Color(0.384314, 0.341176, 0.458824, 1)
 offset = Vector2(-32, 32)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-24, 32, -16, 40, -16, 32)
-uv = PackedVector2Array(0, 0, 128, 128, 128, 0)
+uv = PackedVector2Array(0, 0, 0.0625, 0.0625, 0.0625, 0)
 script = ExtResource("5_6qhos")
 power = 0
 max_power = 2
@@ -892,7 +931,7 @@ position = Vector2(2584, 416)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-24, -32, -24, -24, -8, 8, 32, 32, 40, 24, 8, -16, -8, -32)
-uv = PackedVector2Array(0, 0, 0, 16, 32, 80, 112, 128, 128, 112, 64, 32, 32, 0)
+uv = PackedVector2Array(0, 0, 0, 0.0625, 0.125, 0.3125, 0.4375, 0.5, 0.5, 0.4375, 0.25, 0.125, 0.125, 0)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -902,7 +941,7 @@ position = Vector2(2672, 264)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-40, 8, -24, 8, -16, 32, -8, 32, -16, 16, -8, 8, 0, 16, 0, 112, -8, 104, 0, 96, 0, 48, -16, 48, -24, 32, -40, 16)
-uv = PackedVector2Array(0, 0, 51.2, 0, 76.8, 29.5385, 102.4, 29.5385, 76.8, 9.84615, 102.4, 0, 128, 9.84615, 128, 128, 102.4, 118.154, 128, 108.308, 128, 49.2308, 76.8, 49.2308, 51.2, 29.5385, 0, 9.84615)
+uv = PackedVector2Array(0, 0, 0.125, 0, 0.1875, 0.1875, 0.25, 0.1875, 0.1875, 0.0625, 0.25, 0, 0.3125, 0.0625, 0.3125, 0.8125, 0.25, 0.75, 0.3125, 0.6875, 0.3125, 0.3125, 0.1875, 0.3125, 0.125, 0.1875, 0, 0.0625)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -912,7 +951,7 @@ position = Vector2(2840, 336)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-8, 0, 0, 8, 16, 8, 24, 0, 8, -16, -8, -8)
-uv = PackedVector2Array(0, 85.3333, 32, 128, 96, 128, 128, 85.3333, 64, 0, 0, 42.6667)
+uv = PackedVector2Array(0, 0.125, 0.0625, 0.1875, 0.1875, 0.1875, 0.25, 0.125, 0.125, 0, 0, 0.0625)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -922,7 +961,7 @@ position = Vector2(-2352, -64)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-32, 24, -24, 32, -16, 24, 8, 24, 8, 32, 16, 24, 0, 24, -8, 16, -8, 8, -8, 24, -16, 24, -24, 0, -32, 0, -24, 16)
-uv = PackedVector2Array(0, 96, 21.3333, 128, 42.6667, 96, 106.667, 96, 106.667, 128, 128, 96, 85.3333, 96, 64, 64, 64, 32, 64, 96, 42.6667, 96, 21.3333, 0, 0, 0, 21.3333, 64)
+uv = PackedVector2Array(0, 0.1875, 0.0625, 0.25, 0.125, 0.1875, 0.3125, 0.1875, 0.3125, 0.25, 0.375, 0.1875, 0.25, 0.1875, 0.1875, 0.125, 0.1875, 0.0625, 0.1875, 0.1875, 0.125, 0.1875, 0.0625, 0, 0, 0, 0.0625, 0.125)
 script = ExtResource("5_6qhos")
 max_power = 2
 
@@ -932,7 +971,7 @@ position = Vector2(-1560, 1080)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(16, 8, 24, 0, 16, -8, -8, -16, -16, -8, -24, 8, -24, 16, -8, 0, -8, 8, 0, 16, 8, 8)
-uv = PackedVector2Array(106.667, 96, 128, 64, 106.667, 32, 42.6667, 0, 21.3333, 32, 0, 96, 0, 128, 42.6667, 64, 42.6667, 96, 64, 128, 85.3333, 96)
+uv = PackedVector2Array(0.3125, 0.1875, 0.375, 0.125, 0.3125, 0.0625, 0.125, 0, 0.0625, 0.0625, 0, 0.1875, 0, 0.25, 0.125, 0.125, 0.125, 0.1875, 0.1875, 0.25, 0.25, 0.1875)
 script = ExtResource("5_6qhos")
 max_power = 2
 
@@ -942,7 +981,7 @@ position = Vector2(-1160, 1136)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-32, -8, -24, 0, -16, 0, 8, 16, 16, 16, 16, 8, 8, 0, -8, -8)
-uv = PackedVector2Array(0, 0, 21.3333, 42.6667, 42.6667, 42.6667, 106.667, 128, 128, 128, 128, 85.3333, 106.667, 42.6667, 64, 0)
+uv = PackedVector2Array(0, 0, 0.0625, 0.0625, 0.125, 0.0625, 0.3125, 0.1875, 0.375, 0.1875, 0.375, 0.125, 0.3125, 0.0625, 0.1875, 0)
 script = ExtResource("5_6qhos")
 max_power = 2
 
@@ -952,7 +991,7 @@ position = Vector2(-2607, 784)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-48, 32, -48, 40, -40, 40)
-uv = PackedVector2Array(0, 0, 0, 128, 128, 128)
+uv = PackedVector2Array(0, 0, 0, 0.0625, 0.0625, 0.0625)
 script = ExtResource("5_6qhos")
 max_power = 2
 
@@ -962,7 +1001,7 @@ position = Vector2(3064, -680)
 color = Color(0.384314, 0.341176, 0.458824, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-32, -16, -16, -16, -8, -8, 8, -8, 8, 0, 32, 0, 24, 8, 24, 32, 32, 24, 56, 32, 48, 48, 32, 56, 24, 48, 24, 16, 0, 16, -8, 0, -24, -8)
-uv = PackedVector2Array(0, 0, 23.2727, 0, 34.9091, 14.2222, 58.1818, 14.2222, 58.1818, 28.4444, 93.0909, 28.4444, 81.4545, 42.6667, 81.4545, 85.3333, 93.0909, 71.1111, 128, 85.3333, 116.364, 113.778, 93.0909, 128, 81.4545, 113.778, 81.4545, 56.8889, 46.5455, 56.8889, 34.9091, 28.4444, 11.6364, 14.2222)
+uv = PackedVector2Array(0, 0, 0.125, 0, 0.1875, 0.0625, 0.3125, 0.0625, 0.3125, 0.125, 0.5, 0.125, 0.4375, 0.1875, 0.4375, 0.375, 0.5, 0.3125, 0.6875, 0.375, 0.625, 0.5, 0.5, 0.5625, 0.4375, 0.5, 0.4375, 0.25, 0.25, 0.25, 0.1875, 0.125, 0.0625, 0.0625)
 script = ExtResource("5_6qhos")
 max_power = 3
 
@@ -973,7 +1012,7 @@ color = Color(0.843137, 0.792157, 0.752941, 1)
 offset = Vector2(104, 88)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(232, 136, -248, 136, -296, 120, -360, 96, -392, 80, -360, 80, -264, 88, -144, 88, -120, 80, -40, 80, -64, 72, -144, 72, -216, 64, -248, 40, -288, 32, -336, 24, -296, 16, -256, 16, -240, 8, -240, 0, -248, -8, -296, -16, -376, -16, -400, -32, -440, -32, -432, -16, -416, -16, -408, -8, -416, 0, -448, -8, -464, -16, -464, -32, -448, -24, -440, -32, -456, -48, -456, -56, -424, -56, -400, -48, -376, -40, -352, -48, -344, -56, -344, -64, -352, -80, -376, -88, -392, -96, -384, -104, -368, -104, -328, -112, -304, -104, -288, -120, -272, -120, -256, -112, -200, -112, -184, -120, -160, -120, -144, -112, -128, -120, -112, -120, -80, -112, -56, -120, -32, -112, -24, -128, -16, -128, 0, -112, 8, -112, 16, -128, 24, -128, 40, -104, 48, -120, 80, -120, 96, -104, 112, -112, 120, -112, 144, -104, 152, -112, 152, -120, 120, -120, 112, -128, 112, -136, 128, -144, 120, -152, 88, -144, 64, -152, 64, -160, 80, -176, 128, -184, 168, -176, 168, -168, 128, -160, 152, -144, 192, -144, 208, -136, 232, -144)
-uv = PackedVector2Array(128, 128, 39.7241, 128, 30.8966, 121.6, 19.1264, 112, 13.2414, 105.6, 19.1264, 105.6, 36.7816, 108.8, 58.8506, 108.8, 63.2644, 105.6, 77.977, 105.6, 73.5632, 102.4, 58.8506, 102.4, 45.6092, 99.2, 39.7241, 89.6, 32.3678, 86.4, 23.5402, 83.2, 30.8966, 80, 38.2529, 80, 41.1954, 76.8, 41.1954, 73.6, 39.7241, 70.4, 30.8966, 67.2, 16.1839, 67.2, 11.7701, 60.8, 4.41379, 60.8, 5.88506, 67.2, 8.82759, 67.2, 10.2989, 70.4, 8.82759, 73.6, 2.94253, 70.4, 0, 67.2, 0, 60.8, 2.94253, 64, 4.41379, 60.8, 1.47126, 54.4, 1.47126, 51.2, 7.35632, 51.2, 11.7701, 54.4, 16.1839, 57.6, 20.5977, 54.4, 22.069, 51.2, 22.069, 48, 20.5977, 41.6, 16.1839, 38.4, 13.2414, 35.2, 14.7126, 32, 17.6552, 32, 25.0115, 28.8, 29.4253, 32, 32.3678, 25.6, 35.3103, 25.6, 38.2529, 28.8, 48.5517, 28.8, 51.4943, 25.6, 55.908, 25.6, 58.8506, 28.8, 61.7931, 25.6, 64.7356, 25.6, 70.6207, 28.8, 75.0345, 25.6, 79.4483, 28.8, 80.9195, 22.4, 82.3908, 22.4, 85.3333, 28.8, 86.8046, 28.8, 88.2759, 22.4, 89.7471, 22.4, 92.6897, 32, 94.1609, 25.6, 100.046, 25.6, 102.989, 32, 105.931, 28.8, 107.402, 28.8, 111.816, 32, 113.287, 28.8, 113.287, 25.6, 107.402, 25.6, 105.931, 22.4, 105.931, 19.2, 108.874, 16, 107.402, 12.8, 101.517, 16, 97.1034, 12.8, 97.1034, 9.6, 100.046, 3.2, 108.874, 0, 116.23, 3.2, 116.23, 6.4, 108.874, 9.6, 113.287, 16, 120.644, 16, 123.586, 19.2, 128, 16)
+uv = PackedVector2Array(5.4375, 2.5, 1.6875, 2.5, 1.3125, 2.375, 0.8125, 2.1875, 0.5625, 2.0625, 0.8125, 2.0625, 1.5625, 2.125, 2.5, 2.125, 2.6875, 2.0625, 3.3125, 2.0625, 3.125, 2, 2.5, 2, 1.9375, 1.9375, 1.6875, 1.75, 1.375, 1.6875, 1, 1.625, 1.3125, 1.5625, 1.625, 1.5625, 1.75, 1.5, 1.75, 1.4375, 1.6875, 1.375, 1.3125, 1.3125, 0.6875, 1.3125, 0.5, 1.1875, 0.1875, 1.1875, 0.25, 1.3125, 0.375, 1.3125, 0.4375, 1.375, 0.375, 1.4375, 0.125, 1.375, 0, 1.3125, 0, 1.1875, 0.125, 1.25, 0.1875, 1.1875, 0.0625, 1.0625, 0.0625, 1, 0.3125, 1, 0.5, 1.0625, 0.6875, 1.125, 0.875, 1.0625, 0.9375, 1, 0.9375, 0.9375, 0.875, 0.8125, 0.6875, 0.75, 0.5625, 0.6875, 0.625, 0.625, 0.75, 0.625, 1.0625, 0.5625, 1.25, 0.625, 1.375, 0.5, 1.5, 0.5, 1.625, 0.5625, 2.0625, 0.5625, 2.1875, 0.5, 2.375, 0.5, 2.5, 0.5625, 2.625, 0.5, 2.75, 0.5, 3, 0.5625, 3.1875, 0.5, 3.375, 0.5625, 3.4375, 0.4375, 3.5, 0.4375, 3.625, 0.5625, 3.6875, 0.5625, 3.75, 0.4375, 3.8125, 0.4375, 3.9375, 0.625, 4, 0.5, 4.25, 0.5, 4.375, 0.625, 4.5, 0.5625, 4.5625, 0.5625, 4.75, 0.625, 4.8125, 0.5625, 4.8125, 0.5, 4.5625, 0.5, 4.5, 0.4375, 4.5, 0.375, 4.625, 0.3125, 4.5625, 0.25, 4.3125, 0.3125, 4.125, 0.25, 4.125, 0.1875, 4.25, 0.0625, 4.625, 0, 4.9375, 0.0625, 4.9375, 0.125, 4.625, 0.1875, 4.8125, 0.3125, 5.125, 0.3125, 5.25, 0.375, 5.4375, 0.3125)
 script = ExtResource("5_6qhos")
 alignment = 3
 power = 3
@@ -986,7 +1025,7 @@ color = Color(0.843137, 0.792157, 0.752941, 1)
 offset = Vector2(8, 104)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-232, 144, 248, 144, 248, 16, 160, 0, 104, -24, 64, -32, 16, -48, 56, -48, 72, -56, 104, -64, 56, -64, 48, -72, 24, -80, 24, -88, 72, -72, 120, -72, 152, -88, 184, -96, 192, -112, 208, -120, 192, -152, 152, -192, 136, -208, 104, -216, 72, -224, 64, -232, 72, -248, 104, -256, 104, -272, 96, -280, 128, -296, 152, -312, 144, -320, 96, -304, 72, -288, 40, -240, 56, -192, 40, -200, 16, -216, 0, -200, 24, -192, 40, -184, 24, -176, 8, -168, 32, -160, 40, -152, 64, -152, 72, -160, 72, -176, 56, -184, 56, -192, 88, -176, 104, -152, 88, -136, 48, -136, -8, -144, -16, -152, -32, -136, -80, -136, -104, -144, -112, -152, -128, -144, -144, -144, -152, -152, -168, -136, -232, -136)
-uv = PackedVector2Array(0, 128, 128, 128, 128, 92.6897, 104.533, 88.2759, 89.6, 81.6552, 78.9333, 79.4483, 66.1333, 75.0345, 76.8, 75.0345, 81.0667, 72.8276, 89.6, 70.6207, 76.8, 70.6207, 74.6667, 68.4138, 68.2667, 66.2069, 68.2667, 64, 81.0667, 68.4138, 93.8667, 68.4138, 102.4, 64, 110.933, 61.7931, 113.067, 57.3793, 117.333, 55.1724, 113.067, 46.3448, 102.4, 35.3103, 98.1333, 30.8966, 89.6, 28.6897, 81.0667, 26.4828, 78.9333, 24.2759, 81.0667, 19.8621, 89.6, 17.6552, 89.6, 13.2414, 87.4667, 11.0345, 96, 6.62069, 102.4, 2.2069, 100.267, 0, 87.4667, 4.41379, 81.0667, 8.82759, 72.5333, 22.069, 76.8, 35.3103, 72.5333, 33.1034, 66.1333, 28.6897, 61.8667, 33.1034, 68.2667, 35.3103, 72.5333, 37.5172, 68.2667, 39.7241, 64, 41.931, 70.4, 44.1379, 72.5333, 46.3448, 78.9333, 46.3448, 81.0667, 44.1379, 81.0667, 39.7241, 76.8, 37.5172, 76.8, 35.3103, 85.3333, 39.7241, 89.6, 46.3448, 85.3333, 50.7586, 74.6667, 50.7586, 59.7333, 48.5517, 57.6, 46.3448, 53.3333, 50.7586, 40.5333, 50.7586, 34.1333, 48.5517, 32, 46.3448, 27.7333, 48.5517, 23.4667, 48.5517, 21.3333, 46.3448, 17.0667, 50.7586, 0, 50.7586)
+uv = PackedVector2Array(0, 3.625, 3.75, 3.625, 3.75, 2.625, 3.0625, 2.5, 2.625, 2.3125, 2.3125, 2.25, 1.9375, 2.125, 2.25, 2.125, 2.375, 2.0625, 2.625, 2, 2.25, 2, 2.1875, 1.9375, 2, 1.875, 2, 1.8125, 2.375, 1.9375, 2.75, 1.9375, 3, 1.8125, 3.25, 1.75, 3.3125, 1.625, 3.4375, 1.5625, 3.3125, 1.3125, 3, 1, 2.875, 0.875, 2.625, 0.8125, 2.375, 0.75, 2.3125, 0.6875, 2.375, 0.5625, 2.625, 0.5, 2.625, 0.375, 2.5625, 0.3125, 2.8125, 0.1875, 3, 0.0625, 2.9375, 0, 2.5625, 0.125, 2.375, 0.25, 2.125, 0.625, 2.25, 1, 2.125, 0.9375, 1.9375, 0.8125, 1.8125, 0.9375, 2, 1, 2.125, 1.0625, 2, 1.125, 1.875, 1.1875, 2.0625, 1.25, 2.125, 1.3125, 2.3125, 1.3125, 2.375, 1.25, 2.375, 1.125, 2.25, 1.0625, 2.25, 1, 2.5, 1.125, 2.625, 1.3125, 2.5, 1.4375, 2.1875, 1.4375, 1.75, 1.375, 1.6875, 1.3125, 1.5625, 1.4375, 1.1875, 1.4375, 1, 1.375, 0.9375, 1.3125, 0.8125, 1.375, 0.6875, 1.375, 0.625, 1.3125, 0.5, 1.4375, 0, 1.4375)
 script = ExtResource("5_6qhos")
 alignment = 3
 power = 0
@@ -998,7 +1037,7 @@ position = Vector2(-1088, 1656)
 color = Color(0.843137, 0.792157, 0.752941, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-224, 48, -224, 176, 320, 176, 320, -64, 280, -56, 256, -56, 232, -48, 192, -40, 160, -32, 144, -16, 160, 0, 192, 0, 224, 8, 264, 0, 272, 8, 248, 8, 240, 16, 248, 24, 272, 24, 240, 32, 200, 40, 112, 48, 80, 56, -16, 56, -72, 64, -96, 80, -120, 56, -144, 56, -193, 41, -192, 32, -160, 32, -24, 32, -16, 24, 40, 24, 56, 8, 48, -8, 24, -16, 40, -24, 32, -32, -8, -32, -32, -16, -24, 8, -40, 16, -56, 16, -40, 32, -144, 32, -136, 24, -144, 16, -160, 16, -176, 24, -192, 8, -208, 16, -208, 24, -192, 31, -193, 40)
-uv = PackedVector2Array(0, 59.7333, 0, 128, 128, 128, 128, 0, 118.588, 4.26667, 112.941, 4.26667, 107.294, 8.53333, 97.8824, 12.8, 90.3529, 17.0667, 86.5882, 25.6, 90.3529, 34.1333, 97.8824, 34.1333, 105.412, 38.4, 114.824, 34.1333, 116.706, 38.4, 111.059, 38.4, 109.176, 42.6667, 111.059, 46.9333, 116.706, 46.9333, 109.176, 51.2, 99.7647, 55.4667, 79.0588, 59.7333, 71.5294, 64, 48.9412, 64, 35.7647, 68.2667, 30.1176, 76.8, 24.4706, 64, 18.8235, 64, 7.29412, 56, 7.52941, 51.2, 15.0588, 51.2, 47.0588, 51.2, 48.9412, 46.9333, 62.1176, 46.9333, 65.8824, 38.4, 64, 29.8667, 58.3529, 25.6, 62.1176, 21.3333, 60.2353, 17.0667, 50.8235, 17.0667, 45.1765, 25.6, 47.0588, 38.4, 43.2941, 42.6667, 39.5294, 42.6667, 43.2941, 51.2, 18.8235, 51.2, 20.7059, 46.9333, 18.8235, 42.6667, 15.0588, 42.6667, 11.2941, 46.9333, 7.52941, 38.4, 3.76471, 42.6667, 3.76471, 46.9333, 7.52941, 50.6667, 7.29412, 55.4667)
+uv = PackedVector2Array(0, 0.875, 0, 1.875, 4.25, 1.875, 4.25, 0, 3.9375, 0.0625, 3.75, 0.0625, 3.5625, 0.125, 3.25, 0.1875, 3, 0.25, 2.875, 0.375, 3, 0.5, 3.25, 0.5, 3.5, 0.5625, 3.8125, 0.5, 3.875, 0.5625, 3.6875, 0.5625, 3.625, 0.625, 3.6875, 0.6875, 3.875, 0.6875, 3.625, 0.75, 3.3125, 0.8125, 2.625, 0.875, 2.375, 0.9375, 1.625, 0.9375, 1.1875, 1, 1, 1.125, 0.8125, 0.9375, 0.625, 0.9375, 0.242188, 0.820312, 0.25, 0.75, 0.5, 0.75, 1.5625, 0.75, 1.625, 0.6875, 2.0625, 0.6875, 2.1875, 0.5625, 2.125, 0.4375, 1.9375, 0.375, 2.0625, 0.3125, 2, 0.25, 1.6875, 0.25, 1.5, 0.375, 1.5625, 0.5625, 1.4375, 0.625, 1.3125, 0.625, 1.4375, 0.75, 0.625, 0.75, 0.6875, 0.6875, 0.625, 0.625, 0.5, 0.625, 0.375, 0.6875, 0.25, 0.5625, 0.125, 0.625, 0.125, 0.6875, 0.25, 0.742188, 0.242188, 0.8125)
 script = ExtResource("5_6qhos")
 alignment = 3
 power = 0
@@ -1010,7 +1049,7 @@ position = Vector2(-328, 1528)
 color = Color(0.843137, 0.792157, 0.752941, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-440, 64, -440, 304, 456, 304, 456, -104, 432, -96, 416, -80, 416, -64, 408, -56, 392, -64, 392, -80, 376, -72, 368, -72, 344, -88, 328, -88, 296, -56, 256, -48, 192, -48, 176, -56, 152, -56, 136, -48, 112, -40, 72, -40, 48, -24, 32, -24, 0, -40, -24, -40, -96, -40, -120, -32, -160, -24, -176, -32, -192, -32, -200, -40, -224, -24, -232, -24, -248, -40, -264, -16, -288, -40, -320, -8, -344, -8, -376, 0, -376, 8, -368, 16, -352, 16, -384, 40, -392, 56)
-uv = PackedVector2Array(0, 52.7059, 0, 128, 128, 128, 128, 0, 124.571, 2.5098, 122.286, 7.52941, 122.286, 12.549, 121.143, 15.0588, 118.857, 12.549, 118.857, 7.52941, 116.571, 10.0392, 115.429, 10.0392, 112, 5.01961, 109.714, 5.01961, 105.143, 15.0588, 99.4286, 17.5686, 90.2857, 17.5686, 88, 15.0588, 84.5714, 15.0588, 82.2857, 17.5686, 78.8571, 20.0784, 73.1429, 20.0784, 69.7143, 25.098, 67.4286, 25.098, 62.8571, 20.0784, 59.4286, 20.0784, 49.1429, 20.0784, 45.7143, 22.5882, 40, 25.098, 37.7143, 22.5882, 35.4286, 22.5882, 34.2857, 20.0784, 30.8571, 25.098, 29.7143, 25.098, 27.4286, 20.0784, 25.1429, 27.6078, 21.7143, 20.0784, 17.1429, 30.1176, 13.7143, 30.1176, 9.14286, 32.6275, 9.14286, 35.1373, 10.2857, 37.6471, 12.5714, 37.6471, 8, 45.1765, 6.85714, 50.1961)
+uv = PackedVector2Array(0, 1.3125, 0, 3.1875, 7, 3.1875, 7, 0, 6.8125, 0.0625, 6.6875, 0.1875, 6.6875, 0.3125, 6.625, 0.375, 6.5, 0.3125, 6.5, 0.1875, 6.375, 0.25, 6.3125, 0.25, 6.125, 0.125, 6, 0.125, 5.75, 0.375, 5.4375, 0.4375, 4.9375, 0.4375, 4.8125, 0.375, 4.625, 0.375, 4.5, 0.4375, 4.3125, 0.5, 4, 0.5, 3.8125, 0.625, 3.6875, 0.625, 3.4375, 0.5, 3.25, 0.5, 2.6875, 0.5, 2.5, 0.5625, 2.1875, 0.625, 2.0625, 0.5625, 1.9375, 0.5625, 1.875, 0.5, 1.6875, 0.625, 1.625, 0.625, 1.5, 0.5, 1.375, 0.6875, 1.1875, 0.5, 0.9375, 0.75, 0.75, 0.75, 0.5, 0.8125, 0.5, 0.875, 0.5625, 0.9375, 0.6875, 0.9375, 0.4375, 1.125, 0.375, 1.25)
 script = ExtResource("5_6qhos")
 alignment = 3
 power = 0
@@ -1023,7 +1062,7 @@ color = Color(0.843137, 0.792157, 0.752941, 1)
 offset = Vector2(88, -40)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-512, 360, 448, 360, 448, -80, 400, -64, 376, -72, 352, -80, 328, -80, 304, -64, 264, -72, 232, -72, 216, -80, 184, -72, 168, -80, 120, -64, 96, -64, 80, -72, 56, -64, 16, -64, -8, -40, -72, -24, -128, 16, -152, 24, -168, 16, -160, 8, -144, 0, -144, -16, -160, -24, -144, -32, -112, -48, -104, -64, -120, -72, -192, -72, -240, -80, -264, -80, -288, -104, -304, -112, -328, -104, -352, -80, -384, -80, -424, -64, -464, -56, -512, -48)
-uv = PackedVector2Array(0, 128, 128, 128, 128, 8.67797, 121.6, 13.0169, 118.4, 10.8475, 115.2, 8.67797, 112, 8.67797, 108.8, 13.0169, 103.467, 10.8475, 99.2, 10.8475, 97.0667, 8.67797, 92.8, 10.8475, 90.6667, 8.67797, 84.2667, 13.0169, 81.0667, 13.0169, 78.9333, 10.8475, 75.7333, 13.0169, 70.4, 13.0169, 67.2, 19.5254, 58.6667, 23.8644, 51.2, 34.7119, 48, 36.8814, 45.8667, 34.7119, 46.9333, 32.5424, 49.0667, 30.3729, 49.0667, 26.0339, 46.9333, 23.8644, 49.0667, 21.6949, 53.3333, 17.3559, 54.4, 13.0169, 52.2667, 10.8475, 42.6667, 10.8475, 36.2667, 8.67797, 33.0667, 8.67797, 29.8667, 2.16949, 27.7333, 0, 24.5333, 2.16949, 21.3333, 8.67797, 17.0667, 8.67797, 11.7333, 13.0169, 6.4, 15.1864, 0, 17.3559)
+uv = PackedVector2Array(0, 3.6875, 7.5, 3.6875, 7.5, 0.25, 7.125, 0.375, 6.9375, 0.3125, 6.75, 0.25, 6.5625, 0.25, 6.375, 0.375, 6.0625, 0.3125, 5.8125, 0.3125, 5.6875, 0.25, 5.4375, 0.3125, 5.3125, 0.25, 4.9375, 0.375, 4.75, 0.375, 4.625, 0.3125, 4.4375, 0.375, 4.125, 0.375, 3.9375, 0.5625, 3.4375, 0.6875, 3, 1, 2.8125, 1.0625, 2.6875, 1, 2.75, 0.9375, 2.875, 0.875, 2.875, 0.75, 2.75, 0.6875, 2.875, 0.625, 3.125, 0.5, 3.1875, 0.375, 3.0625, 0.3125, 2.5, 0.3125, 2.125, 0.25, 1.9375, 0.25, 1.75, 0.0625, 1.625, 0, 1.4375, 0.0625, 1.25, 0.25, 1, 0.25, 0.6875, 0.375, 0.375, 0.4375, 0, 0.5)
 script = ExtResource("5_6qhos")
 alignment = 3
 power = 0
@@ -1035,7 +1074,7 @@ position = Vector2(1344, 1688)
 color = Color(0.843137, 0.792157, 0.752941, 1)
 texture = ExtResource("4_tr1vh")
 polygon = PackedVector2Array(-256, 144, 128, 144, 256, 72, 192, 72, 96, 64, 64, 40, 48, 8, 56, -8, 128, -40, 168, -40, 200, -88, 256, -112, 312, -136, 360, -144, 400, -168, 384, -184, 312, -224, 240, -232, 184, -264, 112, -272, 40, -272, 0, -256, -40, -272, -72, -264, -104, -264, -120, -272, -184, -248, -216, -264, -240, -280, -256, -296)
-uv = PackedVector2Array(0, 128, 74.9268, 128, 99.9024, 107.055, 87.4146, 107.055, 68.6829, 104.727, 62.439, 97.7455, 59.3171, 88.4364, 60.878, 83.7818, 74.9268, 74.4727, 82.7317, 74.4727, 88.9756, 60.5091, 99.9024, 53.5273, 110.829, 46.5455, 120.195, 44.2182, 128, 37.2364, 124.878, 32.5818, 110.829, 20.9455, 96.7805, 18.6182, 85.8537, 9.30909, 71.8049, 6.98182, 57.7561, 6.98182, 49.9512, 11.6364, 42.1463, 6.98182, 35.9024, 9.30909, 29.6585, 9.30909, 26.5366, 6.98182, 14.0488, 13.9636, 7.80488, 9.30909, 3.12195, 4.65455, 0, 0)
+uv = PackedVector2Array(0, 3.4375, 3, 3.4375, 4, 2.875, 3.5, 2.875, 2.75, 2.8125, 2.5, 2.625, 2.375, 2.375, 2.4375, 2.25, 3, 2, 3.3125, 2, 3.5625, 1.625, 4, 1.4375, 4.4375, 1.25, 4.8125, 1.1875, 5.125, 1, 5, 0.875, 4.4375, 0.5625, 3.875, 0.5, 3.4375, 0.25, 2.875, 0.1875, 2.3125, 0.1875, 2, 0.3125, 1.6875, 0.1875, 1.4375, 0.25, 1.1875, 0.25, 1.0625, 0.1875, 0.5625, 0.375, 0.3125, 0.25, 0.125, 0.125, 0, 0)
 script = ExtResource("5_6qhos")
 alignment = 3
 power = 0

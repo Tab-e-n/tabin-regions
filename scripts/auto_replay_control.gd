@@ -68,7 +68,28 @@ func get_next_move():
 
 # ------------ SAVE AND LOAD ------------
 
-func save_replay(replay_name: String):
+func standard_replay_filename(replay_name: String) -> String:
+	if FileAccess.file_exists("user://" + replay_name + ".replay"):
+		var i: int = 1
+		while FileAccess.file_exists("user://" + replay_name + " " + str(i) + ".replay"):
+			i += 1
+		replay_name += " " + str(i)
+	
+	return "user://" + replay_name + ".replay"
+
+
+func stats_replay_filename(replay_name: String) -> String:
+	if not GameStats.victorious_alignment.is_empty():
+		replay_name += " - " + GameStats.victorious_alignment
+	return standard_replay_filename(replay_name)
+
+
+func pack_replay_filename(pack: String, map: String, check: String, dp: DPControl.Controler) -> String:
+	pack = pack.trim_prefix("res://")
+	return standard_replay_filename(pack + "/" + map + "_" + check + "_" + str(dp))
+
+
+func save_replay(replay_name: String) -> void:
 	var replay_save : Dictionary = {
 		"game_version" : Options.VERSION,
 		"replay_dir" : MapSetup.current_directory,
@@ -82,23 +103,19 @@ func save_replay(replay_name: String):
 		"last_turn" : last_turn,
 	}
 	
-	if not GameStats.victorious_alignment.is_empty():
-		replay_name += " - " + GameStats.victorious_alignment
-	if FileAccess.file_exists("user://" + replay_name + ".replay"):
-		var i: int = 1
-		while FileAccess.file_exists("user://" + replay_name + " " + str(i) + ".replay"):
-			i += 1
-		replay_name += " " + str(i)
+	var file = FileAccess.open(replay_name, FileAccess.WRITE)
 	
-	var file = FileAccess.open("user://" + replay_name + ".replay", FileAccess.WRITE)
+	if file == null:
+		push_error("Couldn't save replay file: ", replay_name)
+		return
 	
 	file.store_string(JSON.stringify(replay_save))
 	
 	file.close()
 
 
-func load_replay(replay_name: String):
-	var replay_save : Dictionary = {
+func load_replay(replay_name: String) -> bool:
+	var replay_save: Dictionary = {
 	}
 	
 	if FileAccess.file_exists(replay_name):
@@ -137,5 +154,5 @@ func load_replay(replay_name: String):
 		
 		return true
 	else:
-		push_warning("Couldn't open replay file")
+		push_warning("Couldn't open replay file: ", replay_name)
 		return false

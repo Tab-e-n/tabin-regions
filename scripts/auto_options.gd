@@ -43,6 +43,8 @@ func _ready():
 	DirAccess.make_dir_absolute("user://Dev")
 	
 	load_options()
+	
+	MapSetup._options_loaded()
 
 
 func _physics_process(_delta):

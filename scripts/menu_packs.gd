@@ -70,6 +70,7 @@ func change_directory(dir: String):
 
 func open_directory(dir: String):
 	change_directory(dir)
+	MapSetup.load_pack_user_data()
 	menu_control.change_tab("maps")
 
 

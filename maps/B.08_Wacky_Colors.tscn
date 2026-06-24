@@ -69,6 +69,7 @@ polygon = PackedVector2Array(-1384, 600, -552, 1480, 504, 1208, 1056, 144, 1048,
 script = ExtResource("1_l550i")
 complexity = 2
 lore = "Wacky colors indeed!"
+checkmarks = 2
 align_amount = 9
 align_color = Array[Color]([Color(0.717647, 0.678431, 0.788235, 1), Color(0.647059, 0.509804, 0.376471, 1), Color(0.223529, 0.337255, 0.129412, 1), Color(0.333333, 0.415686, 0.635294, 1), Color(0.537255, 0.345098, 0.439216, 1), Color(0.168627, 0.266667, 0.337255, 1), Color(0.309804, 0.294118, 0.231373, 1), Color(0.929412, 0.654902, 0.356863, 1), Color(0.180392, 0.34902, 0.286275, 1)])
 align_names = Array[String](["Neutral", "Sand", "Grass", "Denim", "Mauve", "Ocean", "Tank", "Sunrise", "Frog"])

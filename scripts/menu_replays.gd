@@ -37,7 +37,7 @@ func setup_replay_list(replay_names: PackedStringArray) -> void:
 func start_replay(filename: String):
 	if ReplayControl.load_replay("user://" + filename):
 		Options.discard_timestamp_sums()
-		Options.timestamp("START MAP", "")
+		Options.timestamp("START REPLAY", "")
 		get_tree().change_scene_to_file("res://main.tscn")
 	else:
 		show_fail_popup()

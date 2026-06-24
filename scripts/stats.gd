@@ -186,7 +186,8 @@ func _on_csv_pressed():
 
 func _on_replay_pressed():
 	var map_name: String = MapSetup.current_map_name.trim_suffix(".tscn")
-	ReplayControl.save_replay(map_name.replace("_", " "))
+	var replay_name: String = ReplayControl.stats_replay_filename(map_name.replace("_", " "))
+	ReplayControl.save_replay(replay_name)
 	$buttons/save.text = "Saved Replay!"
 
 

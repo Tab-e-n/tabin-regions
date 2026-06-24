@@ -68,6 +68,25 @@ var selected_amount: int = 1
 var replay_done_action: bool = true
 
 
+static func dp_color(dp: DPControl.Controler) -> Color:
+	match dp:
+		DPControl.Controler.DEFAULT:
+			return Color("6aee80ff")
+		DPControl.Controler.TURTLE:
+			return Color("ffffffff")
+		DPControl.Controler.SIMPLETON:
+			return Color("7bd37bff")
+		DPControl.Controler.OVERTHINKER:
+			return Color("8282d5ff")
+		DPControl.Controler.BOOKWYRM:
+			return Color("daa16dff")
+		DPControl.Controler.CHEATER:
+			return Color("a23e3eff")
+		DPControl.Controler.DUMMY:
+			return Color("e9d44dff")
+	return Color.WHITE
+
+
 func _ready():
 	Options.timestamp("DPCotrol")
 	

@@ -480,7 +480,7 @@ func update_current_turn():
 			current_turn.text += " / " + str(ReplayControl.last_turn)
 
 
-func advance_turn_visual(type : int):
+func advance_turn_visual(type: int):
 	if advance_action_light:
 		advance_action_light.visible = type == 0
 	
@@ -494,7 +494,7 @@ func advance_turn_visual(type : int):
 		advance_mobilize_dark.visible = type == 3
 
 
-func update_current_action(current_phase : int):
+func update_current_action(current_phase: int):
 	if current_action:
 		current_action.text = ACTIONS[current_phase]
 	if current_phase == RegionControl.PHASE.MOBILIZE:
@@ -729,7 +729,7 @@ func _on_actions_modified(amount : int) -> void:
 		power_amount.text = String.num(region_control.get_action_amount())
 	if amount != 0:
 		make_action_changed_particle(amount, region_control.get_current_alignment_color())
-	if region_control.get_action_amount() == 0:
+	if region_control.current_phase != RegionControl.PHASE.MOBILIZE and region_control.get_action_amount() == 0:
 		advance_turn_visual(1)
 
 

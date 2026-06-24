@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=3 uid="uid://mxbd88idtsnp"]
+[gd_scene load_steps=13 format=3 uid="uid://mxbd88idtsnp"]
 
 [ext_resource type="PackedScene" uid="uid://g8hj7dax3yvv" path="res://objects/selection_list.tscn" id="1_s85w4"]
 [ext_resource type="Script" path="res://scripts/menu_maps.gd" id="1_uv4ou"]
@@ -11,6 +11,7 @@
 [ext_resource type="Texture2D" uid="uid://brn02o1hdlpr0" path="res://sprites/dp/dp_smart.png" id="8_6c10l"]
 [ext_resource type="Texture2D" uid="uid://1i36seg78ctk" path="res://sprites/dp/dp_cheater.png" id="9_gaq7c"]
 [ext_resource type="Texture2D" uid="uid://deqhvnfw114vp" path="res://sprites/ui/advance.png" id="11_cyadq"]
+[ext_resource type="Script" path="res://scripts/checkmarks_container.gd" id="11_h367q"]
 
 [node name="maps" type="Control"]
 layout_mode = 3
@@ -242,6 +243,14 @@ texture_normal = ExtResource("8_6c10l")
 layout_mode = 2
 texture_normal = ExtResource("9_gaq7c")
 
+[node name="checkmarks" type="Container" parent="."]
+layout_mode = 0
+offset_left = 520.0
+offset_top = 288.0
+offset_right = 1144.0
+offset_bottom = 408.0
+script = ExtResource("11_h367q")
+
 [node name="map_title" type="Label" parent="."]
 layout_mode = 0
 offset_left = 520.0
@@ -276,9 +285,11 @@ clip_text = true
 layout_mode = 0
 offset_left = 1016.0
 offset_top = 472.0
-offset_right = 1144.0
-offset_bottom = 600.0
+offset_right = 1136.0
+offset_bottom = 592.0
+focus_mode = 0
 texture_normal = ExtResource("11_cyadq")
+stretch_mode = 3
 
 [connection signal="item_activated" from="maps" to="." method="_on_map_activated"]
 [connection signal="item_selected" from="maps" to="." method="_on_map_selected"]
@@ -291,4 +302,5 @@ texture_normal = ExtResource("11_cyadq")
 [connection signal="pressed" from="presets/clip/container/dp/buttons/overthinker" to="." method="_on_button_dp_pressed" binds= ["Overthinker"]]
 [connection signal="pressed" from="presets/clip/container/dp/buttons/bookwyrm" to="." method="_on_button_dp_pressed" binds= ["Bookwyrm"]]
 [connection signal="pressed" from="presets/clip/container/dp/buttons/cheater" to="." method="_on_button_dp_pressed" binds= ["Cheater"]]
+[connection signal="sort_children" from="checkmarks" to="checkmarks" method="_on_sort_children"]
 [connection signal="pressed" from="start" to="." method="_on_start_pressed"]

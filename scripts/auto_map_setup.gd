@@ -13,11 +13,15 @@ var used_alignments: int = 0
 
 var preset_alignments: Array[int] = []
 
+var pack_user_data: Dictionary = {}
 
-func _ready():
+
+func _options_loaded():
 	current_directory = Options.last_pack
 	var info: Dictionary = load_pack_info()
 	current_pack_name = info["title"]
+	
+	load_pack_user_data()
 
 
 func load_map(_map_name: String) -> RegionControl:
@@ -83,6 +87,11 @@ func get_pack_savefile_name(pack_save_folder: String) -> String:
 #	return savefile
 
 
+func make_user_data_folder(pack_folder: String) -> void:
+	var save_folder: String = get_pack_save_folder(pack_folder)
+	DirAccess.make_dir_recursive_absolute(save_folder)
+
+
 func save_pack_savefile(save_name: String, data: Dictionary) -> bool:
 	var savefile: ConfigFile = ConfigFile.new()
 	
@@ -98,16 +107,28 @@ func load_pack_savefile(save_name: String) -> Dictionary:
 	var savefile: ConfigFile = ConfigFile.new()
 	
 	var data: Dictionary = {}
+	var err: Error = savefile.load(save_name)
 	
-	if savefile.load(save_name):
+	if err == OK:
 		for section in savefile.get_sections():
 			data[section] = {}
 			for key in savefile.get_section_keys(section):
 				var value: Variant = savefile.get_value(section, key)
 				if value != null:
 					data[section][key] = value
+	else:
+		push_error("Couldn't open pack savefile: ", save_name)
 	
 	return data
+
+
+func load_pack_user_data() -> void:
+	var save_folder: String = get_pack_save_folder(current_directory)
+#	print(save_folder)
+	if DirAccess.dir_exists_absolute(save_folder):
+		var savefile_name: String = get_pack_savefile_name(save_folder)
+#		print(savefile_name)
+		pack_user_data = load_pack_savefile(savefile_name)
 
 
 func set_pack_data(data: Dictionary, section: String, key: String, value: Variant) -> void:
@@ -122,19 +143,75 @@ func get_pack_data(data: Dictionary, section: String, key: String, default: Vari
 	return data[section][key]
 
 
+func get_pack_section(data: Dictionary, section: String, default: Dictionary = {}) -> Dictionary:
+	if not data.has(section) or not data[section] is Dictionary:
+		return default
+	return data[section]
+
+
 # ------------ CHECKMARKS ------------
+
+func dp_difficulty(dp: DPControl.Controler) -> int:
+	match dp:
+		DPControl.Controler.DEFAULT:
+			return 0
+		DPControl.Controler.DUMMY:
+			return 0
+		DPControl.Controler.TURTLE:
+			return 1
+		DPControl.Controler.SIMPLETON:
+			return 2
+		DPControl.Controler.OVERTHINKER:
+			return 3
+		DPControl.Controler.BOOKWYRM:
+			return 4
+		DPControl.Controler.CHEATER:
+			return 5
+		_:
+			return 0
+
+
+func harder_dp(current: DPControl.Controler, new: DPControl.Controler) -> bool:
+	return dp_difficulty(new) > dp_difficulty(current)
+
 
 func check_general() -> String:
 	return "won"
+
+
+func check_bonus() -> String:
+	return "bonus"
 
 
 func check_alignment(alignment: int) -> String:
 	return str(alignment)
 
 
-func checkmark_set(data: Dictionary, map: String, check: String, dp: DPControl.Controler) -> void:
-	set_pack_data(data, map, check, dp)
+func checkmark_set(map: String, check: String, dp: DPControl.Controler) -> void:
+	set_pack_data(pack_user_data, map, check, dp)
 
 
-func checkmark_save_replay(data: Dictionary, map: String, check: String, dp: DPControl.Controler) -> void:
-	pass # TODO
+func checkmark_get(map: String, check: String, dp: DPControl.Controler = DPControl.Controler.DUMMY) -> Variant:
+	return get_pack_data(pack_user_data, map, check, dp)
+
+
+func get_map_checkmarks(map: String) -> Dictionary:
+	return get_pack_section(pack_user_data, map)
+
+
+func checkmark_save_replay(pack: String, map: String, check: String, dp: DPControl.Controler) -> void:
+	make_user_data_folder(pack)
+	var replay_name: String = ReplayControl.pack_replay_filename(pack, map, check, dp)
+	ReplayControl.save_replay(replay_name)
+
+
+func checkmark_load_replay(pack: String, map: String, check: String, dp: DPControl.Controler) -> bool:
+	var replay_name: String = ReplayControl.pack_replay_filename(pack, map, check, dp)
+	return ReplayControl.load_replay(replay_name)
+
+
+func save_checkmarks() -> void:
+	make_user_data_folder(current_directory)
+	var save_folder: String = get_pack_save_folder(current_directory)
+	var savefile_name: String = get_pack_savefile_name(save_folder)
+	save_pack_savefile(savefile_name, pack_user_data)
