@@ -245,9 +245,9 @@ texture_normal = ExtResource("9_gaq7c")
 
 [node name="checkmarks" type="Container" parent="."]
 layout_mode = 0
-offset_left = 520.0
+offset_left = 528.0
 offset_top = 288.0
-offset_right = 1144.0
+offset_right = 1136.0
 offset_bottom = 408.0
 script = ExtResource("11_h367q")
 

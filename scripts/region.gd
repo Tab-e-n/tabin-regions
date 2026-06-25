@@ -79,18 +79,13 @@ func _recalculate_polygon():
 			if i.y > far_down:
 				far_down = i.y
 		
-#		var width: float = abs(far_right - far_left)
-#		var height: float = abs(far_down - far_up)
-#		if width == 0.0:
-#			width = 1.0
-#		else:
-#			width = 1.0 / width
-#		if height == 0.0:
-#			height = 1.0
-#		else:
-#			height = 1.0 / height
+		var size: Vector2 = Vector2(abs(far_right - far_left), abs(far_down - far_up))
+		if size.x == 0.0:
+			size.x = 1.0
+		if size.y == 0.0:
+			size.y = 1.0
 		
-		var scaling: Vector2 = Vector2.ONE / TEXTURE_SIZE
+		var scaling: Vector2 = Vector2.ONE / (size / TEXTURE_SIZE)
 
 		material.set_shader_parameter("scale", scaling)
 		
@@ -98,10 +93,10 @@ func _recalculate_polygon():
 		temp_uv.resize(polygon.size())
 
 		for i in range(temp_uv.size()):
-#			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * height
-#			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * height
-			temp_uv[i].x = scaling.x * (polygon[i].x - far_left)
-			temp_uv[i].y = scaling.y * (polygon[i].y - far_up)
+#			temp_uv[i].x = TEXTURE_SIZE.x * (polygon[i].x - far_left) * size.y
+#			temp_uv[i].y = TEXTURE_SIZE.y * (polygon[i].y - far_up) * size.y
+			temp_uv[i].x = (polygon[i].x - far_left)
+			temp_uv[i].y = (polygon[i].y - far_up)
 #			print(temp_uv[i])
 
 		set_uv(temp_uv)
@@ -118,11 +113,12 @@ func _power_color(amount: int, no_zero: bool):
 
 
 func _ready():
-	if not texture or not material:
+	if true or not texture or not material:
 		_on_update_texture()
 	
 	if Engine.is_editor_hint():
 		_recalculate_polygon()
+		material.set_shader_parameter("current_color", color)
 		return
 	
 	_ready_deferred.call_deferred()
@@ -154,6 +150,7 @@ func _ready_deferred():
 
 func _process(delta):
 	if Engine.is_editor_hint() and region_control:
+		var previous: Color = color
 		match(region_control.render_mode):
 			RegionControl.RENDER_MODE.DISABLED:
 				color = Color(1, 1, 1, 1)
@@ -175,6 +172,8 @@ func _process(delta):
 				var col1: float = 1.0 - clampf(abs(position.x) / pos_range, 0, 1)
 				var col2: float = 1.0 - clampf(abs(position.y) / pos_range, 0, 1)
 				color = Color(col1, col2, 0.5, 1)
+		if previous != color:
+			material.set_shader_parameter("current_color", color)
 	
 	if not Engine.is_editor_hint():
 		if _color_change_time < 1.0:
@@ -448,7 +447,7 @@ func city_particle(is_mobilized : bool):
 
 ## Recolors the region.
 func color_self(animate: bool = true, backup_color: Color = color):
-	if(animate):
+	if animate:
 		material.set_shader_parameter("changing_color", true)
 		material.set_shader_parameter("n", 0)
 		material.set_shader_parameter("previous_color", color)
@@ -457,6 +456,7 @@ func color_self(animate: bool = true, backup_color: Color = color):
 		color = region_control.get_alignment_color(alignment, neutral_color)
 	else:
 		color = backup_color
+	material.set_shader_parameter("current_color", color)
 	if city:
 		city.color_self(color)
 	for link in links:
