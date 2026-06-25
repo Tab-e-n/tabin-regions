@@ -2,6 +2,8 @@ extends Node
 class_name Tornado
 
 
+signal turn_started()
+
 const WARNING_NAME: String = "TornadoWarning"
 
 
@@ -92,9 +94,10 @@ func _start_tornado_turn():
 		return
 	
 #	print("Start tornado turn")
+	turn_started.emit()
 	
 	if trigger_region and trigger_region.alignment != dummy_alignment:
-		controler.selected_action = DPControl.PlayerAction.FORFEIT
+		dp_control.selected_action = DPControl.PlayerAction.FORFEIT
 		for path in pathways:
 			path.deactivate()
 			path.update_warnings()
@@ -111,7 +114,7 @@ func _start_tornado_turn():
 	
 	if should_active_paths:
 		activate_pathways()
-		controler.selected_action = DPControl.PlayerAction.END_TURN
+		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 	
 	active = true
 
@@ -119,15 +122,15 @@ func _start_tornado_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if controler.selected_action != DPControl.PlayerAction.REGION:
+	if dp_control.selected_action != DPControl.PlayerAction.REGION:
 		return
 	if not active:
-		controler.selected_action = DPControl.PlayerAction.END_TURN
+		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 		return
 	
 	if current_path == pathways.size():
 #		print("Iterated through all paths")
-		controler.selected_action = DPControl.PlayerAction.END_TURN
+		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 		current_path = 0
 		return
 	
@@ -152,7 +155,7 @@ func _think_normal():
 		disabled_regions[current_path] = region
 	else:
 #		print("Path inactive")
-		controler.selected_action = DPControl.PlayerAction.NOTHING
+		dp_control.selected_action = DPControl.PlayerAction.NOTHING
 		if particle.deactivate():
 			ReplayControl.record_move(ReplayControl.RecordType.TORNADO, "", particle.tornado_id)
 	
@@ -162,7 +165,7 @@ func _think_normal():
 func _think_mobilize():
 	if controler.current_alignment != dummy_alignment:
 		return
-	controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
+	dp_control.selected_action = DPControl.PlayerAction.NEXT_PHASE
 
 
 func _think_bonus():

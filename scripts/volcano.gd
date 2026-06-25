@@ -4,6 +4,8 @@ extends Node
 class_name Volcano
 
 
+signal turn_started()
+
 const WARNING_NAME : String = "VolcanoWarning"
 
 
@@ -85,16 +87,18 @@ func _start_volcano_turn():
 	if controler.current_alignment != dummy_alignment:
 		return
 	
+	turn_started.emit()
+	
 	if residing_region.alignment != dummy_alignment:
-		controler.selected_action = DPControl.PlayerAction.FORFEIT
+		dp_control.selected_action = DPControl.PlayerAction.FORFEIT
 		for path in pathways:
 			path.deactivate()
 			path.update_warnings()
 		return
 	
 	if residing_region.power == residing_region.max_power:
-		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
-#	print(residing_region.power, "/", residing_region.max_power, " -> ", controler.selected_action)
+		dp_control.selected_action = DPControl.PlayerAction.NEXT_PHASE
+#	print(residing_region.power, "/", residing_region.max_power, " -> ", dp_control.selected_action)
 	
 	active = true
 
@@ -102,16 +106,16 @@ func _start_volcano_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if controler.selected_action != DPControl.PlayerAction.REGION:
+	if dp_control.selected_action != DPControl.PlayerAction.REGION:
 #		print("Skipping normal")
 		return
 	if not active:
 #		print("Ending turn")
-		controler.selected_action = DPControl.PlayerAction.END_TURN
+		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 		return
 	
 	if region_control.get_action_amount() == 0:
-		controler.selected_action = DPControl.PlayerAction.ADD_ACTION
+		dp_control.selected_action = DPControl.PlayerAction.ADD_ACTION
 	else:
 		dp_control.selected_capital = residing_region.name
 		active = false
@@ -121,12 +125,12 @@ func _think_normal():
 func _think_mobilize():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if controler.selected_action != DPControl.PlayerAction.REGION:
+	if dp_control.selected_action != DPControl.PlayerAction.REGION:
 		return
 	
 	if residing_region.power == 1:
 #		print("Erupting")
-		controler.selected_action = DPControl.PlayerAction.NEXT_PHASE
+		dp_control.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		shake_screen()
 	else:
 #		print("Timer reset")
@@ -146,7 +150,7 @@ func _think_bonus():
 		dp_control.select_overtake(path.get_next_region().name)
 		break
 	if call_end_turn:
-		controler.selected_action = DPControl.PlayerAction.END_TURN
+		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 		activate_pathways()
 
 
