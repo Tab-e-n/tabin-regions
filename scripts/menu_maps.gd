@@ -255,9 +255,9 @@ func update_dp_selection(dp: DPControl.Controler = Options.default_dp) -> void:
 		DPControl.Controler.BOOKWYRM:
 			dp_button = dp_button_bookwyrm
 			dp_label.text = "Bookwyrm"
-		DPControl.Controler.CHEATER:
-			dp_button = dp_button_cheater
-			dp_label.text = "Cheater"
+#		DPControl.Controler.CHEATER:
+#			dp_button = dp_button_cheater
+#			dp_label.text = "Cheater"
 		_:
 			dp_label.text = ""
 	
@@ -274,7 +274,7 @@ func set_dp_disabled(disabled: bool, map_dp: DPControl.Controler = Options.defau
 		DPControl.Controler.SIMPLETON : dp_button_simpleton, 
 		DPControl.Controler.OVERTHINKER : dp_button_overthinker,
 		DPControl.Controler.BOOKWYRM : dp_button_bookwyrm,
-		DPControl.Controler.CHEATER : dp_button_cheater,
+#		DPControl.Controler.CHEATER : dp_button_cheater,
 	}
 	
 	for dp in buttons:

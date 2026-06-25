@@ -240,6 +240,7 @@ layout_mode = 2
 texture_normal = ExtResource("8_6c10l")
 
 [node name="cheater" type="TextureButton" parent="presets/clip/container/dp/buttons"]
+visible = false
 layout_mode = 2
 texture_normal = ExtResource("9_gaq7c")
 
