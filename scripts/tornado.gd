@@ -68,7 +68,7 @@ func _deferred_ready():
 		return
 	
 	for node in get_children():
-		var path : RegionPath = node as RegionPath
+		var path: RegionPath = node as RegionPath
 		if not path:
 			continue
 		path.ready_pathway(region_control)

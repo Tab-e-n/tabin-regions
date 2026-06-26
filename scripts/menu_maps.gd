@@ -14,6 +14,7 @@ const CHECKMARK_TEXTURES: Dictionary = {
 
 var current_map: RegionControl = null
 var map_filenames: PackedStringArray = []
+var loading_in: bool = true
 
 @onready var map_list: SelectionList = $ui/maps as SelectionList
 @onready var map_preview: Node2D = $preview
@@ -160,6 +161,8 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 		map_preview.remove_child(current_map)
 		current_map.queue_free()
 		current_map = null
+	elif loading_in:
+		loading_in = false
 	else:
 		keep_sliders = true
 	
@@ -196,7 +199,10 @@ func setup_sliders() -> void:
 		return
 	
 	slider_leaders.visible = not current_map.lock_align_amount
-	slider_leaders.max_value = current_map.align_amount - 1
+	if current_map.used_alignments >= 2:
+		slider_leaders.max_value = current_map.used_alignments
+	else:
+		slider_leaders.max_value = current_map.align_amount - 1
 	slider_leaders.tick_count = int(slider_leaders.max_value) - 1
 		
 	slider_players.visible = not current_map.lock_player_amount
@@ -207,7 +213,7 @@ func setup_sliders() -> void:
 	slider_players.tick_count = int(slider_players.max_value) + 1
 	
 	slider_aliances.visible = not current_map.lock_aliances
-	slider_aliances.max_value = current_map.align_amount - 1
+	slider_aliances.max_value = slider_leaders.max_value
 	slider_aliances.tick_count = int(slider_aliances.max_value)
 
 

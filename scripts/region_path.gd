@@ -2,22 +2,23 @@ extends Node
 class_name RegionPath
 
 
-@export var pathway_region_names : Array[String] = []
+@export var pathway_region_names: Array[String] = []
 
 @export_subgroup("Disasters")
 ## When a disaster activates, it chooses which paths to use.
 ## Chosen frequency determines how many activations need to happen until this path gets chosen.
 ## At frequency 1 the path will be chosen every time.
-@export var chosen_frequency : int = 5
-@export var chosen_offset : int = 0
+@export var chosen_frequency: int = 5
+@export var chosen_offset: int = 0
 
-var active : bool = false
-var current : int = 0
-var pathway : Array[Region] = []
-var warnings : Array[RegionWarning] = []
+var active: bool = false
+var current: int = 0
+var pathway: Array[Region] = []
+var warnings: Array[RegionWarning] = []
 
 
-func ready_pathway(region_control : RegionControl) -> void:
+func ready_pathway(region_control: RegionControl) -> void:
+#	print(region_control.get_all_regions(), pathway_region_names)
 	for region_name in pathway_region_names:
 		var region = region_control.get_region(region_name)
 		if not region:

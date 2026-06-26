@@ -507,8 +507,11 @@ func update_current_action(current_phase: int):
 		phase_info.text = PHASE_INFO[current_phase]
 
 
-func make_action_changed_particle(amount : int, color : Color) -> void:
+func make_action_changed_particle(amount: int, color: Color) -> void:
 	if not Options.action_change_particles:
+		return
+	if Options.should_limit_flashing():
+		# they got burned into my monitor :(
 		return
 	if ui_hideable and not ui_hideable.visible:
 		return

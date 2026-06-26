@@ -52,7 +52,7 @@ func _process(_delta):
 	if hovering_available:
 		var hovered_player : int = available.get_leader_id_from_mouse()
 		
-		if hovered_player < current_map.align_names.size():
+		if hovered_player + 1 < current_map.align_names.size():
 			$text_name.text = current_map.align_names[hovered_player + 1]
 		
 		if Input.is_action_just_pressed("left_click"):

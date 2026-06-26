@@ -33,7 +33,6 @@ var converted : int = 0
 			link.from_name = region_from.name
 			link.to_name = region_to.name
 			link.power_reduction = power_reduction
-			link._generate_name()
 			converted += 1
 			i += 1
 			if i >= step:

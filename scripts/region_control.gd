@@ -157,6 +157,8 @@ const COLOR_TOO_BRIGHT: float = 0.85
 	21 : .125,
 } 
 
+@export var alignment_penalty_mult: Array[float] = []
+
 @export_subgroup("Alignments & Players")
 ## The number of alignments the map uses. Set it to a number of active alignments + 1 neutral alignment.
 @export var align_amount: int = 3
@@ -344,29 +346,31 @@ var play_order_i: int = 0
 var align_controlers: Array = []
 var is_player_controled: bool
 
-var regions : Dictionary = {}
-var capitals : Dictionary = {}
-var region_amount : Array[int] = []
-var last_turn_region_amount : Array[int] = []
-var capital_amount : Array[int] = []
+var regions: Dictionary = {}
+var capitals: Dictionary = {}
+var region_amount: Array[int] = []
+var last_turn_region_amount: Array[int] = []
+var capital_amount: Array[int] = []
 
-var removed_alignments : Array = []
+var removed_alignments: Array = []
+var used_alignments_changed: bool = false
 
-var current_phase : PHASE = PHASE.NORMAL
+var current_phase: PHASE = PHASE.NORMAL
 
-var first_action_amount : int = 1
-var bonus_action_amount : int = 0
+var first_action_amount: int = 1
+var bonus_action_amount: int = 0
 
-var current_turn : int = 1
-var current_placement : int = 0
+var current_turn: int = 1
+var current_placement: int = 0
 
-var penalty_amount : Array = []
+var penalty_amount: Array = []
 
 var region_description : RegionDescription = null
 var volcanos: Array[Volcano] = []
 var tornados: Array[ParticleTornado] = []
 
 var frame_actions_modified_amount: int = 0
+
 
 static func active(region_control : RegionControl) -> bool:
 	return region_control and not region_control.dummy
@@ -479,8 +483,9 @@ func _ready():
 			autoaliances_divisions_amount = MapSetup.aliances_amount
 			use_aliances = true
 			use_autoaliances = true
-		if not lock_align_amount:
+		if not lock_align_amount and MapSetup.used_alignments != used_alignments:
 			used_alignments = MapSetup.used_alignments
+			used_alignments_changed = true
 	
 	if save_cache:
 		_load_cache()
@@ -638,10 +643,11 @@ func _ready():
 			if center_region:
 				if center_region.is_capital and not region.is_capital:
 					continue
-				if center_region.power >= region.power:
-					continue
-				if center_region.max_power >= region.power:
-					continue
+				if center_region.is_capital == region.is_capital:
+					if center_region.power >= region.power:
+						continue
+					if center_region.max_power >= region.power:
+						continue
 			
 			center_region = region
 			
@@ -1132,10 +1138,13 @@ func player_won(align_victory: int) -> bool:
 
 func grant_checkmarks(align_victory: int) -> void:
 	if ReplayControl.replay_active:
-		print("Checkmark denied: Replays is happening")
+#		print("Checkmark denied: Replays is happening")
+		return
+	if used_alignments_changed:
+#		print("Checkmark denied: Less alignments than what dev intended")
 		return
 	if not player_won(align_victory):
-		print("Checkmark denied: Player didn't win")
+#		print("Checkmark denied: Player didn't win")
 		return
 	var new_dp: DPControl.Controler = default_digital_player
 	if lock_dp_setup:
@@ -1145,8 +1154,8 @@ func grant_checkmarks(align_victory: int) -> void:
 		if MapSetup.harder_dp(dp, new_dp):
 			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_general(), new_dp)
 			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_general(), new_dp)
-		else:
-			print("Big checkmark denied: Easier dp", str(dp), str(new_dp))
+#		else:
+#			print("Big checkmark denied: Easier dp", str(dp), str(new_dp))
 	if checkmarks & Checkmarks.ALIGNMENT == 0:
 		return
 	for align in align_play_order:
@@ -1156,8 +1165,8 @@ func grant_checkmarks(align_victory: int) -> void:
 		if MapSetup.harder_dp(dp, new_dp):
 			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
 			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
-		else:
-			print("Align checkmark denied: Easier dp")
+#		else:
+#			print("Align checkmark denied: Easier dp")
 
 
 # ------------ ACTIONS ------------
@@ -1229,7 +1238,7 @@ func add_action(amount: int = 1):
 
 # ------------ PENALTIES ------------
 
-func _calculate_penalty(alignment : int, end_of_turn : bool = false):
+func _calculate_penalty(alignment: int, end_of_turn: bool = false):
 	if apply_penalties == APPLY_PENALTIES.OFF:
 		return
 	if apply_penalties == APPLY_PENALTIES.PREVIOUS_CAPITAL and not end_of_turn:
@@ -1237,14 +1246,14 @@ func _calculate_penalty(alignment : int, end_of_turn : bool = false):
 	if power_gain_penalties.size() == 0:
 		return
 	
-	var amount_of_capitals : int = capital_amount[alignment - 1]
+	var amount_of_capitals: int = capital_amount[alignment - 1]
 	
-	var penalty : float = 0.0
-	for i in power_gain_penalties.keys():
-		if amount_of_capitals <= i:
+	var penalty: float = 0.0
+	for threshold in power_gain_penalties.keys():
+		if amount_of_capitals <= threshold:
 			break
-		penalty += float(amount_of_capitals - i) * power_gain_penalties[i]
-	var penalty_total = int(penalty)
+		penalty += float(amount_of_capitals - threshold) * power_gain_penalties[threshold]
+	var penalty_total = int(penalty * alignment_penalty_mult[alignment - 1])
 	
 #	print(penalty_total)
 	
@@ -1291,18 +1300,18 @@ func get_alignment_penalties(alignment: int = current_playing_align) -> int:
 
 
 ## Turns all regions of alignment A into regions of alignment B
-func convert_alignment(alignment_a : int, alignment_b : int):
-	if alignment_a < 0:
-		push_warning("Alignment ", alignment_a, " cannot be converted.")
+func convert_alignment(alignment_from: int, alignment_to: int):
+	if alignment_from < 0:
+		push_warning("Alignment ", alignment_from, " cannot be converted.")
 		return
-	if alignment_b < 0:
-		push_warning("Alignment ", alignment_b, " cannot be converted to.")
+	if alignment_to < 0:
+		push_warning("Alignment ", alignment_to, " cannot be converted to.")
 		return
 	
 	for region in get_children():
 		if region is Region:
-			if region.alignment == alignment_a:
-				region.change_alignment(alignment_b)
+			if region.alignment == alignment_from:
+				region.change_alignment(alignment_to)
 
 
 # ------------ REGIONS ------------
