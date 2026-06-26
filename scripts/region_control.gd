@@ -437,6 +437,13 @@ static func setup_complexity_name(compx : SETUP_COMPLEXITY) -> String:
 			return "Unknown"
 
 
+static func map_rescale(map: RegionControl, desired_scale: Vector2, desired_aspect: Vector2) -> Vector4:
+	var bounds: Vector4 = map.map_bounds()
+	var size: Vector2 = map.map_size(bounds)
+	map.scale = desired_scale * (1 / max(max(size.x / desired_aspect.x, size.y / desired_aspect.y), 1))
+	return bounds
+
+
 func _tool_update_textures():
 	for node in get_children():
 		var region : Region = node as Region

@@ -115,9 +115,7 @@ func setup_menu_backup():
 func setup_menu_based_on_map(map_display_name: String, keep_sliders: bool = false):
 	current_map.dummy = true
 	
-	var bounds: Vector4 = current_map.map_bounds()
-	var map_size: Vector2 = current_map.map_size(bounds)
-	current_map.scale = Vector2(0.5, 0.5) * (1 / max(max(map_size.x / 1120, map_size.y / 800), 1))
+	var bounds: Vector4 = RegionControl.map_rescale(current_map, Vector2(0.5, 0.5) , Vector2(1120, 800))
 	current_map.position = -current_map.map_center_offset(bounds) * current_map.scale
 	
 	map_preview.add_child(current_map)

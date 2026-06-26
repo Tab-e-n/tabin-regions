@@ -553,7 +553,7 @@ shader_parameter/previous_color = Color(1, 1, 1, 1)
 
 [node name="RegionControl" type="Polygon2D" node_paths=PackedStringArray("region_links")]
 color = Color(0.521569, 0.521569, 0.603922, 1)
-polygon = PackedVector2Array(-3200, -1848, 3200, -1848, 3200, 1848, -3200, 1848)
+polygon = PackedVector2Array(-3200, -1848, -576, -1856, -576, -128, -3200, -128)
 script = ExtResource("1_wwdnx")
 complexity = 2
 lore = "I used to rule the world, 

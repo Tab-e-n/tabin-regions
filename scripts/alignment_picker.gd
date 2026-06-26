@@ -19,6 +19,7 @@ func _ready():
 	if packed_map:
 		current_map = packed_map.instantiate()
 		current_map.dummy = true
+		RegionControl.map_rescale(current_map, Vector2.ONE, Vector2(1120, 608))
 		$play.modulate = RegionControl.slight_tint(current_map.color)
 		$map.add_child(current_map)
 	
