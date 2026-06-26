@@ -221,7 +221,7 @@ func replay():
 	replay_done_action = false
 	
 	var next_move = ReplayControl.get_next_move()
-	print(next_move)
+#	print(next_move)
 	var type: ReplayControl.RecordType = next_move[0]
 	var action: String = next_move[1]
 	var amount: int = next_move[2]
@@ -382,7 +382,7 @@ func forfeit() -> void:
 
 func end_turn() -> void:
 	region_control.end_turn()
-	ReplayControl.record_move.call_deferred(ReplayControl.RecordType.FUNCTION, "end_turn")
+	ReplayControl.record_move(ReplayControl.RecordType.FUNCTION, "end_turn")
 
 
 func next_phase() -> bool:

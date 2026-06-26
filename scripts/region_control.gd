@@ -121,6 +121,8 @@ const LAST_PHASE: PHASE = PHASE.BONUS
 ## When coloring text on an alignments color, the text will turn black if the brightness of the color is higher than this constant.
 const COLOR_TOO_BRIGHT: float = 0.85
 
+const MINIMUM_ALLOWED_ALIGNMENTS: int = 2
+
 
 @export_subgroup("Setup Scene")
 ## Tells the player the type of the map.
@@ -372,7 +374,7 @@ var tornados: Array[ParticleTornado] = []
 var frame_actions_modified_amount: int = 0
 
 
-static func active(region_control : RegionControl) -> bool:
+static func active(region_control: RegionControl) -> bool:
 	return region_control and not region_control.dummy
 
 
@@ -491,8 +493,11 @@ func _ready():
 			use_aliances = true
 			use_autoaliances = true
 		if not lock_align_amount and MapSetup.used_alignments != used_alignments:
+			if used_alignments < MINIMUM_ALLOWED_ALIGNMENTS:
+				used_alignments_changed = MapSetup.used_alignments != align_amount - 1
+			else:
+				used_alignments_changed = true
 			used_alignments = MapSetup.used_alignments
-			used_alignments_changed = true
 	
 	if save_cache:
 		_load_cache()
@@ -836,7 +841,7 @@ func _remove_alignment(align: int, remove_capitals: bool):
 
 
 func _unused_alignments(alignments: Array[int]):
-	if used_alignments < 2 or used_alignments >= align_amount:
+	if used_alignments < MINIMUM_ALLOWED_ALIGNMENTS or used_alignments >= align_amount:
 		used_alignments = align_amount - 1
 	
 	# Preset alignments take precedent over used alignments
@@ -934,7 +939,7 @@ func _start_turn():
 	if color_bg_according_to_alignment:
 		var bg_color_tinted: Color = bg_color + get_alignment_color(current_playing_align) * Color(0.25, 0.25, 0.25)
 		if Options.should_limit_flashing():
-			if turn_is_player_turn():
+			if turn_is_player_turn() and not ReplayControl.replay_active:
 				color = bg_color_tinted
 			else:
 				color = bg_color
@@ -950,7 +955,7 @@ func _start_turn():
 		dp_control.start_turn(current_playing_align, get_align_controler(current_playing_align))
 
 
-func _new_round(_in_ready : bool = false):
+func _new_round(_in_ready: bool = false):
 	
 	for alignment in range(1, align_amount):
 		GameStats.set_stat(alignment, "regions", get_alignment_regions(alignment))
@@ -1020,9 +1025,9 @@ func end_turn():
 		if play_order_i == starting_player:
 			break
 	
-	_check_victory()
-	
 	_check_eliminations()
+	
+	_check_victory()
 	
 	last_turn_region_amount = region_amount.duplicate()
 	
@@ -1063,8 +1068,8 @@ func turn_is_player_turn() -> bool:
 # ------------ GAME END ------------
 
 func _check_victory():
-	var aliance : int = 0
-	var victory_align : int = 0
+	var aliance: int = 0
+	var victory_align: int = 0
 	for i in range(region_amount.size()):
 		if region_amount[i] > 0:
 			if alignment_aliances[i + 1] <= 0:
@@ -1074,7 +1079,9 @@ func _check_victory():
 				aliance = alignment_aliances[i + 1]
 			elif aliance != alignment_aliances[i + 1]:
 				return
-	victory(victory_align)
+	
+	ReplayControl.last_turn = current_turn
+	victory.call_deferred(victory_align)
 
 
 func _check_eliminations():
@@ -1099,13 +1106,12 @@ func forfeit():
 func victory(align_victory: int):
 	dummy = true
 	
-	ReplayControl.last_turn = current_turn
 	GameStats.set_stat(align_victory, "placement", "1")
 	
 	var placement = String.num(current_placement)
 	
 	for i in range(align_amount - 1):
-		var align : int = i + 1
+		var align: int = i + 1
 		if alignment_aliances[align] <= 0:
 			continue
 		if use_aliances:
@@ -1145,13 +1151,13 @@ func player_won(align_victory: int) -> bool:
 
 func grant_checkmarks(align_victory: int) -> void:
 	if ReplayControl.replay_active:
-#		print("Checkmark denied: Replays is happening")
+		if Options.checkmark_debug: print("Checkmark denied: Replays is happening")
 		return
 	if used_alignments_changed:
-#		print("Checkmark denied: Less alignments than what dev intended")
+		if Options.checkmark_debug: print("Checkmark denied: Less alignments than what dev intended")
 		return
 	if not player_won(align_victory):
-#		print("Checkmark denied: Player didn't win")
+		if Options.checkmark_debug: print("Checkmark denied: Player didn't win")
 		return
 	var new_dp: DPControl.Controler = default_digital_player
 	if lock_dp_setup:
@@ -1161,8 +1167,7 @@ func grant_checkmarks(align_victory: int) -> void:
 		if MapSetup.harder_dp(dp, new_dp):
 			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_general(), new_dp)
 			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_general(), new_dp)
-#		else:
-#			print("Big checkmark denied: Easier dp", str(dp), str(new_dp))
+		elif Options.checkmark_debug: print("Big checkmark denied: Easier dp", str(dp), str(new_dp))
 	if checkmarks & Checkmarks.ALIGNMENT == 0:
 		return
 	for align in align_play_order:
@@ -1172,8 +1177,7 @@ func grant_checkmarks(align_victory: int) -> void:
 		if MapSetup.harder_dp(dp, new_dp):
 			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
 			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
-#		else:
-#			print("Align checkmark denied: Easier dp")
+		elif Options.checkmark_debug: print("Align checkmark denied: Easier dp")
 
 
 # ------------ ACTIONS ------------

@@ -68,8 +68,8 @@ func get_next_move():
 
 # ------------ SAVE AND LOAD ------------
 
-func standard_replay_filename(replay_name: String) -> String:
-	if FileAccess.file_exists("user://" + replay_name + ".replay"):
+func standard_replay_filename(replay_name: String, prevent_overwrite: bool = true) -> String:
+	if prevent_overwrite and FileAccess.file_exists("user://" + replay_name + ".replay"):
 		var i: int = 1
 		while FileAccess.file_exists("user://" + replay_name + " " + str(i) + ".replay"):
 			i += 1
@@ -86,7 +86,7 @@ func stats_replay_filename(replay_name: String) -> String:
 
 func pack_replay_filename(pack: String, map: String, check: String, dp: DPControl.Controler) -> String:
 	pack = pack.trim_prefix("res://")
-	return standard_replay_filename(pack + "/" + map + "_" + check + "_" + str(dp))
+	return standard_replay_filename(pack + "/" + map + "_" + check + "_" + str(dp), false)
 
 
 func save_replay(replay_name: String) -> void:

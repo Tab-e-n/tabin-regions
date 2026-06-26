@@ -28,6 +28,7 @@ var action_change_particles: bool = true
 var debug_options: bool = false
 var capital_distance_visible: bool = false
 var timestamps_active: bool = false
+var checkmark_debug: bool = false
 
 var last_tab: String = "maps"
 var last_pack: String = "res://maps"
@@ -72,7 +73,7 @@ func save_options() -> Error:
 	
 	savefile.set_value("Legacy", "mouse_scroll_active", mouse_scroll_active)
 	
-	savefile.set_value("Menu", "last_tab", last_tab)
+#	savefile.set_value("Menu", "last_tab", last_tab)
 	savefile.set_value("Menu", "last_pack", last_pack)
 	savefile.set_value("Menu", "accepted_directory_danger", accepted_directory_danger)
 	savefile.set_value("Menu", "allowed_directories", allowed_directories)
@@ -80,6 +81,7 @@ func save_options() -> Error:
 	savefile.set_value("Debug", "debug_options", debug_options)
 	savefile.set_value("Debug", "capital_distance_visible", capital_distance_visible)
 	savefile.set_value("Debug", "timestamps_active", timestamps_active)
+	savefile.set_value("Debug", "checkmark_debug", checkmark_debug)
 	
 	return savefile.save(SAVEFILE)
 

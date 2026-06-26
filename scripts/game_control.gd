@@ -243,7 +243,7 @@ func _process(delta : float):
 					new_callout("Advance turn")
 			
 			if Input.is_action_just_pressed("grab_extra"):
-				region_control.grab_extra_power()
+				dp_control.grab_extra_power()
 			elif Input.is_action_just_pressed("show_extra"):
 				if Input.is_action_pressed("shift"):
 					show_extra_other.emit(region_control.current_playing_align)

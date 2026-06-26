@@ -246,7 +246,22 @@ theme_override_styles/disabled = ExtResource("3_qatca")
 theme_override_styles/hover = ExtResource("3_qatca")
 theme_override_styles/hover_pressed = ExtResource("3_qatca")
 theme_override_styles/focus = ExtResource("3_qatca")
-text = "Console timestamps"
+text = "Print timestamps"
+
+[node name="checkmarks" type="CheckButton" parent="debug"]
+layout_mode = 0
+offset_left = 8.0
+offset_top = 96.0
+offset_right = 328.0
+offset_bottom = 128.0
+focus_mode = 0
+theme_override_styles/normal = ExtResource("3_qatca")
+theme_override_styles/pressed = ExtResource("3_qatca")
+theme_override_styles/disabled = ExtResource("3_qatca")
+theme_override_styles/hover = ExtResource("3_qatca")
+theme_override_styles/hover_pressed = ExtResource("3_qatca")
+theme_override_styles/focus = ExtResource("3_qatca")
+text = "Checkmark debug print"
 
 [node name="save" type="Button" parent="."]
 layout_mode = 0
@@ -278,4 +293,5 @@ vertical_alignment = 1
 [connection signal="toggled" from="legacy/mouse_scroll" to="." method="set_mouse_scroll"]
 [connection signal="toggled" from="debug/capital_dist" to="." method="set_capital_distance_visible"]
 [connection signal="toggled" from="debug/timestamps" to="." method="set_timestamps_active"]
+[connection signal="toggled" from="debug/checkmarks" to="." method="set_checkmark_debug"]
 [connection signal="pressed" from="save" to="." method="_on_save_pressed"]

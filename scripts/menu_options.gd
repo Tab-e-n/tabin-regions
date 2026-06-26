@@ -9,6 +9,7 @@ func _ready():
 	$gameplay/graph.set_pressed_no_signal(Options.use_graph)
 	$debug/capital_dist.set_pressed_no_signal(Options.capital_distance_visible)
 	$debug/timestamps.set_pressed_no_signal(Options.timestamps_active)
+	$debug/checkmarks.set_pressed_no_signal(Options.checkmark_debug)
 	$gameplay/dp_speed.set_value_no_signal(1.0 - (Options.dp_think_timer - DPControl.THINKING_TIMER_MIN) / (DPControl.THINKING_TIMER_MAX - DPControl.THINKING_TIMER_MIN))
 	$debug.visible = Options.debug_options or Options.editor
 	init_default_dp()
@@ -47,12 +48,16 @@ func set_capital_distance_visible(value: bool):
 	Options.capital_distance_visible = value
 
 
-func set_template(value: bool):
-	Options.use_graph = value
-
-
 func set_timestamps_active(value: bool):
 	Options.timestamps_active = value
+
+
+func set_checkmark_debug(value: bool):
+	Options.checkmark_debug = value
+
+
+func set_template(value: bool):
+	Options.use_graph = value
 
 
 func init_default_dp():

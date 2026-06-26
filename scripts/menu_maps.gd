@@ -14,7 +14,6 @@ const CHECKMARK_TEXTURES: Dictionary = {
 
 var current_map: RegionControl = null
 var map_filenames: PackedStringArray = []
-var loading_in: bool = true
 
 @onready var map_list: SelectionList = $ui/maps as SelectionList
 @onready var map_preview: Node2D = $preview
@@ -49,7 +48,7 @@ var loading_in: bool = true
 func _ready() -> void:
 	update_presets.call_deferred()
 	
-	slider_leaders.min_value = 2
+	slider_leaders.min_value = RegionControl.MINIMUM_ALLOWED_ALIGNMENTS
 	slider_players.min_value = 0
 	slider_aliances.min_value = 1
 
@@ -130,7 +129,7 @@ func setup_menu_based_on_map(map_display_name: String, keep_sliders: bool = fals
 		slider_players.value = MapSetup.player_amount
 		slider_aliances.value = MapSetup.aliances_amount
 	else:
-		if current_map.used_alignments >= 2:
+		if current_map.used_alignments >= RegionControl.MINIMUM_ALLOWED_ALIGNMENTS:
 			slider_leaders.value = current_map.used_alignments
 		else:
 			slider_leaders.value = current_map.align_amount - 1
@@ -159,8 +158,8 @@ func load_map(map_name: String, map_display_name: String, keep_sliders: bool = f
 		map_preview.remove_child(current_map)
 		current_map.queue_free()
 		current_map = null
-	elif loading_in:
-		loading_in = false
+	elif MapSetup.loading_in:
+		MapSetup.loading_in = false
 	else:
 		keep_sliders = true
 	
@@ -197,7 +196,7 @@ func setup_sliders() -> void:
 		return
 	
 	slider_leaders.visible = not current_map.lock_align_amount
-	if current_map.used_alignments >= 2:
+	if current_map.used_alignments >= RegionControl.MINIMUM_ALLOWED_ALIGNMENTS:
 		slider_leaders.max_value = current_map.used_alignments
 	else:
 		slider_leaders.max_value = current_map.align_amount - 1
