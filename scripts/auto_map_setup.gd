@@ -154,25 +154,25 @@ func get_pack_section(data: Dictionary, section: String, default: Dictionary = {
 func dp_difficulty(dp: DPControl.Controler) -> int:
 	match dp:
 		DPControl.Controler.DEFAULT:
-			return 0
+			return 1
 		DPControl.Controler.DUMMY:
 			return 0
 		DPControl.Controler.TURTLE:
-			return 1
-		DPControl.Controler.SIMPLETON:
 			return 2
-		DPControl.Controler.OVERTHINKER:
+		DPControl.Controler.SIMPLETON:
 			return 3
-		DPControl.Controler.BOOKWYRM:
+		DPControl.Controler.OVERTHINKER:
 			return 4
-		DPControl.Controler.CHEATER:
+		DPControl.Controler.BOOKWYRM:
 			return 5
+		DPControl.Controler.CHEATER:
+			return 6
 		_:
 			return 0
 
 
 func harder_dp(current: DPControl.Controler, new: DPControl.Controler) -> bool:
-	return dp_difficulty(new) > dp_difficulty(current)
+	return dp_difficulty(current) < dp_difficulty(new)
 
 
 func check_general() -> String:

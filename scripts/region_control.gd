@@ -919,7 +919,7 @@ func _start_turn():
 	_modify_action_amount(0)
 	
 	if color_bg_according_to_alignment:
-		var bg_color_tinted : Color = bg_color + get_alignment_color(current_playing_align) * Color(0.25, 0.25, 0.25)
+		var bg_color_tinted: Color = bg_color + get_alignment_color(current_playing_align) * Color(0.25, 0.25, 0.25)
 		if Options.should_limit_flashing():
 			if turn_is_player_turn():
 				color = bg_color_tinted
@@ -1132,8 +1132,10 @@ func player_won(align_victory: int) -> bool:
 
 func grant_checkmarks(align_victory: int) -> void:
 	if ReplayControl.replay_active:
+		print("Checkmark denied: Replays is happening")
 		return
 	if not player_won(align_victory):
+		print("Checkmark denied: Player didn't win")
 		return
 	var new_dp: DPControl.Controler = default_digital_player
 	if lock_dp_setup:
@@ -1143,6 +1145,8 @@ func grant_checkmarks(align_victory: int) -> void:
 		if MapSetup.harder_dp(dp, new_dp):
 			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_general(), new_dp)
 			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_general(), new_dp)
+		else:
+			print("Big checkmark denied: Easier dp", str(dp), str(new_dp))
 	if checkmarks & Checkmarks.ALIGNMENT == 0:
 		return
 	for align in align_play_order:
@@ -1152,6 +1156,8 @@ func grant_checkmarks(align_victory: int) -> void:
 		if MapSetup.harder_dp(dp, new_dp):
 			MapSetup.checkmark_set(MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
 			MapSetup.checkmark_save_replay(MapSetup.current_directory, MapSetup.current_map_name, MapSetup.check_alignment(align), new_dp)
+		else:
+			print("Align checkmark denied: Easier dp")
 
 
 # ------------ ACTIONS ------------

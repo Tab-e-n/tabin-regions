@@ -33,6 +33,7 @@ var pathways: Array[RegionPath] = []
 var active: bool = false
 var iteration: int = 0
 var volcano_id: int = 0
+var erupt: bool = false
 
 
 func _ready():
@@ -58,7 +59,6 @@ func _ready():
 		return
 	
 	_deferred_ready.call_deferred()
-	activate_pathways.call_deferred()
 
 
 func _deferred_ready():
@@ -69,6 +69,7 @@ func _deferred_ready():
 		path.ready_pathway(region_control)
 		path.create_warnings(warning_number, region_control.get_alignment_color(dummy_alignment))
 		pathways.append(path)
+	activate_pathways()
 	
 	dp_control = region_control.dp_control
 	var controler_id = region_control.align_controlers[dummy_alignment - 1]
@@ -96,9 +97,9 @@ func _start_volcano_turn():
 			path.update_warnings()
 		return
 	
-	if residing_region.power == residing_region.max_power:
-		dp_control.selected_action = DPControl.PlayerAction.NEXT_PHASE
-#	print(residing_region.power, "/", residing_region.max_power, " -> ", dp_control.selected_action)
+	if residing_region.power >= residing_region.max_power:
+		erupt = true
+#	print(residing_region.power, "/", residing_region.max_power, " -> ", erupt)
 	
 	active = true
 
@@ -106,8 +107,10 @@ func _start_volcano_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.selected_action != DPControl.PlayerAction.REGION:
+	if erupt:
 #		print("Skipping normal")
+		erupt = false
+		dp_control.selected_action = DPControl.PlayerAction.NEXT_PHASE
 		return
 	if not active:
 #		print("Ending turn")
@@ -117,9 +120,9 @@ func _think_normal():
 	if region_control.get_action_amount() == 0:
 		dp_control.selected_action = DPControl.PlayerAction.ADD_ACTION
 	else:
+#		print("Building Up")
 		dp_control.selected_capital = residing_region.name
 		active = false
-#		print(dp_control.selected_capital)
 
 
 func _think_mobilize():
@@ -146,6 +149,7 @@ func _think_bonus():
 	for path in pathways:
 		if not path.is_active():
 			continue
+#		print(path.name)
 		call_end_turn = false
 		dp_control.select_overtake(path.get_next_region().name)
 		break

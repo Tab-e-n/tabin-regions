@@ -15,32 +15,34 @@ const CHECKMARK_TEXTURES: Dictionary = {
 var current_map: RegionControl = null
 var map_filenames: PackedStringArray = []
 
-@onready var map_list: SelectionList = $maps as SelectionList
+@onready var map_list: SelectionList = $ui/maps as SelectionList
 @onready var map_preview: Node2D = $preview
 
-@onready var map_title: Label = $map_title as Label
-@onready var map_lore: Label = $map_lore as Label
-@onready var map_info: Label = $presets/clip/container/info as Label
+@onready var map_title: Label = $ui/map_title as Label
+@onready var map_lore: Label = $ui/map_lore as Label
+@onready var map_info: Label = $ui/presets/clip/container/info as Label
 
-@onready var slider_leaders: HSlider = $presets/clip/container/leaders/slider as HSlider
-@onready var slider_players: HSlider = $presets/clip/container/players/slider as HSlider
-@onready var slider_aliances: HSlider = $presets/clip/container/aliances/slider as HSlider
-@onready var slider_key_leaders: Label = $presets/clip/container/leaders/key as Label
-@onready var slider_key_players: Label = $presets/clip/container/players/key as Label
-@onready var slider_key_aliances: Label = $presets/clip/container/aliances/key as Label
+@onready var slider_leaders: HSlider = $ui/presets/clip/container/leaders/slider as HSlider
+@onready var slider_players: HSlider = $ui/presets/clip/container/players/slider as HSlider
+@onready var slider_aliances: HSlider = $ui/presets/clip/container/aliances/slider as HSlider
+@onready var slider_key_leaders: Label = $ui/presets/clip/container/leaders/key as Label
+@onready var slider_key_players: Label = $ui/presets/clip/container/players/key as Label
+@onready var slider_key_aliances: Label = $ui/presets/clip/container/aliances/key as Label
 
-@onready var dp_selector: Sprite2D = $presets/clip/container/dp/selector
-@onready var dp_label: Label = $presets/clip/container/dp/name
-@onready var dp_buttons: Control = $presets/clip/container/dp/buttons
-@onready var dp_button_turtle: BaseButton = $presets/clip/container/dp/buttons/turtle
-@onready var dp_button_simpleton: BaseButton = $presets/clip/container/dp/buttons/simpleton
-@onready var dp_button_overthinker: BaseButton = $presets/clip/container/dp/buttons/overthinker
-@onready var dp_button_bookwyrm: BaseButton = $presets/clip/container/dp/buttons/bookwyrm
-@onready var dp_button_cheater: BaseButton = $presets/clip/container/dp/buttons/cheater
+@onready var dp_selector: Sprite2D = $ui/presets/clip/container/dp/selector
+@onready var dp_label: Label = $ui/presets/clip/container/dp/name
+@onready var dp_buttons: Control = $ui/presets/clip/container/dp/buttons
+@onready var dp_button_turtle: BaseButton = $ui/presets/clip/container/dp/buttons/turtle
+@onready var dp_button_simpleton: BaseButton = $ui/presets/clip/container/dp/buttons/simpleton
+@onready var dp_button_overthinker: BaseButton = $ui/presets/clip/container/dp/buttons/overthinker
+@onready var dp_button_bookwyrm: BaseButton = $ui/presets/clip/container/dp/buttons/bookwyrm
+@onready var dp_button_cheater: BaseButton = $ui/presets/clip/container/dp/buttons/cheater
 
-@onready var directory_name_label: Label = $directory/name as Label
+@onready var directory_name_label: Label = $ui/directory/name as Label
 
-@onready var checkmarks: Container = $checkmarks as Container
+@onready var checkmarks: Container = $ui/checkmarks as Container
+
+@onready var ui_tintable: Control = $ui as Control
 
 
 func _ready() -> void:
@@ -150,7 +152,7 @@ func setup_menu_based_on_map(map_display_name: String, keep_sliders: bool = fals
 		set_dp_disabled(false)
 		update_dp_selection(MapSetup.default_digital_player)
 	
-	modulate = RegionControl.slight_tint(current_map.color)
+	ui_tintable.modulate = RegionControl.slight_tint(current_map.color)
 
 
 func load_map(map_name: String, map_display_name: String, keep_sliders: bool = false) -> void:
@@ -310,7 +312,7 @@ func setup_checkmarks() -> void:
 	if map_data.is_empty():
 		return
 	var checks: Array = map_data.keys()
-	checks.sort_custom(func(a, b): return a.naturalnocasecmp_to(b) < 0)
+	checks.sort_custom(func(a, b): return a.naturalnocasecmp_to(b) > 0)
 	for check in checks:
 		var button: TextureButton = TextureButton.new()
 		

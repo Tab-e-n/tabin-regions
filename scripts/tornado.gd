@@ -24,6 +24,7 @@ var pathways: Array[RegionPath] = []
 var current_path: int = 0
 var active: bool = false
 var iteration: int = 0
+var tornado_start: bool = false
 
 var disabled_regions: Array[Region] = []
 var particles: Array[ParticleTornado] = []
@@ -105,16 +106,15 @@ func _start_tornado_turn():
 #		print("Tornado ended")
 		return
 	
-	var should_active_paths: bool = true
+	tornado_start = true
 	for path in pathways:
 		if path.is_active():
-			should_active_paths = false
+			tornado_start = false
 	
 #	print("Should reactivate: ", should_active_paths)
 	
-	if should_active_paths:
+	if tornado_start:
 		activate_pathways()
-		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 	
 	active = true
 
@@ -122,9 +122,8 @@ func _start_tornado_turn():
 func _think_normal():
 	if controler.current_alignment != dummy_alignment:
 		return
-	if dp_control.selected_action != DPControl.PlayerAction.REGION:
-		return
-	if not active:
+	if not active or tornado_start:
+		tornado_start = false
 		dp_control.selected_action = DPControl.PlayerAction.END_TURN
 		return
 	

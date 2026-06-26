@@ -37,7 +37,12 @@ color = Color(0.364706, 0.364706, 0.439216, 1)
 z_index = -100
 position = Vector2(832, 208)
 
-[node name="maps" parent="." instance=ExtResource("1_s85w4")]
+[node name="ui" type="Control" parent="."]
+anchors_preset = 0
+offset_right = 40.0
+offset_bottom = 40.0
+
+[node name="maps" parent="ui" instance=ExtResource("1_s85w4")]
 layout_mode = 1
 offset_left = 16.0
 offset_top = 56.0
@@ -45,13 +50,13 @@ offset_right = 496.0
 offset_bottom = 304.0
 empty_list_message = "No maps."
 
-[node name="directory" type="Control" parent="."]
+[node name="directory" type="Control" parent="ui"]
 layout_mode = 1
 anchors_preset = 0
 offset_right = 512.0
 offset_bottom = 48.0
 
-[node name="panel" type="Panel" parent="directory"]
+[node name="panel" type="Panel" parent="ui/directory"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -59,7 +64,7 @@ offset_right = 504.0
 offset_bottom = 40.0
 theme_override_styles/panel = ExtResource("3_led7l")
 
-[node name="name" type="Label" parent="directory"]
+[node name="name" type="Label" parent="ui/directory"]
 layout_mode = 0
 offset_left = 40.0
 offset_top = 8.0
@@ -70,7 +75,7 @@ text = "PACK"
 vertical_alignment = 1
 clip_text = true
 
-[node name="back" type="Button" parent="directory"]
+[node name="back" type="Button" parent="ui/directory"]
 layout_mode = 0
 offset_left = 16.0
 offset_top = 8.0
@@ -84,13 +89,13 @@ theme_override_styles/disabled = ExtResource("4_yh0bc")
 theme_override_styles/focus = ExtResource("4_yh0bc")
 text = "<"
 
-[node name="presets" type="Control" parent="."]
+[node name="presets" type="Control" parent="ui"]
 anchors_preset = 0
 offset_top = 320.0
 offset_right = 512.0
 offset_bottom = 608.0
 
-[node name="panel" type="Panel" parent="presets"]
+[node name="panel" type="Panel" parent="ui/presets"]
 layout_mode = 0
 offset_left = 8.0
 offset_top = 8.0
@@ -98,7 +103,7 @@ offset_right = 504.0
 offset_bottom = 280.0
 theme_override_styles/panel = ExtResource("3_led7l")
 
-[node name="clip" type="Control" parent="presets"]
+[node name="clip" type="Control" parent="ui/presets"]
 clip_contents = true
 layout_mode = 1
 anchors_preset = 15
@@ -111,7 +116,7 @@ offset_bottom = -16.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="container" type="VBoxContainer" parent="presets/clip"]
+[node name="container" type="VBoxContainer" parent="ui/presets/clip"]
 layout_mode = 1
 anchors_preset = 10
 anchor_right = 1.0
@@ -119,26 +124,26 @@ offset_bottom = 256.0
 grow_horizontal = 2
 theme_override_constants/separation = 4
 
-[node name="info" type="Label" parent="presets/clip/container"]
+[node name="info" type="Label" parent="ui/presets/clip/container"]
 layout_mode = 2
 text = "Beginner, Skirmish
 Preset player order"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="leaders" type="HBoxContainer" parent="presets/clip/container"]
+[node name="leaders" type="HBoxContainer" parent="ui/presets/clip/container"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="key" type="Label" parent="presets/clip/container/leaders"]
+[node name="key" type="Label" parent="ui/presets/clip/container/leaders"]
 custom_minimum_size = Vector2(120, 24)
 layout_mode = 2
 text = "LEADERS: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="slider" type="HSlider" parent="presets/clip/container/leaders"]
+[node name="slider" type="HSlider" parent="ui/presets/clip/container/leaders"]
 custom_minimum_size = Vector2(320, 24)
 layout_mode = 2
 focus_mode = 0
@@ -146,46 +151,46 @@ min_value = 2.0
 max_value = 2.0
 value = 2.0
 
-[node name="empty" type="Control" parent="presets/clip/container/leaders"]
+[node name="empty" type="Control" parent="ui/presets/clip/container/leaders"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 
-[node name="players" type="HBoxContainer" parent="presets/clip/container"]
+[node name="players" type="HBoxContainer" parent="ui/presets/clip/container"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="key" type="Label" parent="presets/clip/container/players"]
+[node name="key" type="Label" parent="ui/presets/clip/container/players"]
 custom_minimum_size = Vector2(120, 24)
 layout_mode = 2
 text = "PLAYERS: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="slider" type="HSlider" parent="presets/clip/container/players"]
+[node name="slider" type="HSlider" parent="ui/presets/clip/container/players"]
 custom_minimum_size = Vector2(320, 24)
 layout_mode = 2
 focus_mode = 0
 max_value = 2.0
 value = 2.0
 
-[node name="empty" type="Control" parent="presets/clip/container/players"]
+[node name="empty" type="Control" parent="ui/presets/clip/container/players"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 
-[node name="aliances" type="HBoxContainer" parent="presets/clip/container"]
+[node name="aliances" type="HBoxContainer" parent="ui/presets/clip/container"]
 custom_minimum_size = Vector2(0, 24)
 layout_mode = 2
 theme_override_constants/separation = 8
 
-[node name="key" type="Label" parent="presets/clip/container/aliances"]
+[node name="key" type="Label" parent="ui/presets/clip/container/aliances"]
 custom_minimum_size = Vector2(120, 24)
 layout_mode = 2
 text = "ALIANCES: 0"
 horizontal_alignment = 2
 vertical_alignment = 1
 
-[node name="slider" type="HSlider" parent="presets/clip/container/aliances"]
+[node name="slider" type="HSlider" parent="ui/presets/clip/container/aliances"]
 custom_minimum_size = Vector2(320, 24)
 layout_mode = 2
 focus_mode = 0
@@ -193,15 +198,15 @@ min_value = 1.0
 max_value = 2.0
 value = 2.0
 
-[node name="empty" type="Control" parent="presets/clip/container/aliances"]
+[node name="empty" type="Control" parent="ui/presets/clip/container/aliances"]
 custom_minimum_size = Vector2(24, 0)
 layout_mode = 2
 
-[node name="dp" type="Control" parent="presets/clip/container"]
+[node name="dp" type="Control" parent="ui/presets/clip/container"]
 custom_minimum_size = Vector2(0, 128)
 layout_mode = 2
 
-[node name="name" type="Label" parent="presets/clip/container/dp"]
+[node name="name" type="Label" parent="ui/presets/clip/container/dp"]
 layout_mode = 0
 offset_left = 64.0
 offset_right = 416.0
@@ -210,12 +215,12 @@ text = "NAME"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="selector" type="Sprite2D" parent="presets/clip/container/dp"]
+[node name="selector" type="Sprite2D" parent="ui/presets/clip/container/dp"]
 position = Vector2(48, 24)
 texture = ExtResource("5_fovw5")
 offset = Vector2(32, 48)
 
-[node name="buttons" type="HBoxContainer" parent="presets/clip/container/dp"]
+[node name="buttons" type="HBoxContainer" parent="ui/presets/clip/container/dp"]
 layout_mode = 0
 offset_top = 28.0
 offset_right = 480.0
@@ -223,28 +228,28 @@ offset_bottom = 124.0
 theme_override_constants/separation = 16
 alignment = 1
 
-[node name="turtle" type="TextureButton" parent="presets/clip/container/dp/buttons"]
+[node name="turtle" type="TextureButton" parent="ui/presets/clip/container/dp/buttons"]
 layout_mode = 2
 texture_normal = ExtResource("5_5y2pc")
 
-[node name="simpleton" type="TextureButton" parent="presets/clip/container/dp/buttons"]
+[node name="simpleton" type="TextureButton" parent="ui/presets/clip/container/dp/buttons"]
 layout_mode = 2
 texture_normal = ExtResource("6_h3uix")
 
-[node name="overthinker" type="TextureButton" parent="presets/clip/container/dp/buttons"]
+[node name="overthinker" type="TextureButton" parent="ui/presets/clip/container/dp/buttons"]
 layout_mode = 2
 texture_normal = ExtResource("7_nvcq1")
 
-[node name="bookwyrm" type="TextureButton" parent="presets/clip/container/dp/buttons"]
+[node name="bookwyrm" type="TextureButton" parent="ui/presets/clip/container/dp/buttons"]
 layout_mode = 2
 texture_normal = ExtResource("8_6c10l")
 
-[node name="cheater" type="TextureButton" parent="presets/clip/container/dp/buttons"]
+[node name="cheater" type="TextureButton" parent="ui/presets/clip/container/dp/buttons"]
 visible = false
 layout_mode = 2
 texture_normal = ExtResource("9_gaq7c")
 
-[node name="checkmarks" type="Container" parent="."]
+[node name="checkmarks" type="Container" parent="ui"]
 layout_mode = 0
 offset_left = 528.0
 offset_top = 288.0
@@ -252,7 +257,7 @@ offset_right = 1136.0
 offset_bottom = 408.0
 script = ExtResource("11_h367q")
 
-[node name="map_title" type="Label" parent="."]
+[node name="map_title" type="Label" parent="ui"]
 layout_mode = 0
 offset_left = 520.0
 offset_top = 416.0
@@ -264,7 +269,7 @@ text = "Cool Map!"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="map_lore" type="Label" parent="."]
+[node name="map_lore" type="Label" parent="ui"]
 layout_mode = 0
 offset_left = 520.0
 offset_top = 472.0
@@ -282,26 +287,26 @@ horizontal_alignment = 1
 autowrap_mode = 2
 clip_text = true
 
-[node name="start" type="TextureButton" parent="."]
+[node name="start" type="TextureButton" parent="ui"]
 layout_mode = 0
 offset_left = 1016.0
 offset_top = 472.0
-offset_right = 1136.0
-offset_bottom = 592.0
+offset_right = 1144.0
+offset_bottom = 600.0
 focus_mode = 0
 texture_normal = ExtResource("11_cyadq")
 stretch_mode = 3
 
-[connection signal="item_activated" from="maps" to="." method="_on_map_activated"]
-[connection signal="item_selected" from="maps" to="." method="_on_map_selected"]
-[connection signal="pressed" from="directory/back" to="." method="_on_directory_back_pressed"]
-[connection signal="value_changed" from="presets/clip/container/leaders/slider" to="." method="_on_leaders_value_changed"]
-[connection signal="value_changed" from="presets/clip/container/players/slider" to="." method="_on_players_value_changed"]
-[connection signal="value_changed" from="presets/clip/container/aliances/slider" to="." method="_on_aliances_value_changed"]
-[connection signal="pressed" from="presets/clip/container/dp/buttons/turtle" to="." method="_on_button_dp_pressed" binds= ["Turtle"]]
-[connection signal="pressed" from="presets/clip/container/dp/buttons/simpleton" to="." method="_on_button_dp_pressed" binds= ["Simpleton"]]
-[connection signal="pressed" from="presets/clip/container/dp/buttons/overthinker" to="." method="_on_button_dp_pressed" binds= ["Overthinker"]]
-[connection signal="pressed" from="presets/clip/container/dp/buttons/bookwyrm" to="." method="_on_button_dp_pressed" binds= ["Bookwyrm"]]
-[connection signal="pressed" from="presets/clip/container/dp/buttons/cheater" to="." method="_on_button_dp_pressed" binds= ["Cheater"]]
-[connection signal="sort_children" from="checkmarks" to="checkmarks" method="_on_sort_children"]
-[connection signal="pressed" from="start" to="." method="_on_start_pressed"]
+[connection signal="item_activated" from="ui/maps" to="." method="_on_map_activated"]
+[connection signal="item_selected" from="ui/maps" to="." method="_on_map_selected"]
+[connection signal="pressed" from="ui/directory/back" to="." method="_on_directory_back_pressed"]
+[connection signal="value_changed" from="ui/presets/clip/container/leaders/slider" to="." method="_on_leaders_value_changed"]
+[connection signal="value_changed" from="ui/presets/clip/container/players/slider" to="." method="_on_players_value_changed"]
+[connection signal="value_changed" from="ui/presets/clip/container/aliances/slider" to="." method="_on_aliances_value_changed"]
+[connection signal="pressed" from="ui/presets/clip/container/dp/buttons/turtle" to="." method="_on_button_dp_pressed" binds= ["Turtle"]]
+[connection signal="pressed" from="ui/presets/clip/container/dp/buttons/simpleton" to="." method="_on_button_dp_pressed" binds= ["Simpleton"]]
+[connection signal="pressed" from="ui/presets/clip/container/dp/buttons/overthinker" to="." method="_on_button_dp_pressed" binds= ["Overthinker"]]
+[connection signal="pressed" from="ui/presets/clip/container/dp/buttons/bookwyrm" to="." method="_on_button_dp_pressed" binds= ["Bookwyrm"]]
+[connection signal="pressed" from="ui/presets/clip/container/dp/buttons/cheater" to="." method="_on_button_dp_pressed" binds= ["Cheater"]]
+[connection signal="sort_children" from="ui/checkmarks" to="ui/checkmarks" method="_on_sort_children"]
+[connection signal="pressed" from="ui/start" to="." method="_on_start_pressed"]
