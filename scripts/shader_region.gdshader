@@ -10,5 +10,7 @@ uniform vec4 previous_color: source_color = vec4(1, 1, 1, 1);
 void fragment() {
 	vec2 uv = UV * scale;
 	float c = float(changing_color && (uv.y * 0.75 - uv.x * 0.25 + 0.25) > n);
+	float alpha = COLOR.a;
 	COLOR = texture(TEXTURE, UV) * (current_color * (1.0 - c) + previous_color * c);
+	COLOR.a = alpha;
 }
