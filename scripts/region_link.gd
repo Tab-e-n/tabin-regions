@@ -278,8 +278,12 @@ func _set_cutoff_label_position(close: Region, far: Region) -> void:
 	label.position = far.position * 0.25 + close.position * 0.75 - label_size * 0.5
 
 
+func should_label_be_visible() -> bool:
+	return is_cutoff or power_reduction > 0
+
+
 func should_have_label() -> bool:
-	return kinetic or is_cutoff or power_reduction > 0
+	return kinetic or should_label_be_visible()
 
 
 func check_and_make_label() -> void:
@@ -291,12 +295,14 @@ func check_and_make_label() -> void:
 
 func update_label():
 	check_and_make_label()
-	if label and should_have_label():
+	if not label:
+		return
+	if should_label_be_visible():
 		label.visible = true
 		
 		_update_label_text()
 		_update_label_position.call_deferred()
-	elif label:
+	else:
 		label.visible = false
 
 
