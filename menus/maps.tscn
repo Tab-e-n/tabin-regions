@@ -249,14 +249,6 @@ visible = false
 layout_mode = 2
 texture_normal = ExtResource("9_gaq7c")
 
-[node name="checkmarks" type="Container" parent="ui"]
-layout_mode = 0
-offset_left = 528.0
-offset_top = 288.0
-offset_right = 1136.0
-offset_bottom = 408.0
-script = ExtResource("11_h367q")
-
 [node name="map_title" type="Label" parent="ui"]
 layout_mode = 0
 offset_left = 520.0
@@ -297,6 +289,14 @@ focus_mode = 0
 texture_normal = ExtResource("11_cyadq")
 stretch_mode = 3
 
+[node name="checkmarks" type="Container" parent="."]
+layout_mode = 0
+offset_left = 528.0
+offset_top = 288.0
+offset_right = 1136.0
+offset_bottom = 408.0
+script = ExtResource("11_h367q")
+
 [connection signal="item_activated" from="ui/maps" to="." method="_on_map_activated"]
 [connection signal="item_selected" from="ui/maps" to="." method="_on_map_selected"]
 [connection signal="pressed" from="ui/directory/back" to="." method="_on_directory_back_pressed"]
@@ -308,5 +308,5 @@ stretch_mode = 3
 [connection signal="pressed" from="ui/presets/clip/container/dp/buttons/overthinker" to="." method="_on_button_dp_pressed" binds= ["Overthinker"]]
 [connection signal="pressed" from="ui/presets/clip/container/dp/buttons/bookwyrm" to="." method="_on_button_dp_pressed" binds= ["Bookwyrm"]]
 [connection signal="pressed" from="ui/presets/clip/container/dp/buttons/cheater" to="." method="_on_button_dp_pressed" binds= ["Cheater"]]
-[connection signal="sort_children" from="ui/checkmarks" to="ui/checkmarks" method="_on_sort_children"]
 [connection signal="pressed" from="ui/start" to="." method="_on_start_pressed"]
+[connection signal="sort_children" from="checkmarks" to="checkmarks" method="_on_sort_children"]

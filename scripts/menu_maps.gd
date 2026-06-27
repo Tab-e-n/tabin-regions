@@ -40,7 +40,7 @@ var map_filenames: PackedStringArray = []
 
 @onready var directory_name_label: Label = $ui/directory/name as Label
 
-@onready var checkmarks: Container = $ui/checkmarks as Container
+@onready var checkmarks: Container = $checkmarks as Container
 
 @onready var ui_tintable: Control = $ui as Control
 

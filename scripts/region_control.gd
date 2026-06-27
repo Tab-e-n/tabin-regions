@@ -356,6 +356,7 @@ var capital_amount: Array[int] = []
 
 var removed_alignments: Array = []
 var used_alignments_changed: bool = false
+var player_amount_changed: bool = false
 
 var current_phase: PHASE = PHASE.NORMAL
 
@@ -484,7 +485,8 @@ func _ready():
 		use_aliances = ReplayControl.replay_uses_aliances
 	else:
 		ReplayControl.clear_replay()
-		if not lock_player_amount:
+		if not lock_player_amount and MapSetup.player_amount != player_amount:
+			player_amount_changed = true
 			player_amount = MapSetup.player_amount
 		if not lock_dp_setup:
 			default_digital_player = MapSetup.default_digital_player
@@ -615,6 +617,9 @@ func _ready():
 	penalty_amount.resize(align_amount - 1)
 	for i in range(align_amount - 1):
 		penalty_amount[i] = 0
+	
+	while alignment_penalty_mult.size() < align_amount - 1:
+		alignment_penalty_mult.append(1)
 	
 	current_placement = align_play_order.size()
 	
@@ -1140,12 +1145,15 @@ func victory(align_victory: int):
 
 func player_won(align_victory: int) -> bool:
 	if player_amount <= 0:
+		if Options.checkmark_debug: print("Checkmark denied: No players")
 		return false
-	if checkmarks & Checkmarks.MULTIPLAYER == 0 and player_amount > 1:
+	if checkmarks & Checkmarks.MULTIPLAYER == 0 and player_amount_changed:
+		if Options.checkmark_debug: print("Checkmark denied: Player amount modified")
 		return false
 	for align in align_play_order:
 		if get_align_controler(align) == DPControl.Controler.DEFAULT and alignment_aliances[align] == alignment_aliances[align_victory]:
 			return true
+	if Options.checkmark_debug: print("Checkmark denied: Player didn't win")
 	return false
 
 
@@ -1157,7 +1165,6 @@ func grant_checkmarks(align_victory: int) -> void:
 		if Options.checkmark_debug: print("Checkmark denied: Less alignments than what dev intended")
 		return
 	if not player_won(align_victory):
-		if Options.checkmark_debug: print("Checkmark denied: Player didn't win")
 		return
 	var new_dp: DPControl.Controler = default_digital_player
 	if lock_dp_setup:
