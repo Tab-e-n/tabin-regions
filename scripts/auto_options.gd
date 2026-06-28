@@ -41,7 +41,10 @@ var timestamp_sums: Dictionary = {}
 
 
 func _ready():
-	DirAccess.make_dir_absolute("user://Dev")
+	DirAccess.make_dir_absolute("user://dev")
+	DirAccess.make_dir_absolute("user://packs")
+	DirAccess.make_dir_absolute("user://data_base")
+	DirAccess.make_dir_absolute("user://data_packs")
 	
 	load_options()
 	

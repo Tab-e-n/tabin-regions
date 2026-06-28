@@ -189,6 +189,8 @@ popup_window = true
 ok_button_text = "Select Current Folder"
 dialog_hide_on_ok = true
 file_mode = 2
+access = 1
+root_subfolder = "user://packs"
 filters = PackedStringArray("*.json")
 
 [connection signal="item_activated" from="packs" to="." method="_on_packs_item_activated"]

@@ -85,8 +85,8 @@ func stats_replay_filename(replay_name: String) -> String:
 
 
 func pack_replay_filename(pack: String, map: String, check: String, dp: DPControl.Controler) -> String:
-	pack = pack.trim_prefix("res://")
-	return standard_replay_filename(pack + "/" + map + "_" + check + "_" + str(dp), false)
+	var save_folder: String = MapSetup.get_pack_save_folder(pack)
+	return save_folder + "/" + map + "_" + check + "_" + str(dp) + ".replay"
 
 
 func save_replay(replay_name: String) -> void:

@@ -18,6 +18,9 @@ var loading_in: bool = true
 
 func _options_loaded():
 	current_directory = Options.last_pack
+	if not current_directory in Options.BUILTIN_PACKS and not current_directory in Options.allowed_directories:
+		current_directory = "res://maps"
+	
 	var info: Dictionary = load_pack_info()
 	current_pack_name = info["title"]
 	
@@ -25,7 +28,7 @@ func _options_loaded():
 
 
 func load_map(_map_name: String) -> RegionControl:
-	var packed_map: PackedScene = load(MapSetup.current_directory + "/" + _map_name) as PackedScene
+	var packed_map: PackedScene = load(current_directory + "/" + _map_name) as PackedScene
 	if not packed_map:
 		push_error(_map_name, " is not a Scene, could not load.")
 		return null
@@ -64,7 +67,9 @@ func print_map_data():
 # ------------ PACK USER DATA ------------
 
 func get_pack_save_folder(pack_folder: String) -> String:
-	return "user:" + pack_folder.trim_prefix("res:")
+	if pack_folder.begins_with("res:"):
+		return "user://data_base/" + pack_folder.trim_prefix("res://")
+	return "user://data_packs/" + pack_folder.trim_prefix("user://packs/")
 
 
 func get_pack_savefile_name(pack_save_folder: String) -> String:

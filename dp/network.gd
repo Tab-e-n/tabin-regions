@@ -129,7 +129,7 @@ func save_network(net_name : String):
 	
 #	print(save)
 	
-	var filename : String = "user://Dev/" + net_name + ".json"
+	var filename : String = "user://dev/" + net_name + ".json"
 	var file = FileAccess.open(filename, FileAccess.WRITE)
 	
 	file.store_string(JSON.stringify(save))
@@ -138,7 +138,7 @@ func save_network(net_name : String):
 func load_network(net_name : String):
 	var save : Dictionary = {}
 	
-	var filename : String = "user://Dev/" + net_name + ".json"
+	var filename : String = "user://dev/" + net_name + ".json"
 	if FileAccess.file_exists(filename):
 		var file = FileAccess.open(filename, FileAccess.READ)
 		

@@ -1,6 +1,6 @@
 [gd_scene load_steps=303 format=3 uid="uid://djvg2um11mesh"]
 
-[ext_resource type="PackedScene" uid="uid://cvs2arpbio3au" path="res://maps/C.30_World_Map.tscn" id="1_cq6y4"]
+[ext_resource type="PackedScene" uid="uid://cvs2arpbio3au" path="res://mappacks/slopen/3._World_Map.tscn" id="1_cq6y4"]
 [ext_resource type="Shader" path="res://scripts/shader_region.gdshader" id="2_bpwx7"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_o82df"]
