@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://cbt282jrbubml"]
+[gd_scene load_steps=19 format=3 uid="uid://cbt282jrbubml"]
 
 [ext_resource type="Script" path="res://scripts/menu_packs.gd" id="1_a1v3l"]
 [ext_resource type="StyleBox" uid="uid://cyll56fcff0as" path="res://styles/menu_panel.tres" id="2_s5p1v"]
@@ -14,6 +14,8 @@
 [ext_resource type="Texture2D" uid="uid://d3l22gyjawbxv" path="res://sprites/ui/mask_deny.png" id="10_2o7ss"]
 [ext_resource type="Texture2D" uid="uid://ex66wqntm5fi" path="res://sprites/ui/deny.png" id="11_kiy1r"]
 [ext_resource type="Texture2D" uid="uid://dg7vk6rgj3o7c" path="res://sprites/ui/deny_pressed.png" id="12_tqxd5"]
+[ext_resource type="StyleBox" uid="uid://cdfja1fux3hsc" path="res://styles/menu_button_normal.tres" id="15_mdis0"]
+[ext_resource type="StyleBox" uid="uid://bupcy4mllm26p" path="res://styles/menu_button_pressed.tres" id="16_5c26b"]
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_slr3e"]
 shader = ExtResource("6_oas45")
@@ -193,6 +195,27 @@ access = 1
 root_subfolder = "user://packs"
 filters = PackedStringArray("*.json")
 
+[node name="user_folder" type="Button" parent="."]
+offset_left = 136.0
+offset_top = 56.0
+offset_right = 304.0
+offset_bottom = 88.0
+focus_mode = 0
+theme_override_colors/font_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_colors/font_pressed_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_colors/font_hover_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_colors/font_focus_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_colors/font_hover_pressed_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_colors/font_disabled_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_colors/font_outline_color = Color(0.156863, 0.156863, 0.156863, 1)
+theme_override_font_sizes/font_size = 16
+theme_override_styles/normal = ExtResource("15_mdis0")
+theme_override_styles/hover = ExtResource("15_mdis0")
+theme_override_styles/pressed = ExtResource("16_5c26b")
+theme_override_styles/disabled = ExtResource("15_mdis0")
+theme_override_styles/focus = ExtResource("15_mdis0")
+text = "OPEN USER FOLDER"
+
 [connection signal="item_activated" from="packs" to="." method="_on_packs_item_activated"]
 [connection signal="item_selected" from="packs" to="." method="_on_packs_item_selected"]
 [connection signal="pressed" from="start" to="." method="_on_start_pressed"]
@@ -203,3 +226,4 @@ filters = PackedStringArray("*.json")
 [connection signal="pressed" from="remove_popup/yes" to="." method="_on_remove_popup_yes"]
 [connection signal="pressed" from="remove_popup/no" to="." method="_on_remove_popup_no"]
 [connection signal="dir_selected" from="dir_window" to="." method="_on_dir_window_dir_selected"]
+[connection signal="pressed" from="user_folder" to="." method="_on_user_folder_pressed"]

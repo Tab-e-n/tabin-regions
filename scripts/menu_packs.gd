@@ -125,3 +125,7 @@ func _on_packs_item_selected(item: SelectionListItem):
 
 func _on_packs_item_activated(item: SelectionListItem):
 	open_directory(item.value)
+
+
+func _on_user_folder_pressed():
+	OS.shell_open(OS.get_user_data_dir())
